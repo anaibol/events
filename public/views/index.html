@@ -1,0 +1,10 @@
+<section data-ng-controller="IndexController">
+	<h1>Welcome to Wooeva</h1>
+	<h2>Events near your location</h2>
+	<div ng-repeat="event in events">
+		<h3>{{event.name}}</h3>
+		<p>{{event.location}}</p>
+		<!--<p>{{event.start-time}}</p>-->
+	</div>
+
+</section>
