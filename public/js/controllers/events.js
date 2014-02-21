@@ -10,6 +10,9 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
         // If route is "posts" it looks for response.data.posts
         newResponse = response.payload;
         newResponse.count = response.total;
+      } else if (operation === "get") {
+        newResponse = response.payload[0];
+        console.log(newResponse);
       } else {
         newResponse = response.data;
       }
@@ -35,7 +38,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
               $scope.markers.push({
                 lat: value.venue.latitude,
                 lng: value.venue.longitude,
-                message: "My Added Marker"
+                message: value.name
               });
 
               $scope.$parent.pos = {
@@ -47,9 +50,9 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
           }
         });
       });
-    }
+    };
 
-    $scope.paginate = function() {
+    /*$scope.paginate = function() {
       var Event = Restangular.all('rest/event?limit=10&skip=' + $scope.pago * 10);
       var allEvents = Event.getList().then(function(events) {
         $scope.events = events;
@@ -72,7 +75,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
           }
         });
       });
-    }
+    }*/
 
     $scope.create = function() {
       var event = new Event({
@@ -115,10 +118,10 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
     };
 
     $scope.findOne = function() {
-      $scope.event = Event.findOne({
-        eventId: $routeParams.eventId
-      }, function(err, event) {
-        console.log(event);
+      Restangular.one('rest/event', $routeParams.eventId).get().then(function(event) {
+        $scope.event = event;
+      }, function(response) {
+        console.log("Error with status code", response.status);
       });
     };
   }

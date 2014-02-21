@@ -1,35 +1,35 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    //LocalStrategy = require('passport-local').Strategy,
-    //TwitterStrategy = require('passport-twitter').Strategy,
-    FacebookStrategy = require('passport-facebook').Strategy,
-    //GitHubStrategy = require('passport-github').Strategy,
-    //GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-    //LinkedinStrategy = require('passport-linkedin').Strategy,
-    User = mongoose.model('User'),
-    config = require('./config');
+  //LocalStrategy = require('passport-local').Strategy,
+  //TwitterStrategy = require('passport-twitter').Strategy,
+  FacebookStrategy = require('passport-facebook').Strategy,
+  //GitHubStrategy = require('passport-github').Strategy,
+  //GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+  //LinkedinStrategy = require('passport-linkedin').Strategy,
+  User = mongoose.model('User'),
+  config = require('./config');
 
 
 module.exports = function(passport) {
-    
-    // Serialize the user id to push into the session
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
-    });
 
-    // Deserialize the user object based on a pre-serialized token
-    // which is the user id
-    passport.deserializeUser(function(id, done) {
-        User.findOne({
-            _id: id
-        }, '-salt -hashed_password', function(err, user) {
-            done(err, user);
-        });
-    });
+  // Serialize the user id to push into the session
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
 
-    // Use local strategy
-    /*passport.use(new LocalStrategy({
+  // Deserialize the user object based on a pre-serialized token
+  // which is the user id
+  passport.deserializeUser(function(id, done) {
+    User.findOne({
+      _id: id
+    }, '-salt -hashed_password', function(err, user) {
+      done(err, user);
+    });
+  });
+
+  // Use local strategy
+  /*passport.use(new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password'
         },
@@ -55,8 +55,8 @@ module.exports = function(passport) {
         }
     ));*/
 
-    // Use twitter strategy
-    /*passport.use(new TwitterStrategy({
+  // Use twitter strategy
+  /*passport.use(new TwitterStrategy({
             consumerKey: config.twitter.clientID,
             consumerSecret: config.twitter.clientSecret,
             callbackURL: config.twitter.callbackURL
@@ -86,41 +86,44 @@ module.exports = function(passport) {
         }
     ));*/
 
-    // Use facebook strategy
-    passport.use(new FacebookStrategy({
-            clientID: config.facebook.clientID,
-            clientSecret: config.facebook.clientSecret,
-            callbackURL: config.facebook.callbackURL
-        },
-        function(accessToken, refreshToken, profile, done) {
-            User.findOne({
-                'facebook.id': profile.id
-            }, function(err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (!user) {
-                    user = new User({
-                        name: profile.displayName,
-                        email: profile.emails[0].value,
-                        username: profile.username,
-                        provider: 'facebook',
-                        facebook: profile._json,
-                        accessToken: accessToken
-                    });
-                    user.save(function(err) {
-                        if (err) console.log(err);
-                        return done(err, user);
-                    });
-                } else {
-                    return done(err, user);
-                }
-            });
-        }
-    ));
+  // Use facebook strategy
 
-    // Use github strategy
-    /*passport.use(new GitHubStrategy({
+  global.fbAppId = config.facebook.clientID;
+
+  passport.use(new FacebookStrategy({
+      clientID: config.facebook.clientID,
+      clientSecret: config.facebook.clientSecret,
+      callbackURL: config.facebook.callbackURL
+    },
+    function(accessToken, refreshToken, profile, done) {
+      User.findOne({
+        'facebook.id': profile.id
+      }, function(err, user) {
+        if (err) {
+          return done(err);
+        }
+        if (!user) {
+          user = new User({
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            username: profile.username,
+            provider: 'facebook',
+            facebook: profile._json,
+            accessToken: accessToken
+          });
+          user.save(function(err) {
+            if (err) console.log(err);
+            return done(err, user);
+          });
+        } else {
+          return done(err, user);
+        }
+      });
+    }
+  ));
+
+  // Use github strategy
+  /*passport.use(new GitHubStrategy({
             clientID: config.github.clientID,
             clientSecret: config.github.clientSecret,
             callbackURL: config.github.callbackURL
@@ -148,8 +151,8 @@ module.exports = function(passport) {
         }
     ));*/
 
-    // Use google strategy
-    /*passport.use(new GoogleStrategy({
+  // Use google strategy
+  /*passport.use(new GoogleStrategy({
             clientID: config.google.clientID,
             clientSecret: config.google.clientSecret,
             callbackURL: config.google.callbackURL
@@ -177,8 +180,8 @@ module.exports = function(passport) {
         }
     ));*/
 
-    // use linkedin strategy
-    /*passport.use(new LinkedinStrategy({
+  // use linkedin strategy
+  /*passport.use(new LinkedinStrategy({
             consumerKey: config.linkedin.clientID,
             consumerSecret: config.linkedin.clientSecret,
             callbackURL: config.linkedin.callbackURL,

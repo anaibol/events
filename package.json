@@ -59,7 +59,9 @@
     "karma": "~0.10.9",
     "request": "~2.33.0",
     "fbgraph": "~0.2.9",
-    "mers": "~0.7.2"
+    "mers": "~0.7.2",
+    "monk": "~0.7.1",
+    "cron": "~1.0.3"
   },
   "devDependencies": {
     "supertest": "0.8.2",

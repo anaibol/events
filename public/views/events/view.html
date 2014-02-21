@@ -1,14 +1,14 @@
-<section data-ng-controller="FeventsController" data-ng-init="findOne()">
-    <span>{{event.start_time | date:'medium'}}</span>/
-    <span>{{event.owner.name}}</span>
-    <h2>{{event.name}}</h2>
-    <div data-ng-show="global.user._id == event.user._id">
-        <a class="btn" href="/#!/events/{{event._id}}/edit">
-        	<i class="glyphicon glyphicon-edit"></i>
-        </a> 
-        <a class="btn" data-ng-click="remove();">
-            <i class="glyphicon glyphicon-trash"></i>
-        </a>
-    </div>
-    <div>{{event.description}}</div>
+<section data-ng-controller="EventsController" data-ng-init="findOne()">
+  <span>{{event.start_time | date:'medium'}}</span>/
+  <span>{{event.owner.name}}</span>
+  <h2>{{event.name}}</h2>
+  <div data-ng-show="global.user._id == event.user._id">
+    <a class="btn" href="/#!/events/{{event._id}}/edit">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn" data-ng-click="remove();">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <div>{{event.description}}</div>
 </section>

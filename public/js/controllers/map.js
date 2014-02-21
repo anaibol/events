@@ -4,7 +4,7 @@ app.controller('mapCtrl', function($scope, $http, Restangular) {
   $scope.pos = {};
 
   $scope.markers = new Array();
-
+  /*
   $http({
     method: 'GET',
     url: 'http://freegeoip.net/json/'
@@ -38,7 +38,7 @@ app.controller('mapCtrl', function($scope, $http, Restangular) {
 
     });
   });
-
+*/
   angular.extend($scope, {
     layers: {
       baselayers: {
