@@ -31,6 +31,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
 
       var allEvents = Event.getList().then(function(events) {
         $scope.events = events;
+        console.log(events);
 
         angular.forEach($scope.events, function(value, key) {
           if (value.venue) {

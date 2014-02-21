@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAVebA5FD2cBABTDkJhuEQ7THoKVTWL9CTpeW5m02te18SO5WRMBtqJgZADUaZC5SnfrvaVrD9vMJJvZAr3o7mVqhk1LZCZBTsi6FWaJRIGxFwHHAJ2ZCCv4EfYHjbiRGVZAYSe2NxiEZCpTQXUnH4xUr9gdoRmo6ASu10BciGmIzZC73BJnsDzBMZAZASmkhQ012EZD';
+var accessToken = 'CAACEdEose0cBAPUYeAJUPY6kLnvcBedCIt5ZC9GMXjAR8f19L4aiCTbjJoVhpzZCd2YRqSgU7QdYw8o4oabJuWYmMusj8yU6VgAoIAbysiVDdvqZAakSO3vDLqZCebsS6l4nAcVO7RiZALhkRfpbZBZBO9ZAXoJG6ahHdtz3LX8E4z9LGEoCTEirjDbZAhjd2NvKTyfLjufKvrQZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -35,45 +35,87 @@ function search(query) {
     until: 'today'*/
   };
 
+
   graph.search(searchOptions, function(err, res) {
+    if (err) console.log(err);
+    if (res.data) {
+      if (res.data.length) {
+        /*if (res.paging && res.paging.next) {
+          paginate(res.paging.next);
+        }*/
+
+        res.data.forEach(function(ev) {
+          //existsInDb(ev.id, function(exists) {
+          //  console.log(exists);
+          //  return
+          //  if (!exists) {
+          var query = "SELECT description, end_time, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id;
+          //    console.log(query);
+          graph.fql(query, function(err, ev) {
+            if (err) console.log(err);
+            if (ev.data) {
+              Events.insert(ev.data, function(err, doc) {
+                if (err) console.log(err);
+              });
+            }
+          });
+          //}
+          //});
+          return;
+        });
+      }
+    }
+  });
+}
+
+/*graph.search(searchOptions, function(err, res) {
     if (err) console.log(err);
     if (res.data) {
       if (res.data.length) {
         if (res.paging && res.paging.next) {
           paginate(res.paging.next);
         }
+
+        var ids = [];
+
+
         res.data.forEach(function(ev) {
-          Events.findOne({
-            id: ev.id
-          }).on('complete', function(err, doc) {
-            if (err) console.log(err);
+          if (!existsInDb(ev.id)) {
+            ids.push(ev.id);
+          }
+        });
 
-            if (!doc) {
-              if (ev) {
-                var query = "SELECT description, end_time, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid = " + ev.id;
+        var query = "SELECT description, end_time, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid IN (" + ids.join() + ')';
+        console.log(query);
+        graph.fql(query, function(err, res) {
+          if (err) console.log(err);
 
-                graph.fql(query, function(err, evs) {
-                  if (err) console.log(err);
-                  if (evs.data) {
-                    if (evs.data.length) {
-                      console.log(evs.data[0]);
-                      Events.insert(evs.data[0], function(err, doc) {
-                        if (doc) console.log(doc.name);
-                      });
-                    }
-                  }
-                });
-              }
-              //} else {
-              //  console.log(doc.id);
-            }
+          Events.insert(res.data, function(err, doc) {
+            console.log(doc);
           });
         });
       }
     }
   });
+}*/
+
+function existsInDb(id, cb) {
+  Events.findOne({
+    id: id
+  }).on('complete', function(err, doc) {
+    if (err) console.log(err);
+    console.log(doc);
+    console.log(err);
+    if (!doc) {
+      cb(false);
+    } else {
+      cb(true);
+    }
+  });
+
 
 }
+
 //var cronJob = require('cron').CronJob;
 //new cronJob('*/5 * * * * ', function() {
 var date = new Date();
@@ -86,6 +128,5 @@ search('kizomba');
 search('porto');
 search('cubaine');
 search('semba ');
-search('paris');
 
 //}, null, true);

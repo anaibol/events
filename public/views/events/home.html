@@ -1,0 +1,31 @@
+<section class="home" data-ng-controller="EventsController" data-ng-init="find()">
+  <table class="table table-condensed">
+    <thead>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Begin date</th>
+      <th>Finish date</th>
+      <th>Owner</th>
+      <th>Description</th>
+      <th>Location</th>
+      <th>Privacy</th>
+    </thead>
+    <tbody>
+      <tr class="event" data-ng-repeat="event in events">
+        <td>
+          <img class="image" src="{{event.pic_big}}">
+        </td>
+        <td>
+          <!--<a data-ng-href="#!/events/{{event._id}}">{{event.name}}</a>--><a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
+        </td>
+
+        <td class="time">{{event.start_time | date:'medium'}}</td>
+        <td class="time">{{event.end_time | date:'medium'}}</td>
+        <td class="owner">{{event.owner.name}}</td>
+        <td class="description">{{event.description}}</td>
+        <td class="location">{{event.location}}</td>
+        <td class="privacy">{{event.privacy}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

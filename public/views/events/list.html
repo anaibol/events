@@ -1,11 +1,13 @@
-<section data-ng-controller="EventsController" data-ng-init="find()">
-	<ul class="events unstyled">
-		<li data-ng-repeat="event in events">
-			<span>{{event.start_time | date:'medium'}}</span> /
-			<span>{{event.owner.name}}</span>
-			<h2><a data-ng-href="#!/events/{{event._id}}">{{event.name}}</a></h2>
-			<div>{{event.description}}</div>
-		</li>
-	</ul>
-	<h1 data-ng-hide="!events || events.length">No events yet. <br> Why don't you <a href="/#!/events/create">Create One</a>?</h1>
+<section class="right events" data-ng-controller="EventsController" data-ng-init="find()">
+  <ul class="events unstyled">
+    <li data-ng-repeat="event in events">
+      <span>{{event.start_time | date:'medium'}}</span>/
+      <span>{{event.owner.name}}</span>
+      <h2><a data-ng-href="#!/events/{{event._id}}">{{event.name}}</a>
+      </h2>
+      <div>{{event.description}}</div>
+    </li>
+  </ul>
+  <h1 data-ng-hide="!events || events.length">No events yet.
+    <br>Why don't you <a href="/#!/events/create">Create One</a>?</h1>
 </section>

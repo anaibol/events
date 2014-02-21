@@ -4,6 +4,9 @@
 angular.module('mean').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+    when('/home', {
+      templateUrl: 'views/events/home.html'
+    }).
     when('/events', {
       templateUrl: 'views/events/list.html'
     }).
