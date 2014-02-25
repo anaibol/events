@@ -91,7 +91,7 @@ exports.show = function(req, res) {
  * List of Events
  */
 exports.all = function(req, res) {
-  Event.find().sort('-created').populate('user', 'name username').exec(function(err, events) {
+  Event.find().sort('-created').exec(function(err, events) {
     if (err) {
       res.render('error', {
         status: 500
@@ -145,4 +145,17 @@ exports.find = function(req, res) {
       events: 'null'
     });
   }
+};
+
+
+exports.fromNow = function(req, res) {
+  Event.findFromNow().exec(function(err, events) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.jsonp(events);
+    }
+  });
 };

@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAACEdEose0cBAPUYeAJUPY6kLnvcBedCIt5ZC9GMXjAR8f19L4aiCTbjJoVhpzZCd2YRqSgU7QdYw8o4oabJuWYmMusj8yU6VgAoIAbysiVDdvqZAakSO3vDLqZCebsS6l4nAcVO7RiZALhkRfpbZBZBO9ZAXoJG6ahHdtz3LX8E4z9LGEoCTEirjDbZAhjd2NvKTyfLjufKvrQZDZD';
+var accessToken = 'CAAKvXHZBBCIUBAGXMqZCmo1TBn9Q1YdibOZCrB5Cw9xKA2pmQdaFNV5qGmY3VieLzImZBJWZBZAA1GbettQ3HQpzffVGqc9xnYBndAkIA5ZB52LY8ZBZCt5Y6W3MPtSbwsFLPIL8kiwBoYQtW3VLIFBjFQXujVe9Ck2fUkEAeK7rshb230pZBQVogRADz5W7HrIzwDKQ7AV9sVtgZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -37,7 +37,11 @@ function search(query) {
 
 
   graph.search(searchOptions, function(err, res) {
-    if (err) console.log(err);
+    if (err) {
+      console.log(err);
+      return;
+    }
+
     if (res.data) {
       if (res.data.length) {
         /*if (res.paging && res.paging.next) {
@@ -49,13 +53,33 @@ function search(query) {
           //  console.log(exists);
           //  return
           //  if (!exists) {
-          var query = "SELECT description, end_time, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id;
+          var query = "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id;
+
+
+          var query = {
+            user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id,
+            event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)"
+          };
+
           //    console.log(query);
           graph.fql(query, function(err, ev) {
-            if (err) console.log(err);
+            if (err) {
+              console.log(err);
+              return;
+            }
+
             if (ev.data) {
-              Events.insert(ev.data, function(err, doc) {
+              console.log(ev.data);
+              eve = ev.data[0];
+              eve.start_time = new Date(Date.parse(eve.start_time));
+
+              eve.end_time = new Date(Date.parse(eve.end_time));
+
+              eve.saved = new Date();
+
+              Events.insert(eve, function(err, doc) {
                 if (err) console.log(err);
+                console.log(doc.name);
               });
             }
           });

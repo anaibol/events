@@ -27,7 +27,7 @@ var EventSchema = new Schema({
 EventSchema.statics.load = function(id, cb) {
   this.findOne({
     _id: id
-  }).populate('user', 'name username').exec(cb);
+  }).exec(cb);
 };
 
 
@@ -35,6 +35,17 @@ EventSchema.statics.findNameLike = function findNameLike(q, term) {
   return this.find({
     'name': new RegExp(q.name || term, 'i')
   });
-}
+};
+
+
+EventSchema.statics.findFromNow = function findFromNow() {
+  return this.find({
+    'start_time': {
+      $gte: new Date()
+    }
+  }).sort({
+    'start_time': 1
+  });
+};
 
 mongoose.model('Event', EventSchema);

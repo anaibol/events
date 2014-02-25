@@ -59,11 +59,16 @@ html, body {
   position: absolute;
   width: 100%;
   overflow: auto;
-  height: 100%;
-  background: rgba(50, 50, 50, 0.9);
-  padding: 30px;
-  color: white;
+  height: 92%;
+  padding: 0 30px 0 30px;
+  margin-top: 50px;
 }
 .leaflet-top {
   display: none;
+}
+pre {
+  background: none;
+  border: none;
+  height: 211px;
+  overflow-y: auto;
 }

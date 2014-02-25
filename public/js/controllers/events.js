@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('mean.events').controller('EventsController', ['$scope', '$routeParams', '$location', 'Global', 'Restangular',
-  function($scope, $routeParams, $location, Global, Restangular) {
+angular.module('mean.events').controller('EventsController', ['$scope', '$routeParams', '$location', '$filter', 'Global', 'Restangular', 'ngTableParams',
+  function($scope, $routeParams, $location, $filter, Global, Restangular, ngTableParams) {
     $scope.global = Global;
 
-    Restangular.addResponseInterceptor(function(response, operation, route, url) {
+    /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
       var newResponse;
       if (operation === "getList") {
         // If route is "posts" it looks for response.data.posts
@@ -17,23 +17,38 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
         newResponse = response.data;
       }
       return newResponse;
-    });
+    });*/
 
     $scope.find = function() {
       if (!jQuery.isEmptyObject($location.search())) {
         var term = Object.keys($location.search());
         term = term[0];
 
-        var Event = Restangular.all('rest/event/finder/findNameLike?name=' + term);
+        var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
+
       } else {
-        var Event = Restangular.all('rest/event');
+        var Event = Restangular.all('events/now');
       }
 
       var allEvents = Event.getList().then(function(events) {
-        $scope.events = events;
-        console.log(events);
+        $scope.tableParams = new ngTableParams({
+          page: 1, // show first page
+          count: 10 // count per page
+        }, {
+          total: events.length, // length of data
+          getData: function($defer, params) {
+            // use build-in angular filter
+            var orderedData = params.filter() ? $filter('filter')(events, params.filter()) : events;
+            orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
+            $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
-        angular.forEach($scope.events, function(value, key) {
+            params.total(orderedData.length); // set total for recalc pagination
+            $defer.resolve($scope.events);
+          }
+        });
+
+
+        /*angular.forEach($scope.events, function(value, key) {
           if (value.venue) {
             if (value.venue.latitude !== undefined) {
               $scope.markers.push({
@@ -49,7 +64,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
               };
             }
           }
-        });
+        });*/
       });
     };
 
