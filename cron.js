@@ -69,23 +69,25 @@ function search(query) {
             }
 
             if (res.data) {
-              eve = res.data[0].fql_result_set[0];
+              if (res.data[1].fql_result_set[0]) {
+                eve = res.data[0].fql_result_set[0];
 
-              eve.creator = {
-                id: res.data[1].fql_result_set[0].id,
-                name: res.data[1].fql_result_set[0].name
-              };
+                eve.creator = {
+                  id: res.data[1].fql_result_set[0].id,
+                  name: res.data[1].fql_result_set[0].name
+                };
 
-              eve.start_time = new Date(Date.parse(eve.start_time));
+                eve.start_time = new Date(Date.parse(eve.start_time));
 
-              eve.end_time = new Date(Date.parse(eve.end_time));
+                eve.end_time = new Date(Date.parse(eve.end_time));
 
-              eve.saved = new Date();
+                eve.saved = new Date();
 
-              Events.insert(eve, function(err, doc) {
-                if (err) console.log(err);
-                console.log(doc.creator);
-              });
+                Events.insert(eve, function(err, doc) {
+                  if (err) console.log(err);
+                  console.log(doc.creator);
+                });
+              }
             }
           });
           //}
