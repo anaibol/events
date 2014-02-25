@@ -10,7 +10,7 @@
 
       <td data-title="'Start date'" sortable="'start_time'" class="time">{{event.start_time | date:'medium'}}</td>
       <td data-title="'End date'" sortable="'end_time'" class="time">{{event.end_time | date:'medium'}}</td>
-      <td data-title="'Creator'" sortable="'creator.name'" filter="{ 'creator.name': 'text' }" class="creator">{{event.creator.name}}</td>
+      <td data-title="'Creator'" sortable="'creator.name'" class="creator">{{event.creator.name}}</td>
       <td data-title="'Description'" class="description">
         <pre>{{event.description}}</pre>
       </td>
