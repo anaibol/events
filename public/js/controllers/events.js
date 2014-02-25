@@ -42,6 +42,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
             orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
             $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
+            console.log($scope.events);
             params.total(orderedData.length); // set total for recalc pagination
             $defer.resolve($scope.events);
           }

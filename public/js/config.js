@@ -4,7 +4,7 @@
 angular.module('mean').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-    when('/home', {
+    when('/', {
       templateUrl: 'views/events/home.html'
     }).
     when('/events', {
@@ -19,9 +19,9 @@ angular.module('mean').config(['$routeProvider',
     when('/events/:eventId', {
       templateUrl: 'views/events/view.html'
     }).
-    when('/', {
-      templateUrl: 'views/index.html'
-    }).
+    /*when('/', {
+    //  templateUrl: 'views/index.html'
+    }).*/
     otherwise({
       redirectTo: '/'
     });

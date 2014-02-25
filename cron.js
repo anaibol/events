@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAVebA5FD2cBAJrKsqMCPGstlfZBR8yZAalFiDkAHWHaQI4jC2fZBvLPN7ZAz15hhwLxKbIIGMdU4Rc6g3YVza6ZCJCUa7gvpu9ZAhtSiLum5OGT7LHwvoJrikWlL9ZAkIKnjrZCpWkYlbK7p8vpodPdJFXOaVWESDkXAZBKf5Ct5AFRewW6QL3Kb5GKbSDw7R3khTUfD2lLQWAZDZD';
+var accessToken = 'CAAVebA5FD2cBADZCeNs9GwQtX0tEpci7CwJPvyhssYfzFkqDtHaHP1Wu26zGy08bKwUfz3k7ZAAVVB93s5A5DZA7z0N8Kq9vZAqNNBe3McOrZBVRMZA4KKmZCfEPNmC6a0s8zDtZB6ST4aVfZCYu8M7agDRzxJOZCYD3zfXlCxc9ZA8ajruIg4d7RZC6pUBTdnfQpTFv4vKA1V6BfQZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -77,15 +77,16 @@ function search(query) {
                   name: res.data[1].fql_result_set[0].name
                 };
 
+                console.log(eve.start_time);
                 eve.start_time = new Date(Date.parse(eve.start_time));
-
+                console.log(eve.start_time);
                 eve.end_time = new Date(Date.parse(eve.end_time));
 
                 eve.saved = new Date();
 
                 Events.insert(eve, function(err, doc) {
                   if (err) console.log(err);
-                  console.log(doc.creator);
+                  console.log(doc.name);
                 });
               }
             }
