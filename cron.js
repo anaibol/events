@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAKvXHZBBCIUBAGXMqZCmo1TBn9Q1YdibOZCrB5Cw9xKA2pmQdaFNV5qGmY3VieLzImZBJWZBZAA1GbettQ3HQpzffVGqc9xnYBndAkIA5ZB52LY8ZBZCt5Y6W3MPtSbwsFLPIL8kiwBoYQtW3VLIFBjFQXujVe9Ck2fUkEAeK7rshb230pZBQVogRADz5W7HrIzwDKQ7AV9sVtgZDZD';
+var accessToken = 'CAAVebA5FD2cBAJrKsqMCPGstlfZBR8yZAalFiDkAHWHaQI4jC2fZBvLPN7ZAz15hhwLxKbIIGMdU4Rc6g3YVza6ZCJCUa7gvpu9ZAhtSiLum5OGT7LHwvoJrikWlL9ZAkIKnjrZCpWkYlbK7p8vpodPdJFXOaVWESDkXAZBKf5Ct5AFRewW6QL3Kb5GKbSDw7R3khTUfD2lLQWAZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -62,15 +62,20 @@ function search(query) {
           };
 
           //    console.log(query);
-          graph.fql(query, function(err, ev) {
+          graph.fql(query, function(err, res) {
             if (err) {
               console.log(err);
               return;
             }
 
-            if (ev.data) {
-              console.log(ev.data);
-              eve = ev.data[0];
+            if (res.data) {
+              eve = res.data[0].fql_result_set[0];
+
+              eve.creator = {
+                id: res.data[1].fql_result_set[0].id,
+                name: res.data[1].fql_result_set[0].name
+              };
+
               eve.start_time = new Date(Date.parse(eve.start_time));
 
               eve.end_time = new Date(Date.parse(eve.end_time));
@@ -79,7 +84,7 @@ function search(query) {
 
               Events.insert(eve, function(err, doc) {
                 if (err) console.log(err);
-                console.log(doc.name);
+                console.log(doc.creator);
               });
             }
           });
