@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.events').controller('EventsController', ['$scope', '$routeParams', '$location', '$filter', 'Global', 'Restangular', 'ngTableParams',
-  function($scope, $routeParams, $location, $filter, Global, Restangular, ngTableParams) {
+angular.module('mean.events').controller('EventsController', ['$scope', '$routeParams', '$location', '$filter', 'Global', 'Restangular', 'ngTableParams', '$anchorScroll',
+  function($scope, $routeParams, $location, $filter, Global, Restangular, ngTableParams, $anchorScroll) {
     $scope.global = Global;
 
     /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
@@ -18,6 +18,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
       }
       return newResponse;
     });*/
+
 
     $scope.find = function() {
       if (!jQuery.isEmptyObject($location.search())) {
@@ -93,6 +94,14 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
         });
       });
     }*/
+
+
+    $scope.paginate = function(params, page) {
+      jQuery('#home').animate({scrollTop: 0});
+      params.page(page);
+    };
+
+
 
     $scope.create = function() {
       var event = new Event({

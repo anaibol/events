@@ -71,4 +71,6 @@ pre {
   border: none;
   height: 211px;
   overflow-y: auto;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
 }
