@@ -9,16 +9,18 @@
       </td>
 
       <td data-title="'Start date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td>
-      <td data-title="'End date'" sortable="'end_time'" class="time" ng-if="event.end_time > event.start_time">{{event.end_time | date:'EEE dd MMM HH:mm'}}</td>
-      <td data-title="'End date'" sortable="'end_time'" class="time" ng-if="event.end_time < event.start_time"></td>      
-      <td data-title="'Creator'" sortable="'creator.name'" class="creator">{{event.creator.name}}</td>
+      <td data-title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>
+
+      
+
+      <td data-title="'Creator'" filter="{ 'creator': 'text' }" sortable="'creator.name'" class="creator">{{event.creator}}</td>
       <td data-title="'Description'" class="description">
         <pre>{{event.description}}</pre>
       </td>
       <td data-title="'Location'" filter="{ 'location': 'text' }" sortable="'location'" class="location">{{event.location}}</td>
-      <td data-title="'City'" sortable="'venue.city'" class="city">{{event.venue.city}}</td>
-      <td data-title="'Country'" sortable="'venue.country'" class="country">{{event.venue.country}}</td>
-      <td data-title="'Privacy'" sortable="'privacy'" class="privacy">{{event.privacy}}</td>
+      <td data-title="'City'" filter="{ 'city': 'text' }" sortable="'city'" class="city">{{event.city}}</td>
+      <td data-title="'Country'" filter="{ 'country': 'text' }" sortable="'country'" class="country">{{event.country}}</td>
+      <!--<td data-title="'Privacy'" sortable="'privacy'" class="privacy">{{event.privacy}}</td>-->
       <!--<td class="map">
           <leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>
         </td>-->

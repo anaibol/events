@@ -32,6 +32,18 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
       }
 
       var allEvents = Event.getList().then(function(events) {
+        angular.forEach(events, function(ev, key) {
+          if (ev.venue) {
+
+            if (ev.venue.city) ev.city = ev.venue.city;
+            if (ev.venue.location) ev.location = ev.venue.location;
+            if (ev.venue.country) ev.country = ev.venue.country;
+            if (ev.creator) ev.creator = ev.creator.name;
+            console.log(123);
+            console.log(ev.country);
+          }
+        });
+
         $scope.tableParams = new ngTableParams({
           page: 1, // show first page
           count: 10 // count per page
@@ -97,7 +109,7 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
 
 
     $scope.paginate = function(params, page) {
-      jQuery('#home').animate({scrollTop: 0});
+      jQuery('#home').animate({scrollTop: 0}, 'slow');
       params.page(page);
     };
 
