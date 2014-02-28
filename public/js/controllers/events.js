@@ -33,7 +33,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
             
             if (!ev.members) ev.members = [];
             if (ev.members.uid) ev.members = [ev.members];
-            console.log(ev.members);
           }
         });
 

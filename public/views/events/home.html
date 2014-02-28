@@ -9,7 +9,7 @@
       </td>
 
       <td data-title="'Start date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td>
-      <td data-title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>      
+      <!--<td data-title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
 
       <td data-title="'Creator'" filter="{ 'creator': 'text' }" sortable="'creator.name'" class="creator">{{event.creator}}</td>
       <td data-title="'Description'" class="description">

@@ -59,8 +59,7 @@ html, body {
   position: absolute;
   width: 100%;
   overflow: auto;
-  height: 92%;
-  padding: 0 30px 0 30px;
+  height: 100%;
   margin-top: 50px;
 }
 .leaflet-top {
@@ -73,4 +72,57 @@ pre {
   overflow-y: auto;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
+}
+
+.home thead {
+  position: fixed;
+  background: white;
+  width: 100%;
+  top: 50px;
+}
+
+
+.home thead .ng-table-filters th, .home tbody .event td {
+  padding: 8px !important;
+}
+
+.home thead .ng-table-filters th:nth-child(1), .home tbody .event td:nth-child(1) {
+  width: 220px !important;
+}
+
+.home thead .ng-table-filters th:nth-child(2), .home tbody .event td:nth-child(2) {
+  width: 250px !important;
+}
+
+.home thead .ng-table-filters th:nth-child(3), .home tbody .event td:nth-child(3) {
+  width: 75px !important;
+}
+
+.home thead .ng-table-filters th:nth-child(4), .home tbody .event td:nth-child(4) {
+  width: 100px !important;
+}
+
+.home thead .ng-table-filters th:nth-child(5), .home tbody .event td:nth-child(5) {
+  width: 847px !important;
+}
+
+.home thead .ng-table-filters th:nth-child(6), .home tbody .event td:nth-child(6) {
+  width: 48px !important;
+}
+
+.home thead .ng-table-filters th:nth-child(7), .home tbody .event td:nth-child(7) {
+  width: 61px;
+}
+
+.home thead .ng-table-filters th:nth-child(8), .home tbody .event td:nth-child(8) {
+  width: 40px;
+}
+
+.home thead .ng-table-filters th:nth-child(9), .home tbody .event td:nth-child(9) {
+  width: 40px;
+}
+
+
+.ng-table {
+  margin-top: 109px;
 }
