@@ -30,6 +30,10 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
             if (ev.venue.location) ev.location = ev.venue.location;
             if (ev.venue.country) ev.country = ev.venue.country;
             if (ev.creator) ev.creator = ev.creator.name;
+            
+            if (!ev.members) ev.members = [];
+            if (ev.members.uid) ev.members = [ev.members];
+            console.log(ev.members);
           }
         });
 
@@ -44,7 +48,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
             orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
             $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
-            console.log($scope.events);
             params.total(orderedData.length); // set total for recalc pagination
             $defer.resolve($scope.events);
           }
@@ -84,7 +87,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
               orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
               $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
-              console.log($scope.events);
               params.total(orderedData.length); // set total for recalc pagination
               $defer.resolve($scope.events);
             }

@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAVebA5FD2cBADZCeNs9GwQtX0tEpci7CwJPvyhssYfzFkqDtHaHP1Wu26zGy08bKwUfz3k7ZAAVVB93s5A5DZA7z0N8Kq9vZAqNNBe3McOrZBVRMZA4KKmZCfEPNmC6a0s8zDtZB6ST4aVfZCYu8M7agDRzxJOZCYD3zfXlCxc9ZA8ajruIg4d7RZC6pUBTdnfQpTFv4vKA1V6BfQZDZD';
+var accessToken = 'CAAKvXHZBBCIUBAPefGrpd0kMuobTZCTFynPigK06EtXoloZBBFWxF8cAUDMt3PnGc4jfH4akZCIbE3IZCy8FJHNmDytCZBx4j46ZAvB9Y7jvxjouUed86QaNR1fr9S5GFfDw9mb2w7qFpb4iLytGZCec4GgJZCSxO3OEsT6lK3MZCwHQkyUqhd2ZCxBtpYgDMnMY00arUUaOBLysAZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -53,12 +53,11 @@ function search(query) {
           //  console.log(exists);
           //  return
           //  if (!exists) {
-          var query = "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id;
-
 
           var query = {
-            user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic_big, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id,
-            event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)"
+            user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id,
+            event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
+            event_members: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending'"
           };
 
           //    console.log(query);
@@ -77,9 +76,9 @@ function search(query) {
                   name: res.data[1].fql_result_set[0].name
                 };
 
-                console.log(eve.start_time);
+                eve.members = res.data[2].fql_result_set;
+
                 eve.start_time = new Date(Date.parse(eve.start_time));
-                console.log(eve.start_time);
                 eve.end_time = new Date(Date.parse(eve.end_time));
 
                 eve.saved = new Date();

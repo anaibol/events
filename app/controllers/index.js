@@ -10,13 +10,12 @@ exports.render = function(req, res) {
         status: 500
       });
     } else {
-	  res.render('index', {
-	    title: 'Wooeva',
-	    user: req.user ? JSON.stringify(req.user) : 'null',
-	    fbAppId: global.fbAppId,
-	    events: events
-	  });
-	  console.log(events);
+  	  res.render('index', {
+  	    title: 'Wooeva',
+  	    user: req.user ? JSON.stringify(req.user) : 'null',
+  	    fbAppId: global.fbAppId,
+  	    events: events
+  	  });
     }
   });
 };

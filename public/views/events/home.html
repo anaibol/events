@@ -9,9 +9,7 @@
       </td>
 
       <td data-title="'Start date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td>
-      <td data-title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>
-
-      
+      <td data-title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>      
 
       <td data-title="'Creator'" filter="{ 'creator': 'text' }" sortable="'creator.name'" class="creator">{{event.creator}}</td>
       <td data-title="'Description'" class="description">
@@ -20,6 +18,10 @@
       <td data-title="'Location'" filter="{ 'location': 'text' }" sortable="'location'" class="location">{{event.location}}</td>
       <td data-title="'City'" filter="{ 'city': 'text' }" sortable="'city'" class="city">{{event.city}}</td>
       <td data-title="'Country'" filter="{ 'country': 'text' }" sortable="'country'" class="country">{{event.country}}</td>
+      <td data-title="'Attending'" sortable="'members.length'" class="members">{{event.members.length}}</td>
+
+
+
       <!--<td data-title="'Privacy'" sortable="'privacy'" class="privacy">{{event.privacy}}</td>-->
       <!--<td class="map">
           <leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>
