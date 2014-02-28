@@ -74,6 +74,7 @@ pre {
   font-size: 14px;
 }
 
+/*
 .home thead {
   position: fixed;
   background: white;
@@ -81,13 +82,8 @@ pre {
   top: 50px;
 }
 
-
-.home thead .ng-table-filters th, .home tbody .event td {
-  padding: 8px !important;
-}
-
 .home thead .ng-table-filters th:nth-child(1), .home tbody .event td:nth-child(1) {
-  width: 220px !important;
+  width: 236px !important;
 }
 
 .home thead .ng-table-filters th:nth-child(2), .home tbody .event td:nth-child(2) {
@@ -125,4 +121,8 @@ pre {
 
 .ng-table {
   margin-top: 109px;
-}
+  table-layout: fixed;
+  width: 100%;
+  overflow:hidden;
+  word-break:break-all;
+}*/
