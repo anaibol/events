@@ -19,19 +19,10 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
       return newResponse;
     });*/
 
-
     $scope.find = function() {
-      if (!jQuery.isEmptyObject($location.search())) {
-        var term = Object.keys($location.search());
-        term = term[0];
+      if (window.events) {
+        var events = window.events;
 
-        var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
-
-      } else {
-        var Event = Restangular.all('events/now');
-      }
-
-      var allEvents = Event.getList().then(function(events) {
         angular.forEach(events, function(ev, key) {
           if (ev.venue) {
 
@@ -39,8 +30,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
             if (ev.venue.location) ev.location = ev.venue.location;
             if (ev.venue.country) ev.country = ev.venue.country;
             if (ev.creator) ev.creator = ev.creator.name;
-            console.log(123);
-            console.log(ev.country);
           }
         });
 
@@ -60,26 +49,67 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
             $defer.resolve($scope.events);
           }
         });
+      }
 
+      else {
+        if (!jQuery.isEmptyObject($location.search())) {
+          var term = Object.keys($location.search());
+          term = term[0];
 
-        /*angular.forEach($scope.events, function(value, key) {
-          if (value.venue) {
-            if (value.venue.latitude !== undefined) {
-              $scope.markers.push({
-                lat: value.venue.latitude,
-                lng: value.venue.longitude,
-                message: value.name
-              });
+          var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
 
-              $scope.$parent.pos = {
-                lat: value.venue.latitude,
-                lng: value.venue.longitude,
-                zoom: 10
-              };
+        } else {
+          var Event = Restangular.all('events/now');
+        }
+
+        var allEvents = Event.getList().then(function(events) {
+          angular.forEach(events, function(ev, key) {
+            if (ev.venue) {
+
+              if (ev.venue.city) ev.city = ev.venue.city;
+              if (ev.venue.location) ev.location = ev.venue.location;
+              if (ev.venue.country) ev.country = ev.venue.country;
+              if (ev.creator) ev.creator = ev.creator.name;
             }
-          }
-        });*/
-      });
+          });
+
+          $scope.tableParams = new ngTableParams({
+            page: 1, // show first page
+            count: 10 // count per page
+          }, {
+            total: events.length, // length of data
+            getData: function($defer, params) {
+              // use build-in angular filter
+              var orderedData = params.filter() ? $filter('filter')(events, params.filter()) : events;
+              orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
+              $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+
+              console.log($scope.events);
+              params.total(orderedData.length); // set total for recalc pagination
+              $defer.resolve($scope.events);
+            }
+          });
+
+
+          /*angular.forEach($scope.events, function(value, key) {
+            if (value.venue) {
+              if (value.venue.latitude !== undefined) {
+                $scope.markers.push({
+                  lat: value.venue.latitude,
+                  lng: value.venue.longitude,
+                  message: value.name
+                });
+
+                $scope.$parent.pos = {
+                  lat: value.venue.latitude,
+                  lng: value.venue.longitude,
+                  zoom: 10
+                };
+              }
+            }
+          });*/
+        });
+      }
     };
 
     /*$scope.paginate = function() {
