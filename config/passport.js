@@ -1,14 +1,16 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-  //LocalStrategy = require('passport-local').Strategy,
-  //TwitterStrategy = require('passport-twitter').Strategy,
-  FacebookStrategy = require('passport-facebook').Strategy,
-  //GitHubStrategy = require('passport-github').Strategy,
-  //GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-  //LinkedinStrategy = require('passport-linkedin').Strategy,
-  User = mongoose.model('User'),
-  config = require('./config');
+//LocalStrategy = require('passport-local').Strategy,
+//TwitterStrategy = require('passport-twitter').Strategy,
+var FacebookStrategy = require('passport-facebook').Strategy;
+
+//GitHubStrategy = require('passport-github').Strategy,
+//GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
+//LinkedinStrategy = require('passport-linkedin').Strategy,
+var db = require('monk')('localhost/wooeva-dev');
+var Users = db.get('users');
+
+var config = require('./config');
 
 
 module.exports = function(passport) {
@@ -21,7 +23,7 @@ module.exports = function(passport) {
   // Deserialize the user object based on a pre-serialized token
   // which is the user id
   passport.deserializeUser(function(id, done) {
-    User.findOne({
+    Users.findOne({
       _id: id
     }, '-salt -hashed_password', function(err, user) {
       done(err, user);

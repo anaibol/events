@@ -23,6 +23,6 @@ module.exports = function(app) {
   app.del('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.destroy);
   //app.get('/:eventSlug', events.all);
   // Finish with setting up the eventId param
-  app.param('eventId', events.event);
+  //app.param('eventId', events.event);
 
 };

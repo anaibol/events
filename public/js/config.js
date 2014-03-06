@@ -10,10 +10,10 @@ angular.module('mean').config(['$routeProvider',
     when('/events', {
       templateUrl: 'views/events/list.html'
     }).
-    when('/events/create', {
+    when('/create', {
       templateUrl: 'views/events/create.html'
     }).
-    when('/events/:eventId/edit', {
+    when('/:eventId/edit', {
       templateUrl: 'views/events/edit.html'
     }).
     when('/events/:eventId', {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mean.events').controller('EventsController', ['$scope', '$routeParams', '$location', '$filter', 'Global', 'Restangular', 'ngTableParams', '$anchorScroll',
+angular.module('mean.events').controller('EventsCtrl', ['$scope', '$routeParams', '$location', '$filter', 'Global', 'Restangular', 'ngTableParams', '$anchorScroll',
   function($scope, $routeParams, $location, $filter, Global, Restangular, ngTableParams, $anchorScroll) {
     $scope.global = Global;
 
@@ -142,21 +142,6 @@ angular.module('mean.events').controller('EventsController', ['$scope', '$routeP
     $scope.paginate = function(params, page) {
       jQuery('#home').animate({scrollTop: 0}, 'slow');
       params.page(page);
-    };
-
-
-
-    $scope.create = function() {
-      var event = new Event({
-        title: this.title,
-        content: this.content
-      });
-      event.$save(function(response) {
-        $location.path('events/' + response._id);
-      });
-
-      this.title = '';
-      this.content = '';
     };
 
     $scope.remove = function(event) {

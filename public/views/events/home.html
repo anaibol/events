@@ -1,28 +1,28 @@
-<section id="home" class="home" data-ng-controller="EventsController" data-ng-init="find()">
+<section ng-controller="EventsCtrl" ng-init="find()">
   <table ng-table="tableParams" show-filter="true" class="table" template-pagination="custom/pager">
-    <tr class="event" data-ng-repeat="event in $data">
-      <td data-title="'Image'">
+    <tr class="event" ng-repeat="event in $data">
+      <td title="'Image'">
         <img class="image" src="{{event.pic_big}}">
       </td>
-      <td data-title="'Name'" filter="{ 'name': 'text' }">
-        <!--<a data-ng-href="#!/events/{{event._id}}">{{event.name}}</a>--><a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
+      <td title="'Name'" filter="{ 'name': 'text' }">
+        <!--<a ng-href="#!/events/{{event._id}}">{{event.name}}</a>--><a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
       </td>
 
-      <td data-title="'Start date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td>
-      <!--<td data-title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
+      <td title="'Date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td>
+      <!--<td title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
 
-      <td data-title="'Creator'" filter="{ 'creator': 'text' }" sortable="'creator.name'" class="creator">{{event.creator}}</td>
-      <td data-title="'Description'" class="description">
+      <td title="'Creator'" filter="{ 'creator': 'text' }" sortable="'creator.name'" class="creator">{{event.creator}}</td>
+      <td title="'Description'" class="description">
         <pre>{{event.description}}</pre>
       </td>
-      <td data-title="'Location'" filter="{ 'location': 'text' }" sortable="'location'" class="location">{{event.location}}</td>
-      <td data-title="'City'" filter="{ 'city': 'text' }" sortable="'city'" class="city">{{event.city}}</td>
-      <td data-title="'Country'" filter="{ 'country': 'text' }" sortable="'country'" class="country">{{event.country}}</td>
-      <td data-title="'Attending'" sortable="'members.length'" class="members">{{event.members.length}}</td>
+      <td title="'Location'" filter="{ 'location': 'text' }" sortable="'location'" class="location">{{event.location}}</td>
+      <td title="'City'" filter="{ 'city': 'text' }" sortable="'city'" class="city">{{event.city}}</td>
+      <td title="'Country'" filter="{ 'country': 'text' }" sortable="'country'" class="country">{{event.country}}</td>
+      <td title="'Attending'" sortable="'members.length'" class="members">{{event.members.length}}</td>
 
 
 
-      <!--<td data-title="'Privacy'" sortable="'privacy'" class="privacy">{{event.privacy}}</td>-->
+      <!--<td title="'Privacy'" sortable="'privacy'" class="privacy">{{event.privacy}}</td>-->
       <!--<td class="map">
           <leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>
         </td>-->

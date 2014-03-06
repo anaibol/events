@@ -3,108 +3,109 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-  Event = mongoose.model('Event'),
-  _ = require('lodash');
+var _ = require('lodash');
+
+var db = require('monk')('localhost/wooeva-dev');
+var Events = db.get('events');
+
 
 var request = require('request');
 var graph = require('fbgraph');
 
 
 /**
- * Find event by id
+ * Find ev by id
  */
-exports.event = function(req, res, next, id) {
-  Event.load(id, function(err, event) {
+exports.ev = function(req, res, next, id) {
+  Events.findById(id, function(err, ev) {
     if (err) return next(err);
-    if (!event) return next(new Error('Failed to load event ' + id));
-    req.event = event;
+    if (!ev) return next(new Error('Failed to load ev ' + id));
+    req.ev = ev;
     next();
   });
 };
 
 /**
- * Create a event
+ * Create a ev
  */
 exports.create = function(req, res) {
-  var event = new Event(req.body);
-  event.user = req.user;
+  var ev = req.body;
 
-  event.save(function(err) {
+  Events.insert(ev, function(err) {
     if (err) {
       return res.send('users/signup', {
         errors: err.errors,
-        event: event
+        ev: ev
       });
     } else {
-      res.jsonp(event);
+      res.jsonp(ev);
     }
   });
 };
 
 /**
- * Update a event
+ * Update a ev
  */
 exports.update = function(req, res) {
-  var event = req.event;
+  var ev = req.ev;
 
-  event = _.extend(event, req.body);
+  ev = _.extend(ev, req.body);
 
-  event.save(function(err) {
+  Events.insert(ev, function(err) {
     if (err) {
       return res.send('users/signup', {
         errors: err.errors,
-        event: event
+        ev: ev
       });
     } else {
-      res.jsonp(event);
+      res.jsonp(ev);
     }
   });
 };
 
 /**
- * Delete an event
+ * Delete an ev
  */
 exports.destroy = function(req, res) {
-  var event = req.event;
+  var ev = req.ev;
 
-  event.remove(function(err) {
+  ev.remove(function(err) {
     if (err) {
       return res.send('users/signup', {
         errors: err.errors,
-        event: event
+        ev: ev
       });
     } else {
-      res.jsonp(event);
+      res.jsonp(ev);
     }
   });
 };
 
 /**
- * Show an event
+ * Show an ev
  */
 exports.show = function(req, res) {
-  res.jsonp(req.event);
+  res.jsonp(req.ev);
 };
 
 /**
- * List of Events
+ * List of Eventss
  */
 exports.all = function(req, res) {
-  Event.find().sort('-created').exec(function(err, events) {
+  Events.find().sort('-created').exec(function(err, evs) {
     if (err) {
       res.render('error', {
         status: 500
       });
     } else {
-      res.jsonp(events);
+      res.jsonp(evs);
     }
   });
 };
 
 
 /**
- * Find events
+ * Find evs
  */
 exports.find = function(req, res) {
   var pos = req.body.pos;
@@ -112,23 +113,23 @@ exports.find = function(req, res) {
   if (req.user) {
     graph.setAccessToken(req.user.accessToken);
 
-    /*var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM event WHERE eid in(SELECT eid FROM event_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
-        //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM event WHERE eid in(SELECT eid FROM event_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
-        graph.fql(query, function(err, events) {
-            res.json(events.data);
-            console.log(events.data);
+    /*var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+        //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+        graph.fql(query, function(err, evs) {
+            res.json(evs.data);
+            console.log(evs.data);
         });*/
 
 
     var searchOptions = {
       q: pos.city,
-      type: "event"
+      type: "ev"
     };
 
-    graph.search(searchOptions, function(err, events) {
-      res.json(events.data);
+    graph.search(searchOptions, function(err, evs) {
+      res.json(evs.data);
 
-      Event.create(events.data, function(err) {
+      Events.create(evs.data, function(err) {
         if (err) console.log(err) // ...
       });
     });
@@ -142,20 +143,49 @@ exports.find = function(req, res) {
       title: 'Wooeva',
       user: 'null',
       pos: JSON.stringify(pos),
-      events: 'null'
+      evs: 'null'
     });
   }
 };
 
-
 exports.fromNow = function(req, res) {
-  Event.findFromNow().exec(function(err, events) {
+  var date = new Date();
+
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+
+  Events.find({
+    start_time: {
+      $gte: new Date()
+    },
+    sort: {
+      start_time: 1
+    }
+  }, function(err, evs) {
     if (err) {
       res.render('error', {
         status: 500
       });
     } else {
-      res.jsonp(events);
+      res.jsonp(evs);
+    }
+  });
+};
+
+exports.nameLike = function(req, res) {
+  Events.find({
+    name: new RegExp(q.name || term, 'i'),
+    sort: {
+      start_time: 1
+    }
+  }, function(err, evs) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.jsonp(evs);
     }
   });
 };

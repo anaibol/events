@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAKvXHZBBCIUBAKo806HMTC2ZBx5KZC01latoIVyFqWyEl9iHarLPuUvpyXw4MghBBT5zPcW05r0iOzdWwWvkiWZCjPSmBoJx2p0QQB6IAd62zZCMiITDLdZA81fDn2esKHyCjoknNwIs99LikpBSrLPWyZBbaJrXXZCPKVSTIxE9AFi2QCtdBcHTL91lVEImwKJBeAZCCGZCxkgZDZD';
+var accessToken = 'CAAKvXHZBBCIUBAIEMgkzMI9sy5QCMEhm4Mp8aoIMcrKIRwyUquZBcsLno2CLr5Au91gKwttOlYNPRhaXCjf7SoJFtdxrs1SfaK7KTqobLcrHi3oLcblqpXAkC7apEcaFbY0S0tX59iz6LZANivVj9jriHm5VkYzCEwmzgZC5HnldF0UFKfAahIBkIPrByZCPpDNVWJZBndawZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -57,7 +57,7 @@ function search(query) {
           var query = {
             user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id,
             event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
-            event_members: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending'"
+            event_members: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000"
           };
 
           //    console.log(query);
