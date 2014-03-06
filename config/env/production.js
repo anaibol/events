@@ -2,6 +2,7 @@
 
 module.exports = {
   db: "mongodb://localhost/wooeva-dev",
+  dbName: "wooeva-dev",
   app: {
     name: "Wooeva - Production"
   },

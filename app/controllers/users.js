@@ -1,10 +1,6 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
-var db = require('monk')('localhost/wooeva-dev');
-var Users = db.get('users');
+var Users = global.db.get('users');
 
 /**
  * Auth callback
@@ -29,7 +25,7 @@ exports.signin = function(req, res) {
 exports.signup = function(req, res) {
     res.render('users/signup', {
         title: 'Sign up',
-        user: new User()
+        user: {}
     });
 };
 

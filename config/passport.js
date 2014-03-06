@@ -7,17 +7,17 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 //GitHubStrategy = require('passport-github').Strategy,
 //GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
 //LinkedinStrategy = require('passport-linkedin').Strategy,
-var db = require('monk')('localhost/wooeva-dev');
-var Users = db.get('users');
 
 var config = require('./config');
+
+var Users = global.db.get('users');
 
 
 module.exports = function(passport) {
 
   // Serialize the user id to push into the session
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user._id);
   });
 
   // Deserialize the user object based on a pre-serialized token
@@ -98,22 +98,23 @@ module.exports = function(passport) {
       callbackURL: config.facebook.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-      User.findOne({
+      Users.findOne({
         'facebook.id': profile.id
       }, function(err, user) {
         if (err) {
           return done(err);
         }
         if (!user) {
-          user = new User({
+          user = {
             name: profile.displayName,
             email: profile.emails[0].value,
             username: profile.username,
             provider: 'facebook',
             facebook: profile._json,
             accessToken: accessToken
-          });
-          user.save(function(err) {
+          };
+
+          Users.insert(user, function(err) {
             if (err) console.log(err);
             return done(err, user);
           });

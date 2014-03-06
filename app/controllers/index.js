@@ -1,7 +1,6 @@
 'use strict';
 
-var db = require('monk')('localhost/wooeva-dev');
-var Events = db.get('events');
+var Events = global.db.get('events');
 
 exports.fromNow = function(req, res) {
   var date = new Date();
@@ -37,27 +36,27 @@ exports.render = function(req, res) {
   date.setHours(0);
 
   Events.find({
-      start_time: {
-        $gte: date
-      }
-    }, {
-      sort: {
-        start_time: 1
-      }
+    start_time: {
+      $gte: date
+    }
+  }, {
+    sort: {
+      start_time: 1
     },
-    function(err, evs) {
-      if (err) {
-        res.render('error', {
-          status: 500
-        });
-      } else {
-        console.log(evs);
-        res.render('index', {
-          title: 'Wooeva',
-          user: req.user ? JSON.stringify(req.user) : 'null',
-          fbAppId: global.fbAppId,
-          events: evs
-        });
-      }
-    });
+    limit: 100
+  },
+  function(err, events) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.render('index', {
+        title: 'Wooeva',
+        user: req.user ? JSON.stringify(req.user) : 'null',
+        fbAppId: global.fbAppId,
+        events: events
+      });
+    }
+  });
 };

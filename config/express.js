@@ -51,7 +51,7 @@ module.exports = function(app, passport, db) {
     app.use(express.session({
       secret: config.sessionSecret,
       store: new mongoStore({
-        db: 'wooeva-dev'
+        db: config.dbName,
       })
     }));
 

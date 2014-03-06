@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('mean.events').controller('EventsCtrl', ['$scope', '$routeParams', '$location', '$filter', 'Global', 'Restangular', 'ngTableParams', '$anchorScroll',
-  function($scope, $routeParams, $location, $filter, Global, Restangular, ngTableParams, $anchorScroll) {
-    $scope.global = Global;
+var EventsCtrl = function($scope, $routeParams, $location, $filter, Global, Restangular, ngTableParams, $modal) {
+  $scope.global = Global;
 
-    /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
+  /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
       var newResponse;
       if (operation === "getList") {
         // If route is "posts" it looks for response.data.posts
@@ -19,10 +18,50 @@ angular.module('mean.events').controller('EventsCtrl', ['$scope', '$routeParams'
       return newResponse;
     });*/
 
-    $scope.find = function() {
-      if (window.events) {
-        var events = window.events;
+  $scope.find = function() {
+    if (window.events) {
+      var events = window.events;
 
+      angular.forEach(events, function(ev, key) {
+        if (ev.venue) {
+
+          if (ev.venue.city) ev.city = ev.venue.city;
+          if (ev.venue.location) ev.location = ev.venue.location;
+          if (ev.venue.country) ev.country = ev.venue.country;
+          if (ev.creator) ev.creator = ev.creator.name;
+
+          if (!ev.members) ev.members = [];
+          if (ev.members.uid) ev.members = [ev.members];
+        }
+      });
+
+      $scope.tableParams = new ngTableParams({
+        page: 1, // show first page
+        count: 10 // count per page
+      }, {
+        total: events.length, // length of data
+        getData: function($defer, params) {
+          // use build-in angular filter
+          var orderedData = params.filter() ? $filter('filter')(events, params.filter()) : events;
+          orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
+          $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+
+          params.total(orderedData.length); // set total for recalc pagination
+          $defer.resolve($scope.events);
+        }
+      });
+    } else {
+      if (!jQuery.isEmptyObject($location.search())) {
+        var term = Object.keys($location.search());
+        term = term[0];
+
+        var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
+
+      } else {
+        var Event = Restangular.all('events/now');
+      }
+
+      var allEvents = Event.getList().then(function(events) {
         angular.forEach(events, function(ev, key) {
           if (ev.venue) {
 
@@ -30,9 +69,6 @@ angular.module('mean.events').controller('EventsCtrl', ['$scope', '$routeParams'
             if (ev.venue.location) ev.location = ev.venue.location;
             if (ev.venue.country) ev.country = ev.venue.country;
             if (ev.creator) ev.creator = ev.creator.name;
-            
-            if (!ev.members) ev.members = [];
-            if (ev.members.uid) ev.members = [ev.members];
           }
         });
 
@@ -51,48 +87,9 @@ angular.module('mean.events').controller('EventsCtrl', ['$scope', '$routeParams'
             $defer.resolve($scope.events);
           }
         });
-      }
-
-      else {
-        if (!jQuery.isEmptyObject($location.search())) {
-          var term = Object.keys($location.search());
-          term = term[0];
-
-          var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
-
-        } else {
-          var Event = Restangular.all('events/now');
-        }
-
-        var allEvents = Event.getList().then(function(events) {
-          angular.forEach(events, function(ev, key) {
-            if (ev.venue) {
-
-              if (ev.venue.city) ev.city = ev.venue.city;
-              if (ev.venue.location) ev.location = ev.venue.location;
-              if (ev.venue.country) ev.country = ev.venue.country;
-              if (ev.creator) ev.creator = ev.creator.name;
-            }
-          });
-
-          $scope.tableParams = new ngTableParams({
-            page: 1, // show first page
-            count: 10 // count per page
-          }, {
-            total: events.length, // length of data
-            getData: function($defer, params) {
-              // use build-in angular filter
-              var orderedData = params.filter() ? $filter('filter')(events, params.filter()) : events;
-              orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
-              $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-
-              params.total(orderedData.length); // set total for recalc pagination
-              $defer.resolve($scope.events);
-            }
-          });
 
 
-          /*angular.forEach($scope.events, function(value, key) {
+        /*angular.forEach($scope.events, function(value, key) {
             if (value.venue) {
               if (value.venue.latitude !== undefined) {
                 $scope.markers.push({
@@ -109,11 +106,11 @@ angular.module('mean.events').controller('EventsCtrl', ['$scope', '$routeParams'
               }
             }
           });*/
-        });
-      }
-    };
+      });
+    }
+  };
 
-    /*$scope.paginate = function() {
+  /*$scope.paginate = function() {
       var Event = Restangular.all('rest/event?limit=10&skip=' + $scope.pago * 10);
       var allEvents = Event.getList().then(function(events) {
         $scope.events = events;
@@ -138,45 +135,62 @@ angular.module('mean.events').controller('EventsCtrl', ['$scope', '$routeParams'
       });
     }*/
 
-
-    $scope.paginate = function(params, page) {
-      jQuery('#home').animate({scrollTop: 0}, 'slow');
-      params.page(page);
-    };
-
-    $scope.remove = function(event) {
-      if (event) {
-        event.$remove();
-
-        for (var i in $scope.events) {
-          if ($scope.events[i] === event) {
-            $scope.events.splice(i, 1);
-          }
+  $scope.edit = function(ev) {
+    var modalInstance = $modal.open({
+      templateUrl: 'views/events/modalForm.html',
+      controller: 'EventFormCtrl',
+      resolve: {
+        ev: function() {
+          return ev;
         }
-      } else {
-        $scope.event.$remove();
-        $location.path('events');
       }
-    };
+    });
 
-    $scope.update = function() {
-      var event = $scope.event;
-      if (!event.updated) {
-        event.updated = [];
+    modalInstance.result.then(function(selected) {
+      $scope.ev = selected;
+    }, function() {});
+  };
+
+
+  $scope.paginate = function(params, page) {
+    jQuery('.content').animate({
+      scrollTop: 0
+    }, 'slow');
+    params.page(page);
+  };
+
+  $scope.remove = function(event) {
+    if (event) {
+      event.$remove();
+
+      for (var i in $scope.events) {
+        if ($scope.events[i] === event) {
+          $scope.events.splice(i, 1);
+        }
       }
-      event.updated.push(new Date().getTime());
+    } else {
+      $scope.event.$remove();
+      $location.path('events');
+    }
+  };
 
-      event.$update(function() {
-        $location.path('events/' + event._id);
-      });
-    };
+  $scope.update = function() {
+    var event = $scope.event;
+    if (!event.updated) {
+      event.updated = [];
+    }
+    event.updated.push(new Date().getTime());
 
-    $scope.findOne = function() {
-      Restangular.one('rest/event', $routeParams.eventId).get().then(function(event) {
-        $scope.event = event;
-      }, function(response) {
-        console.log("Error with status code", response.status);
-      });
-    };
-  }
-]);
+    event.$update(function() {
+      $location.path('events/' + event._id);
+    });
+  };
+
+  $scope.findOne = function() {
+    Restangular.one('rest/event', $routeParams.eventId).get().then(function(event) {
+      $scope.event = event;
+    }, function(response) {
+      console.log("Error with status code", response.status);
+    });
+  };
+};

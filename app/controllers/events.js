@@ -1,13 +1,8 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
 var _ = require('lodash');
 
-var db = require('monk')('localhost/wooeva-dev');
-var Events = db.get('events');
-
+var Events = global.db.get('events');
 
 var request = require('request');
 var graph = require('fbgraph');
@@ -30,8 +25,10 @@ exports.ev = function(req, res, next, id) {
  */
 exports.create = function(req, res) {
   var ev = req.body;
+  console.log(req.body);
 
   Events.insert(ev, function(err) {
+    console.log(err);
     if (err) {
       return res.send('users/signup', {
         errors: err.errors,
@@ -51,7 +48,7 @@ exports.update = function(req, res) {
 
   ev = _.extend(ev, req.body);
 
-  Events.insert(ev, function(err) {
+  Events.updateById(ev._id, ev, function(err) {
     if (err) {
       return res.send('users/signup', {
         errors: err.errors,
@@ -157,7 +154,7 @@ exports.fromNow = function(req, res) {
 
   Events.find({
     start_time: {
-      $gte: new Date()
+      $gte: date
     },
     sort: {
       start_time: 1

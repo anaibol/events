@@ -19,15 +19,15 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 // Initializing system variables 
 var config = require('./config/config');
 
+var app = express();
+
+global.db = require('monk')(config.db);
+
 // Bootstrap passport config
 require('./config/passport')(passport);
 
-var app = express();
-
-var db = require('monk')('localhost/wooeva-dev');
-
 // Express settings
-require('./config/express')(app, passport, db);
+require('./config/express')(app, passport, config.db);
 
 // Bootstrap routes
 var routes_path = __dirname + '/app/routes';
@@ -37,7 +37,7 @@ var walk = function(path) {
         var stat = fs.statSync(newPath);
         if (stat.isFile()) {
             if (/(.*)\.(js$|coffee$)/.test(file)) {
-                require(newPath)(app, passport);
+                require(newPath)(app, passport, db);
             }
         // We skip the app/routes/middlewares directory as it is meant to be
         // used and shared by routes as further middlewares and is not a 
