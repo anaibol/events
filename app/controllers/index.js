@@ -37,24 +37,27 @@ exports.render = function(req, res) {
   date.setHours(0);
 
   Events.find({
-    start_time: {
-      $gte: new Date()
+      start_time: {
+        $gte: date
+      }
+    }, {
+      sort: {
+        start_time: 1
+      }
     },
-    sort: {
-      start_time: 1
-    }
-  }, function(err, evs) {
-    if (err) {
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.render('index', {
-        title: 'Wooeva',
-        user: req.user ? JSON.stringify(req.user) : 'null',
-        fbAppId: global.fbAppId,
-        events: evs
-      });
-    }
-  });
+    function(err, evs) {
+      if (err) {
+        res.render('error', {
+          status: 500
+        });
+      } else {
+        console.log(evs);
+        res.render('index', {
+          title: 'Wooeva',
+          user: req.user ? JSON.stringify(req.user) : 'null',
+          fbAppId: global.fbAppId,
+          events: evs
+        });
+      }
+    });
 };
