@@ -1,16 +1,8 @@
-var DatepickerCtrl = function ($scope) {
-  $scope.today = function() {
-    $scope.dt = new Date();
-  };
-  $scope.today();
-
-  $scope.showWeeks = true;
-  $scope.toggleWeeks = function () {
-    $scope.showWeeks = ! $scope.showWeeks;
-  };
+var DatepickerCtrl = function ($scope, Global) {
+  $scope.global = Global;
 
   $scope.clear = function () {
-    $scope.dt = null;
+    $scope.date = null;
   };
 
   // Disable weekend selection
@@ -18,12 +10,9 @@ var DatepickerCtrl = function ($scope) {
     return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
   };
 
-  $scope.toggleMin = function() {
-    $scope.minDate = ( $scope.minDate ) ? null : new Date();
-  };
-  $scope.toggleMin();
+  $scope.open = function(params) {
+    $scope.params = params;
 
-  $scope.open = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
@@ -32,9 +21,20 @@ var DatepickerCtrl = function ($scope) {
 
   $scope.dateOptions = {
     'year-format': "'yy'",
-    'starting-day': 1
+    'starting-day': 1,
+    'show-weeks': false,
+    'show-button-bar': false,
+    'day-title-format': 'MMMM',
+    'month-title-format': ''
   };
 
-  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
-  $scope.format = $scope.formats[0];
+  $scope.formats = ['dd-MMMM-yyyy', 'dd - MMMM', 'shortDate'];
+  $scope.format = 'd';
+
+  $scope.$watch('date', function() {
+    if ($scope.date) {
+      console.log(123);
+      $scope.global.events = [$scope.global.events[0]];
+    }
+  });
 };

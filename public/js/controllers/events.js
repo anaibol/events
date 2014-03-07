@@ -1,6 +1,6 @@
 'use strict';
 
-var EventsCtrl = function($scope, $routeParams, $location, $filter, Global, Restangular, ngTableParams, $modal) {
+var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular, ngTableParams, $modal, Global) {
   $scope.global = Global;
 
   /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
@@ -30,6 +30,17 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Global, Rest
           if (ev.venue.country) ev.country = ev.venue.country;
           if (ev.creator) ev.creator = ev.creator.name;
 
+          if (ev.start_time) {
+            console.log(ev.start_time);
+            var date = new Date(ev.start_time);
+            var m_names = new Array("January", "February", "March",
+            "April", "May", "June", "July", "August", "September",
+            "October", "November", "December"); 
+
+            //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
+             ev.date = date.getDate();
+          }
+
           if (!ev.members) ev.members = [];
           if (ev.members.uid) ev.members = [ev.members];
         }
@@ -48,8 +59,15 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Global, Rest
 
           params.total(orderedData.length); // set total for recalc pagination
           $defer.resolve($scope.events);
+          $scope.global.events = $scope.events;
         }
       });
+
+      $scope.editId = -1;
+
+      $scope.setEditId =  function(pid) {
+          $scope.editId = pid;
+      }      
     } else {
       if (!jQuery.isEmptyObject($location.search())) {
         var term = Object.keys($location.search());

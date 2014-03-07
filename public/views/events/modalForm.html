@@ -14,13 +14,13 @@
         <label for="title" class="col-md-4 control-label">Date</label>
         <div class="col-md-10">
           <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="ev.start_time" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="ev.start_time" is-open="opened" min="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
             <span class="input-group-btn">
               <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </p>
         </div>
-      </div>    
+      </div>
       <div class="form-group">
         <label for="content" class="col-md-4 control-label">Description</label>
         <div class="col-md-10">

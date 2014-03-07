@@ -7,8 +7,8 @@ module.exports = {
     name: "Wooeva - Production"
   },
   facebook: {
-    clientID: "755761764436101",
-    clientSecret: "7c66eae6a39cb45f1845220c4283e2d3",
+    clientID: "439472799532734",
+    clientSecret: "6e940b23fdbf539939dffbe479678623",
     callbackURL: "http://wooeva.com/auth/facebook/callback"
   }
   /*,
