@@ -1,7 +1,6 @@
 <section ng-controller="EventsCtrl" ng-init="find()">
   <table ng-table="tableParams" show-filter="true" class="table" template-pagination="custom/pager" pagination-top pagination-bottom>
-    <tbody ng-repeat="event in $events">
-    <tr class="event">
+    <tr class="event" ng-repeat="event in $data">
       <td title="'Image'" ng-click="edit(event)">
         <img class="image" src="{{event.pic_big}}">
       </td>
@@ -9,7 +8,7 @@
         <!--<a ng-href="#!/events/{{event._id}}">{{event.name}}</a>--><a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
       </td>
 
-      <td title="'Date'" sortable="'date'" filter="{ 'date': 'date'}" class="time">{{event.date}}</td>
+      <td title="'Date'" sortable="'date'" class="time">{{event.date}}</td> <!-- filter="{ 'date': 'date'}"-->
       <!--<td title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
 
       <td title="'Creator'" filter="{ 'creator': 'text' }" sortable="'creator.name'" class="creator">{{event.creator}}</td>
@@ -19,10 +18,10 @@
       <td title="'Location'" filter="{ 'location': 'text' }" sortable="'location'" class="location">{{event.location}}</td>
       <td title="'City'" filter="{ 'city': 'text' }" sortable="'city'" class="city">{{event.city}}</td>
       <td title="'Country'" filter="{ 'country': 'text' }" sortable="'country'" class="country">{{event.country}}</td>
-      <td title="'Attending'" sortable="'members.length'" class="members">{{event.members.length}}
-        <input type=button id="editRowBtn{{p.id}}" value="edit"
-                                      ng-click="setEditId(p.id)">
-      </td>
+      <td title="'Attending'" sortable="'attending.length'" class="attending">{{event.attending.length}}</td>
+      <td title="'Unsure'" sortable="'unsure.length'" class="unsure">{{event.unsure.length}}</td>
+      <td title="'Query'" sortable="'query'" class="query">{{event.query}}</td>
+      <td title="'Price'" sortable="'price'" class="price">{{event.price}}</td>
 
 
 
@@ -31,28 +30,6 @@
           <leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>
         </td>-->
     </tr>
-    <tr ng-show="editId===p.id" ng-if="editId===p.id">
-        <td colspan="7">
-          <table class="noborder">
-              <tr>
-                  <td rowspan="2">ID: {{p.id}}<input type="hidden" name="id" value="{{p.id}}"></td>
-                  <td>Image:</td>
-                  <td><input type="text" name="fn" class="w100" value="{{p.fn}}"></td>
-                  <td>Name: </td>
-                  <td>Date:</td>
-                  <td><input type="text" name="em" class="w180" value="{{p.em}}"></td>
-                  <td>Creator:</td>
-                  <td><input type="text" name="ln" class="w100" value="{{p.ln}}"></td>
-                  <td><input type="text" name="dc" class="w180" value="{{p.dc}}"></td>
-                  <td>Description: </td>
-                  <td><input type="text" name="ph" class="w120" value="{{p.ph}}"></td>
-                  <td><input type="button" value=" save " onclick="alert('Save :)')"></td>                  
-                  <td><input type="button" value=" cancel" ng-click="setEditId(-1)"></td>
-              </tr>
-          </table>
-        </td>
-    </tr>    
-    </tbody>   
   </table>
   <script type="text/ng-template" id="custom/pager">
       <ul class="pager ng-cloak">
@@ -75,13 +52,19 @@
       </ul>
   </script>
   <script type="text/ng-template" id="ng-table/filters/date.html">
+     <div id="date" class="input-append" datetimez name="filter-date" ng-model="params.filter()[name]">
+    
+    <!--
+    <input type="date" ng-model="params.filter()[name]" />
+
     <div class="form-group" ng-controller="DatepickerCtrl">
       <p class="input-group">
-      <input type="text" class="form-control" name="filter-date" ng-model="date" datepicker-popup="{{format}}" min="minDate" datepicker-options="dateOptions" />
+      <input type="text" class="form-control" name="filter-date" ng-model="params.filter()[name]" datepicker-popup="{{format}}" min="minDate" datepicker-options="dateOptions" />
       <span class="input-group-btn">
-        <button class="btn btn-default" ng-click="open(params)"><i class="glyphicon glyphicon-calendar"></i></button>
+        <button class="btn btn-default" ng-click="open(params.filter()[name])"><i class="glyphicon glyphicon-calendar"></i></button>
       </span>
       </p>
     </div>
+  -->
   </script>  
 </section>

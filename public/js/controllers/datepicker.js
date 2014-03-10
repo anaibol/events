@@ -1,6 +1,4 @@
-var DatepickerCtrl = function ($scope, Global) {
-  $scope.global = Global;
-
+var DatepickerCtrl = function ($scope) {
   $scope.clear = function () {
     $scope.date = null;
   };
@@ -10,8 +8,8 @@ var DatepickerCtrl = function ($scope, Global) {
     return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
   };
 
-  $scope.open = function(params) {
-    $scope.params = params;
+  $scope.open = function(dateScope) {
+    $scope.dateScope = dateScope;
 
     $event.preventDefault();
     $event.stopPropagation();
@@ -28,13 +26,5 @@ var DatepickerCtrl = function ($scope, Global) {
     'month-title-format': ''
   };
 
-  $scope.formats = ['dd-MMMM-yyyy', 'dd - MMMM', 'shortDate'];
   $scope.format = 'd';
-
-  $scope.$watch('date', function() {
-    if ($scope.date) {
-      console.log(123);
-      $scope.global.events = [$scope.global.events[0]];
-    }
-  });
 };

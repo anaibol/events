@@ -1,8 +1,27 @@
-'use strict';
 
-var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular, ngTableParams, $modal, Global) {
-  $scope.global = Global;
+app.directive('datetimez', function() {
+    return {
+        restrict: 'A',
+        require : 'ngModel',
+        link: function(scope, element, attrs, ngModelCtrl) {
+          element.datetimepicker({
+            dateFormat:'dd/MM/yyyy hh:mm:ss',
+            language: 'pt-BR'
+          }).on('changeDate', function(e) {
 
+            var outputDate = new Date(e.date);
+
+           var n = outputDate.getTime();
+
+
+           ngModelCtrl.$setViewValue(n);
+            scope.$apply();
+          });
+        }
+    };
+});
+
+var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular, ngTableParams, $modal) {
   /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
       var newResponse;
       if (operation === "getList") {
@@ -38,7 +57,8 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
             "October", "November", "December"); 
 
             //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
-             ev.date = date.getDate();
+
+             ev.date = date.toUTCString();
           }
 
           if (!ev.members) ev.members = [];
@@ -59,7 +79,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
 
           params.total(orderedData.length); // set total for recalc pagination
           $defer.resolve($scope.events);
-          $scope.global.events = $scope.events;
         }
       });
 
