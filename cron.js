@@ -83,7 +83,7 @@ function search(term) {
                     name: res.data[2].fql_result_set[0].name
                   };
                 }
-                
+
                 eve.start_time = new Date(Date.parse(eve.start_time));
                 eve.end_time = new Date(Date.parse(eve.end_time));
 
@@ -95,8 +95,12 @@ function search(term) {
                 eve.price = getPrice(eve);
 
                 Events.insert(eve, function(err, doc) {
-                  if (err) console.log(err);
-                  console.log(doc.name);
+                  if (err) {
+                    console.log(err);
+                  }
+                  else {
+                    console.log(doc.name);
+                  }
                 });
               }
             }
