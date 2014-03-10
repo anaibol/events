@@ -77,11 +77,13 @@ function search(term) {
 
                 // console.log(eve.unsure);
 
-                eve.creator = {
-                  id: res.data[2].fql_result_set[0].id,
-                  name: res.data[2].fql_result_set[0].name
-                };
-
+                if (res.data[2].fql_result_set[0]) {
+                  eve.creator = {
+                    id: res.data[2].fql_result_set[0].id,
+                    name: res.data[2].fql_result_set[0].name
+                  };
+                }
+                
                 eve.start_time = new Date(Date.parse(eve.start_time));
                 eve.end_time = new Date(Date.parse(eve.end_time));
 
@@ -243,6 +245,7 @@ function searches() {
   search('kizomba');
   search('porto');
   search('cubaine');
+  search('cubana');
   search('semba');
   search('samba');
   search('merengue');
