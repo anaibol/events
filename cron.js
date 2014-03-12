@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAKvXHZBBCIUBAE7zzoXKHRMhT6KZC7GzdcTbVtffjyAswthi4iK60rp2yPzgAqaqEZBNJcbJBfZBmRN9Udfeh1NWKtzZAjvHGbScKdLTP5nxK5i9QzJnvmrB8WlHbpMenmjRYZC93XfZB3rZCp8EW9XxROsA9nQ0KC6rz7jKtOTLRXdZA8es5cDPWIrvJh7mIDxDIx7IF0jlgAZDZD';
+var accessToken = 'CAAKvXHZBBCIUBAMv8JtTjsqZCRUT5r71urMTmSBWhvADcMo95JQElv4qGLEtOQuM5bhlBJL2xL0zUt26o80kCmXQHSwlYXeppVwzxp80RxQDOPQsImxMJP4xqeakpsWXHisNELcZAoscG2xkc7zDOMowQUC2y2Mg5pgRn5ofEog3KQPWraTFDgSLA0KSMvv9m4Mt2qJTQZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -155,7 +155,13 @@ function getPrice(ev) {
   if (match) {
     var numbers = match.join().removeAll("$").removeAll("£").removeAll("€").split(',');
     var min = numbers.min();
-    return match[numbers.indexOf(min.toString())];
+
+    var price = {
+      full: match[numbers.indexOf(min.toString())],
+      num: min
+    }
+
+    return price;
   }
 }
 
@@ -243,7 +249,7 @@ console.log(date.toString());
 // search('samba');
 
 function searches() {
-  search('paris');
+  //search('paris');
   search('salsa');
   search('bachata');
   search('kizomba');

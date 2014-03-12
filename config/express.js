@@ -9,6 +9,7 @@ var express = require('express'),
   helpers = require('view-helpers'),
   config = require('./config');
 
+
 module.exports = function(app, passport, db) {
   app.set('showStackError', true);
 
@@ -95,5 +96,7 @@ module.exports = function(app, passport, db) {
         error: 'Not found'
       });
     });
+
+    app.use(require('prerender-node'));
   });
 };

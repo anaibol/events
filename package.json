@@ -58,7 +58,8 @@
     "request": "~2.33.0",
     "fbgraph": "~0.2.9",
     "monk": "~0.7.1",
-    "cron": "~1.0.3"
+    "cron": "~1.0.3",
+    "prerender-node": "^0.1.18"
   },
   "devDependencies": {
     "supertest": "0.8.2",

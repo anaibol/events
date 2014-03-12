@@ -4,27 +4,24 @@
       <td title="'Image'" ng-click="edit(event)">
         <img class="image" src="{{event.pic_big}}">
       </td>
-      <td title="'Name'" filter="{ 'name': 'text' }">
+      <td title="'Name'" filter="{'name': 'text' }">
         <!--<a ng-href="#!/events/{{event._id}}">{{event.name}}</a>--><a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
       </td>
 
-      <td title="'Date'" sortable="'date'" class="time">{{event.date}}</td> <!-- filter="{ 'date': 'date'}"-->
+      <td title="'Date'" sortable="'date'" class="time">{{event.date}}</td> <!-- filter="{'date': 'date'}"-->
       <!--<td title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
 
-      <td title="'Creator'" filter="{ 'creator': 'text' }" sortable="'creator.name'" class="creator">{{event.creator}}</td>
+      <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{event.creator}}</td>
       <td title="'Description'" class="description">
         <pre>{{event.description}}</pre>
       </td>
-      <td title="'Location'" filter="{ 'location': 'text' }" sortable="'location'" class="location">{{event.location}}</td>
-      <td title="'City'" filter="{ 'city': 'text' }" sortable="'city'" class="city">{{event.city}}</td>
-      <td title="'Country'" filter="{ 'country': 'text' }" sortable="'country'" class="country">{{event.country}}</td>
+      <td title="'Location'" filter="{'location': 'text'}" sortable="'location'" class="location">{{event.location}}</td>
+      <td title="'City'" filter="{'city': 'text'}" sortable="'city'" class="city">{{event.city}}</td>
+      <td title="'Country'" filter="{'country': 'text'}" sortable="'country'" class="country">{{event.country}}</td>
       <td title="'Attending'" sortable="'attending.length'" class="attending">{{event.attending.length}}</td>
       <td title="'Unsure'" sortable="'unsure.length'" class="unsure">{{event.unsure.length}}</td>
-      <td title="'Query'" sortable="'query'" class="query">{{event.query}}</td>
-      <td title="'Price'" sortable="'price'" class="price">{{event.price}}</td>
-
-
-
+      <td title="'Style'" filter="{'query': 'select'}" filter-data="styles(column)" sortable="'query'" class="query">{{event.query}}</td>
+      <td title="'Price'" sortable="'price.num'" class="price">{{event.price.full}}</td>
       <!--<td title="'Privacy'" sortable="'privacy'" class="privacy">{{event.privacy}}</td>-->
       <!--<td class="map">
           <leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>

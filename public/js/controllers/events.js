@@ -1,27 +1,4 @@
-
-app.directive('datetimez', function() {
-    return {
-        restrict: 'A',
-        require : 'ngModel',
-        link: function(scope, element, attrs, ngModelCtrl) {
-          element.datetimepicker({
-            dateFormat:'dd/MM/yyyy hh:mm:ss',
-            language: 'pt-BR'
-          }).on('changeDate', function(e) {
-
-            var outputDate = new Date(e.date);
-
-           var n = outputDate.getTime();
-
-
-           ngModelCtrl.$setViewValue(n);
-            scope.$apply();
-          });
-        }
-    };
-});
-
-var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular, ngTableParams, $modal) {
+var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular, ngTableParams, $modal, $q) {
   /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
       var newResponse;
       if (operation === "getList") {
@@ -41,20 +18,37 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
     if (window.events) {
       var events = window.events;
 
+        var styles = [];
+
+        $scope.styles = function(column) {
+              var def = $q.defer(),
+                arr = [],
+                styles = [];
+            angular.forEach(events, function(ev){
+              if (inArray(ev.query, arr) === -1) {
+                arr.push(ev.query);
+                styles.push({
+                    'id': ev.query,
+                    'title': ev.query
+                });
+              }
+            });
+            def.resolve(styles);
+            return def;
+        };
+
       angular.forEach(events, function(ev, key) {
         if (ev.venue) {
-
           if (ev.venue.city) ev.city = ev.venue.city;
           if (ev.venue.location) ev.location = ev.venue.location;
           if (ev.venue.country) ev.country = ev.venue.country;
           if (ev.creator) ev.creator = ev.creator.name;
 
           if (ev.start_time) {
-            console.log(ev.start_time);
             var date = new Date(ev.start_time);
             var m_names = new Array("January", "February", "March",
             "April", "May", "June", "July", "August", "September",
-            "October", "November", "December"); 
+            "October", "November", "December");
 
             //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
 
@@ -101,7 +95,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       var allEvents = Event.getList().then(function(events) {
         angular.forEach(events, function(ev, key) {
           if (ev.venue) {
-
             if (ev.venue.city) ev.city = ev.venue.city;
             if (ev.venue.location) ev.location = ev.venue.location;
             if (ev.venue.country) ev.country = ev.venue.country;
@@ -146,6 +139,18 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       });
     }
   };
+
+  var inArray = Array.prototype.indexOf ?
+          function (val, arr) {
+              return arr.indexOf(val);
+          } :
+          function (val, arr) {
+              var i = arr.length;
+              while (i--) {
+                  if (arr[i] === val) return i;
+              }
+              return -1;
+          };
 
   /*$scope.paginate = function() {
       var Event = Restangular.all('rest/event?limit=10&skip=' + $scope.pago * 10);

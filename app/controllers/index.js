@@ -42,8 +42,7 @@ exports.render = function(req, res) {
   }, {
     sort: {
       start_time: 1
-    },
-    limit: 100
+    }
   },
   function(err, events) {
     if (err) {
