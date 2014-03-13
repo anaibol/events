@@ -1,7 +1,7 @@
 <section ng-controller="EventsCtrl" ng-init="find()">
   <table ng-table="tableParams" show-filter="true" class="table" template-pagination="custom/pager" pagination-top pagination-bottom>
-    <tr class="event" ng-repeat="event in $data">
-      <td title="'Image'" ng-click="edit(event)">
+    <tr class="event" ng-repeat="event in $data" ng-click="edit(event)">
+      <td title="'Image'">
         <img class="image" src="{{event.pic_big}}">
       </td>
       <td title="'Name'" filter="{'name': 'text' }">

@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAKvXHZBBCIUBAMv8JtTjsqZCRUT5r71urMTmSBWhvADcMo95JQElv4qGLEtOQuM5bhlBJL2xL0zUt26o80kCmXQHSwlYXeppVwzxp80RxQDOPQsImxMJP4xqeakpsWXHisNELcZAoscG2xkc7zDOMowQUC2y2Mg5pgRn5ofEog3KQPWraTFDgSLA0KSMvv9m4Mt2qJTQZDZD';
+var accessToken = 'CAAKvXHZBBCIUBANjfffq29Yl7nNJ7yecGa0qnY3xUXZALD9jqpqok3x91MJ5fOT5VHu0daDT3DetdsLQs2VnQ77Q2vAPZCSE9PEnoGay2hHCfzCguw5B18txDaxRUeHMBecEpRelW5Q2jgG6GZAOhEBzrtheSj8goltIIZC1gcaZBm3UKJtN15ypTX9fTbMQv0PktarbfrVwZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -94,14 +94,24 @@ function search(term) {
                 //getTags(eve);
                 eve.price = getPrice(eve);
 
-                Events.insert(eve, function(err, doc) {
-                  if (err) {
-                    console.log(err);
+                if (eve.venue) {
+                  if (eve.venue.country === "Portugal" || eve.venue.country === "Brazil") {
+                    if (term === 'porto') {
+                      eve = null;
+                    }
                   }
-                  else {
-                    console.log(doc.name);
-                  }
-                });
+                }
+
+                if (eve) {
+                  Events.insert(eve, function(err, doc) {
+                    if (err) {
+                      console.log(err);
+                    }
+                    else {
+                      console.log(doc.name);
+                    }
+                  });
+                }
               }
             }
           });
