@@ -1,5 +1,6 @@
 'use strict';
 
+var request = require('request');
 var Events = global.db.get('events');
 
 exports.fromNow = function(req, res) {
@@ -29,33 +30,40 @@ exports.fromNow = function(req, res) {
 
 
 exports.render = function(req, res) {
-  var date = new Date();
+  //request('http://freegeoip.net/json/82.142.63.255', function(error, response, body) {
+  request('http://freegeoip.net/json/' + req.connection.remoteAddress, function(error, response, body) {
+    var pos = JSON.parse(body);
 
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
+    var date = new Date();
 
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }, {
-    sort: {
-      start_time: 1
-    }
-  },
-  function(err, events) {
-    if (err) {
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.render('index', {
-        title: 'Wooeva',
-        user: req.user ? JSON.stringify(req.user) : 'null',
-        fbAppId: global.fbAppId,
-        events: events
-      });
-    }
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+
+    Events.find({
+      start_time: {
+        $gte: date
+      },
+      "venue.country": pos.country_name
+    }, {
+      sort: {
+        start_time: 1
+      },
+    },
+    function(err, events) {
+      if (err) {
+        res.render('error', {
+          status: 500
+        });
+      } else {
+        res.render('index', {
+          title: 'Wooeva',
+          user: req.user ? JSON.stringify(req.user) : 'null',
+          fbAppId: global.fbAppId,
+          events: events,
+          pos: pos
+        });
+      }
+    });
   });
 };
