@@ -11,7 +11,7 @@
       <td title="'Date'" sortable="'date'" class="time">{{event.date}}</td> <!-- filter="{'date': 'date'}"-->
       <!--<td title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
 
-      <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{event.creator}}</td>
+      <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{event.creator.name}}</td>
       <td title="'Description'" class="description">
         <pre>{{event.description}}</pre>
       </td>

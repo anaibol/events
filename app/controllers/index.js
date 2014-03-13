@@ -30,8 +30,8 @@ exports.fromNow = function(req, res) {
 
 
 exports.render = function(req, res) {
-  //request('http://freegeoip.net/json/82.142.63.255', function(error, response, body) {
-  request('http://freegeoip.net/json/' + req.connection.remoteAddress, function(error, response, body) {
+  request('http://freegeoip.net/json/82.142.63.255', function(error, response, body) {
+  //request('http://freegeoip.net/json/' + req.connection.remoteAddress, function(error, response, body) {
     var pos = JSON.parse(body);
 
     var date = new Date();

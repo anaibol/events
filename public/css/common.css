@@ -2,6 +2,10 @@
   padding-left:20px;
   margin-left:0
 }
+navbar.container {
+  background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
+  background-color: #FAFAFA;
+}
 footer {
   position:fixed;
   left:0px;
@@ -68,10 +72,9 @@ pre {
   border: none;
   height: 211px;
   overflow-y: auto;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
-
 /*
 .home thead {
   position: fixed;
@@ -124,3 +127,13 @@ pre {
   overflow:hidden;
   word-break:break-all;
 }*/
+ form.event .modal-body {
+  padding: 0 35px;
+}
+.modal-dialog {
+  width: 50%;
+}
+.dropdown.login {
+  width: 250px;
+  padding: 17px;
+}

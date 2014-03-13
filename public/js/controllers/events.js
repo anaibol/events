@@ -42,7 +42,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
           if (ev.venue.city) ev.city = ev.venue.city;
           if (ev.venue.location) ev.location = ev.venue.location;
           if (ev.venue.country) ev.country = ev.venue.country;
-          if (ev.creator) ev.creator = ev.creator.name;
 
           if (ev.start_time) {
             var date = new Date(ev.start_time);
@@ -179,7 +178,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
 
   $scope.edit = function(ev) {
     var modalInstance = $modal.open({
-      templateUrl: 'views/events/modalForm.html',
+      templateUrl: 'views/events/form.html',
       controller: 'EventFormCtrl',
       resolve: {
         ev: function() {
