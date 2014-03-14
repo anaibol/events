@@ -8,7 +8,8 @@
         <!--<a ng-href="#!/events/{{event._id}}">{{event.name}}</a>--><a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
       </td>
 
-      <td title="'Date'" sortable="'date'" class="time">{{event.date}}</td> <!-- filter="{'date': 'date'}"-->
+      <td title="'Date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td>
+      <!-- filter="{'start_time': 'date'}"-->
       <!--<td title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
 
       <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{event.creator.name}}</td>
@@ -63,5 +64,5 @@
       </p>
     </div>
   -->
-  </script>  
+  </script>
 </section>

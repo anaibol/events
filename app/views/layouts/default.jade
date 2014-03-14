@@ -2,19 +2,15 @@ doctype html
 html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.facebook.com/2008/fbml', itemscope='itemscope', itemtype='http://schema.org/Product')
   include ../includes/head
   body(ng-controller='mapCtrl')
-    nav.navbar.navbar-default.navbar-fixed-top(role="navigation", ng-controller='HeaderCtrl')
+    nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
       .container-fluid
-        .navbar-header
-          a.btn.btn-navbar.btn-default(ng-click='isCollapsed = !isCollapsed')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar              
+        .navbar-header        
           a.navbar-brand(href='#!') Wooeva
         .navbar-collapse.collapse(collapse='isCollapsed')
           ul.nav.navbar-nav
             li.active
               a(href='#')
-                i.icon-home.icon-white
+                i.glyphicon.glyphicon-home.icon-white
                 | Home
           ul.nav.navbar-nav.navbar-right
             li#menuLogin.dropdown

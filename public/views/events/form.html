@@ -9,21 +9,18 @@
     </div>
     <div class="form-group">
       <label>Date</label>
-      Selected Date: {{ ev.date | date:'yyyy-MM-dd a' }}
-
-      <datetimepicker data-ng-model="ev.embeddedDate" data-datetimepicker-config="{ startView:'day', minView:'day' }" />s
       <div class="input-group">
         <div class="dropdown">
-          <a class="dropdown-toggle my-toggle-select" role="button" data-toggle="dropdown" data-target="#" href="">
+          <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
             <div class="input-append input-group">
-              <input type="text" class="form-control input-large" ng-model="ev.start_time2" data-on-set-time="onTimeSet">
+              <input type="text" class="form-control input-large" ng-model="ev.date">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
               </span>
             </div>
           </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-            <datetimepicker data-ng-model="data.date" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select' }"></datetimepicker>
+            <datetimepicker ng-model="ev.date" data-datetimepicker-config="{ dropdownSelector: '#dropdown' }" />
           </ul>
         </div>
       </div>
@@ -41,8 +38,44 @@
       <input type="text" class="form-control" ng-model="ev.creator.name" id="creator_name" placeholder="Creator name">
     </div>
     <div class="form-group">
+      <label>Country</label>
+      <input type="text" class="form-control" ng-model="ev.venue.country">
+    </div>
+    <div class="form-group">
+      <label>City</label>
+      <input type="text" class="form-control" ng-model="ev.venue.city">
+    </div>
+    <div class="form-group">
+      <label>State</label>
+      <input type="text" class="form-control" ng-model="ev.venue.state">
+    </div>
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" class="form-control" ng-model="ev.venue.location">
+    </div>
+    <div class="form-group">
+      <label>Street</label>
+      <input type="text" class="form-control" ng-model="ev.venue.street">
+    </div>
+    <div class="form-group">
+      <label>Latitude</label>
+      <input type="text" class="form-control" ng-model="ev.venue.latitude">
+      <label>Longitude</label>
+      <input type="text" class="form-control" ng-model="ev.venue.longitude">
+    </div>
+    <div class="form-group">
       <label>Picture</label>
       <input type="text" class="form-control" ng-model="ev.pic" id="pig" placeholder="Picture">
+      <input type="file" ng-model="ev.pic" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.7" />
+
+      Original <img ng-show="image" ng-src="{{image.dataURL}}" type="{{image.file.type}}" />
+      Resized <img ng-show="image" ng-src="{{image.resized.dataURL}}" type="{{image.file.type}}" />
+      
+      <img ng-show="!image" ng-src="{{ev.pic}}" />
+    </div>
+    <div class="form-group">
+      <label>Price</label>
+      <input type="text" class="form-control" ng-model="ev.price.full" id="pig" placeholder="Price">
     </div>
     <!--<div ezfb-xfbml="model.reloadWidget['Commens']">
         <div class="fb-comments center-widget" ng-style="{width: widgetWidth + 'px'}" data-href="{{pageUrl}}" data-width="{{widgetWidth}}">
