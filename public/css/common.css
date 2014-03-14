@@ -70,7 +70,8 @@ html, body {
 pre {
   background: none;
   border: none;
-  height: 100%;
+  /*height: 100%;*/
+  height: 211px;  
   overflow-y: auto;
   font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
