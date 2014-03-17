@@ -12,5 +12,9 @@ angular.element(document).ready(function() {
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-48693864-1', 'wooeva.com');
-      ga('send', 'pageview');    
+      ga('send', 'pageview');
+
+    $('.dropdown-menu input, .dropdown-menu label').click(function(e) {
+        e.stopPropagation();
+    });
 });

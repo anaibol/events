@@ -9,22 +9,26 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
         .navbar-collapse.collapse(collapse='isCollapsed')
           ul.nav.navbar-nav
             li.active
-              a(href='#')
-                i.glyphicon.glyphicon-home.icon-white
-                | Home
-          ul.nav.navbar-nav.navbar-right
+              a(href='#!')
+                i.glyphicon.glyphicon-home.icon-white Home
+            li
+              a(ng-click='newEvent()')
+                i.glyphicon.glyphicon-plus.icon-white New event
+                
+          ul.nav.navbar-nav.navbar-right.navbar-default(ng-show='!global.authenticated')
             li#menuLogin.dropdown
               a#navLogin.dropdown-toggle(href='#', data-toggle='dropdown') Login
               .dropdown-menu
-                form#formLogin.form
-                  input#username.form-control(name='username', placeholder='Username', type='text')
-                  input#password.form-control(name='password', placeholder='Password', type='password')
-                  br
-                  button#btnLogin.btn.btn-default(type='button') Login
+                a.btn.btn-info(href="/auth/facebook") Login with Facebook
+                //-br
+                //-form.form
+                //-input.form-control(name='username', placeholder='Username', type='text')
+                //-input.form-control(name='password', placeholder='Password', type='password')
+                //-br
+                //-button.btn.btn-default(type='button') Login
           ul.nav.pull-right.navbar-nav.navbar-default(ng-show='global.authenticated')
             li.dropdown
-              a.dropdown-toggle(href='#', toggle='dropdown')
-                | {{global.user.name}}
+              a.dropdown-toggle(href='#', toggle='dropdown') {{global.user.name}}
                 b.caret
               ul.dropdown-menu
                 li

@@ -84,6 +84,20 @@ td.name {
   height: 211px;
 }
 
+.pac-container {
+    background-color: #FFF;
+    z-index: 20000;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    min-width: 200%;
+    padding: 15px;
+}
+
+
 /*
 .home thead {
   position: fixed;

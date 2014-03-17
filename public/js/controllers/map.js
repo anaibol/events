@@ -1,6 +1,22 @@
 'use strict';
 
-app.controller('mapCtrl', function($scope, $http, Restangular) {
+app.controller('mapCtrl', function($scope, $http, Restangular, $modal) {
+  $scope.newEvent = function(ev) {
+    var modalInstance = $modal.open({
+      templateUrl: 'views/events/form.html',
+      controller: 'EventFormCtrl',
+      resolve: {
+        ev: function() {
+          return ev;
+        }
+      }
+    });
+
+    modalInstance.result.then(function(selected) {
+      $scope.ev = selected;
+    }, function() {});
+  };
+
   $scope.pos = {};
 
   $scope.markers = new Array();

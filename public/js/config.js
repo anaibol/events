@@ -28,12 +28,24 @@ angular.module('mean').config(['$routeProvider',
   }
 ])
 
+
 //Setting HTML5 Location Mode
 angular.module('mean').config(['$locationProvider',
   function($locationProvider) {
     $locationProvider.hashPrefix('!');
   }
 ]);
+
+//Setting HTML5 Location Mode
+angular.module('mean').config(['$locationProvider',
+  function($locationProvider) {
+    $locationProvider.hashPrefix('!');
+  }
+]);
+
+angular.module('mean').config(function(RestangularProvider) {
+    RestangularProvider.setBaseUrl('/api');
+});
 
 angular.module('mean').run(function($FB) {
   $FB.init({

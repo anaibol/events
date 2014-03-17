@@ -25,10 +25,11 @@ exports.ev = function(req, res, next, id) {
  */
 exports.create = function(req, res) {
   var ev = req.body;
-  console.log(req.body);
+
+  ev.start_time = new Date(ev.start_time);
+  ev.end_time = new Date(ev.end_time);
 
   Events.insert(ev, function(err) {
-    console.log(err);
     if (err) {
       return res.send('users/signup', {
         errors: err.errors,
@@ -46,7 +47,9 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   var ev = req.ev;
 
-  ev = _.extend(ev, req.body);
+  ev = _.extend(req.body);
+  ev.start_time = new Date(ev.start_time);
+  ev.end_time = new Date(ev.end_time);
 
   Events.updateById(ev._id, ev, function(err) {
     if (err) {

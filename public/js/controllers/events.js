@@ -25,7 +25,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
                 arr = [],
                 styles = [];
             angular.forEach(events, function(ev){
-              if (inArray(ev.query, arr) === -1) {
+              if (arr.indexOf(ev.query) === -1) {
                 arr.push(ev.query);
                 styles.push({
                     'id': ev.query,
@@ -138,18 +138,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       });
     }
   };
-
-  var inArray = Array.prototype.indexOf ?
-          function (val, arr) {
-              return arr.indexOf(val);
-          } :
-          function (val, arr) {
-              var i = arr.length;
-              while (i--) {
-                  if (arr[i] === val) return i;
-              }
-              return -1;
-          };
 
   /*$scope.paginate = function() {
       var Event = Restangular.all('rest/event?limit=10&skip=' + $scope.pago * 10);

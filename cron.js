@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAKvXHZBBCIUBAG0rFry6VzNFqaJbEyetRZBM5k9gpPliKi2F7ZBvwhkGEGCtiggpqTonBEEYnpZC5ZCFE9iYzdOdq4p0FZCXFUsd5AnAgK1JNjENPOhdX0lxGf1igEQYFGUobz7M6c1uycAanGjhlyhUZAbDVjOqL4Xkl2mg1IktcSgZChiWf0yUmA8Dw3HgtEZCjxIoWAtYkQZDZD';
+var accessToken = 'CAAKvXHZBBCIUBAOFq4MTKVXgU9JAh3AZAVQh86NEDeGcZBjLPKNEQxZAwdJInmWdBj5uLSNhQdqnMivoJmZBCU6fMvuBuWy9Bx6mqF8TEnfwC6YkwwLJsG7hovWlkrrFS5opCGfN7HpabsAsekln5ZC1A5BKLQp2md6JbZAI1X4RCIyLiEGK12aZCNNbqOqX3kf5WsKZBR0YARAZDZD';
 graph.setAccessToken(accessToken);
 
 function paginate(page) {
@@ -34,6 +34,14 @@ function search(term) {
     /*timezone: "Europe/Paris",
     until: 'today'*/
   };
+
+function joinObj(a, attr) {
+  var out = []; 
+  for (var i=0; i<a.length; i++) { 
+    out.push(a[i][attr]); 
+  } 
+  return out.join(", ");
+}
 
 
   graph.search(searchOptions, function(err, res) {
@@ -86,6 +94,20 @@ function search(term) {
 
                 eve.start_time = new Date(Date.parse(eve.start_time));
                 eve.end_time = new Date(Date.parse(eve.end_time));
+
+                //eve.location = (eve.venue.location) ? eve.venue.location : '' + (eve.venue.city) ? eve.venue.city : '' + (eve.venue.state) ? eve.venue.state : '' + (eve.venue.state) ? eve.venue.state : '';
+
+                eve.place = [];
+
+                if (eve.venue) {
+                  if (eve.venue.location) eve.place.push(eve.venue.location);
+                  if (eve.venue.street) eve.place.push(eve.venue.street);
+                  if (eve.venue.city) eve.place.push(eve.venue.city);
+                  if (eve.venue.state) eve.place.push(eve.venue.state);
+                  if (eve.venue.country) eve.place.push(eve.venue.country);
+                }
+
+                eve.place = eve.place.join(', ');
 
                 eve.query = term;
 

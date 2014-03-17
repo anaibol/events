@@ -13,14 +13,14 @@
         <div class="dropdown">
           <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target="#" href="#">
             <div class="input-append input-group">
-              <input type="text" class="form-control input-large" ng-model="ev.date">
+              <input type="text" class="form-control input-large" ng-model="ev.start_time" mo-date-input="{{'ddd DD MMM HH:mm'}}">
               <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
               </span>
             </div>
           </a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-            <datetimepicker ng-model="ev.date" data-datetimepicker-config="{ dropdownSelector: '#dropdown' }" />
+            <datetimepicker ng-model="ev.start_time" data-datetimepicker-config="{ dropdownSelector: '#dropdown' }" />
           </ul>
         </div>
       </div>
@@ -37,9 +37,10 @@
       <label>Creator name</label>
       <input type="text" class="form-control" ng-model="ev.creator.name" id="creator_name" placeholder="Creator name">
     </div>
+    <!--
     <div class="form-group">
       <label>Country</label>
-      <input type="text" class="form-control" ng-model="ev.venue.country">
+      <input type="text" class="form-control" ng-model="ev.venue.country" ng-autocomplete="result"/>
     </div>
     <div class="form-group">
       <label>City</label>
@@ -63,6 +64,14 @@
       <label>Longitude</label>
       <input type="text" class="form-control" ng-model="ev.venue.longitude">
     </div>
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" class="form-control" ng-autocomplete options="options" ng-model="ev.venue.location" />
+    </div>-->
+    <div class="form-group">
+      <label>Place</label>
+      <input type="text" class="form-control" ng-autocomplete options="options" ng-model="ev.place" />
+    </div>      
     <div class="form-group">
       <label>Picture</label>
       <input type="text" class="form-control" ng-model="ev.pic" id="pig" placeholder="Picture">

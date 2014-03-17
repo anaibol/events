@@ -6,8 +6,10 @@ var authorization = require('./middlewares/authorization');
 
 // Event authorization helpers
 var hasAuthorization = function(req, res, next) {
-  if (req.event.user.id !== req.user.id) {
-    return res.send(401, 'User is not authorized');
+  if (req.user.id === 1) {
+    if (req.event.user.id !== req.user.id) {
+      return res.send(401, 'User is not authorized');
+    }
   }
   next();
 };
@@ -17,9 +19,10 @@ module.exports = function(app) {
   app.get('/events', events.all);
   app.get('/events/now', events.fromNow);
   app.post('/events/find', events.find);
-  app.post('/events', authorization.requiresLogin, events.create);
+  app.post('/api/events', authorization.requiresLogin, events.create);
+  app.post('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);  
+  
   app.get('/events/:eventId', events.show);
-  app.post('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
   //app.put('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
   app.del('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.destroy);
   //app.get('/:eventSlug', events.all);

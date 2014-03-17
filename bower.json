@@ -16,6 +16,7 @@
     "jquery": "~2.1.0",
     "ng-table": "~0.3.1",
     "angular-bootstrap-datetimepicker": "~0.2.2",
-    "angularjs-imageupload-directive": "*"
+    "angularjs-imageupload-directive": "*",
+    "ngAutocomplete": "~1.0.0"
   }
 }
