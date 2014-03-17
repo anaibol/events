@@ -37,6 +37,8 @@ exports.render = function(req, res) {
     ip = req.connection.remoteAddress;
   }
   
+  console.log(ip);
+
   request('http://freegeoip.net/json/' + ip, function(error, response, body) {
   //request('http://freegeoip.net/json/82.142.63.255', function(error, response, body) {
     var pos = JSON.parse(body);
