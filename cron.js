@@ -20,7 +20,8 @@ function paginate(page) {
   });
 }
 
-var db = require('monk')('localhost/wooeva-dev');
+config = require('./config');
+var db = require('monk')(config.db);
 var Events = db.get('events');
 
 function search(term) {
