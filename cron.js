@@ -36,15 +36,6 @@ function search(term) {
     until: 'today'*/
   };
 
-function joinObj(a, attr) {
-  var out = []; 
-  for (var i=0; i<a.length; i++) { 
-    out.push(a[i][attr]); 
-  } 
-  return out.join(", ");
-}
-
-
   graph.search(searchOptions, function(err, res) {
     if (err) {
       console.log(err);
@@ -100,8 +91,10 @@ function joinObj(a, attr) {
 
                 eve.place = [];
 
+                if (eve.location) eve.place.push(eve.location);
+
                 if (eve.venue) {
-                  if (eve.venue.location) eve.place.push(eve.venue.location);
+                  if (eve.location) eve.place.push(eve.location);
                   if (eve.venue.street) eve.place.push(eve.venue.street);
                   if (eve.venue.city) eve.place.push(eve.venue.city);
                   if (eve.venue.state) eve.place.push(eve.venue.state);
