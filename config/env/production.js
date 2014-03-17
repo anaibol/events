@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-  db: "mongodb://localhost/wooeva-dev",
-  dbName: "wooeva-dev",
+  db: "mongodb://localhost/wooeva",
+  dbName: "wooeva",
   app: {
     name: "Wooeva - Production"
   },
