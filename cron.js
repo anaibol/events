@@ -20,7 +20,7 @@ function paginate(page) {
   });
 }
 
-config = require('./config');
+var config = require('./config/config');
 var db = require('monk')(config.db);
 var Events = db.get('events');
 
