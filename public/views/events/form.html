@@ -52,9 +52,23 @@
       <label class="control-label">Price</label>
       <div class="input-append input-group">
         <input type="text" class="form-control" ng-model="ev.price.full" id="pig" placeholder="Price">
-        <span class="input-group-addon">
-          <i class="glyphicon glyphicon-euro"></i>
+
+        <span class="input-group-btn">
+          <div class="dropdown">
+            <button type="button" class="btn btn-default 
+               dropdown-toggle" data-toggle="dropdown">
+               <i class="glyphicon glyphicon-euro"></i> 
+               <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+               <li><i class="glyphicon glyphicon-euro"></i></li>
+               <li><i class="glyphicon glyphicon-euro"></i></li>
+               <li><i class="glyphicon glyphicon-euro"></i></li>
+            </ul>
+          </div>
         </span>
+
+
       </div>      
     </div>
     <!--<div ezfb-xfbml="model.reloadWidget['Commens']">

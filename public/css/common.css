@@ -149,6 +149,33 @@ td.name {
   padding: 4px 0 6px;  
 }
 
+.caret {display:none;}
+.bootstrap-select {
+  margin:0;
+  display: inline-block;
+  width: 23px;
+  height: 20px;
+  min-width: 16px;
+  padding: 4px 5px;
+  line-height: 20px;
+  text-align: center;
+}
+.input-append .bootstrap-select.btn-group {
+ margin-left: -6px;
+}
+.bootstrap-select.btn-group .btn .filter-option {  
+  position:relative;
+  left:-8px;
+}
+.bootstrap-select .btn {
+  overflow:hidden;
+}
+#choices {
+    outline-offset:-4px;
+    outline-width:0;
+    outline-color:#999 !important;    
+}
+
 /*
 .home thead {
   position: fixed;
