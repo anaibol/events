@@ -125,9 +125,24 @@ td.name {
   width: 100%;
 }
 
+.filter-select {
+  -webkit-appearance: menulist;
+}
+
 .date .dropdown-menu {
   visibility: visible;
   opacity: 1;
+  padding: 7px;
+}
+
+.date .showButtonBar {
+  display: none;
+}
+
+.dropdown-menu {
+  background-color: #34495e;
+  color: #cccccc;
+  padding: 4px 0 6px;  
 }
 
 /*
