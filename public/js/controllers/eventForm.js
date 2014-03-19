@@ -1,4 +1,4 @@
-var EventFormCtrl = function($scope, $modalInstance, ev, Restangular, $http) {
+var EventFormCtrl = function($scope, $modalInstance, ev, Restangular, $http, $q, $filter) {
   $scope.result = '';
 
   $scope.form = {
@@ -19,6 +19,14 @@ var EventFormCtrl = function($scope, $modalInstance, ev, Restangular, $http) {
   else {
     $scope.ev = {};
   }
+
+  var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango'];
+
+  $scope.words = function(query) {
+    var deferred = $q.defer();
+    deferred.resolve($filter('filter')(words, query));
+    return deferred.promise;
+  };
 
   $scope.submit = function(image) {
     console.log(image);

@@ -221,6 +221,15 @@ td.name {
   text-align: left;  
 }
 
+.ngTagsInput .autocomplete {
+  z-index: 1000000000;
+  position: absolute;
+}
+
+.ngTagsInput .autocomplete ul {
+  list-style: none;
+}
+
 .tag-item button {
   position: absolute;
   width: 100%;

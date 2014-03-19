@@ -51,8 +51,8 @@
 
     <div class="form-group">
       <label class="control-label">Tags</label>
-      <tags-input ng-model="ev.tags">
-          <!-- <auto-complete source="ev.tags"></auto-complete> -->
+      <tags-input ng-model="ev.tags" allowed-tags-pattern="(bachata+|salsa+|kizomba+|porto+|cubaine+|cubana+|semba+|samba+|merengue+|tango)">
+        <auto-complete source="words($query)" min-length="0"></auto-complete>
       </tags-input>
     </div>
 
