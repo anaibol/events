@@ -73,8 +73,11 @@ pre {
   /*height: 100%;*/
   height: 211px;
   overflow-y: auto;
-  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family:"Lato",Helvetica,Arial,sans-serif;
+  font-size: 15px;
+  width: 750px;
+  padding: 0;
+  margin: 0;
 }
 td {
   height: 100%;
@@ -97,6 +100,30 @@ td.name {
     padding: 15px;
 }
 
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+    border: none;
+}
+
+.pagination {
+  text-align: center;
+  width: 100%;
+}
 
 /*
 .home thead {

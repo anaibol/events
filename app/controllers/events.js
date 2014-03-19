@@ -47,7 +47,24 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   var ev = req.ev;
 
-  ev = _.extend(req.body);
+  // if (req.files.image) {
+  //   console.log(req.files);
+  //   var image = req.files.image;
+  //       console.log(image.name);
+  //   var newImageLocation = path.join(__dirname, 'public/uploads', image.name);
+    
+  //   fs.readFile(image.path, function(err, data) {
+  //       fs.writeFile(newImageLocation, data, function(err) {
+  //           res.json(200, {
+  //               src: 'images/' + image.name,
+  //               size: image.size
+  //           });
+  //       });
+  //   });
+  // }
+
+  // console.log(req.body.data);
+  ev = _.extend(req.body.data);
   ev.start_time = new Date(ev.start_time);
   ev.end_time = new Date(ev.end_time);
 

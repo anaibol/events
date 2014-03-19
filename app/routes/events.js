@@ -7,7 +7,7 @@ var authorization = require('./middlewares/authorization');
 // Event authorization helpers
 var hasAuthorization = function(req, res, next) {
   if (req.user.id === 1) {
-    if (req.event.user.id !== req.user.id) {
+    if (req.event.creator.id !== req.user.facebook.id) {
       return res.send(401, 'User is not authorized');
     }
   }
@@ -15,7 +15,6 @@ var hasAuthorization = function(req, res, next) {
 };
 
 module.exports = function(app) {
-
   app.get('/events', events.all);
   app.get('/events/now', events.fromNow);
   app.post('/events/find', events.find);
