@@ -94,7 +94,6 @@ function search(term) {
                 if (eve.location) eve.place.push(eve.location);
 
                 if (eve.venue) {
-                  if (eve.location) eve.place.push(eve.location);
                   if (eve.venue.street) eve.place.push(eve.venue.street);
                   if (eve.venue.city) eve.place.push(eve.venue.city);
                   if (eve.venue.state) eve.place.push(eve.venue.state);

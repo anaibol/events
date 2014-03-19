@@ -1,21 +1,12 @@
 var DatepickerCtrl = function ($scope) {
-  $scope.clear = function () {
-    $scope.date = null;
-  };
-
-  // Disable weekend selection
-  $scope.disabled = function(date, mode) {
-    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-  };
-
-  $scope.open = function(dateScope) {
-    $scope.dateScope = dateScope;
-
+  $scope.open = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
 
     $scope.opened = true;
   };
+
+  $scope.minDate = new Date();
 
   $scope.dateOptions = {
     'year-format': "'yy'",
@@ -26,5 +17,5 @@ var DatepickerCtrl = function ($scope) {
     'month-title-format': ''
   };
 
-  $scope.format = 'd';
+  $scope.format = 'dd - MMMM';
 };

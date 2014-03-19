@@ -64,7 +64,7 @@ exports.update = function(req, res) {
   // }
 
   // console.log(req.body.data);
-  ev = _.extend(req.body.data);
+  ev = _.extend(req.body);
   ev.start_time = new Date(ev.start_time);
   ev.end_time = new Date(ev.end_time);
 
