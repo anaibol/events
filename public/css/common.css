@@ -135,6 +135,10 @@ td.name {
   padding: 7px;
 }
 
+.date .dropdown-menu .text-center .btn {
+  margin: 3px;
+}
+
 .date .showButtonBar {
   display: none;
 }
