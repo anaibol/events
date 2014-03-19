@@ -18,6 +18,7 @@
     "angularjs-imageupload-directive": "*",
     "ngAutocomplete": "~1.0.0",
     "bootstrap-ui": "~0.10.0",
-    "ng-tags-input": "~1.1.1"
+    "ng-tags-input": "~1.1.1",
+    "bootstrap-select": "~1.5.2"
   }
 }
