@@ -176,6 +176,79 @@ td.name {
     outline-color:#999 !important;    
 }
 
+.tag-list {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.tag-list .tag-item {
+  border-radius: 4px;
+  background-color: #1abc9c;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  line-height: 15px;
+  padding: 6px 15px 8px 15px;
+  position: relative;
+  vertical-align: middle;
+  -webkit-transition: 0.25s linear;
+  transition: 0.25s linear;
+}
+
+.tag-item span {
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.ngTagsInput {
+  width: 100% !important;
+  height: 46px !important;
+  background: white;
+  border: 2px solid #1abc9c;
+  border-radius: 6px;
+  height: 100px;
+  margin-bottom: 18px;
+  padding: 6px 1px 1px 6px;
+  overflow-y: auto;
+  text-align: left;  
+}
+
+.tag-item button {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+}
+
+.tag-input {
+  background: transparent;
+  border: none;
+  color: #34495e;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0px;
+  outline: none !important;
+  vertical-align: top;
+  width: 12px;
+  padding: 3px 5px;
+}
+
+.tagsinput .tag:hover .tagsinput-remove-link {
+  color: #ffffff;
+  opacity: 1;
+  display: block\9;
+}
+
 /*
 .home thead {
   position: fixed;

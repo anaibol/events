@@ -1,7 +1,32 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAKvXHZBBCIUBAOFq4MTKVXgU9JAh3AZAVQh86NEDeGcZBjLPKNEQxZAwdJInmWdBj5uLSNhQdqnMivoJmZBCU6fMvuBuWy9Bx6mqF8TEnfwC6YkwwLJsG7hovWlkrrFS5opCGfN7HpabsAsekln5ZC1A5BKLQp2md6JbZAI1X4RCIyLiEGK12aZCNNbqOqX3kf5WsKZBR0YARAZDZD';
+var accessToken = 'CAAKvXHZBBCIUBACRjCwgnmJwbUXpLSXqutOZCnQPYDGKWFWcNWw8ZC7TNHokp9TLrdaLZB6vvwvr3dSKi9o7r5tu6RTMygvGSJjWfCCZCZAgPo1K3T1RyO9O8NzPaRdYzIXAQyZAEYQrbzfxoLZAFemelXTfdM4UQ2Pye9mOpZBKSzvdcyTzenhZCJ0WuwOGkS1rDZBqqfnF77ZBGgZDZD';
 graph.setAccessToken(accessToken);
+
+
+//var cronJob = require('cron').CronJob;
+//new cronJob('*/5 * * * * ', function() {
+var date = new Date();
+console.log(date.toString());
+
+// search('paris');
+// search('salsa');
+// search('bachata');
+// search('kizomba');
+// search('porto');
+// search('cubaine');
+// search('semba');
+// search('samba');
+
+var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango'];
+
+for (var i = 0; i < words.length; i++) {
+  search(words[i]);
+}
+
+//update();
+
+//}, null, true);
 
 function paginate(page) {
   graph.get(page, function(err, res) {
@@ -106,7 +131,8 @@ function search(term) {
 
                 eve.saved = new Date();
 
-                //getTags(eve);
+                eve.tags = getTags(eve);
+
                 eve.price = getPrice(eve);
 
                 if (eve.venue) {
@@ -139,31 +165,41 @@ function search(term) {
   });
 }
 
-function getTags() {
-  Events.find({}, function(err, evs) {
-    evs.forEach(function(ev) {
-      var name = ev.name;
-      var desc = ev.description;
+function getTags(eve) {
+  var tags = [];
 
-      var text = name + ' ' + desc;
+  var name = eve.name;
+  var desc = eve.description;
 
-      var n = text.search("salsa");
+  var text = name + ' ' + desc;
+  text = text.toLowerCase();
 
-      if (n > 0) {
-        console.log(n);
-        console.log(name);
-        console.log(desc);
-      }
+  for (var i = 0; i < words.length; i++) {
+    var str = words[i];
+    var n = text.search(str);
 
-      /*Events.updateById(ev._id, ev, function(err, doc) {
-        if (err) console.log(err);
+    if (n > 0) {
+      tags.push(words[i]);
+    }
+  }
 
-        if (ev.attending.length < updatedEv.attending.length) {
-          console.log(ev.name);
-        }
-      });*/
-    });
-  });
+  if (tags.length < 1) {
+    console.log(eve.name);
+  }
+
+  return tags;
+
+  // if (n > 0) {
+  //   console.log(n);
+  // }
+
+  /*Events.updateById(ev._id, ev, function(err, doc) {
+    if (err) console.log(err);
+
+    if (ev.attending.length < updatedEv.attending.length) {
+      console.log(ev.name);
+    }
+  });*/
 }
 
 function getPrice(ev) {
@@ -258,40 +294,3 @@ function existsInDb(id, cb) {
     }
   });
 }
-
-//var cronJob = require('cron').CronJob;
-//new cronJob('*/5 * * * * ', function() {
-var date = new Date();
-console.log(date.toString());
-
-// search('paris');
-// search('salsa');
-// search('bachata');
-// search('kizomba');
-// search('porto');
-// search('cubaine');
-// search('semba');
-// search('samba');
-
-function searches() {
-  //search('paris');
-  search('salsa');
-  search('bachata');
-  search('kizomba');
-  search('porto');
-  search('cubaine');
-  search('cubana');
-  search('semba');
-  search('samba');
-  search('merengue');
-  search('tango');
-}
-
-
-//update();
-
-//getTags();
-
-searches();
-
-//}, null, true);
