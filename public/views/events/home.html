@@ -1,21 +1,36 @@
 <section ng-controller="EventsCtrl" ng-init="find()">
   <table ng-table="tableParams" show-filter="true" class="table table-striped table-condensed" template-pagination="custom/pager" pagination-top pagination-bottom>
     <tr class="event" ng-repeat="event in $data" ng-click="edit(event)">
-      <td title="'Image'">
+<!--       <td title="'Image'">
         <img class="image img-rounded" src="{{event.pic_big}}">
-      </td>
-      <td title="'Name'" filter="{'name': 'text' }" class="name">
-        <!--<a ng-href="#!/events/{{event._id}}">{{event.name}}</a>--><a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
-      </td>
+      </td> -->
+      <td title="'Image'" class="image" style="background-image: url({{event.pic_cover.source}})">
+        <div class="info">
+          <div class="date">
+            <i class="fui-calendar-solid"></i>
+            <div class="month">{{event.start_time | date:'MMM' | uppercase}}</div>
+            <div class="day">{{event.start_time | date:'dd'}}</div>
+          </div>
+          <div class="time">
+            <i class="fui-time"></i>
+            <div>{{event.start_time | date:'HH:mm'}}</div>
+          </div>          
+          <div class="name">{{event.name}}</div>
+        </div>
+        <!-- <img class="image img-rounded" src="{{event.pic_cover.source}}"> -->
+      </td>     
+      <!-- <td title="'Name'" filter="{'name': 'text' }" class="name">
+        <a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
+      </td> -->
 
-      <td title="'Date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td>
+      <!-- <td title="'Date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td> -->
       <!-- filter="{'start_time': 'date'}"-->
       <!--<td title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
 
-      <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{event.creator.name}}</td>
-      <td title="'Description'" class="description">
+      <!-- <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{event.creator.name}}</td> -->
+      <!-- <td title="'Description'" class="description">
         <pre>{{event.description}}</pre>
-      </td>
+      </td> -->
       <td title="'Place'" filter="{'place': 'text'}" sortable="'place'" class="place">{{event.place}}</td>
       <!--<td title="'Location'" filter="{'location': 'text'}" sortable="'location'" class="location">{{event.location}}</td>
       <td title="'City'" filter="{'city': 'text'}" sortable="'city'" class="city">{{event.city}}</td>
