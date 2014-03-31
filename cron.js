@@ -1,40 +1,35 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAKvXHZBBCIUBACRjCwgnmJwbUXpLSXqutOZCnQPYDGKWFWcNWw8ZC7TNHokp9TLrdaLZB6vvwvr3dSKi9o7r5tu6RTMygvGSJjWfCCZCZAgPo1K3T1RyO9O8NzPaRdYzIXAQyZAEYQrbzfxoLZAFemelXTfdM4UQ2Pye9mOpZBKSzvdcyTzenhZCJ0WuwOGkS1rDZBqqfnF77ZBGgZDZD';
+var accessToken = 'CAAGPsrwaxr4BADGXeox8qWYOtUe14RLbobooZA4DMJEzReUROPJvaxbnBzI3LGgNAn9qfDUefXGZBZBzZBXwxWgw3ZCyAhKe5qZAKEAveKo9VhzdOEEceUquxWaFrlEdPwXfJKEZBAnXqI8MeprXVGrCPaqJUfpUqZCkZBZBEjWpUvNoPQxE07tINZAjKSwuM34U8wZD';
 graph.setAccessToken(accessToken);
 
+var cronJob = require('cron').CronJob;
 
-//var cronJob = require('cron').CronJob;
-//new cronJob('*/5 * * * * ', function() {
-var date = new Date();
-console.log(date.toString());
+var newEvents;
 
-// search('paris');
-// search('salsa');
-// search('bachata');
-// search('kizomba');
-// search('porto');
-// search('cubaine');
-// search('semba');
-// search('samba');
+new cronJob('*/5 * * * * ', function() {
+  var date = new Date();
+  console.log(date.toString());
 
-var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango'];
+  newEvents = 0;
 
-for (var i = 0; i < words.length; i++) {
-  search(words[i]);
-}
+  var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango'];
 
-//update();
+  for (var i = 0; i < words.length; i++) {
+    search(words[i]);
+  }
 
-//}, null, true);
+  update();
+
+}, null, true);
 
 function paginate(page) {
   graph.get(page, function(err, res) {
     if (res.paging && res.paging.next) {
       paginate(res.paging.next);
     }
-    /*if (res.data) {
-      res.data.forEach(function(ev) {
+    /*if (events) {
+      events.forEach(function(ev) {
         graph.get(ev.id, function(err, res) {
           if (res) {
             Events.insert(res);
@@ -50,10 +45,10 @@ var db = require('monk')(config.db);
 var Events = db.get('events');
 
 function search(term) {
-
   var searchOptions = {
     q: term,
-    type: "event"
+    type: 'event',
+    limit: 10
   };
 
   var options = {
@@ -73,92 +68,92 @@ function search(term) {
           paginate(res.paging.next);
         }*/
 
-        res.data.forEach(function(ev) {
-          //existsInDb(ev.id, function(exists) {
-          //  console.log(exists);
-          //  return
-          //  if (!exists) {
+        var events = res.data;
 
-          var query = {
-            user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id,
-            event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
-            event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
-            event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
-          };
+        events.forEach(function(ev) {
+          ev.id = parseInt(ev.id);
 
-          //    console.log(query);
-          graph.fql(query, function(err, res) {
-            if (err) {
-              console.log(err);
-              return;
-            }
+          existsInDb(ev.id, function(exists) {
+            if (!exists) {
+              var query = {
+                user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + ev.id,
+                event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
+                event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
+                event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
+              };
 
-            if (res.data) {;
-              if (res.data[0].fql_result_set[0]) {
-                eve = res.data[0].fql_result_set[0];
-
-                eve.attending = res.data[1].fql_result_set;
-                eve.unsure = res.data[3].fql_result_set;
-
-                // console.log(eve.unsure);
-
-                if (res.data[2].fql_result_set[0]) {
-                  eve.creator = {
-                    id: res.data[2].fql_result_set[0].id,
-                    name: res.data[2].fql_result_set[0].name
-                  };
+              //    console.log(query);
+              graph.fql(query, function(err, res) {
+                if (err) {
+                  console.log(err);
+                  return;
                 }
 
-                eve.start_time = new Date(Date.parse(eve.start_time));
-                eve.end_time = new Date(Date.parse(eve.end_time));
+                var data = res.data;
 
-                //eve.location = (eve.venue.location) ? eve.venue.location : '' + (eve.venue.city) ? eve.venue.city : '' + (eve.venue.state) ? eve.venue.state : '' + (eve.venue.state) ? eve.venue.state : '';
+                if (data) {
+                  if (data[0].fql_result_set[0]) {
+                    eve = data[0].fql_result_set[0];
 
-                eve.place = [];
+                    eve.attending = data[1].fql_result_set;
+                    eve.unsure = data[3].fql_result_set;
 
-                if (eve.location) eve.place.push(eve.location);
+                    eve.creator = data[2].fql_result_set[0];
 
-                if (eve.venue) {
-                  if (eve.venue.street) eve.place.push(eve.venue.street);
-                  if (eve.venue.city) eve.place.push(eve.venue.city);
-                  if (eve.venue.state) eve.place.push(eve.venue.state);
-                  if (eve.venue.country) eve.place.push(eve.venue.country);
-                }
+                    eve.start_time = new Date(Date.parse(eve.start_time));
+                    eve.end_time = new Date(Date.parse(eve.end_time));
 
-                eve.place = eve.place.join(', ');
+                    //eve.location = (eve.venue.location) ? eve.venue.location : '' + (eve.venue.city) ? eve.venue.city : '' + (eve.venue.state) ? eve.venue.state : '' + (eve.venue.state) ? eve.venue.state : '';
 
-                eve.query = term;
+                    eve.place = [];
 
-                eve.saved = new Date();
+                    if (eve.location) eve.place.push(eve.location);
 
-                eve.tags = getTags(eve);
+                    if (eve.venue) {
+                      if (eve.venue.street) eve.place.push(eve.venue.street);
+                      if (eve.venue.city) eve.place.push(eve.venue.city);
+                      if (eve.venue.state) eve.place.push(eve.venue.state);
+                      if (eve.venue.country) eve.place.push(eve.venue.country);
+                    }
 
-                eve.price = getPrice(eve);
+                    eve.place = eve.place.join(', ');
 
-                if (eve.venue) {
-                  if (eve.venue.country === "Portugal" || eve.venue.country === "Brazil") {
-                    if (term === 'porto') {
-                      eve = null;
+                    eve.query = term;
+
+                    eve.saved = new Date();
+
+                    eve.tags = getTags(eve);
+
+                    eve.price = getPrice(eve);
+
+                    if (eve.venue) {
+                      if (eve.venue.country === "Portugal" || eve.venue.country === "Brazil") {
+                        if (term === 'porto') {
+                          eve = null;
+                        }
+                      }
+                    }
+
+                    if (eve) {
+                      eve.eid = parseInt(eve.eid);
+
+                      Events.insert(eve, function(err, newEv) {
+                        if (err) {
+                          console.log(err);
+                        }
+                        else {
+                          console.log(newEv.name);
+                          console.log(newEv.eid);
+
+                          newEvents++;
+                        }
+                      });
                     }
                   }
                 }
-
-                if (eve) {
-                  Events.insert(eve, function(err, doc) {
-                    if (err) {
-                      console.log(err);
-                    }
-                    else {
-                      console.log(doc.name);
-                    }
-                  });
-                }
-              }
+              });
             }
           });
-          //}
-          //});
-          return;
         });
       }
     }
@@ -183,9 +178,9 @@ function getTags(eve) {
     }
   }
 
-  if (tags.length < 1) {
-    console.log(eve.name);
-  }
+  // if (tags.length < 1) {
+  //   console.log(eve.name);
+  // }
 
   return tags;
 
@@ -220,7 +215,7 @@ function getPrice(ev) {
     var price = {
       full: match[numbers.indexOf(min.toString())],
       num: min
-    }
+    };
 
     return price;
   }
@@ -242,11 +237,6 @@ String.prototype.removeAll = function(target) {
 function update() {
   Events.find({}, function(err, evs) {
     evs.forEach(function(ev) {
-      //existsInDb(ev.id, function(exists) {
-      //  console.log(exists);
-      //  return
-      //  if (!exists) {
-
       var query = {
         event_attending: "SELECT uid FROM event_member WHERE eid =" + ev.eid + " and rsvp_status = 'attending' LIMIT 50000",
         event_unsure: "SELECT uid FROM event_member WHERE eid =" + ev.eid + " and rsvp_status = 'unsure' LIMIT 50000"
@@ -259,12 +249,14 @@ function update() {
           return;
         }
 
-        if (res.data) {
-          if (res.data[0].fql_result_set[0]) {
+        var events = res.data;
+
+        if (events) {
+          if (events[0].fql_result_set[0]) {
             var updatedEv = JSON.parse(JSON.stringify(ev));
 
-            updatedEv.attending = res.data[0].fql_result_set;
-            updatedEv.unsure = res.data[1].fql_result_set;
+            updatedEv.attending = events[0].fql_result_set;
+            updatedEv.unsure = events[1].fql_result_set;
 
             Events.updateById(ev._id, ev, function(err, doc) {
               if (err) console.log(err);
@@ -280,17 +272,20 @@ function update() {
   });
 }
 
-function existsInDb(id, cb) {
+function existsInDb(eid, cb) {
+  var res;
+
   Events.findOne({
-    id: id
+    eid: eid
   }).on('complete', function(err, doc) {
     if (err) console.log(err);
-    console.log(doc);
-    console.log(err);
+
     if (!doc) {
-      cb(false);
+      res = false;
     } else {
-      cb(true);
+      res = true;
     }
+
+    cb(res);
   });
 }
