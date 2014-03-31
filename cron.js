@@ -3,6 +3,8 @@ var graph = require('fbgraph');
 var accessToken = 'CAAGPsrwaxr4BADGXeox8qWYOtUe14RLbobooZA4DMJEzReUROPJvaxbnBzI3LGgNAn9qfDUefXGZBZBzZBXwxWgw3ZCyAhKe5qZAKEAveKo9VhzdOEEceUquxWaFrlEdPwXfJKEZBAnXqI8MeprXVGrCPaqJUfpUqZCkZBZBEjWpUvNoPQxE07tINZAjKSwuM34U8wZD';
 graph.setAccessToken(accessToken);
 
+var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango'];
+
 var cronJob = require('cron').CronJob;
 
 var newEvents;
@@ -13,11 +15,11 @@ new cronJob('*/5 * * * * ', function() {
 
   newEvents = 0;
 
-  var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango'];
-
   for (var i = 0; i < words.length; i++) {
     search(words[i]);
   }
+
+  console.log(newEvents);
 
   update();
 
@@ -48,7 +50,7 @@ function search(term) {
   var searchOptions = {
     q: term,
     type: 'event',
-    limit: 10
+    limit: 5000
   };
 
   var options = {
@@ -142,8 +144,8 @@ function search(term) {
                           console.log(err);
                         }
                         else {
-                          console.log(newEv.name);
-                          console.log(newEv.eid);
+                          //console.log(newEv.name);
+                          //console.log(newEv.eid);
 
                           newEvents++;
                         }
