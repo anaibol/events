@@ -7,23 +7,21 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
 
 var cronJob = require('cron').CronJob;
 
-var newEvents;
 
-new cronJob('*/5 * * * * ', function() {
+
+// new cronJob('*/30 * * * * ', function() {
   var date = new Date();
   console.log(date.toString());
 
-  newEvents = 0;
-
   for (var i = 0; i < words.length; i++) {
-    search(words[i]);
+    search(words[i], function(numEvents){
+      console.log(numEvents);
+    });
   }
 
-  console.log(newEvents);
+  // update();
 
-  update();
-
-}, null, true);
+// }, null, true);
 
 function paginate(page) {
   graph.get(page, function(err, res) {
@@ -46,11 +44,13 @@ var config = require('./config/config');
 var db = require('monk')(config.db);
 var Events = db.get('events');
 
-function search(term) {
+function search(term, cb) {
+  var newEvents = 0;
+
   var searchOptions = {
     q: term,
     type: 'event',
-    limit: 5000
+    limit: 5
   };
 
   var options = {
@@ -72,7 +72,10 @@ function search(term) {
 
         var events = res.data;
 
-        events.forEach(function(ev) {
+        events.forEach(function(ev, index) {
+          var lastEvent = false;
+          if (index === events.length - 1) lastEvent = true;
+
           ev.id = parseInt(ev.id);
 
           existsInDb(ev.id, function(exists) {
@@ -148,12 +151,22 @@ function search(term) {
                           //console.log(newEv.eid);
 
                           newEvents++;
+                          if (lastEvent) cb(newEvents);
                         }
                       });
                     }
+                    else {
+                      if (lastEvent) cb(newEvents);
+                    }
                   }
                 }
+                else {
+                  if (lastEvent) cb(newEvents);
+                }
               });
+            }
+            else {
+              if (lastEvent) cb(newEvents);
             }
           });
         });
@@ -283,7 +296,7 @@ function existsInDb(eid, cb) {
     if (err) console.log(err);
 
     if (!doc) {
-      res = false;
+      res = !doc;
     } else {
       res = true;
     }
