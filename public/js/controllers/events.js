@@ -25,13 +25,18 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
                 arr = [],
                 styles = [];
             angular.forEach(events, function(ev){
-              if (arr.indexOf(ev.query) === -1) {
-                arr.push(ev.query);
-                styles.push({
-                    'id': ev.query,
-                    'title': ev.query
-                });
+              for (var i = 0; i < ev.tags.length; i++) {
+                console.log(styles);
+                if (arr.indexOf(ev.tags[i]) === -1) {
+                  arr.push(ev.tags[i]);
+                  styles.push({
+                      'id': ev.tags[i],
+                      'title': ev.tags[i]
+                  });
+                  console.log(styles);
+                }
               }
+
             });
             def.resolve(styles);
             return def;
