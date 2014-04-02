@@ -14,6 +14,8 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       return newResponse;
     });*/
 
+  $scope.tags = ['Tango'];
+
   $scope.find = function() {
     if (window.events) {
       var events = window.events;
@@ -26,14 +28,12 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
                 styles = [];
             angular.forEach(events, function(ev){
               for (var i = 0; i < ev.tags.length; i++) {
-                console.log(styles);
                 if (arr.indexOf(ev.tags[i]) === -1) {
                   arr.push(ev.tags[i]);
                   styles.push({
                       'id': ev.tags[i],
                       'title': ev.tags[i]
                   });
-                  console.log(styles);
                 }
               }
 

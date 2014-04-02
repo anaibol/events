@@ -42,7 +42,7 @@
       <td title="'Country'" filter="{'country': 'text'}" sortable="'country'" class="country">{{event.country}}</td>-->
       <td title="'Attending'" sortable="'attending.length'" class="attending"><i class="glyphicon glyphicon-group"></i>{{event.attending.length}}</td>
       <!-- <td title="'Unsure'" sortable="'unsure.length'" class="unsure">{{event.unsure.length}}</td> -->
-      <td title="'Style'" filter="{'query': 'select'}" filter-data="styles(column)" sortable="'query'" class="tag-list">
+      <td title="'Style'" filter="{'tags': 'select'}" filter-data="styles(column)" sortable="'query'" class="tag-list">
         <span class="tag-item" ng-repeat="tag in event.tags">{{tag}}</span>
       </td>
       <td title="'Price'" sortable="'price.num'" class="price">{{event.price.full}}</td>
