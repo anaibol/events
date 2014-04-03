@@ -16,10 +16,10 @@ var hasAuthorization = function(req, res, next) {
 
 module.exports = function(app) {
   app.get('/events', events.all);
-  app.get('/events/now', events.fromNow);
   app.post('/events/find', events.find);
   app.post('/api/events', authorization.requiresLogin, events.create);
   app.post('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);  
+  app.get('/api/events/now', events.fromNow);
   
   app.get('/events/:eventId', events.show);
   //app.put('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);

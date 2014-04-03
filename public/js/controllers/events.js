@@ -17,7 +17,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
   $scope.tags = ['Tango'];
 
   $scope.find = function() {
-    if (window.events) {
+    if (window.events && $location.$$path !== '/worldwide') {
       var events = window.events;
 
         var styles = [];
