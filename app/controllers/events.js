@@ -175,7 +175,8 @@ exports.fromNow = function(req, res) {
   Events.find({
     start_time: {
       $gte: date
-    },
+    }
+  }, {
     sort: {
       start_time: 1
     }

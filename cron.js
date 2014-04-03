@@ -9,7 +9,7 @@ var cronJob = require('cron').CronJob;
 
 
 
-// new cronJob('*/30 * * * * ', function() {
+new cronJob('*/30 * * * * ', function() {
   var date = new Date();
   console.log(date.toString());
 
@@ -21,7 +21,7 @@ var cronJob = require('cron').CronJob;
 
   // update();
 
-// }, null, true);
+}, null, true);
 
 function paginate(page) {
   graph.get(page, function(err, res) {
@@ -147,7 +147,7 @@ function search(term, cb) {
                           console.log(err);
                         }
                         else {
-                          //console.log(newEv.name);
+                          console.log(newEv.name);
                           //console.log(newEv.eid);
 
                           newEvents++;
@@ -296,7 +296,7 @@ function existsInDb(eid, cb) {
     if (err) console.log(err);
 
     if (!doc) {
-      res = !doc;
+      res = false;
     } else {
       res = true;
     }
