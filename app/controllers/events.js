@@ -191,6 +191,29 @@ exports.fromNow = function(req, res) {
   });
 };
 
+exports.popular = function(req, res) {
+  var date = new Date();
+
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+
+  Events.find({}, {
+    sort: {
+      "attending.length": 1
+    },
+    limit: 30  
+  }, function(err, evs) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.jsonp(evs);
+    }
+  });
+};
+
 exports.nameLike = function(req, res) {
   Events.find({
     name: new RegExp(q.name || term, 'i'),

@@ -17,71 +17,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
   $scope.tags = ['Tango'];
 
   $scope.find = function() {
-    if (window.events && $location.$$path !== '/worldwide') {
-      var events = window.events;
-        $scope.styles = function(column) {
-          var def = $q.defer(),
-            arr = [],
-            styles = [];
-          angular.forEach(events, function(ev){
-            for (var i = 0; i < ev.tags.length; i++) {
-              if (arr.indexOf(ev.tags[i]) === -1) {
-                arr.push(ev.tags[i]);
-                styles.push({
-                    'id': ev.tags[i],
-                    'title': ev.tags[i]
-                });
-              }
-            }
-          });
-          def.resolve(styles);
-          return def;
-        };
-
-      angular.forEach(events, function(ev, key) {
-        if (ev.venue) {
-          if (ev.venue.city) ev.city = ev.venue.city;
-          if (ev.venue.location) ev.location = ev.venue.location;
-          if (ev.venue.country) ev.country = ev.venue.country;
-
-          if (ev.start_time) {
-            var date = new Date(ev.start_time);
-            var m_names = new Array("January", "February", "March",
-            "April", "May", "June", "July", "August", "September",
-            "October", "November", "December");
-
-            //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
-
-             ev.date = date.toUTCString();
-          }
-
-          if (!ev.members) ev.members = [];
-          if (ev.members.uid) ev.members = [ev.members];
-        }
-      });
-
-      $scope.tableParams = new ngTableParams({
-        page: 1, // show first page
-        count: 10 // count per page
-      }, {
-        total: events.length, // length of data
-        getData: function($defer, params) {
-          // use build-in angular filter
-          var orderedData = params.filter() ? $filter('filter')(events, params.filter()) : events;
-          orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
-          $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-
-          params.total(orderedData.length); // set total for recalc pagination
-          $defer.resolve($scope.events);
-        }
-      });
-
-      $scope.editId = -1;
-
-      $scope.setEditId =  function(pid) {
-          $scope.editId = pid;
-      }      
-    } else {
+    if ($location.$$path === '/worldwide') {
       if (!jQuery.isEmptyObject($location.search())) {
         var term = Object.keys($location.search());
         term = term[0];
@@ -151,7 +87,145 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
               }
             }
           });*/
+      });   
+    } else if ($location.$$path === '/popular') {
+      if (!jQuery.isEmptyObject($location.search())) {
+        var term = Object.keys($location.search());
+        term = term[0];
+
+        var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
+
+      } else {
+        var Event = Restangular.all('events/popular');
+      }
+
+      var styles = [{"id":"salsa","title":"salsa"},
+      {"id":"bachata","title":"bachata"},
+      {"id":"kizomba","title":"kizomba"},
+      {"id":"cubaine","title":"cubaine"},
+      {"id":"samba","title":"samba"},
+      {"id":"porto","title":"porto"},
+      {"id":"tango","title":"tango"},
+      {"id":"merengue","title":"merengue"}];
+
+      $scope.styles = function(column) {
+        var def = $q.defer();
+        def.resolve(styles);
+        return def;
+      };
+
+      var allEvents = Event.getList().then(function(events) {
+        angular.forEach(events, function(ev, key) {
+          if (ev.venue) {
+            if (ev.venue.city) ev.city = ev.venue.city;
+            if (ev.venue.location) ev.location = ev.venue.location;
+            if (ev.venue.country) ev.country = ev.venue.country;
+            if (ev.creator) ev.creator = ev.creator.name;
+          }
+        });
+
+        $scope.tableParams = new ngTableParams({
+          page: 1, // show first page
+          count: 10, // count per page
+          sorting: {
+              attending: 'desc'     // initial sorting
+          }          
+        }, {
+          total: events.length, // length of data
+          getData: function($defer, params) {
+            // use build-in angular filter
+            var orderedData = params.filter() ? $filter('filter')(events, params.filter()) : events;
+            orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
+            $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+
+            params.total(orderedData.length); // set total for recalc pagination
+            $defer.resolve($scope.events);
+          }
+        });
+
+
+        /*angular.forEach($scope.events, function(value, key) {
+            if (value.venue) {
+              if (value.venue.latitude !== undefined) {
+                $scope.markers.push({
+                  lat: value.venue.latitude,
+                  lng: value.venue.longitude,
+                  message: value.name
+                });
+
+                $scope.$parent.pos = {
+                  lat: value.venue.latitude,
+                  lng: value.venue.longitude,
+                  zoom: 10
+                };
+              }
+            }
+          });*/
       });
+    } else {
+      var events = window.events;
+        $scope.styles = function(column) {
+          var def = $q.defer(),
+            arr = [],
+            styles = [];
+          angular.forEach(events, function(ev){
+            for (var i = 0; i < ev.tags.length; i++) {
+              if (arr.indexOf(ev.tags[i]) === -1) {
+                arr.push(ev.tags[i]);
+                styles.push({
+                    'id': ev.tags[i],
+                    'title': ev.tags[i]
+                });
+              }
+            }
+          });
+          def.resolve(styles);
+          return def;
+        };
+
+      angular.forEach(events, function(ev, key) {
+        if (ev.venue) {
+          if (ev.venue.city) ev.city = ev.venue.city;
+          if (ev.venue.location) ev.location = ev.venue.location;
+          if (ev.venue.country) ev.country = ev.venue.country;
+
+          if (ev.start_time) {
+            var date = new Date(ev.start_time);
+            var m_names = new Array("January", "February", "March",
+            "April", "May", "June", "July", "August", "September",
+            "October", "November", "December");
+
+            //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
+
+             ev.date = date.toUTCString();
+          }
+
+          if (!ev.members) ev.members = [];
+          if (ev.members.uid) ev.members = [ev.members];
+        }
+      });
+
+      $scope.tableParams = new ngTableParams({
+        page: 1, // show first page
+        count: 10 // count per page
+      }, {
+        total: events.length, // length of data
+        getData: function($defer, params) {
+          // use build-in angular filter
+          var orderedData = params.filter() ? $filter('filter')(events, params.filter()) : events;
+          orderedData = params.sorting() ? $filter('orderBy')(orderedData, params.orderBy()) : orderedData;
+          $scope.events = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+
+          params.total(orderedData.length); // set total for recalc pagination
+          $defer.resolve($scope.events);
+        }
+      });
+
+      $scope.editId = -1;
+
+      $scope.setEditId =  function(pid) {
+          $scope.editId = pid;
+      }      
     }
   };
 

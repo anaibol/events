@@ -10,6 +10,9 @@ angular.module('mean').config(['$routeProvider',
     when('/worldwide', {
       templateUrl: 'views/events/home.html',
     }).
+    when('/popular', {
+      templateUrl: 'views/events/home.html',
+    }).    
     when('/events', {
       templateUrl: 'views/events/list.html'
     }).

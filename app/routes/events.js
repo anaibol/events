@@ -20,6 +20,7 @@ module.exports = function(app) {
   app.post('/api/events', authorization.requiresLogin, events.create);
   app.post('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);  
   app.get('/api/events/now', events.fromNow);
+  app.get('/api/events/popular', events.popular);
   
   app.get('/events/:eventId', events.show);
   //app.put('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
