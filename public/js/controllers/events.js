@@ -19,27 +19,23 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
   $scope.find = function() {
     if (window.events && $location.$$path !== '/worldwide') {
       var events = window.events;
-
-        var styles = [];
-
         $scope.styles = function(column) {
-              var def = $q.defer(),
-                arr = [],
-                styles = [];
-            angular.forEach(events, function(ev){
-              for (var i = 0; i < ev.tags.length; i++) {
-                if (arr.indexOf(ev.tags[i]) === -1) {
-                  arr.push(ev.tags[i]);
-                  styles.push({
-                      'id': ev.tags[i],
-                      'title': ev.tags[i]
-                  });
-                }
+          var def = $q.defer(),
+            arr = [],
+            styles = [];
+          angular.forEach(events, function(ev){
+            for (var i = 0; i < ev.tags.length; i++) {
+              if (arr.indexOf(ev.tags[i]) === -1) {
+                arr.push(ev.tags[i]);
+                styles.push({
+                    'id': ev.tags[i],
+                    'title': ev.tags[i]
+                });
               }
-
-            });
-            def.resolve(styles);
-            return def;
+            }
+          });
+          def.resolve(styles);
+          return def;
         };
 
       angular.forEach(events, function(ev, key) {
@@ -95,6 +91,21 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       } else {
         var Event = Restangular.all('events/now');
       }
+
+      var styles = [{"id":"salsa","title":"salsa"},
+      {"id":"bachata","title":"bachata"},
+      {"id":"kizomba","title":"kizomba"},
+      {"id":"cubaine","title":"cubaine"},
+      {"id":"samba","title":"samba"},
+      {"id":"porto","title":"porto"},
+      {"id":"tango","title":"tango"},
+      {"id":"merengue","title":"merengue"}];
+
+      $scope.styles = function(column) {
+        var def = $q.defer();
+        def.resolve(styles);
+        return def;
+      };
 
       var allEvents = Event.getList().then(function(events) {
         angular.forEach(events, function(ev, key) {

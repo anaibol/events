@@ -128,7 +128,9 @@ function search(term, cb) {
                     eve.saved = new Date();
 
                     eve.tags = getTags(eve);
-
+                    if (!eve.tags.length) {
+                      console.log(eve.name);
+                    }
                     eve.price = getPrice(eve);
 
                     if (eve.venue) {
@@ -191,6 +193,8 @@ function getTags(eve) {
     if (n > 0) {
       tags.push(words[i]);
     }
+
+    if (!tags.length) console.log(text);
   }
 
   // if (tags.length < 1) {
