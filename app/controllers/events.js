@@ -198,7 +198,11 @@ exports.popular = function(req, res) {
   date.setMinutes(0);
   date.setHours(0);
 
-  Events.find({}, {
+  Events.find({
+    start_time: {
+      $gte: date
+    }
+  }, {
     sort: {
       "attending.length": 1
     },
