@@ -203,10 +203,10 @@ exports.popular = function(req, res) {
       $gte: date
     }
   }, {
+    limit : 30,
     sort: {
-      "attending.length": 1
-    },
-    limit: 30  
+      "attending": {$size: {} }
+    }
   }, function(err, evs) {
     if (err) {
       res.render('error', {
