@@ -9,7 +9,7 @@ var cronJob = require('cron').CronJob;
 
 
 
-new cronJob('*/30 * * * * ', function() {
+// new cronJob('*/30 * * * * ', function() {
   var date = new Date();
   console.log(date.toString());
 
@@ -21,7 +21,7 @@ new cronJob('*/30 * * * * ', function() {
 
   // update();
 
-}, null, true);
+// }, null, true);
 
 function paginate(page) {
   graph.get(page, function(err, res) {
@@ -50,7 +50,7 @@ function search(term, cb) {
   var searchOptions = {
     q: term,
     type: 'event',
-    limit: 5
+    limit: 5000
   };
 
   var options = {
@@ -71,7 +71,6 @@ function search(term, cb) {
         }*/
 
         var events = res.data;
-
         events.forEach(function(ev, index) {
           var lastEvent = false;
           if (index === events.length - 1) lastEvent = true;
@@ -96,12 +95,15 @@ function search(term, cb) {
 
                 var data = res.data;
 
-                if (data) {
+                if (data) {               
                   if (data[0].fql_result_set[0]) {
                     eve = data[0].fql_result_set[0];
 
                     eve.attending = data[1].fql_result_set;
                     eve.unsure = data[3].fql_result_set;
+
+                    eve.attendingNum = eve.attending.length;
+                    eve.unsureNum = eve.unsure.length;
 
                     eve.creator = data[2].fql_result_set[0];
 
@@ -128,16 +130,18 @@ function search(term, cb) {
                     eve.saved = new Date();
 
                     eve.tags = getTags(eve);
-                    if (!eve.tags.length) {
-                      console.log(eve.name);
-                    }
+
                     eve.price = getPrice(eve);
 
-                    if (eve.venue) {
-                      if (eve.venue.country === "Portugal" || eve.venue.country === "Brazil") {
-                        if (term === 'porto') {
-                          eve = null;
-                        }
+                    if (eve.place.indexOf('porto')) {
+                      if (term === 'porto') {
+                        eve = null;
+                      }
+                    }
+
+                    if (eve) {
+                      if (!eve.tags.length) {
+                        eve = null;
                       }
                     }
 
@@ -149,7 +153,7 @@ function search(term, cb) {
                           console.log(err);
                         }
                         else {
-                          console.log(newEv.name);
+                          //console.log(newEv.name);
                           //console.log(newEv.eid);
 
                           newEvents++;
@@ -193,13 +197,7 @@ function getTags(eve) {
     if (n > 0) {
       tags.push(words[i]);
     }
-
-    if (!tags.length) console.log(text);
   }
-
-  // if (tags.length < 1) {
-  //   console.log(eve.name);
-  // }
 
   return tags;
 
@@ -261,7 +259,6 @@ function update() {
         event_unsure: "SELECT uid FROM event_member WHERE eid =" + ev.eid + " and rsvp_status = 'unsure' LIMIT 50000"
       };
 
-      //    console.log(query);
       graph.fql(query, function(err, res) {
         if (err) {
           console.log(err);
@@ -275,14 +272,16 @@ function update() {
             var updatedEv = JSON.parse(JSON.stringify(ev));
 
             updatedEv.attending = events[0].fql_result_set;
+            updatedEv.attendingNum = updatedEv.attending.length;
             updatedEv.unsure = events[1].fql_result_set;
+            updatedEv.unsureNum = updatedEv.unsure.length;
 
             Events.updateById(ev._id, ev, function(err, doc) {
               if (err) console.log(err);
 
-              if (ev.attending.length < updatedEv.attending.length) {
+              // if (ev.attending.length < updatedEv.attending.length) {
                 //console.log(ev.name);
-              }
+              // }
             });
           }
         }

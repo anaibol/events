@@ -205,7 +205,7 @@ exports.popular = function(req, res) {
   }, {
     limit : 30,
     sort: {
-      "attending": {$size: {} }
+      "attendingNum": -1
     }
   }, function(err, evs) {
     if (err) {
