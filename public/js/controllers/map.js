@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('mapCtrl', function($scope, $http, Restangular, $modal) {
+app.controller('MapCtrl', function($scope, $http, Restangular, $modal) {
   $scope.newEvent = function(ev) {
     var modalInstance = $modal.open({
       templateUrl: 'views/events/form.html',

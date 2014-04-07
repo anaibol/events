@@ -8,9 +8,11 @@
         <div class="image">
           <div class="name">{{event.name}}</div>
           <div class="info">
-            <div class="place">
-              <i class="fui-location"></i>{{event.location}}
-            </div>
+            <a href="https://maps.google.com/maps?q={{event.place}}" target="_blank">
+              <div class="place">
+                <i class="fui-location"></i>{{event.location}}
+              </div>
+            </a>
             <div class="date">
               <i class="fui-calendar-solid"></i>
               <div class="day">{{event.start_time | date:'dd'}}</div>

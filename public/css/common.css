@@ -134,6 +134,9 @@ td .image .info .place {
   color: white;
   text-align: center;
   /*margin-bottom: 10px;*/
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;  
 }
 
 td .image .name {
