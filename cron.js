@@ -9,7 +9,7 @@ var cronJob = require('cron').CronJob;
 
 
 
-// new cronJob('*/30 * * * * ', function() {
+new cronJob('*/30 * * * * ', function() {
   var date = new Date();
   console.log(date.toString());
 
@@ -19,9 +19,9 @@ var cronJob = require('cron').CronJob;
     });
   }
 
-  // update();
+  update();
 
-// }, null, true);
+}, null, true);
 
 function paginate(page) {
   graph.get(page, function(err, res) {

@@ -1,11 +1,20 @@
-'use strict';
-
 var Users = global.db.get('users');
+var graph = require('fbgraph');
 
 /**
  * Auth callback
  */
 exports.authCallback = function(req, res) {
+    graph.setAccessToken(req.user.accessToken);
+
+    var query = 'select eid, uid, rsvp_status from event_member where uid = me()';
+    // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+        //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+    graph.fql(query, function(err, res) {
+        console.log(res.data);
+    });
+
+
     res.redirect('/');
 };
 
@@ -79,6 +88,25 @@ exports.create = function(req, res, next) {
  * Send User
  */
 exports.me = function(req, res) {
+    graph.setAccessToken(req.user.accessToken);
+
+    var query = 'SELECT eid, uid, rsvp_status FROM event_member WHERE uid = me()';
+    var query = 'SELECT eid, name, pic, creator FROM event WHERE eid IN (SELECT eid FROM event_member WHERE me()) AND creator=me()';
+    // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+        //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+    graph.fql(query, function(err, res) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+
+        var events = res.data;
+        console.log(events);
+        events.forEach(function(ev, index) {
+            // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid=' + ev.eid;
+        });
+    });
+
     res.jsonp(req.user || null);
 };
 
