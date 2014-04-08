@@ -234,3 +234,37 @@ exports.nameLike = function(req, res) {
     }
   });
 };
+
+/**
+ * Send User
+ */
+exports.import = function(req, res) {
+    graph.setAccessToken(req.user.accessToken);
+
+    graph.get(req.params.name, function(err, result) {
+      var query = 'SELECT eid, uid, rsvp_status FROM event_member WHERE uid = me()';
+      var query = 'SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid in(SELECT eid FROM event_member  WHERE uid = ' + result.id + ')';
+      
+      console.log(query);
+      // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+          //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+
+      graph.fql(query, function(err, response) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+
+          var events = response.data;
+          console.log(response.data);
+          events.forEach(function(ev, index) {
+              // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid=' + ev.eid;
+          });
+
+          res.jsonp(events || null);
+      });
+    });
+
+
+
+};

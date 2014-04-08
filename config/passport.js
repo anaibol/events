@@ -105,6 +105,11 @@ module.exports = function(passport) {
           return done(err);
         }
         if (!user) {
+          if (!profile.emails) {
+            profile.emails = [{}];
+            profile.emails[0].value = '';
+          }
+
           user = {
             name: profile.displayName,
             email: profile.emails[0].value,
