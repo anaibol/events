@@ -33,20 +33,20 @@ var cronJob = require('cron').CronJob;
 
 
 
-// new cronJob('*/30 * * * * ', function() {
-  // var date = new Date();
-  // console.log(date.toString());
+new cronJob('*/30 * * * * ', function() {
+  var date = new Date();
+  console.log(date.toString());
 
-  // for (var i = 0; i < words.length; i++) {
-  //   search(words[i], function(numEvents){
-  //     console.log(numEvents);
-  //   });
-  // }
+  for (var i = 0; i < words.length; i++) {
+    search(words[i], function(numEvents){
+      console.log(numEvents);
+    });
+  }
 
-  // updateAttendees();
+  updateAttendees();
   updateEventsFromUsers();
 
-// }, null, true);
+}, null, true);
 
 function paginate(page) {
   graph.get(page, function(err, res) {

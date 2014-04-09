@@ -59,7 +59,9 @@
     "fbgraph": "~0.2.9",
     "monk": "~0.7.1",
     "cron": "~1.0.3",
-    "prerender-node": "^0.1.18"
+    "prerender-node": "^0.1.18",
+    "cheerio": "^0.15.0",
+    "async": "^0.7.0"
   },
   "devDependencies": {
     "supertest": "0.8.2",
