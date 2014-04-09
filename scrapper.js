@@ -2,13 +2,8 @@ var request = require('request')
   , cheerio = require('cheerio')
   , async = require('async')
   , format = require('util').format;
-
-String.prototype.removeAll = function(target) {
-  return this.split(target).join('');
-};
-
-var users = [ 'clubastoriabcn', 'El.Cel.Badalona', 'lelebahia' ]
-  , concurrency = 2;
+  
+var concurrency = 2;
 
 async.eachLimit(users, concurrency, function (user, next) {
     var options = {
@@ -20,12 +15,14 @@ async.eachLimit(users, concurrency, function (user, next) {
 
     request(options, function (err, response, body) {
         if (err) throw err;
+
+        body = body.removeAll('<!--').removeAll('-->');
+
         var $ = cheerio.load(body);
 
-        var html = $('.hidden_elem#u_0_7').html();
+        var html = $('.fbTimelineEvents').html();
 
         if (html) {
-          html = html.removeAll('<!--').removeAll('-->');
           var $2 = cheerio.load(html);
 
           $2('.eventsGrid').each(function(i, elem) {

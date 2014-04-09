@@ -10,7 +10,25 @@ var accessToken = 'CAAGPsrwaxr4BADGXeox8qWYOtUe14RLbobooZA4DMJEzReUROPJvaxbnBzI3
 graph.setAccessToken(accessToken);
 
 var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango'];
-var users = [ 'clubastoriabcn', 'El.Cel.Badalona', 'lelebahia' ];
+var users = [ 'EsenciaSalsaClub',
+'clubastoriabcn',
+'SevenDanceEscuelaBaile',
+'manisero.delasalsa',
+'antillasalsabarcelona',
+'aguadelunasalsa',
+'El.Cel.Badalona‎',
+'pacomorenotheclub',
+'mojito.barcelona',
+'bailongu',
+'kizombafusionmadrid',
+'lelebahia',
+'bikinitheoriginal',
+'Camanaclub',
+'thebeachmilano1',
+'puertoalegre.zythum',
+'TropicanaMilano',
+'MangosTropCafe'];
+
 var cronJob = require('cron').CronJob;
 
 
@@ -154,11 +172,11 @@ function fetchEvent(id, term) {
               }
             }
 
-            if (eve) {
-              if (!eve.tags.length) {
-                eve = null;
-              }
-            }
+            // if (eve) {
+            //   if (!eve.tags.length) {
+            //     eve = null;
+            //   }
+            // }
 
             if (eve) {
               eve.eid = parseInt(eve.eid);
@@ -168,7 +186,7 @@ function fetchEvent(id, term) {
                   console.log(err);
                 }
                 else {
-                  //console.log(newEv.name);
+                  console.log(newEv.name);
                   //console.log(newEv.eid);
 
                   //newEvents++;
@@ -265,34 +283,35 @@ function updateEventsFromUsers() {
   var concurrency = 2;
 
   async.eachLimit(users, concurrency, function (user, next) {
-      var options = {
-        url: format('http://facebook.com/%s/events', user),
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36'
-        }
-      };
+    var options = {
+      url: format('http://facebook.com/%s/events', user),
+      headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36'
+      }
+    };
 
-      request(options, function (err, response, body) {
-        if (err) throw err;
-        var $ = cheerio.load(body);
+    request(options, function (err, response, body) {
+      if (err) throw err;
 
-        var html = $('.hidden_elem#u_0_7').html();
+      body = body.removeAll('<!--').removeAll('-->');
 
-        if (html) {
-          html = html.removeAll('<!--').removeAll('-->');
-          var $2 = cheerio.load(html);
+      var $ = cheerio.load(body);
 
-          $2('.eventsGrid').each(function(i, elem) {
-            var url = $2(this).find('a').attr('href');
-            var re = /\d+/i;
-            var id = url.match(re);
-            console.log(id[0]);
-            fetchEvent(id[0], '');
-          });
-        }
+      var html = $('.fbTimelineEvents').html();
 
-        next();
-      });
+      if (html) {
+        var $2 = cheerio.load(html);
+
+        $2('.eventsGrid').each(function(i, elem) {
+          var url = $2(this).find('a').attr('href');
+          var re = /\d+/i;
+          var id = url.match(re);
+          fetchEvent(id[0], '');
+        });
+      }
+
+      next();
+    });
   });
 
 }
