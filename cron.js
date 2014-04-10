@@ -5,8 +5,6 @@ var request = require('request')
   
 var winston = require('winston');
 
-winston.add(winston.transports.File, { filename: 'cron.log' });
-
 winston.loggers.add('eventNames', {
   console: {
     level: 'info',
@@ -14,7 +12,7 @@ winston.loggers.add('eventNames', {
     label: 'event names'
   },
   file: {
-    filename: __dirname + '/public/eventNames.log'
+    filename: __dirname + '/public/logs/eventNames.json'
   }
 });
 
@@ -25,7 +23,7 @@ winston.loggers.add('numEvents', {
     label: 'num events'
   },
   file: {
-    filename: __dirname + '/public/numEvents.log'
+    filename: __dirname + '/public/logs/numEvents.json'
   }
 });
 
