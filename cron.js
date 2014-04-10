@@ -3,6 +3,34 @@ var request = require('request')
   , async = require('async')
   , format = require('util').format;
   
+var winston = require('winston');
+
+winston.add(winston.transports.File, { filename: 'cron.log' });
+
+winston.loggers.add('eventNames', {
+  console: {
+    level: 'info',
+    colorize: 'false',
+    label: 'event names'
+  },
+  file: {
+    filename: __dirname + '/public/eventNames.log'
+  }
+});
+
+winston.loggers.add('numEvents', {
+  console: {
+    level: 'info',
+    colorize: 'true',
+    label: 'num events'
+  },
+  file: {
+    filename: __dirname + '/public/numEvents.log'
+  }
+});
+
+var eventNames = winston.loggers.get('eventNames');
+var numEvents = winston.loggers.get('numEvents');
 
 var graph = require('fbgraph');
 
@@ -33,7 +61,7 @@ var cronJob = require('cron').CronJob;
 
 
 
-new cronJob('*/30 * * * * ', function() {
+// new cronJob('*/30 * * * * ', function() {
   var date = new Date();
   console.log(date.toString());
 
@@ -43,25 +71,26 @@ new cronJob('*/30 * * * * ', function() {
     });
   }
 
-  updateAttendees();
-  updateEventsFromUsers();
+  // updateAttendees();
+  // updateEventsFromUsers();
 
-}, null, true);
+// }, null, true);
 
-function paginate(page) {
+function paginate(page, term) {
   graph.get(page, function(err, res) {
-    if (res.paging && res.paging.next) {
-      paginate(res.paging.next);
-    }
-    /*if (events) {
+    if (res) {
+      if (res.paging && res.paging.next) {
+        paginate(res.paging.next, term);
+      }
+      console.log(res);
+      var events = res.data;
+
       events.forEach(function(ev) {
-        graph.get(ev.id, function(err, res) {
-          if (res) {
-            Events.insert(res);
-          }
+        fetchEvent(ev.id, term, function(){
+          newEvents++;
         });
       });
-    }*/
+    }
   });
 }
 
@@ -70,17 +99,17 @@ var db = require('monk')(config.db);
 var Events = db.get('events');
 
 function search(term, cb) {
-  //var newEvents = 0;
+  var newEvents = 0;
 
   var searchOptions = {
     q: term,
     type: 'event',
-    limit: 5000
+    limit: 5000,
   };
 
   var options = {
-    /*timezone: "Europe/Paris",
-    until: 'today'*/
+    /*timezone: "Europe/Paris",*/
+    since: 'now'
   };
 
   graph.search(searchOptions, function(err, res) {
@@ -91,27 +120,32 @@ function search(term, cb) {
 
     if (res.data) {
       if (res.data.length) {
-        /*if (res.paging && res.paging.next) {
-          paginate(res.paging.next);
-        }*/
+        // if (res.paging && res.paging.next) {
+        //   paginate(res.paging.next, term);
+        // }
 
         var events = res.data;
-        events.forEach(function(ev, index) {
-          //var lastEvent = false;
-          //if (index === events.length - 1) lastEvent = true;
 
-          fetchEvent(ev.id, term);
+        async.each(events, function(ev, cb){
+          fetchEvent(ev.id, term, function(ev){
+            newEvents++;
+            eventNames.info(term + ': ' + ev.name);
+            cb();
+          });
+        }, function(err) {
+          numEvents.info(term + ': ' + newEvents);
         });
       }
     }
   });
 }
 
-function fetchEvent(id, term) {
+function fetchEvent(id, term, cb) {
   id = parseInt(id);
 
   existsInDb(id, function(exists) {
     if (!exists) {
+
       var query = {
         user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + id,
         event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
@@ -180,32 +214,20 @@ function fetchEvent(id, term) {
 
             if (eve) {
               eve.eid = parseInt(eve.eid);
-
               Events.insert(eve, function(err, newEv) {
                 if (err) {
                   console.log(err);
                 }
                 else {
-                  console.log(newEv.name);
+                  //console.log(newEv.name);
                   //console.log(newEv.eid);
-
-                  //newEvents++;
-                  //if (lastEvent) cb(newEvents);
+                  cb(newEv);
                 }
               });
             }
-            else {
-              //if (lastEvent) cb(newEvents);
-            }
           }
         }
-        else {
-          //if (lastEvent) cb(newEvents);
-        }
       });
-    }
-    else {
-      //if (lastEvent) cb(newEvents);
     }
   });
 }
@@ -280,9 +302,7 @@ String.prototype.removeAll = function(target) {
 };
 
 function updateEventsFromUsers() {
-  var concurrency = 2;
-
-  async.eachLimit(users, concurrency, function (user, next) {
+  async.each(users, function (user, next) {
     var options = {
       url: format('http://facebook.com/%s/events', user),
       headers: {
@@ -313,7 +333,6 @@ function updateEventsFromUsers() {
       next();
     });
   });
-
 }
 
 function updateAttendees() {
