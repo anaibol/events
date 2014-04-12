@@ -1,17 +1,11 @@
 var EventFormCtrl = function($scope, $modalInstance, ev, Restangular, $http, $q, $filter) {
   $scope.result = '';
 
-  $scope.form = {
-    type: 'geocode',
-    bounds: {SWLat: 49, SWLng: -97, NELat: 50, NELng: -96},
-    country: 'ca',
-    typesEnabled: false,
-    boundsEnabled: false,
-    componentEnabled: false,
-    watchEnter: true
+  $scope.options = {
+    types: '(establishment)'
   };
 
-  var events = Restangular.all('events');
+  var Events = Restangular.all('events');
 
   if (ev) {
     $scope.ev = ev;
@@ -29,7 +23,6 @@ var EventFormCtrl = function($scope, $modalInstance, ev, Restangular, $http, $q,
   };
 
   $scope.submit = function(image) {
-    console.log(image);
     if ($scope.ev._id) {
       if (image) {
         //fd.append('data',JSON.stringify($scope.ev));
@@ -48,17 +41,16 @@ var EventFormCtrl = function($scope, $modalInstance, ev, Restangular, $http, $q,
         });
       }
       else {
-        Restangular.all('events/' + $scope.ev._id).post($scope.ev).then(function(res) {
+        Events.one($scope.ev._id).customPUT($scope.ev).then(function(res) {
           $scope.ev._id = res._id;
           events.push($scope.ev);
           $modalInstance.close($scope.ev);
         });
       }
     } else {
-      Restangular.all('events/').post($scope.ev).then(function(res) {
-          $scope.ev._id = res._id;
-          $scope.$parent.events.push($scope.ev);
-          $modalInstance.close($scope.ev);
+      Events.post($scope.ev).then(function(res) {
+        $scope.ev._id = res._id;
+        $modalInstance.close($scope.ev);
       });
     }
   };

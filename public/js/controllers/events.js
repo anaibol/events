@@ -14,19 +14,21 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       return newResponse;
     });*/
 
-  $scope.tags = ['Tango'];
+  nowEvents = Restangular.all('events/now');
+  popularEvents = Restangular.all('events/popular');
+  // worldwideEvents = Restangular.all('events/worldwide');
 
   $scope.find = function() {
     if ($location.$$path === '/worldwide') {
-      if (!jQuery.isEmptyObject($location.search())) {
-        var term = Object.keys($location.search());
-        term = term[0];
+      // if (!jQuery.isEmptyObject($location.search())) {
+      //   var term = Object.keys($location.search());
+      //   term = term[0];
 
-        var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
+      //   var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
 
-      } else {
-        var Event = Restangular.all('events/now');
-      }
+      // } else {
+      //   var Event = Restangular.all('events/now');
+      // }
 
       var styles = [{"id":"salsa","title":"salsa"},
       {"id":"bachata","title":"bachata"},
@@ -43,7 +45,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
         return def;
       };
 
-      var allEvents = Event.getList().then(function(events) {
+      nowEvents.getList().then(function(events) {
         angular.forEach(events, function(ev, key) {
           if (ev.venue) {
             if (ev.venue.city) ev.city = ev.venue.city;
@@ -89,15 +91,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
           });*/
       });   
     } else if ($location.$$path === '/popular') {
-      if (!jQuery.isEmptyObject($location.search())) {
-        var term = Object.keys($location.search());
-        term = term[0];
-
-        var Event = Restangular.all('rest/event/finder/findNameLike?sort=start_time?name=' + term);
-
-      } else {
-        var Event = Restangular.all('events/popular');
-      }
 
       var styles = [{"id":"salsa","title":"salsa"},
       {"id":"bachata","title":"bachata"},
@@ -114,7 +107,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
         return def;
       };
 
-      var allEvents = Event.getList().then(function(events) {
+      popularEvents.getList().then(function(events) {
         angular.forEach(events, function(ev, key) {
           if (ev.venue) {
             if (ev.venue.city) ev.city = ev.venue.city;

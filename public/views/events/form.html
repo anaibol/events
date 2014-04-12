@@ -30,10 +30,21 @@
       <label class="control-label">Description</label>
       <textarea class="form-control" ng-model="ev.description" id="description" cols="30" rows="10" placeholder="Content"></textarea>
     </div>
+
     <div class="form-group">
-      <label class="control-label">Place</label>
+      <label class="control-label">Location</label>
       <div class="input-append input-group">
-        <input type="text" class="form-control" ng-autocomplete options="options" ng-model="ev.place" />
+        <input type="text" class="form-control" ng-autocomplete ng-model="ev.location" options="options" />
+        <span class="input-group-addon">
+          <i class="fui-location"></i>
+        </span>
+      </div>      
+    </div>  
+
+    <div class="form-group">
+      <label class="control-label">Address</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-autocomplete ng-model="ev.place" />
         <span class="input-group-addon">
           <i class="fui-location"></i>
         </span>

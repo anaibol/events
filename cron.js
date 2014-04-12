@@ -2,23 +2,12 @@ var request = require('request')
   , cheerio = require('cheerio')
   , async = require('async')
   , format = require('util').format;
-  
+
 var config = require('./config/config');
 var db = require('monk')(config.db);
 var Events = db.get('events');
 
 var winston = require('winston');
-
-winston.loggers.add('eventNames', {
-  console: {
-    level: 'info',
-    colorize: 'false',
-    label: 'event names'
-  },
-  file: {
-    filename: __dirname + '/public/logs/eventNames.json'
-  }
-});
 
 winston.loggers.add('numEvents', {
   console: {
@@ -31,7 +20,6 @@ winston.loggers.add('numEvents', {
   }
 });
 
-var eventNames = winston.loggers.get('eventNames');
 var numEvents = winston.loggers.get('numEvents');
 
 var graph = require('fbgraph');
@@ -57,7 +45,8 @@ var users = [ 'EsenciaSalsaClub',
 'thebeachmilano1',
 'puertoalegre.zythum',
 'TropicanaMilano',
-'MangosTropCafe'];
+'MangosTropCafe',
+'victorsuco'];
 
 var cronJob = require('cron').CronJob;
 var newEvents;
@@ -71,10 +60,10 @@ var newEvents;
 
   fetchEventsFromKeywords();
 
-  //updateAttendees();
-  fetchEventsFromUsers();
-  fetchEventsFromUsers2();
-  fetchEventsFromLocations();
+  updateAttendees();
+  // fetchEventsFromUsers();
+  // fetchEventsFromUsers2();
+  // fetchEventsFromLocations();
 
 // }, null, true);
 
@@ -85,9 +74,9 @@ function paginate(page, term) {
         paginate(res.paging.next, term);
       }
 
-      var events = res.data;
+      var evs = res.data;
 
-      events.forEach(function(ev) {
+      evs.forEach(function(ev) {
         fetchEvent(ev.id, term, function(){
           newEvents++;
         });
@@ -97,9 +86,9 @@ function paginate(page, term) {
 }
 
 function fetchEventsFromKeywords() {
-  for (var i = 0; i < keywords.length; i++) {
-    searchEventsFromKeyword(keywords[i]);
-  }
+  keywords.forEach(function(keyword) {
+    searchEventsFromKeyword(keyword);
+  });
 }
 
 function searchEventsFromKeyword(term, cb) {
@@ -126,16 +115,17 @@ function searchEventsFromKeyword(term, cb) {
         //   paginate(res.paging.next, term);
         // }
 
-        var events = res.data;
+        var evs = res.data;
 
-        async.each(events, function(ev, cb){
+        evs.forEach(function(ev) {
+        // async.each(events, function(ev, cb){
           fetchEvent(ev.id, term, function(ev){
             newEvents++;
             console.log(term + ': ' + ev.name);
             cb();
           });
-        }, function(err) {
-          numEvents.info(term + ': ' + newEvents);
+        // }, function(err) {
+        //   numEvents.info(term + ': ' + newEvents);
         });
       }
     }
@@ -335,9 +325,14 @@ function crawlUserEvents(userName, cb) {
 }
 
 function fetchEventsFromUsers() {
-  async.each(users, function (user, next) {
+  // async.each(users, function (user, next) {
+  //   crawlUserEvents(user, function(){
+  //     next();
+  //   });
+  // });
+
+  users.forEach(function(user) {
     crawlUserEvents(user, function(){
-      next();
     });
   });
 }
@@ -349,7 +344,9 @@ function fetchEventsFromUsers2() {
     }
   }, function(err, evs) {
     var creatorsIds = [];
-    async.each(evs, function (ev, next) {
+
+    evs.forEach(function(ev) {
+    //async.each(evs, function (ev, next) {
       if (ev.creator) {
         if (creatorsIds.indexOf(ev.creator.id) < 0) {
           creatorsIds.push(ev.creator.id);
@@ -361,7 +358,7 @@ function fetchEventsFromUsers2() {
             }
 
             crawlUserEvents(res.username, function(){
-              next();
+              // next();
             });
           });
         }
@@ -377,12 +374,19 @@ function fetchEventsFromLocations() {
     }
   }, function(err, evs) {
     var locations = [];
-    async.each(evs, function (ev, next) {
+    evs.forEach(function(ev) {
       if (locations.indexOf(ev.location) < 0) {
         locations.push(ev.location);
         searchEventsFromKeyword(ev.location);
       }
     });
+
+    // async.each(evs, function (ev, next) {
+    //   if (locations.indexOf(ev.location) < 0) {
+    //     locations.push(ev.location);
+    //     searchEventsFromKeyword(ev.location);
+    //   }
+    // });
   });
 }
 
@@ -410,15 +414,15 @@ function updateAttendees() {
           return;
         }
 
-        var events = res.data;
+        var evs = res.data;
 
-        if (events) {
-          if (events[0].fql_result_set[0]) {
+        if (evs) {
+          if (evs[0].fql_result_set[0]) {
             var updatedEv = JSON.parse(JSON.stringify(ev));
 
-            updatedEv.attending = events[0].fql_result_set;
+            updatedEv.attending = evs[0].fql_result_set;
             updatedEv.attendingNum = updatedEv.attending.length;
-            updatedEv.unsure = events[1].fql_result_set;
+            updatedEv.unsure = evs[1].fql_result_set;
             updatedEv.unsureNum = updatedEv.unsure.length;
 
             Events.updateById(ev._id, ev, function(err, doc) {

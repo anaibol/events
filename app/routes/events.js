@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.get('/events', events.all);
   app.post('/events/find', events.find);  
   app.post('/api/events', authorization.requiresLogin, events.create);
-  app.post('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);  
+  app.put('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);  
   app.get('/api/events/now', events.fromNow);
   app.get('/api/events/popular', events.popular);
   

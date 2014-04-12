@@ -29,6 +29,18 @@ exports.create = function(req, res) {
   ev.start_time = new Date(ev.start_time);
   ev.end_time = new Date(ev.end_time);
 
+  var venue;
+
+  if (ev.place) {
+    venue = ev.place.split(', ');
+
+    ev.venue = {
+      country: venue[venue.length - 1]
+    };
+
+    //ev.venue.city = venue[venue.length - 2];
+  }
+
   Events.insert(ev, function(err) {
     if (err) {
       return res.send('users/signup', {
@@ -45,6 +57,7 @@ exports.create = function(req, res) {
  * Update a ev
  */
 exports.update = function(req, res) {
+  console.log(req.body);
   var ev = req.ev;
 
   // if (req.files.image) {
@@ -67,6 +80,18 @@ exports.update = function(req, res) {
   ev = _.extend(req.body);
   ev.start_time = new Date(ev.start_time);
   ev.end_time = new Date(ev.end_time);
+
+  var venue;
+
+  if (ev.place) {
+    venue = ev.place.split(', ');
+
+    ev.venue = {
+      country: venue[venue.length - 1]
+    };
+
+    //ev.venue.city = venue[venue.length - 2];
+  }
 
   Events.updateById(ev._id, ev, function(err) {
     if (err) {
@@ -179,7 +204,8 @@ exports.fromNow = function(req, res) {
   }, {
     sort: {
       start_time: 1
-    }
+    },
+    limit: 100
   }, function(err, evs) {
     if (err) {
       res.render('error', {
@@ -192,29 +218,41 @@ exports.fromNow = function(req, res) {
 };
 
 exports.popular = function(req, res) {
-  var date = new Date();
+  var ip = '';
+  if (process.env.NODE_ENV === 'development') {
+    ip = '82.142.63.255';
+  } else {
+    ip = req.connection.remoteAddress;
+  }
 
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
+  request('http://freegeoip.net/json/' + ip, function(error, response, body) {
+  //request('http://freegeoip.net/json/82.142.63.255', function(error, response, body) {
+    var pos = JSON.parse(body);
 
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }, {
-    limit : 30,
-    sort: {
-      "attendingNum": -1
-    }
-  }, function(err, evs) {
-    if (err) {
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.jsonp(evs);
-    }
+    var date = new Date();
+
+    date.setSeconds(0);
+    date.setMinutes(0);
+    date.setHours(0);
+
+    Events.find({
+      start_time: {
+        $gte: date
+      },
+      "venue.country": pos.country_name
+    }, {
+      sort: {
+        attendingNum: -1
+      },
+    }, function(err, evs) {
+      if (err) {
+        res.render('error', {
+          status: 500
+        });
+      } else {
+        res.jsonp(evs);
+      }
+    });
   });
 };
 
@@ -239,32 +277,29 @@ exports.nameLike = function(req, res) {
  * Send User
  */
 exports.import = function(req, res) {
-    graph.setAccessToken(req.user.accessToken);
+  graph.setAccessToken(req.user.accessToken);
 
-    graph.get(req.params.name, function(err, result) {
-      var query = 'SELECT eid, uid, rsvp_status FROM event_member WHERE uid = me()';
-      var query = 'SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid in(SELECT eid FROM event_member  WHERE uid = ' + result.id + ')';
-      
-      console.log(query);
-      // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
-          //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+  graph.get(req.params.name, function(err, result) {
+    var query = 'SELECT eid, uid, rsvp_status FROM event_member WHERE uid = me()';
+    var query = 'SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid in(SELECT eid FROM event_member  WHERE uid = ' + result.id + ')';
+    
+    console.log(query);
+    // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
+        //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
 
-      graph.fql(query, function(err, response) {
-          if (err) {
-            console.log(err);
-            return;
-          }
+    graph.fql(query, function(err, response) {
+        if (err) {
+          console.log(err);
+          return;
+        }
 
-          var events = response.data;
-          console.log(response.data);
-          events.forEach(function(ev, index) {
-              // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid=' + ev.eid;
-          });
+        var events = response.data;
+        console.log(response.data);
+        events.forEach(function(ev, index) {
+            // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid=' + ev.eid;
+        });
 
-          res.jsonp(events || null);
-      });
+        res.jsonp(events || null);
     });
-
-
-
+  });
 };
