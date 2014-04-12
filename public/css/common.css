@@ -102,7 +102,7 @@ pre {
   margin: auto;
 }
 
-td {
+th, td {
   height: 100%;
   border: none !important;
 }
@@ -112,6 +112,10 @@ td.image, div.image {
   height: 264px;
   padding: 0 !important;
   float: left;
+}
+
+td.tag-list {
+  height: 264px;bo
 }
 
 .image .name, .image .info {
