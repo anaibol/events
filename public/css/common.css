@@ -1,3 +1,11 @@
+body {
+  color: white;
+}
+
+.modal-dialog {
+  color: black;
+}
+
 .navbar .nav>li>a.brand {
   padding-left:20px;
   margin-left:0
@@ -96,40 +104,62 @@ pre {
 
 td {
   height: 100%;
+  border: none !important;
 }
 
-td.image {
+td.image, div.image {
   width: 720px;
   height: 264px;
   padding: 0 !important;
+  float: left;
 }
 
-td .image {
+.image .name, .image .info {
+  background: rgba(0,0,0,0.5);
+}
+
+.info .time, .info .date i {
+  float: left;
+}
+
+.imageContainer {
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-td .image .info {
+.imageContainer .info {
   position: absolute;
   bottom: 0;
-  left: 0;
   width: 100%;
-  height: 90px;
-  padding: 10px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 1%,rgba(0,0,0,1) 84%); /* W3C */
+  height: 40px;
 }
 
-td .image .info .date, td .image .info .time {
-  width: 50px;
-  height: 50px;
+.imageContainer .info .date, .imageContainer .info .time {
+  width: 85px;
   float: right;
   color: white;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
-td .image .info .place {
+.imageContainer .info a {
+  line-height: 20px;
+}
+
+.imageContainer .info .datetime {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-right: 8px;
+}
+
+.imageContainer .info i, .imageContainer .info div {
+  float: left;
+  margin-left: 3px;
+}
+
+.imageContainer .info .place {
   float: left;
   color: white;
   text-align: center;
@@ -139,14 +169,14 @@ td .image .info .place {
   margin-bottom: 10px;  
 }
 
-td .image .name {
+.imageContainer .name {
   color: white;
   position: absolute;
   top: 0;
   width: 100%;
   left: 0;
   padding: 10px;
-  background: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 1%,rgba(0,0,0,1) 84%); /* W3C */
+  padding-bottom: 4px;
 }
 
 .pac-container {
@@ -388,6 +418,15 @@ section.events {
 }
 
 
+p.description {
+  white-space: pre;
+  overflow: auto;
+}
+
+h3.name {
+  background: rgba(0,0,0,0.6);
+}
+
 /* 
 Max width before this PARTICULAR table gets nasty
 This query will take effect for any screen smaller than 760px
@@ -399,7 +438,7 @@ only screen and (max-width: 760px),
 
   /* Force table to not be like tables anymore */
   table, thead, tbody, th, td, tr { 
-    display: block; 
+    display: block;
   }
   
   /* Hide table headers (but not display: none;, for accessibility) */

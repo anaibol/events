@@ -21,8 +21,8 @@
     <div class="form-group">
       <label class="control-label">Time</label>
       <div ng-controller="TimepickerCtrl" ng-model="ev.start_time">
-          <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-          <i class="fui-time"></i>
+        <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        <i class="fui-time"></i>
       </div> 
     </div>
 
@@ -34,7 +34,7 @@
     <div class="form-group">
       <label class="control-label">Location</label>
       <div class="input-append input-group">
-        <input type="text" class="form-control" ng-autocomplete ng-model="ev.location" options="options" />
+        <input type="text" class="form-control" ng-model="ev.location" />
         <span class="input-group-addon">
           <i class="fui-location"></i>
         </span>

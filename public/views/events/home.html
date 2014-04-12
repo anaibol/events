@@ -1,54 +1,56 @@
 <section class="events" ng-controller="EventsCtrl" ng-init="find()">
   <table ng-table="tableParams" show-filter="true" class="table table-condensed" template-pagination="custom/pager" pagination-top pagination-bottom>
-    <tr class="event" ng-repeat="event in $data" ng-click="edit(event)">
+    <tr class="event" ng-repeat="ev in $data" ng-click="open(ev)">
 <!--       <td title="'Image'">
-        <img class="image img-rounded" src="{{event.pic_big}}">
+        <img class="image img-rounded" src="{{ev.pic_big}}">
       </td> -->
-      <td class="image" title="'Image'" style="background-image: url({{event.pic_cover.source}})">
-        <div class="image">
-          <div class="name">{{event.name}}</div>
+      <td class="image" title="'Image'" style="background-image: url({{ev.pic_cover.source}})">
+        <div class="imageContainer">
+          <div class="name">{{ev.name}}</div>
           <div class="info">
-            <a href="https://maps.google.com/maps?q={{event.place}}" target="_blank">
+            <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
               <div class="place">
-                <i class="fui-location"></i>{{event.location}}
+                <i class="fui-location"></i>{{ev.location}}
               </div>
             </a>
-            <div class="date">
-              <i class="fui-calendar-solid"></i>
-              <div class="day">{{event.start_time | date:'dd'}}</div>
-              <div class="month">{{event.start_time | date:'MMM' | uppercase}}</div>
+            <div class="datetime">
+              <div class="date">
+                <i class="fui-calendar-solid"></i>
+                <div class="day">{{ev.start_time | date:'dd'}}</div>
+                <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+              </div>
+              <div class="time">
+                <i class="fui-time"></i>
+                <div>{{ev.start_time | date:'HH:mm'}}</div>
+              </div>
             </div>
-            <div class="time">
-              <i class="fui-time"></i>
-              <div>{{event.start_time | date:'HH:mm'}}</div>
-            </div>          
           </div>
-        <!-- <img class="image img-rounded" src="{{event.pic_cover.source}}"> -->
+        <!-- <img class="image img-rounded" src="{{ev.pic_cover.source}}"> -->
         </div>
-      </td>     
-      <!-- <td title="'Name'" filter="{'name': 'text' }" class="name">
-        <a target="_blank" href="https://facebook.com/{{event.eid}}">{{event.name}}</a>
-      </td> -->
-
-      <!-- <td title="'Date'" sortable="'start_time'" class="time">{{event.start_time | date:'EEE dd MMM HH:mm'}}</td> -->
-      <!-- filter="{'start_time': 'date'}"-->
-      <!--<td title="'End date'" sortable="'end_time'" class="time">{{event.end_time < event.start_time && event.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
-
-      <!-- <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{event.creator.name}}</td> -->
-      <!-- <td title="'Description'" class="description">
-        <pre>{{event.description}}</pre>
-      </td> -->
-      <!-- <td title="'Place'" filter="{'place': 'text'}" sortable="'place'" class="place"><i class="fui-location"></i>{{event.location}}</td> -->
-      <!-- <td title="'Location'" filter="{'location': 'text'}" sortable="'location'" class="location">{{event.location}}</td> -->
-      <td title="'City'" filter="{'city': 'text'}" sortable="'city'" class="city">{{event.city}}</td>
-      <!-- <td title="'Country'" filter="{'country': 'text'}" sortable="'country'" class="country">{{event.country}}</td> -->
-      <td title="'Attending'" sortable="'attending.length'" class="attending"><i class="glyphicon glyphicon-group"></i>{{event.attending.length}}</td>
-      <!-- <td title="'Unsure'" sortable="'unsure.length'" class="unsure">{{event.unsure.length}}</td> -->
-      <td title="'Style'" filter="{'tags': 'select'}" filter-data="styles(column)" sortable="'query'" class="tag-list">
-        <span class="tag-item" ng-repeat="tag in event.tags">{{tag}}</span>
       </td>
-      <td title="'Price'" sortable="'price.num'" class="price">{{event.price.full}}</td>
-      <!--<td title="'Privacy'" sortable="'privacy'" class="privacy">{{event.privacy}}</td>-->
+      <!-- <td title="'Name'" filter="{'name': 'text' }" class="name">
+        <a target="_blank" href="https://facebook.com/{{ev.eid}}">{{ev.name}}</a>
+      </td> -->
+
+      <!-- <td title="'Date'" sortable="'start_time'" class="time">{{ev.start_time | date:'EEE dd MMM HH:mm'}}</td> -->
+      <!-- filter="{'start_time': 'date'}"-->
+      <!--<td title="'End date'" sortable="'end_time'" class="time">{{ev.end_time < ev.start_time && ev.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
+
+      <!-- <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{ev.creator.name}}</td> -->
+      <!-- <td title="'Description'" class="description">
+        <pre>{{ev.description}}</pre>
+      </td> -->
+      <!-- <td title="'Place'" filter="{'place': 'text'}" sortable="'place'" class="place"><i class="fui-location"></i>{{ev.location}}</td> -->
+      <!-- <td title="'Location'" filter="{'location': 'text'}" sortable="'location'" class="location">{{ev.location}}</td> -->
+      <td title="'City'" filter="{'city': 'text'}" sortable="'city'" class="city">{{ev.city}}</td>
+      <!-- <td title="'Country'" filter="{'country': 'text'}" sortable="'country'" class="country">{{ev.country}}</td> -->
+      <td title="'Attending'" sortable="'attending.length'" class="attending"><i class="glyphicon glyphicon-group"></i>{{ev.attending.length}}<i class="icon-group"></i></td>
+      <!-- <td title="'Unsure'" sortable="'unsure.length'" class="unsure">{{ev.unsure.length}}</td> -->
+      <td title="'Style'" filter="{'tags': 'select'}" filter-data="styles(column)" sortable="'query'" class="tag-list">
+        <span class="tag-item" ng-repeat="tag in ev.tags">{{tag}}</span>
+      </td>
+      <td title="'Price'" sortable="'price.num'" class="price">{{ev.price.full}}</td>
+      <!--<td title="'Privacy'" sortable="'privacy'" class="privacy">{{ev.privacy}}</td>-->
       <!--<td class="map">
           <leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>
         </td>-->

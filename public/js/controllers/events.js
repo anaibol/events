@@ -1,4 +1,4 @@
-var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular, ngTableParams, $modal, $q) {
+var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular, ngTableParams, $modal, $q, Global, $window) {
   /*Restangular.addResponseInterceptor(function(response, operation, route, url) {
       var newResponse;
       if (operation === "getList") {
@@ -244,20 +244,37 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       });
     }*/
 
-  $scope.edit = function(ev) {
-    var modalInstance = $modal.open({
-      templateUrl: 'views/events/form.html',
-      controller: 'EventFormCtrl',
-      resolve: {
-        ev: function() {
-          return ev;
+  $scope.open = function(ev) {
+    if (Global.authenticated) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/events/form.html',
+        controller: 'EventFormCtrl',
+        resolve: {
+          ev: function() {
+            return ev;
+          }
         }
-      }
-    });
+      });
 
-    modalInstance.result.then(function(selected) {
-      $scope.ev = selected;
-    }, function() {});
+      modalInstance.result.then(function(selected) {
+        $scope.ev = selected;
+      }, function() {});
+    }
+    else {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/events/view.html',
+        controller: 'EventCtrl',
+        resolve: {
+          ev: function() {
+            return ev;
+          }
+        }
+      });
+
+      modalInstance.result.then(function(selected) {
+      }, function() {});      
+      // $window.open('https://facebook.com/' + ev.eid);
+    }
   };
 
 

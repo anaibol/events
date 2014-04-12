@@ -1,14 +1,75 @@
-<section data-ng-controller="EventsController" data-ng-init="findOne()">
-  <span>{{event.start_time | date:'medium'}}</span>/
-  <span>{{event.owner.name}}</span>
-  <h2>{{event.name}}</h2>
-  <div data-ng-show="global.user._id == event.user._id">
-    <a class="btn" href="/#!/events/{{event._id}}/edit">
-      <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    <a class="btn" data-ng-click="remove();">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
+<div class="event">
+  <div class="modal-header">
+    <div class="image" title="'Image'" style="background-image: url({{ev.pic_cover.source}})">
+      <div class="imageContainer">
+        <h3 class="name">{{ev.name}}</h3>
+        <div class="info">
+          <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
+            <div class="place">
+              <i class="fui-location"></i>{{ev.location}}
+            </div>
+          </a>
+          <div class="date">
+            <i class="fui-calendar-solid"></i>
+            <div class="day">{{ev.start_time | date:'dd'}}</div>
+            <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+          </div>
+          <div class="time">
+            <i class="fui-time"></i>
+            <div>{{ev.start_time | date:'HH:mm'}}</div>
+          </div>          
+        </div>
+      <!-- <img class="image img-rounded" src="{{ev.pic_cover.source}}"> -->
+      </div>
+    </div>
+    <div style="background-image: url(http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false)">
+
+    </div>  
+<img width="203" heigth="264" src="http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=15&size=203x264&maptype=roadmap&sensor=false"/>
   </div>
-  <div>{{event.description}}</div>
-</section>
+  <div class="modal-body">
+    <p>{{ev.start_time | date:'EEE dd MMM HH:mm'}}</p>
+    
+    <p class="description">{{ev.description}}</p>
+
+    <p>{{ev.location}}</p><i class="fui-location"></i>
+
+    <div class="tag-list form-group">
+      <label class="control-label">Tags</label>
+      <span class="tag-item" ng-repeat="tag in ev.tags">{{tag}}</span>
+    </div>
+
+    <p>{{ev.price.full}}</p>
+
+    <span class="input-group-btn">
+      <div class="dropdown">
+        <button type="button" class="btn btn-default 
+           dropdown-toggle" data-toggle="dropdown">
+           <i class="glyphicon glyphicon-euro"></i> 
+           <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+           <li><i class="glyphicon glyphicon-euro"></i></li>
+           <li><i class="glyphicon glyphicon-euro"></i></li>
+           <li><i class="glyphicon glyphicon-euro"></i></li>
+        </ul>
+      </div>
+    </span>
+
+    <div ezfb-xfbml="model.reloadWidget['Commens']">
+        <div class="fb-comments" data-href="https://wooeva.com/events/{{ev.eid}}">
+          <div class="fb-comments" data-numposts="5" data-colorscheme="light"></div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="submit(image)">
+        <i class="fui-check"></i>
+        OK
+      </button>
+      <button class="btn btn-warning" ng-click="cancel()">
+        <i class="fui-cross"></i>
+        Cancel
+      </button>
+    </div>
+</form>
