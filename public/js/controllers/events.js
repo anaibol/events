@@ -37,7 +37,8 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, Restangular,
       {"id":"samba","title":"samba"},
       {"id":"porto","title":"porto"},
       {"id":"tango","title":"tango"},
-      {"id":"merengue","title":"merengue"}];
+      {"id":"merengue","title":"merengue"},
+      {"id":"reggaeton","title":"reggaeton"}];
 
       $scope.styles = function(column) {
         var def = $q.defer();

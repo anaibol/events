@@ -350,6 +350,46 @@ td.image, div.image {
   display: block\9;
 }
 
+.tag-item.salsa {
+  background-color: #3eb9b9;
+}
+
+.tag-item.bachata {
+  background-color: #639b34;
+}
+
+.tag-item.kizomba {
+  background-color: #c9a95d;
+}
+
+.tag-item.reggaeton {
+  background-color: #692673;
+}
+
+.tag-item.porto {
+  background-color: #84349c;
+}
+
+.tag-item.semba, .tag-item.samba {
+  background-color: #c57652;
+}
+
+.tag-item.cubaine, .tag-item.cubana {
+  background-color: #7b2b29;
+}
+
+.tag-item.merengue {
+  background-color: #ad3a48;
+}
+
+.tag-item.tango {
+  background-color: #215f64;
+}
+
+.tag-item.lambazouk {
+  background-color: #2c561d;
+}
+
 section.events {
   background-color: rgba(66, 33, 33, 0.49);
 }

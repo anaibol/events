@@ -47,7 +47,7 @@
       <td title="'Attending'" sortable="'attending.length'" class="attending"><i class="glyphicon glyphicon-group"></i>{{ev.attending.length}}<i class="icon-group"></i></td>
       <!-- <td title="'Unsure'" sortable="'unsure.length'" class="unsure">{{ev.unsure.length}}</td> -->
       <td title="'Style'" filter="{'tags': 'select'}" filter-data="styles(column)" sortable="'query'" class="tag-list">
-        <span class="tag-item" ng-repeat="tag in ev.tags">{{tag}}</span>
+        <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
       </td>
       <td title="'Price'" sortable="'price.num'" class="price">{{ev.price.full}}</td>
       <!--<td title="'Privacy'" sortable="'privacy'" class="privacy">{{ev.privacy}}</td>-->
