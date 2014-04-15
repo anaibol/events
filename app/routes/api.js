@@ -92,8 +92,6 @@ module.exports = function(req, res) {
                 status: 500
               });
             } else {
-              console.log(data.length);
-              console.log(params.limit);
               if (data.length < params.limit) {
                 var response = {
                   data: data,
