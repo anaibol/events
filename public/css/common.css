@@ -99,6 +99,7 @@ pre {
 .event {
   width: 100%;
   height: 100%;
+  padding: 0;
   position: relative;
 }
 
@@ -132,7 +133,7 @@ pre {
 }
 
 .event .info .date, .event .info .time {
-  width: 85px;
+  width: 90px;
   float: right;
   color: white;
   text-align: center;
@@ -377,9 +378,7 @@ pre {
 form.event .modal-body {
   padding: 0 35px;
 }
-.modal-dialog {
-  width: 50%;
-}
+
 .dropdown.login {
   width: 250px;
   padding: 17px;
@@ -420,12 +419,5 @@ only screen and (max-width: 760px),
 
 .row > .col-md-4 {
  display: inline-block;
- padding:  .33rem;
- width:  100%; 
  float:none;
-}
-
-.well {
- position:relative;
- display: block;
 }
