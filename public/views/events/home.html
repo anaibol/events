@@ -1,96 +1,49 @@
-<section class="events" ng-controller="EventsCtrl" ng-init="find()">
-  <table ng-table="tableParams" show-filter="true" class="table table-condensed" template-pagination="custom/pager" pagination-top pagination-bottom>
-    <tr class="event" ng-repeat="ev in $data" ng-click="open(ev)">
-<!--       <td title="'Image'">
-        <img class="image img-rounded" src="{{ev.pic_big}}">
-      </td> -->
-      <td class="image" title="'Image'" style="background-image: url({{ev.pic_cover.source}})">
-        <div class="imageContainer">
-          <div class="name">{{ev.name}}</div>
-          <div class="info">
-            <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
-              <div class="place">
-                <i class="fui-location"></i>{{ev.location}}
-              </div>
-            </a>
-            <div class="datetime">
-              <div class="date">
-                <i class="fui-calendar-solid"></i>
-                <div class="day">{{ev.start_time | date:'dd'}}</div>
-                <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
-              </div>
-              <div class="time">
-                <i class="fui-time"></i>
-                <div>{{ev.start_time | date:'HH:mm'}}</div>
-              </div>
+<section class="events container" ng-controller="EventsCtrl">
+  <div class="filters">
+    <div ng-repeat="header in headers">
+      <sort-by on-sort="onSort" sort-order="filter.sortOrder" sort-by="filter.sortBy" sort-value="{{ header.value }}">{{ header.title }}</sort-by>
+    </div>
+  </div>
+    <div class="list row">
+      <div class="event col-md-4 well" style="background-image: url({{ev.pic_cover.source}})" ng-click="open(ev)" ng-repeat="ev in events">
+        <div class="name">{{ev.name}}</div>
+        <div class="info">
+          <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
+            <div class="place">
+              <i class="fui-location"></i>{{ev.location}}, {{ev.city}}
+            </div>
+          </a>
+          <div class="datetime">
+            <div class="date">
+              <i class="fui-calendar-solid"></i>
+              <div class="day">{{ev.start_time | date:'dd'}}</div>
+              <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+            </div>
+            <div class="time">
+              <i class="fui-time"></i>
+              <div>{{ev.start_time | date:'HH:mm'}}</div>
             </div>
           </div>
-        <!-- <img class="image img-rounded" src="{{ev.pic_cover.source}}"> -->
         </div>
-      </td>
-      <!-- <td title="'Name'" filter="{'name': 'text' }" class="name">
-        <a target="_blank" href="https://facebook.com/{{ev.eid}}">{{ev.name}}</a>
-      </td> -->
-
-      <!-- <td title="'Date'" sortable="'start_time'" class="time">{{ev.start_time | date:'EEE dd MMM HH:mm'}}</td> -->
-      <!-- filter="{'start_time': 'date'}"-->
-      <!--<td title="'End date'" sortable="'end_time'" class="time">{{ev.end_time < ev.start_time && ev.end_time || '' | date:'EEE dd MMM HH:mm'}}</td>-->
-
-      <!-- <td title="'Creator'" filter="{'creator': 'text'}" sortable="'creator.name'" class="creator">{{ev.creator.name}}</td> -->
-      <!-- <td title="'Description'" class="description">
-        <pre>{{ev.description}}</pre>
-      </td> -->
-      <!-- <td title="'Place'" filter="{'place': 'text'}" sortable="'place'" class="place"><i class="fui-location"></i>{{ev.location}}</td> -->
-      <!-- <td title="'Location'" filter="{'location': 'text'}" sortable="'location'" class="location">{{ev.location}}</td> -->
-      <td title="'City'" filter="{'city': 'text'}" sortable="'city'" class="city">{{ev.city}}</td>
-      <!-- <td title="'Country'" filter="{'country': 'text'}" sortable="'country'" class="country">{{ev.country}}</td> -->
-      <td title="'Attending'" sortable="'attending.length'" class="attending"><i class="glyphicon glyphicon-group"></i>{{ev.attending.length}}<i class="icon-group"></i></td>
-      <!-- <td title="'Unsure'" sortable="'unsure.length'" class="unsure">{{ev.unsure.length}}</td> -->
-      <td title="'Style'" filter="{'tags': 'select'}" filter-data="styles(column)" sortable="'query'" class="tag-list">
-        <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
-      </td>
-      <td title="'Price'" sortable="'price.num'" class="price">{{ev.price.full}}</td>
-      <!--<td title="'Privacy'" sortable="'privacy'" class="privacy">{{ev.privacy}}</td>-->
-      <!--<td class="map">
-          <leaflet defaults="defaults" center="center" height="480px" width="640px"></leaflet>
-        </td>-->
-    </tr>
-  </table>
-  <script type="text/ng-template" id="custom/pager">
-    <div class="pagination">
-      <ul class="ng-cloak">
-        <li ng-class="{'active': !page.active, 'first': page.type == 'first', 'previous': page.type == 'prev', 'next': page.type == 'next'}" ng-repeat="page in pages" ng-switch="page.type">
-          <a ng-switch-when="prev" ng-click="paginate(params, page.number)" class="fui-arrow-left" href=""></a>
-          <a ng-switch-when="first" ng-click="paginate(params, page.number)" href=""><span ng-bind="page.number"></span></a>
-          <a ng-switch-when="page" ng-click="paginate(params, page.number)" href=""><span ng-bind="page.number"></span></a>
-          <a ng-switch-when="more" ng-click="paginate(params, page.number)" href="">&#8230;</a>
-          <a ng-switch-when="last" ng-click="paginate(params, page.number)" href=""><span ng-bind="page.number"></span></a>
-          <a ng-switch-when="next" ng-click="paginate(params, page.number)" class="fui-arrow-right" href=""></a>
-        </li>
-        <li>
-          <div class="btn-group">
-              <button type="button" ng-class="{'active':params.count() == 10}" ng-click="params.count(10)" class="btn btn-default">10</button>
-              <button type="button" ng-class="{'active':params.count() == 25}" ng-click="params.count(25)" class="btn btn-default">25</button>
-              <button type="button" ng-class="{'active':params.count() == 50}" ng-click="params.count(50)" class="btn btn-default">50</button>
-              <button type="button" ng-class="{'active':params.count() == 100}" ng-click="params.count(100)" class="btn btn-default">100</button>
-          </div>
-        </li>
-    </ul>
-  </script>
-  <script type="text/ng-template" id="ng-table/filters/date.html">
-     <div id="date" class="input-append" datetimez name="filter-date" ng-model="params.filter()[name]">
-    
-    <!--
-    <input type="date" ng-model="params.filter()[name]" />
-
-    <div class="form-group" ng-controller="DatepickerCtrl">
-      <p class="input-group">
-      <input type="text" class="form-control" name="filter-date" ng-model="params.filter()[name]" datepicker-popup="{{format}}" min="minDate" datepicker-options="dateOptions" />
-      <span class="input-group-btn">
-        <button class="btn btn-default" ng-click="open(params.filter()[name])"><i class="glyphicon glyphicon-calendar"></i></button>
-      </span>
-      </p>
+        <div class="attending"><i class="glyphicon glyphicon-group"></i>{{ev.attending.length}}<i class="icon-group"></i></div>
+        <div class="tag-list">
+          <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+        </div>
+        <div class="price">{{ev.price.full}}</div>
+      </div>
     </div>
-  -->
+  </div>
+
+  <div ng-show="totalPages > 1" class="align-center">
+    <pagination total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" class="pagination" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+  </div>
+
+  <script type="text/ng-template" id="sort-by.html">
+    <a ng-click="sort(sortvalue)">
+      <div ng-transclude=""></div>
+      <div ng-show="sortedby == sortvalue">
+        <i ng-class="{true: 'icon-arrow-up', false: 'icon-arrow-down'}[sordivir == 'asc']"></i>
+      </div>
+    </a>
   </script>
 </section>

@@ -14,7 +14,7 @@ angular.element(document).ready(function() {
       ga('create', 'UA-48693864-1', 'wooeva.com');
       ga('send', 'pageview');
 
-    $('.dropdown-menu input, .dropdown-menu label').click(function(e) {
-        e.stopPropagation();
-    });
+    // $('.dropdown-menu input, .dropdown-menu label').click(function(e) {
+    //     e.stopPropagation();
+    // });
 });

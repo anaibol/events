@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('mean', ['ngCookies', 'ngResource', 'ngRoute', 'ui.bootstrap', 'ui.route', 'mean.system', 'mean.events', 'leaflet-directive', 'restangular', 'ezfb', 'ngTable', 'imageupload', 'ngAutocomplete', 'ngTagsInput']); //'infinite-scroll'
+var app = angular.module('mean', ['ngRoute', 'ui.bootstrap', 'ui.route', 'mean.system', 'mean.events', 'restangular', 'ezfb', 'imageupload', 'ngAutocomplete', 'ngTagsInput']); // 'leaflet-directive',  'ngCookies', 'ngResource', 'infinite-scroll' 'akoenig.deckgrid'
 
 angular.module('mean.system', []);
 angular.module('mean.events', []);

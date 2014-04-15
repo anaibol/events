@@ -1,5 +1,7 @@
 'use strict';
 
+var url = require('url');
+
 var _ = require('lodash');
 
 var Events = global.db.get('events');
@@ -57,7 +59,6 @@ exports.create = function(req, res) {
  * Update a ev
  */
 exports.update = function(req, res) {
-  console.log(req.body);
   var ev = req.ev;
 
   // if (req.files.image) {
@@ -131,10 +132,24 @@ exports.show = function(req, res) {
 };
 
 /**
- * List of Eventss
+ * List of Events
  */
 exports.all = function(req, res) {
-  Events.find().sort('-created').exec(function(err, evs) {
+  var date = new Date();
+
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+
+  Events.find({
+    start_time: {
+      $gte: date
+    }
+  }, {
+    sort: {
+      attendingNum: -1
+    },
+  }, function(err, evs) {
     if (err) {
       res.render('error', {
         status: 500
@@ -172,7 +187,7 @@ exports.find = function(req, res) {
       res.json(evs.data);
 
       Events.create(evs.data, function(err) {
-        if (err) console.log(err) // ...
+        if (err) console.log(err)
       });
     });
 
@@ -190,60 +205,53 @@ exports.find = function(req, res) {
   }
 };
 
-exports.fromNow = function(req, res) {
-  var date = new Date();
-
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
-
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }, {
-    sort: {
-      start_time: 1
-    },
-    limit: 100
-  }, function(err, evs) {
-    if (err) {
-      res.render('error', {
-        status: 500
-      });
+function getCountry(req, cb) {
+  if (!req.session.country) {
+    var ip = '';
+    if (process.env.NODE_ENV === 'development') {
+      ip = '82.142.63.255';
     } else {
-      res.jsonp(evs);
+      ip = req.connection.remoteAddress;
     }
-  });
-};
-
-exports.popular = function(req, res) {
-  var ip = '';
-  if (process.env.NODE_ENV === 'development') {
-    ip = '82.142.63.255';
+     
+    request('http://freegeoip.net/json/' + ip, function(error, response, body) {
+      var pos = JSON.parse(body);
+      req.session.country = pos.country_name;
+      cb(pos);
+    });
   } else {
-    ip = req.connection.remoteAddress;
+    cb(req.session.country);
   }
+}
 
-  request('http://freegeoip.net/json/' + ip, function(error, response, body) {
-  //request('http://freegeoip.net/json/82.142.63.255', function(error, response, body) {
-    var pos = JSON.parse(body);
+exports.get = function(req, res) {
+  getCountry(req, function(country) {
+    var url_parts = url.parse(req.url, true);
+    var params = url_parts.query;
 
     var date = new Date();
 
     date.setSeconds(0);
     date.setMinutes(0);
     date.setHours(0);
+    
+    var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
+    var sort = JSON.parse(sortStr);
 
-    Events.find({
+    var query = {
       start_time: {
         $gte: date
-      },
-      "venue.country": pos.country_name
-    }, {
-      sort: {
-        attendingNum: -1
-      },
+      }
+    };
+
+    if (!params.all) {
+      query["venue.country"] = country;
+    }
+
+    Events.find(query, {
+      sort: sort,
+      limit: params.limit,
+      skip: params.page * params.limit
     }, function(err, evs) {
       if (err) {
         res.render('error', {
@@ -294,7 +302,6 @@ exports.import = function(req, res) {
         }
 
         var events = response.data;
-        console.log(response.data);
         events.forEach(function(ev, index) {
             // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid=' + ev.eid;
         });

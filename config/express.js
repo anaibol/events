@@ -9,7 +9,10 @@ var express = require('express'),
   helpers = require('view-helpers'),
   config = require('./config');
 
+var url = require('url');
+
 module.exports = function(app, passport, db) {
+
   app.set('showStackError', true);
 
   // Prettify HTML
@@ -67,6 +70,12 @@ module.exports = function(app, passport, db) {
 
     // Routes should be at the last
     app.use(app.router);
+
+    //var resources = ['user', 'event'];
+
+    app.all('/api/:entity', function(req, res, next) {
+      require('../app/routes/api')(req, res);
+    });
 
     // Setting the fav icon and static folder
     app.use(express.favicon());

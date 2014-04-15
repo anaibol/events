@@ -49,7 +49,7 @@ footer p {
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 nav a {
   margin-left: 10px;
@@ -74,12 +74,11 @@ nav .navbar-header {
   padding: 30px;
 }
 .content {
-  position: absolute;
-  overflow: auto;
+  /*overflow: auto;*/
   width: 100%;
   height: 92%;
   margin-top: 50px;
-  background-image: url("http://a2d.co.in/wp-content/uploads/2013/08/dance-genre-salsa-16-couple-holding-each-other.jpg");
+  /*background-image: url("http://a2d.co.in/wp-content/uploads/2013/08/dance-genre-salsa-16-couple-holding-each-other.jpg");*/
 }
 .leaflet-top {
   display: none;
@@ -97,83 +96,13 @@ pre {
   margin: 0;
 }
 
-.table {
-  width: auto;
-  margin: auto;
-}
-
-th, td {
-  height: 100%;
-  border: none !important;
-}
-
-td.image, div.image {
-  width: 720px;
-  height: 264px;
-  padding: 0 !important;
-  float: left;
-}
-
-td.tag-list {
-  height: 264px;bo
-}
-
-.image .name, .image .info {
-  background: rgba(0,0,0,0.5);
-}
-
-.info .time, .info .date i {
-  float: left;
-}
-
-.imageContainer {
+.event {
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-.imageContainer .info {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 40px;
-}
-
-.imageContainer .info .date, .imageContainer .info .time {
-  width: 85px;
-  float: right;
-  color: white;
-  text-align: center;
-  margin-bottom: 7px;
-}
-
-.imageContainer .info a {
-  line-height: 20px;
-}
-
-.imageContainer .info .datetime {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  padding-right: 8px;
-}
-
-.imageContainer .info i, .imageContainer .info div {
-  float: left;
-  margin-left: 3px;
-}
-
-.imageContainer .info .place {
-  float: left;
-  color: white;
-  text-align: center;
-  /*margin-bottom: 10px;*/
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 10px;  
-}
-
-.imageContainer .name {
+.event .name {
   color: white;
   position: absolute;
   top: 0;
@@ -181,6 +110,54 @@ td.tag-list {
   left: 0;
   padding: 10px;
   padding-bottom: 4px;
+}
+
+.tag-list {
+  height: 264px;bo
+}
+
+.event .name, .event .info {
+  background: rgba(0,0,0,0.6);
+}
+
+.info .time, .info .date i {
+  float: left;
+}
+
+.event .info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+}
+
+.event .info .date, .event .info .time {
+  width: 85px;
+  float: right;
+  color: white;
+  text-align: center;
+  margin-bottom: 7px;
+}
+
+.event .info a {
+  line-height: 20px;
+}
+
+.event .info .datetime {
+  float: right;
+  padding: 8px;
+}
+
+.event .info i, .event .info div {
+  float: left;
+  margin-left: 3px;
+}
+
+.event .info .place {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 10px;
 }
 
 .pac-container {
@@ -386,6 +363,9 @@ td.tag-list {
   background-color: #ad3a48;
 }
 
+.tag-item.kuduru {
+  background-color: #fce94f;
+}
 .tag-item.tango {
   background-color: #215f64;
 }
@@ -394,63 +374,7 @@ td.tag-list {
   background-color: #2c561d;
 }
 
-section.events {
-  background-color: rgba(66, 33, 33, 0.49);
-}
-
-/*
-.home thead {
-  position: fixed;
-  background: white;
-  width: 100%;
-  top: 50px;
-}
-
-.home thead .ng-table-filters th:nth-child(1), .home tbody .event td:nth-child(1) {
-  width: 236px !important;
-}
-
-.home thead .ng-table-filters th:nth-child(2), .home tbody .event td:nth-child(2) {
-  width: 250px !important;
-}
-
-.home thead .ng-table-filters th:nth-child(3), .home tbody .event td:nth-child(3) {
-  width: 75px !important;
-}
-
-.home thead .ng-table-filters th:nth-child(4), .home tbody .event td:nth-child(4) {
-  width: 100px !important;
-}
-
-.home thead .ng-table-filters th:nth-child(5), .home tbody .event td:nth-child(5) {
-  width: 847px !important;
-}
-
-.home thead .ng-table-filters th:nth-child(6), .home tbody .event td:nth-child(6) {
-  width: 48px !important;
-}
-
-.home thead .ng-table-filters th:nth-child(7), .home tbody .event td:nth-child(7) {
-  width: 61px;
-}
-
-.home thead .ng-table-filters th:nth-child(8), .home tbody .event td:nth-child(8) {
-  width: 40px;
-}
-
-.home thead .ng-table-filters th:nth-child(9), .home tbody .event td:nth-child(9) {
-  width: 40px;
-}
-
-
-.ng-table {
-  margin-top: 109px;
-  table-layout: fixed;
-  width: 100%;
-  overflow:hidden;
-  word-break:break-all;
-}*/
- form.event .modal-body {
+form.event .modal-body {
   padding: 0 35px;
 }
 .modal-dialog {
@@ -471,54 +395,37 @@ h3.name {
   background: rgba(0,0,0,0.6);
 }
 
-/* 
-Max width before this PARTICULAR table gets nasty
-This query will take effect for any screen smaller than 760px
-and also iPads specifically.
-*/
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
-  /* Force table to not be like tables anymore */
-  table, thead, tbody, th, td, tr { 
-    display: block;
-  }
-  
-  /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr { 
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  
-  tr { border: 1px solid #ccc; }
-  
-  td { 
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee; 
-    position: relative;
-    padding-left: 50%; 
-    width: 100% !important;
-  }
-  
-  td:before { 
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 6px;
-    left: 6px;
-    width: 45%; 
-    padding-right: 10px; 
-    white-space: nowrap;
-  }
+
 }
 
 @media 
 only screen and (max-width: 760px),
 (max-device-width: 1024px)  {
-  td * {
-    width: 100%;
-  } 
+
+}
+
+
+
+.row {
+ -moz-column-width: 25em;
+ -webkit-column-width: 25em;
+ -moz-column-gap: 1em;
+ -webkit-column-gap:1em; 
+  
+}
+
+.row > .col-md-4 {
+ display: inline-block;
+ padding:  .33rem;
+ width:  100%; 
+ float:none;
+}
+
+.well {
+ position:relative;
+ display: block;
 }

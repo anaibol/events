@@ -50,12 +50,33 @@ angular.module('mean').config(['$locationProvider',
 ]);
 
 angular.module('mean').config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl('/api');
+  RestangularProvider.setBaseUrl('/api');
+
+  RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
+    if (operation === "getList") {
+        // Use results as the return type, and save the result metadata
+        // in _resultmeta
+        var newResponse = response.data;
+
+        newResponse.metadata = {
+            "count": response.count,
+            "next": response.next,
+            "previous": response.previous
+        };
+        return newResponse;
+    }
+
+    return response;
+  });
 });
 
-angular.module('mean').run(function($FB) {
+// angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
+
+angular.module('mean').run(function($FB, Api) {
   $FB.init({
     // This is my FB app id for plunker demo app
     appId: window.fbAppId
   });
+
+  Api(['user', 'event']);
 });

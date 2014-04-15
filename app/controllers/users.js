@@ -55,11 +55,10 @@ exports.session = function(req, res) {
  * Create user
  */
 exports.create = function(req, res, next) {
-    var user = new User(req.body);
     var message = null;
 
     user.provider = 'local';
-    Users.insert(user, function(err) {
+    Users.insert(req.body, function(err) {
         if (err) {
             switch (err.code) {
                 case 11000:

@@ -13,17 +13,33 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                 i.glyphicon.glyphicon-home
                 | Home
             li
+              a(href='#!/today')
+                i.glyphicon.glyphicon-calendar
+                | Today
+            li
+              a(href='#!/friday')
+                i.glyphicon.glyphicon-calendar
+                | Friday
+            li
+              a(href='#!/saturday')
+                i.glyphicon.glyphicon-calendar
+                | Saturday
+            li
+              a(href='#!/free')
+                i.glyphicon.glyphicon-usd
+                | Free
+            li
               a(href='#!/popular')
                 i.glyphicon.glyphicon-star
-                | Popular                  
+                | Popular
             li
               a(href='#!/worldwide')
                 i.glyphicon.glyphicon-globe
-                | Worldwide                
+                | Worldwide
             li(ng-show='global.authenticated')
               a(ng-click='newEvent()')
                 i.fui-plus
-                | Submit event
+                | Submit an event
                 
           ul.nav.navbar-nav.navbar-right.navbar-inverse(ng-show='!global.authenticated')
             li
