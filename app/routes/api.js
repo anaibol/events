@@ -76,9 +76,9 @@ module.exports = function(req, res) {
             }
           };
 
-          if (!params.all) {
-            query["venue.country"] = country;
-          }
+          // if (!params.all) {
+          //   query["venue.country"] = country;
+          // }
 
           var skip = (params.page - 1) * params.limit;
 
