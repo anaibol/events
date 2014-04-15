@@ -1,49 +1,30 @@
-<section class="events container" ng-controller="EventsCtrl">
-  <div class="filters">
-    <div ng-repeat="header in headers">
-      <sort-by on-sort="onSort" sort-order="filter.sortOrder" sort-by="filter.sortBy" sort-value="{{ header.value }}">{{ header.title }}</sort-by>
-    </div>
-  </div>
-    <div class="list row">
-      <div class="event col-md-4 well" style="background-image: url({{ev.pic_cover.source}})" ng-click="open(ev)" ng-repeat="ev in events">
-        <div class="name">{{ev.name}}</div>
-        <div class="info">
-          <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
-            <div class="place">
-              <i class="fui-location"></i>{{ev.location}}, {{ev.city}}
-            </div>
-          </a>
-          <div class="datetime">
-            <div class="date">
-              <i class="fui-calendar-solid"></i>
-              <div class="day">{{ev.start_time | date:'dd'}}</div>
-              <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
-            </div>
-            <div class="time">
-              <i class="fui-time"></i>
-              <div>{{ev.start_time | date:'HH:mm'}}</div>
-            </div>
-          </div>
+<section class="events row" ng-controller="EventsCtrl">
+  <div class="event col-md-4 well" style="background-image: url({{ev.pic_cover.source}})" ng-click="open(ev)" ng-repeat="ev in events">
+    <div class="name">{{ev.name}}</div>
+    <div class="info">
+      <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
+        <div class="place">
+          <i class="fui-location"></i>{{ev.location}}, {{ev.city}}
         </div>
-        <div class="attending"><i class="glyphicon glyphicon-group"></i>{{ev.attending.length}}<i class="icon-group"></i></div>
-        <div class="tag-list">
-          <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+      </a>
+      <div class="datetime">
+        <div class="date">
+          <i class="fui-calendar-solid"></i>
+          <div class="day">{{ev.start_time | date:'dd'}}</div>
+          <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
         </div>
-        <div class="price">{{ev.price.full}}</div>
+        <div class="time">
+          <i class="fui-time"></i>
+          <div>{{ev.start_time | date:'HH:mm'}}</div>
+        </div>
       </div>
     </div>
+    <div class="attending"><i class="glyphicon glyphicon-group"></i>{{ev.attending.length}}<i class="icon-group"></i></div>
+    <div class="tag-list">
+      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+    </div>
+    <div class="price">{{ev.price.full}}</div>
   </div>
 
-  <div ng-show="totalPages > 1" class="align-center">
-    <pagination total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" class="pagination" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-  </div>
-
-  <script type="text/ng-template" id="sort-by.html">
-    <a ng-click="sort(sortvalue)">
-      <div ng-transclude=""></div>
-      <div ng-show="sortedby == sortvalue">
-        <i ng-class="{true: 'icon-arrow-up', false: 'icon-arrow-down'}[sordivir == 'asc']"></i>
-      </div>
-    </a>
-  </script>
+  <pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 </section>

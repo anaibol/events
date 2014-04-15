@@ -13,40 +13,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
     $scope.totalPages = events.metadata.count / $scope.filter.limit;
   });
 
-  $scope.headers = [
-  {
-    title: 'Id',
-    value: 'id'
-  },
-  {
-    title: 'Name',
-    value: 'name'
-  },
-  {
-    title: 'Email',
-    value: 'email'
-  },
-  {
-    title: 'City',
-    value: 'city'
-  },
-  {
-    title: 'State',
-    value: 'state'
-  }];
-
-  $scope.onSort = function (sortBy, sortOrder) {
-    $scope.filter.sortOrder = sortOrder;
-    $scope.filter.sortBy = sortBy;
-    $scope.filter.page = 1;
-
-    Events.get($scope.filter).then(function(events) {
-      $scope.events = events;
-      $scope.totalEvents = events.metadata.count;
-      $scope.totalPages = events.metadata.count / $scope.filter.limit;
-    });
-  };
-
   $scope.paginate = function(page) {
     $scope.filter.page = page;
 

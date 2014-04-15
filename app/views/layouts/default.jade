@@ -15,15 +15,19 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
             li
               a(href='#!/weekend')
                 i.glyphicon.glyphicon-calendar
-                | This weekend
+                | Weekend
             li
               a(href='#!/free')
                 i.glyphicon.glyphicon-usd
                 | Free
             li
               a(href='#!/popular')
-                i.glyphicon.glyphicon-star
+                i.glyphicon.glyphicon-hearth
                 | Popular
+            li
+              a(href='#!/festival')
+                i.glyphicon.glyphicon-star
+                | Festival
             li
               a(href='#!/worldwide')
                 i.glyphicon.glyphicon-globe
@@ -50,6 +54,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
 
     //- leaflet#map(center='pos', layers='layers', markers='markers', height='100%', width='100%')
     .content
-      block content
+      .container
+        block content
     
     include ../includes/foot
