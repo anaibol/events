@@ -59,9 +59,9 @@ var newEvents;
   var date = new Date();
   console.log(date.toString());
 
-  // fetchEventsFromKeywords();
+  fetchEventsFromKeywords();
 
-  // updateAttending();
+  updateAttending();
   updateTagsAndPrice();
   // fetchEventsFromUsers();
   // fetchEventsFromUsers2();
