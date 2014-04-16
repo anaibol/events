@@ -258,7 +258,7 @@ function getPrice(ev) {
     var min = numbers.min();
 
     if (min > 1000) {
-      return;
+      return {};
     }
 
     var price = {
@@ -280,6 +280,9 @@ function getPrice(ev) {
       };
 
       return price;
+    }
+    else {
+      return {};
     }
   }
 }
