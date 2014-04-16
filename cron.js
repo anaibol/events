@@ -54,7 +54,7 @@ var cronJob = require('cron').CronJob;
 var newEvents;
 
 
-new cronJob('*/30 * * * * ', function() {
+// new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -67,7 +67,7 @@ new cronJob('*/30 * * * * ', function() {
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-}, null, true);
+// }, null, true);
 
 function paginate(page, term) {
   graph.get(page, function(err, res) {
@@ -159,7 +159,7 @@ function fetchEvent(eid, term, cb) {
         if (data) {               
           if (data[0].fql_result_set[0]) {
             eve = data[0].fql_result_set[0];
-            console.log(eve.name);
+
             eve.eid = parseInt(eve.eid);
 
             eve.creator = data[1].fql_result_set[0];
