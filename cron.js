@@ -54,7 +54,7 @@ var cronJob = require('cron').CronJob;
 var newEvents;
 
 
-// new cronJob('*/30 * * * * ', function() {
+new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -64,10 +64,10 @@ var newEvents;
   updateAttending();
   updateTagsAndPrice();
   fetchEventsFromUsers();
-  fetchEventsFromUsers2();
-  fetchEventsFromLocations();
+  // fetchEventsFromUsers2();
+  // fetchEventsFromLocations();
 
-// }, null, true);
+}, null, true);
 
 function paginate(page, term) {
   graph.get(page, function(err, res) {

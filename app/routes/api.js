@@ -119,11 +119,9 @@ module.exports = function(req, res) {
               var friday = moment().day(5).toDate();
               var sunday = moment().day(7).toDate();
 
-              query = {
-                start_time: {
-                  $gte: friday,
-                  $lt: sunday
-                }
+              query.start_time = {
+                $gte: friday,
+                $lt: sunday
               };
 
               break;
