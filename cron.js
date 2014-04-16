@@ -159,7 +159,7 @@ function fetchEvent(eid, term, cb) {
         if (data) {               
           if (data[0].fql_result_set[0]) {
             eve = data[0].fql_result_set[0];
-
+            console.log(eve.name);
             eve.eid = parseInt(eve.eid);
 
             eve.creator = data[1].fql_result_set[0];
@@ -347,7 +347,7 @@ function fetchEventsFromUsers() {
   // });
 
   users.forEach(function(user) {
-    // crawlUserEvents(user);
+    crawlUserEvents(user);
   });
 }
 
