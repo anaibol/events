@@ -13,8 +13,8 @@ angular.module('mean').config(['$routeProvider',
     when('/popular', {
       templateUrl: 'views/events/home.html',
     }).    
-    when('/events', {
-      templateUrl: 'views/events/list.html'
+    when('/free', {
+      templateUrl: 'views/events/home.html'
     }).
     when('/create', {
       templateUrl: 'views/events/create.html'
@@ -32,7 +32,7 @@ angular.module('mean').config(['$routeProvider',
       redirectTo: '/'
     });
   }
-])
+]);
 
 
 //Setting HTML5 Location Mode

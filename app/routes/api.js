@@ -76,9 +76,25 @@ module.exports = function(req, res) {
             }
           };
 
-          // if (!params.all) {
-          //   query["venue.country"] = country;
-          // }
+          if (params.type !== 'worldwide') {
+            query["venue.country"] = country;
+          }
+          else if (params.type !== 'popular') {
+            sort.attending_count = 1;
+          }          
+          else if (params.type !== 'free') {
+            query["price.num"] = 0;
+          }
+          else if (params.type !== 'today') {
+            var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000));
+
+            query = {
+              start_time: {
+                $gte: date,
+                $lt:dateIncreased
+              }
+            };
+          }
 
           var skip = (params.page - 1) * params.limit;
 

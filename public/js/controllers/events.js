@@ -7,6 +7,12 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
     sortOrder: '-1'
   };
 
+  var str = $location.$$path.replace('/', '');
+  
+  if (str) {
+    $scope.filter.type = str;
+  }
+
   Events.get($scope.filter).then(function(events) {
     $scope.events = events;
     $scope.totalEvents = events.metadata.count;
@@ -36,8 +42,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
 
     return tags;
   };
-
-  //$location.$$path.replace('/', ''),
 
   // angular.forEach($scope.events, function(ev, key) {
   //   if (ev.start_time) {

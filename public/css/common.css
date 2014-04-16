@@ -14,20 +14,7 @@ navbar.container {
   background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
   background-color: #FAFAFA;
 }
-footer {
-  position:fixed;
-  left:0px;
-  bottom:0px;
-  height:30px;
-  width:100%;
-  background:#ddd;
-  -webkit-box-shadow:0 8px 6px 6px black;
-  -moz-box-shadow:0 8px 6px 6px black;
-  box-shadow:0 8px 6px 6px black
-}
-footer p {
-  padding:5px 0 12px 10px
-}
+
 .leaflet-bottom.leaflet-right {
   display: none;
 }
@@ -87,26 +74,25 @@ pre {
 
 .event {
   width: 100%;
-  height: 100%;
+  height: 264px;
   padding: 0;
-  position: relative;
 }
 
-.event .name {
-  color: white;
-  position: absolute;
-  top: 0;
+.event .title {
+  float: left;
   width: 100%;
-  left: 0;
-  padding: 10px;
   padding-bottom: 4px;
 }
 
-.tag-list {
-  height: 264px;bo
+.event .title .attending {
+  float: right;
 }
 
-.event .name, .event .info {
+.event .title .price {
+  float: right;
+}
+
+.event .title, .event .info {
   background: rgba(0,0,0,0.6);
 }
 
@@ -118,13 +104,13 @@ pre {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 40px;
+  border-radius: 4px;
+  padding: 0 10px;
 }
 
 .event .info .date, .event .info .time {  
   color: white;
   text-align: center;
-  margin-bottom: 7px;
 }
 
 .event .info a {
@@ -133,19 +119,17 @@ pre {
 
 .event .info .datetime {
   float: right;
-  padding: 8px;
+  line-height: 40px;
 }
 
 .event .info i, .event .info div {
   float: left;
-  margin-left: 3px;
 }
 
 .event .info .place {
   float: left;
   color: white;
-  text-align: center;
-  padding: 10px;
+  line-height: 40px;
 }
 
 .pac-container {
@@ -238,10 +222,8 @@ pre {
 }
 
 .tag-list {
-  display: block;
   float: left;
-  margin: 0;
-  padding: 0;
+  padding: 7px;
 }
 
 .tag-list .tag-item {
@@ -413,4 +395,229 @@ only screen and (max-width: 760px),
 .row > .col-md-4 {
  display: inline-block;
  float:none;
+}
+
+footer {
+  margin-top: 80px;
+  height: 150px;
+  width: 100%;
+  background-color: #1e1e1e;
+}
+footer .container {
+  width: 940px;
+  margin: auto;
+}
+
+.logo .title {
+  color: #ff8f40;
+  font-weight: bold;
+  font-size: 24pt;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  border-bottom: 1px solid grey;
+}
+.logo .subtitle {
+  color: #b4b4b4;
+  clear: both;
+  letter-spacing: 2px;
+  width: 100%;
+  text-align: center;
+  font-size: 16pt;
+  float: left;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+#wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 0 auto 0 auto;
+  overflow: hidden;
+  background-color: #1E1E1E;
+}
+#lightings {
+  bottom: -60px;
+  position: absolute;
+  width: 100%;
+}
+.lights {
+  /*border-radius*/
+ 
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  height: 20px;
+  width: 100%;
+  position: relative;
+  margin: auto;
+}
+#one {
+  /*animation*/
+ 
+  -webkit-animation: one 5s ease-in-out infinite alternate;
+  -moz-animation: one 5s ease-in-out infinite alternate;
+  -ms-animation: one 5s ease-in-out infinite alternate;
+  -o-animation: one 5s ease-in-out infinite alternate;
+  animation: one 5s ease-in-out infinite alternate;
+}
+@-webkit-keyframes one {
+  from {
+    -webkit-box-shadow: 0 0 250px 20px #473C78;
+  }
+  to {
+    -webkit-box-shadow: 0 0 100px 15px #F72A3B;
+  }
+}
+@-moz-keyframes one {
+  from {
+    -moz-box-shadow: 0 0 250px 20px #473C78;
+  }
+  to {
+    -moz-box-shadow: 0 0 100px 15px #F72A3B;
+  }
+}
+@-o-keyframes one {
+  from {
+    -o-box-shadow: 0 0 250px 20px #473C78;
+  }
+  to {
+    -o-box-shadow: 0 0 100px 15px #F72A3B;
+  }
+}
+#two {
+  width: 90%;
+  /*animation*/
+ 
+  -webkit-animation: two 4s ease-in-out infinite alternate;
+  -moz-animation: two 4s ease-in-out infinite alternate;
+  -ms-animation: two 4s ease-in-out infinite alternate;
+  -o-animation: two 4s ease-in-out infinite alternate;
+  animation: two 4s ease-in-out infinite alternate;
+}
+@-webkit-keyframes two {
+  from {
+    -webkit-box-shadow: 0 0 250px 20px #18C499;
+  }
+  to {
+    -webkit-box-shadow: 0 0 100px 15px #D8F05E;
+  }
+}
+@-moz-keyframes two {
+  from {
+    -moz-box-shadow: 0 0 250px 20px #18C499;
+  }
+  to {
+    -moz-box-shadow: 0 0 100px 15px #D8F05E;
+  }
+}
+@-o-keyframes two {
+  from {
+    -o-box-shadow: 0 0 250px 20px #18C499;
+  }
+  to {
+    -o-box-shadow: 0 0 100px 15px #D8F05E;
+  }
+}
+#three {
+  width: 80%;
+  /*animation*/
+ 
+  -webkit-animation: three 3s ease-in-out infinite alternate;
+  -moz-animation: three 3s ease-in-out infinite alternate;
+  -ms-animation: three 3s ease-in-out infinite alternate;
+  -o-animation: three 3s ease-in-out infinite alternate;
+  animation: three 3s ease-in-out infinite alternate;
+}
+@-webkit-keyframes three {
+  from {
+    -webkit-box-shadow: 0 0 250px 20px #FFDD00;
+  }
+  to {
+    -webkit-box-shadow: 0 0 100px 15px #3E33FF;
+  }
+}
+@-moz-keyframes three {
+  from {
+    -moz-box-shadow: 0 0 250px 20px #FFDD00;
+  }
+  to {
+    -moz-box-shadow: 0 0 100px 15px #3e33ff;
+  }
+}
+@-o-keyframes three {
+  from {
+    -o-box-shadow: 0 0 250px 20px #FFDD00;
+  }
+  to {
+    -o-box-shadow: 0 0 100px 15px #3e33ff;
+  }
+}
+#four {
+  width: 70%;
+  /*animation*/
+ 
+  -webkit-animation: four 2s ease-in-out infinite alternate;
+  -moz-animation: four 2s ease-in-out infinite alternate;
+  -ms-animation: four 2s ease-in-out infinite alternate;
+  -o-animation: four 2s ease-in-out infinite alternate;
+  animation: four 2s ease-in-out infinite alternate;
+}
+@-webkit-keyframes four {
+  from {
+    -webkit-box-shadow: 0 0 250px 20px #781848;
+  }
+  to {
+    -webkit-box-shadow: 0 0 100px 15px #F2BBE9;
+  }
+}
+@-moz-keyframes four {
+  from {
+    -moz-box-shadow: 0 0 250px 20px #781848;
+  }
+  to {
+    -moz-box-shadow: 0 0 100px 15px #F2BBE9;
+  }
+}
+@-o-keyframes four {
+  from {
+    -o-box-shadow: 0 0 250px 20px #781848;
+  }
+  to {
+    -o-box-shadow: 0 0 100px 15px #F2BBE9;
+  }
+}
+#five {
+  width: 60%;
+  /*animation*/
+ 
+  -webkit-animation: five 1s ease-in-out infinite alternate;
+  -moz-animation: five 1s ease-in-out infinite alternate;
+  -ms-animation: five 1s ease-in-out infinite alternate;
+  -o-animation: five 1s ease-in-out infinite alternate;
+  animation: five 1s ease-in-out infinite alternate;
+}
+@-webkit-keyframes five {
+  from {
+    -webkit-box-shadow: 0 0 250px 20px #42F2A1;
+  }
+  to {
+    -webkit-box-shadow: 0 0 100px 15px #F4F6AD;
+  }
+}
+@-moz-keyframes five {
+  from {
+    -webkit-box-shadow: 0 0 250px 20px #42F2A1;
+  }
+  to {
+    -webkit-box-shadow: 0 0 100px 15px #F4F6AD;
+  }
+}
+@-o-keyframes five {
+  from {
+    -webkit-box-shadow: 0 0 250px 20px #42F2A1;
+  }
+  to {
+    -webkit-box-shadow: 0 0 100px 15px #F4F6AD;
+  }
 }

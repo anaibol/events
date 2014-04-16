@@ -6,6 +6,8 @@ var request = require('request')
 var config = require('./config/config');
 var db = require('monk')(config.db);
 var Events = db.get('events');
+var Creators = db.get('creators');
+var Locations = db.get('locations');
 
 var winston = require('winston');
 
@@ -57,10 +59,10 @@ var newEvents;
   var date = new Date();
   console.log(date.toString());
 
+  // fetchEventsFromKeywords();
 
-  fetchEventsFromKeywords();
-
-  updateAttendees();
+  updateAttending();
+  // updateTagsAndPrice();
   // fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
@@ -88,11 +90,11 @@ function paginate(page, term) {
 
 function fetchEventsFromKeywords() {
   keywords.forEach(function(keyword) {
-    searchEventsFromKeyword(keyword);
+    fetchEventsFromKeyword(keyword);
   });
 }
 
-function searchEventsFromKeyword(term) {
+function fetchEventsFromKeyword(term) {
   var searchOptions = {
     q: term,
     type: 'event',
@@ -135,12 +137,11 @@ function searchEventsFromKeyword(term) {
 
 function fetchEvent(id, term, cb) {
   id = parseInt(id);
-            
   existsInDb(id, function(exists) {
     if (!exists) {
       var query = {
-        user_event: "SELECT description, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + id,
-        event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
+        user_event: "SELECT description, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + id,
+        // event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
         event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
         //event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
       };
@@ -159,13 +160,6 @@ function fetchEvent(id, term, cb) {
             eve = data[0].fql_result_set[0];
 
             eve.eid = parseInt(eve.eid);
-
-            eve.attending = data[1].fql_result_set;
-            // eve.unsure = data[3].fql_result_set;
-
-            eve.numAttending = eve.attending.length;
-            delete eve.attending;
-            // eve.numUnsure = eve.unsure.length;
 
             eve.creator = data[2].fql_result_set[0];
 
@@ -208,11 +202,13 @@ function fetchEvent(id, term, cb) {
             if (eve) {
               Events.insert(eve, function(err, newEv) {
                 if (err) {
-                  console.log(err);
+                  // console.log(err);
                 }
                 else {
-                  //console.log(newEv.name);
-                  //console.log(newEv.eid);
+                  if (eve.location && eve.venue) {
+                    Creators.insert({fid: eve.creator.fid, username: eve.creator.username});
+                    Locations.insert({location: eve.location, venue: eve.venue});
+                  }
                   cb(newEv);
                 }
               });
@@ -243,18 +239,6 @@ function getTags(eve) {
   }
 
   return tags;
-
-  // if (n > 0) {
-  //   console.log(n);
-  // }
-
-  /*Events.updateById(ev._id, ev, function(err, doc) {
-    if (err) console.log(err);
-
-    if (ev.attending.length < updatedEv.attending.length) {
-      console.log(ev.name);
-    }
-  });*/
 }
 
 function getPrice(ev) {
@@ -284,9 +268,12 @@ function getPrice(ev) {
     var regex2 = /((gratuit)|(free)|(gratis))/;
 
     var match2 = desc.match(regex2);
-
+    console.log(match2[0].toUpperCase());
     if (match2) {
-      return match2[0].toUpperCase();
+      var price = {
+        full: match2[0].toUpperCase(),
+        num: 0
+      };
     }
   }
 }
@@ -303,7 +290,7 @@ String.prototype.removeAll = function(target) {
   return this.split(target).join('');
 };
 
-function crawlUserEvents(userName, cb) {
+function crawlUserEvents(userName) {
   var options = {
     url: format('http://facebook.com/%s/events', userName),
     headers: {
@@ -331,11 +318,9 @@ function crawlUserEvents(userName, cb) {
         fetchEvent(id[0], '', function(ev){
           newEvents++;
           console.log(userName + ': ' + ev.name);
-          newEvents++;
         });
       });
     }
-    cb();
   });
 }
 
@@ -347,65 +332,23 @@ function fetchEventsFromUsers() {
   // });
 
   users.forEach(function(user) {
-    crawlUserEvents(user, function(){
-    });
+    // crawlUserEvents(user);
   });
 }
 
 function fetchEventsFromUsers2() {
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }, function(err, evs) {
-    var creatorsIds = [];
-
-    evs.forEach(function(ev) {
-    //async.each(evs, function (ev, next) {
-      if (ev.creator) {
-        if (creatorsIds.indexOf(ev.creator.id) < 0) {
-          creatorsIds.push(ev.creator.id);
-
-          graph.get(ev.creator.id, function(err, res) {
-            if (err) {
-              console.log(err);
-              return;
-            }
-
-            crawlUserEvents(res.username, function(){
-              // next();
-            });
-          });
-        }
-      }
-    });
+  Creators.find({}).each(function(creator) {
+    crawlUserEvents(creator.username);
   });
 }
 
 function fetchEventsFromLocations() {
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }, function(err, evs) {
-    var locations = [];
-    evs.forEach(function(ev) {
-      if (locations.indexOf(ev.location) < 0) {
-        locations.push(ev.location);
-        searchEventsFromKeyword(ev.location);
-      }
-    });
-
-    // async.each(evs, function (ev, next) {
-    //   if (locations.indexOf(ev.location) < 0) {
-    //     locations.push(ev.location);
-    //     searchEventsFromKeyword(ev.location);
-    //   }
-    // });
+  Locations.find({}).each(function(location) {
+    fetchEventsFromKeywords(location.location);
   });
 }
 
-function updateAttendees() {
+function updateAttending() {
   var date = new Date();
 
   date.setSeconds(0);
@@ -416,41 +359,60 @@ function updateAttendees() {
     start_time: {
       $gte: date
     }
-  }, function(err, evs) {
-    evs.forEach(function(ev) {
-      var query = {
-        event_attending: "SELECT uid FROM event_member WHERE eid =" + ev.eid + " and rsvp_status = 'attending' LIMIT 50000",
-        //event_unsure: "SELECT uid FROM event_member WHERE eid =" + ev.eid + " and rsvp_status = 'unsure' LIMIT 50000"
-      };
+  }).each(function(ev) {
+    var query = "SELECT attending_count FROM event WHERE eid =" + ev.id;
 
-      graph.fql(query, function(err, res) {
-        if (err) {
-          console.log(err);
-          return;
+    graph.fql(query, function(err, res) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      var updatedEv = res.data;
+
+      if (updatedEv) {
+        if (ev.attending_count !== updatedEv.attending_count) {
+          ev.numAttending = attending.attending;
+
+          Events.updateById(ev._id, ev);
+          console.log('UPDATE ATTENDING :' + ev.name);
         }
+      }
+    });
+  });
+}
 
-        var evs = res.data;
+function updateTagsAndPrice() {
+  var date = new Date();
 
-        if (evs) {
-          if (evs[0].fql_result_set[0]) {
-            var updatedEv = JSON.parse(JSON.stringify(ev));
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
 
-            updatedEv.attending = evs[0].fql_result_set;
-            updatedEv.numAttending = updatedEv.attending.length;
-            delete updatedEv.attending;
-            // updatedEv.unsure = evs[1].fql_result_set;
-            // updatedEv.unsureNum = updatedEv.unsure.length;
+  Events.find({
+    start_time: {
+      $gte: date
+    }
+  }).each(function(ev) {
+    var query = "SELECT description FROM event WHERE eid =" + ev.id;
 
-            Events.updateById(ev._id, ev, function(err, doc) {
-              if (err) console.log(err);
+    graph.fql(query, function(err, res) {
+      if (err) {
+        console.log(err);
+        return;
+      }
 
-              // if (ev.attending.length < updatedEv.attending.length) {
-                //console.log(ev.name);
-              // }
-            });
-          }
-        }
-      });
+      var ev = res.data;
+
+      if (ev) {
+        var price = getPrice(ev);
+        var tags = getTags(ev);
+
+        ev.price = price;
+        ev.tags = tags;
+
+        Events.updateById(ev._id, ev);
+      }
     });
   });
 }
