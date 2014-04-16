@@ -63,7 +63,7 @@ var newEvents;
 
   updateAttending();
   updateTagsAndPrice();
-  // fetchEventsFromUsers();
+  fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
@@ -79,7 +79,7 @@ function paginate(page, term) {
       var evs = res.data;
 
       evs.forEach(function(ev) {
-        fetchEvent(ev.id, term, function(ev){
+        fetchEvent(ev.eid, term, function(ev){
           newEvents++;
           console.log(term + ': ' + ev.name);
         });
@@ -121,7 +121,7 @@ function fetchEventsFromKeyword(term) {
         var evs = res.data;
 
         evs.forEach(function(ev) {
-        // async.each(events, function(ev, cb){
+        // async.each(events, function(ev, cb){ 
           fetchEvent(ev.id, term, function(ev){
             newEvents++;
             console.log(term + ': ' + ev.name);
@@ -135,12 +135,13 @@ function fetchEventsFromKeyword(term) {
   });
 }
 
-function fetchEvent(id, term, cb) {
-  id = parseInt(id);
-  existsInDb(id, function(exists) {
+function fetchEvent(eid, term, cb) {
+  eid = parseInt(eid);
+
+  existsInDb(eid, function(exists) {
     if (!exists) {
       var query = {
-        user_event: "SELECT description, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + id,
+        user_event: "SELECT description, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,
         // event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
         event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
         //event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
@@ -368,7 +369,7 @@ function updateAttending() {
       $gte: date
     }
   }).each(function(ev) {
-    var query = "SELECT attending_count FROM event WHERE eid =" + ev.id;
+    var query = "SELECT attending_count FROM event WHERE eid =" + ev.eid;
 
     graph.fql(query, function(err, res) {
       if (err) {
@@ -380,10 +381,10 @@ function updateAttending() {
 
       if (updatedEv) {
         if (ev.attending_count !== updatedEv.attending_count) {
-          ev.numAttending = attending.attending;
+          ev.attending_count = updatedEv.attending_count;
 
-          Events.updateById(ev._id, ev);
-          console.log('UPDATE ATTENDING :' + ev.name);
+          Events.updateById(ev._id, updatedEv);
+          // console.log('UPDATE ATTENDING :' + ev.name);
         }
       }
     });
@@ -422,7 +423,7 @@ function updateTagsAndPrice() {
           ev.tags = tags;
 
           Events.updateById(ev._id, ev);
-          console.log('UPDATE PRICE :' + ev.name);
+          // console.log('UPDATE PRICE :' + ev.name);
         }
       }
     });
