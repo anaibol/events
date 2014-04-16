@@ -22,9 +22,11 @@ function getCountry(req, cb) {
       var pos = JSON.parse(body);
       req.session.country = pos.country_name;
       cb(req.session.country);
+      console.log(req.session.country);
     });
   } else {
     cb(req.session.country);
+    console.log(123 +req.session.country);
   }
 }
 
