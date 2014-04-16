@@ -208,12 +208,14 @@ function fetchEvent(eid, term, cb) {
                   // console.log(err);
                 }
                 else {
-                  if (eve.location && eve.venue) {
-                    Locations.insert({location: eve.location, venue: eve.venue, place: eve.place});
-                  }
+                  if (eve) {
+                    if (eve.location && eve.venue) {
+                      Locations.insert({location: eve.location, venue: eve.venue, place: eve.place});
+                    }
 
-                  if (eve.creator) {
-                    Creators.insert({fid: eve.creator.id, username: eve.creator.username});
+                    if (eve.creator) {
+                      Creators.insert({fid: eve.creator.id, username: eve.creator.username});
+                    }
                   }
 
                   cb(newEv);
