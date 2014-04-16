@@ -81,15 +81,15 @@ pre {
 .event .title {
   float: left;
   width: 100%;
-  padding-bottom: 4px;
+  padding: 2px 5px;
 }
 
-.event .title .attending {
+.event .title .attending,.event .title .price {
   float: right;
 }
 
 .event .title .price {
-  float: right;
+  margin-right: 10px;
 }
 
 .event .title, .event .info {
@@ -105,7 +105,8 @@ pre {
   bottom: 0;
   width: 100%;
   border-radius: 4px;
-  padding: 0 10px;
+  padding: 0 7px;
+  line-height: 37px;
 }
 
 .event .info .date, .event .info .time {  
@@ -113,23 +114,18 @@ pre {
   text-align: center;
 }
 
-.event .info a {
-  line-height: 20px;
-}
-
 .event .info .datetime {
   float: right;
-  line-height: 40px;
 }
 
 .event .info i, .event .info div {
   float: left;
+  padding: 0 3px;
 }
 
 .event .info .place {
   float: left;
   color: white;
-  line-height: 40px;
 }
 
 .pac-container {

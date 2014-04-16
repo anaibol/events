@@ -61,8 +61,8 @@ var newEvents;
 
   // fetchEventsFromKeywords();
 
-  updateAttending();
-  // updateTagsAndPrice();
+  // updateAttending();
+  updateTagsAndPrice();
   // fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
@@ -98,7 +98,7 @@ function fetchEventsFromKeyword(term) {
   var searchOptions = {
     q: term,
     type: 'event',
-    limit: 5000,
+    limit: 100,
   };
 
   var options = {
@@ -161,7 +161,7 @@ function fetchEvent(id, term, cb) {
 
             eve.eid = parseInt(eve.eid);
 
-            eve.creator = data[2].fql_result_set[0];
+            eve.creator = data[1].fql_result_set[0];
 
             eve.start_time = new Date(Date.parse(eve.start_time));
             eve.end_time = new Date(Date.parse(eve.end_time));
@@ -256,6 +256,10 @@ function getPrice(ev) {
     var numbers = match.join().removeAll("$").removeAll("£").removeAll("€").split(',');
     var min = numbers.min();
 
+    if (min > 1000) {
+      return;
+    }
+
     var price = {
       full: match[numbers.indexOf(min.toString())],
       num: min
@@ -264,16 +268,17 @@ function getPrice(ev) {
     return price;
   }
   else {
-    
     var regex2 = /((gratuit)|(free)|(gratis))/;
 
     var match2 = desc.match(regex2);
-    console.log(match2[0].toUpperCase());
+
     if (match2) {
       var price = {
         full: match2[0].toUpperCase(),
         num: 0
       };
+
+      return price;
     }
   }
 }
@@ -394,7 +399,7 @@ function updateTagsAndPrice() {
       $gte: date
     }
   }).each(function(ev) {
-    var query = "SELECT description FROM event WHERE eid =" + ev.id;
+    var query = "SELECT description FROM event WHERE eid =" + ev.eid;
 
     graph.fql(query, function(err, res) {
       if (err) {
@@ -402,16 +407,20 @@ function updateTagsAndPrice() {
         return;
       }
 
-      var ev = res.data;
+      var updatedEv = res.data;
 
-      if (ev) {
-        var price = getPrice(ev);
-        var tags = getTags(ev);
+      if (updatedEv) {
+        if (updatedEv[0]) {
+          updatedEv = updatedEv[0];
+          var price = getPrice(updatedEv);
+          var tags = getTags(updatedEv);
 
-        ev.price = price;
-        ev.tags = tags;
+          ev.price = price;
+          ev.tags = tags;
 
-        Events.updateById(ev._id, ev);
+          Events.updateById(ev._id, ev);
+          console.log('UPDATE PRICE :' + ev.name);
+        }
       }
     });
   });

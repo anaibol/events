@@ -12,8 +12,14 @@ angular.module('mean').config(['$routeProvider',
     }).
     when('/popular', {
       templateUrl: 'views/events/home.html',
-    }).    
+    }).
     when('/free', {
+      templateUrl: 'views/events/home.html'
+    }).
+    when('/today', {
+      templateUrl: 'views/events/home.html'
+    }).
+    when('/weekend', {
       templateUrl: 'views/events/home.html'
     }).
     when('/create', {

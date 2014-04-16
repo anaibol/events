@@ -15,8 +15,13 @@
         <div class="datetime">
           <div class="date">
             <i class="fui-calendar-solid"></i>
-            <div class="day">{{ev.start_time | date:'dd'}}</div>
-            <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+            <div ng-if="ev.date.toDateString() !== today.toDateString()">
+              <div class="day">{{ev.start_time | date:'dd'}}</div>
+              <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+            </div>
+            <div ng-if="ev.date.toDateString() === today.toDateString()">
+              <div class="today">TODAY!</div>
+            </div>
           </div>
           <div class="time">
             <i class="fui-time"></i>

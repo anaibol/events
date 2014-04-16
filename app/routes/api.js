@@ -7,6 +7,8 @@ var _ = require('lodash');
 var request = require('request');
 var graph = require('fbgraph');
 
+var moment = require('moment');
+
 function getCountry(req, cb) {
   if (!req.session.country) {
     var ip = '';
@@ -79,19 +81,31 @@ module.exports = function(req, res) {
           if (params.type !== 'worldwide') {
             query["venue.country"] = country;
           }
-          else if (params.type !== 'popular') {
+          
+          if (params.type === 'popular') {
             sort.attending_count = 1;
           }          
-          else if (params.type !== 'free') {
+          else if (params.type === 'free') {
             query["price.num"] = 0;
           }
-          else if (params.type !== 'today') {
-            var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000));
+          else if (params.type === 'weekend') {
+            var friday = moment().day(5).toDate();
+            var sunday = moment().day(7).toDate();
+
+            query = {
+              start_time: {
+                $gte: friday,
+                $lt: sunday
+              }
+            };
+          }
+          else if (params.type === 'today') {
+            var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000) );
 
             query = {
               start_time: {
                 $gte: date,
-                $lt:dateIncreased
+                $lt: dateIncreased
               }
             };
           }

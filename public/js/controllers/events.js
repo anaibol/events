@@ -1,14 +1,19 @@
 var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, Global, $window) {
+  $scope.today = new Date();
+
   $scope.filter = {
     tags: [],
     limit: 25,
     page: 1,
-    sortBy: 'numAttending',
-    sortOrder: '-1'
+    sortBy: 'start_time',
+    sortOrder: '1'
   };
 
   var str = $location.$$path.replace('/', '');
-  
+  if (str === 'popular') {
+    $scope.filter.sortBy = 'attending_count';
+    $scope.filter.sortOrder = '-1';
+  }
   if (str) {
     $scope.filter.type = str;
   }
@@ -17,6 +22,19 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
     $scope.events = events;
     $scope.totalEvents = events.metadata.count;
     $scope.totalPages = events.metadata.count / $scope.filter.limit;
+
+    angular.forEach($scope.events, function(ev, key) {
+      if (ev.start_time) {
+        ev.date = new Date(ev.start_time);
+        // var m_names = new Array("January", "February", "March",
+        // "April", "May", "June", "July", "August", "September",
+        // "October", "November", "December");
+
+        //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
+
+         // ev.date = date.toUTCString();
+      }
+    });
   });
 
   $scope.paginate = function(page) {
@@ -42,19 +60,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
 
     return tags;
   };
-
-  // angular.forEach($scope.events, function(ev, key) {
-  //   if (ev.start_time) {
-  //     var date = new Date(ev.start_time);
-  //     var m_names = new Array("January", "February", "March",
-  //     "April", "May", "June", "July", "August", "September",
-  //     "October", "November", "December");
-
-  //     //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
-
-  //      ev.date = date.toUTCString();
-  //   }
-  // });
 
   /*angular.forEach($scope.events, function(value, key) {
       if (value.venue) {
