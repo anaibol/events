@@ -207,7 +207,7 @@ function fetchEvent(eid, term, cb) {
                 }
                 else {
                   if (eve.location && eve.venue) {
-                    Creators.insert({fid: eve.creator.fid, username: eve.creator.username});
+                    Creators.insert({fid: eve.creator.id, username: eve.creator.username});
                     Locations.insert({location: eve.location, venue: eve.venue, place: eve.place});
                   }
                   cb(newEv);
