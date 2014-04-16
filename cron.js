@@ -194,11 +194,13 @@ function fetchEvent(eid, term, cb) {
               }
             }
 
-            // if (eve) {
-            //   if (!eve.tags.length) {
-            //     eve = null;
-            //   }
-            // }
+            if (term == 'user') {
+              if (eve) {
+                if (!eve.tags.length) {
+                  eve = null;
+                }
+              }
+            }
 
             if (eve) {
               Events.insert(eve, function(err, newEv) {
@@ -328,7 +330,7 @@ function crawlUserEvents(userName) {
         var re = /\d+/i;
         var id = url.match(re);
 
-        fetchEvent(id[0], '', function(ev){
+        fetchEvent(id[0], 'user', function(ev){
           newEvents++;
           console.log(userName + ': ' + ev.name);
         });
