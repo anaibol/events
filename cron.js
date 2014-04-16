@@ -29,7 +29,7 @@ var graph = require('fbgraph');
 var accessToken = 'CAAGPsrwaxr4BADGXeox8qWYOtUe14RLbobooZA4DMJEzReUROPJvaxbnBzI3LGgNAn9qfDUefXGZBZBzZBXwxWgw3ZCyAhKe5qZAKEAveKo9VhzdOEEceUquxWaFrlEdPwXfJKEZBAnXqI8MeprXVGrCPaqJUfpUqZCkZBZBEjWpUvNoPQxE07tINZAjKSwuM34U8wZD';
 graph.setAccessToken(accessToken);
 
-var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru', 'suelta'];
+var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta'
 var users = [ 'EsenciaSalsaClub',
 'clubastoriabcn',
 'SevenDanceEscuelaBaile',
@@ -200,6 +200,7 @@ function fetchEvent(id, term, cb) {
             // }
 
             if (eve) {
+              console.log(eve);
               Events.insert(eve, function(err, newEv) {
                 if (err) {
                   // console.log(err);
@@ -207,7 +208,7 @@ function fetchEvent(id, term, cb) {
                 else {
                   if (eve.location && eve.venue) {
                     Creators.insert({fid: eve.creator.fid, username: eve.creator.username});
-                    Locations.insert({location: eve.location, venue: eve.venue});
+                    Locations.insert({location: eve.location, venue: eve.venue, place: eve.place});
                   }
                   cb(newEv);
                 }
