@@ -1,32 +1,41 @@
-<div class="event">
-  <div class="modal-header">
-    <div class="image" title="'Image'" style="background-image: url({{ev.pic_cover.source}})">
-      <div class="imageContainer">
-        <h3 class="name">{{ev.name}}</h3>
-        <div class="info">
-          <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
-            <div class="place">
-              <i class="fui-location"></i>{{ev.location}}
-            </div>
-          </a>
-          <div class="date">
-            <i class="fui-calendar-solid"></i>
+  <div class="event modal-header" style="background-image: url({{ev.pic_cover.source}})">
+    <h3 class="name">{{ev.name}}</h3>
+    <div class="title">
+      {{ev.name}}
+      <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
+      <div class="price">{{ev.price.full}}</div>
+    </div>
+    <div class="info">
+      <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
+        <div class="place" ng-show="ev.location">
+          <i class="fui-location"></i>{{ev.location}}{{ev.city}}
+        </div>
+      </a>
+      <div class="datetime">
+        <div class="date">
+          <i class="fui-calendar-solid"></i>
+          <div ng-if="ev.date.toDateString() !== today.toDateString()">
             <div class="day">{{ev.start_time | date:'dd'}}</div>
             <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
           </div>
-          <div class="time">
-            <i class="fui-time"></i>
-            <div>{{ev.start_time | date:'HH:mm'}}</div>
-          </div>          
+          <div ng-if="ev.date.toDateString() === today.toDateString()">
+            <div class="today">TODAY!</div>
+          </div>
         </div>
-      <!-- <img class="image img-rounded" src="{{ev.pic_cover.source}}"> -->
+        <div class="time">
+          <i class="fui-time"></i>
+          <div>{{ev.start_time | date:'HH:mm'}}</div>
+        </div>
       </div>
     </div>
-    <div style="background-image: url(http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false)">
+    <div class="tag-list">
+      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+    </div>
+  </div>
+<!--     <div style="background-image: url(http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false)">
 
     </div>  
-<img width="203" heigth="264" src="http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=15&size=203x264&maptype=roadmap&sensor=false"/>
-  </div>
+    <img width="203" heigth="264" src="http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=15&size=203x264&maptype=roadmap&sensor=false"/> -->
   <div class="modal-body">
     <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
     <p>{{ev.start_time | date:'EEE dd MMM HH:mm'}}</p>

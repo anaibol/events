@@ -96,7 +96,7 @@ module.exports = function(req, res) {
               break;
 
             case 'popular':
-              sort.attending_count = 1;
+              sort.attending_count = -1;
 
               break;
 

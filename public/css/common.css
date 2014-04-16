@@ -73,9 +73,11 @@ pre {
 }
 
 .event {
-  width: 100%;
+  /*width: 100%;*/
+  width: 720px;
   height: 264px;
   padding: 0;
+  text-align: left;
 }
 
 .event .title {
@@ -126,6 +128,11 @@ pre {
 .event .info .place {
   float: left;
   color: white;
+}
+
+.event.modal-header {
+  width: 100%;
+  position: relative;
 }
 
 .pac-container {
@@ -381,11 +388,11 @@ only screen and (max-width: 760px),
 
 
 .row {
- -moz-column-width: 25em;
+ /*-moz-column-width: 25em;
  -webkit-column-width: 25em;
  -moz-column-gap: 1em;
- -webkit-column-gap:1em; 
-  
+ -webkit-column-gap:1em; */
+ text-align: center;  
 }
 
 .row > .col-md-4 {
