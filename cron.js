@@ -200,7 +200,6 @@ function fetchEvent(id, term, cb) {
             // }
 
             if (eve) {
-              console.log(eve);
               Events.insert(eve, function(err, newEv) {
                 if (err) {
                   // console.log(err);

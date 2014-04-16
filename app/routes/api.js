@@ -21,7 +21,7 @@ function getCountry(req, cb) {
     request('http://freegeoip.net/json/' + ip, function(error, response, body) {
       var pos = JSON.parse(body);
       req.session.country = pos.country_name;
-      cb(pos);
+      cb(req.session.country);
     });
   } else {
     cb(req.session.country);
@@ -68,7 +68,10 @@ module.exports = function(req, res) {
           date.setSeconds(0);
           date.setMinutes(0);
           date.setHours(0);
-          
+
+          var limit = params.limit;
+          var skip = (params.page - 1) * params.limit;
+
           var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
           var sort = JSON.parse(sortStr);
 
@@ -78,51 +81,61 @@ module.exports = function(req, res) {
             }
           };
 
-          if (params.type !== 'worldwide') {
-            query["venue.country"] = country;
-          }
-          
-          if (params.type === 'popular') {
-            sort.attending_count = 1;
-          }          
-          else if (params.type === 'free') {
-            query["price.num"] = 0;
-          }
-          else if (params.type === 'weekend') {
-            var friday = moment().day(5).toDate();
-            var sunday = moment().day(7).toDate();
+          var options = {
+            limit: limit,
+            skip: skip,
+            sort: sort
+          };
 
-            query = {
-              start_time: {
-                $gte: friday,
-                $lt: sunday
-              }
-            };
+          query["venue.country"] = country;
+
+          switch (params.type) {
+            case 'worldwide':
+              delete query["venue.country"];
+
+              break;
+
+            case 'popular':
+              sort.attending_count = 1;
+
+              break;
+
+            case 'free':
+              query["price.num"] = 0;
+
+              break;
+            case 'today':
+              var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000) );
+
+              query = {
+                start_time: {
+                  $gte: date,
+                  $lt: dateIncreased
+                }
+              };
+
+              break;
+            case 'weekend':
+              var friday = moment().day(5).toDate();
+              var sunday = moment().day(7).toDate();
+
+              query = {
+                start_time: {
+                  $gte: friday,
+                  $lt: sunday
+                }
+              };
+
+              break;
           }
-          else if (params.type === 'today') {
-            var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000) );
 
-            query = {
-              start_time: {
-                $gte: date,
-                $lt: dateIncreased
-              }
-            };
-          }
-
-          var skip = (params.page - 1) * params.limit;
-
-          Entity.find(query, {
-            sort: sort,
-            limit: params.limit,
-            skip: skip
-          }, function(err, data) {
+          Entity.find(query, options, function(err, data) {
             if (err) {
               res.render('error', {
                 status: 500
               });
             } else {
-              if (data.length < params.limit) {
+              if (data.length < limit) {
                 var response = {
                   data: data,
                   count: data.length
@@ -143,7 +156,7 @@ module.exports = function(req, res) {
 
                     res.json(response);
                   }
-                });                
+                });
               }
             }
           });
