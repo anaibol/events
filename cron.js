@@ -64,8 +64,8 @@ var newEvents;
   updateAttending();
   updateTagsAndPrice();
   fetchEventsFromUsers();
-  // fetchEventsFromUsers2();
-  // fetchEventsFromLocations();
+  fetchEventsFromUsers2();
+  fetchEventsFromLocations();
 
 // }, null, true);
 
