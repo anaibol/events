@@ -98,7 +98,7 @@ function fetchEventsFromKeyword(term) {
   var searchOptions = {
     q: term,
     type: 'event',
-    limit: 100,
+    limit: 5000,
   };
 
   var options = {
