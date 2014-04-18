@@ -347,13 +347,13 @@ pre {
   background-color: #2c561d;
 }
 
-form.event .modal-body {
+.event-form .modal-body {
   padding: 0 35px;
 }
 
 @media screen and (min-width: 768px) {
   .modal-dialog {
-    width: 50%;
+    width: 1200px;
   }
 }
 
@@ -368,8 +368,20 @@ p.description {
   overflow: auto;
 }
 
-h3.name {
+h3.name, .modal-header .box {
   background: rgba(0,0,0,0.6);
+  color: white;
+}
+
+.modal-header .box {
+  position: relative;
+}
+
+.modal-header .box .title {
+  background: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 @media 

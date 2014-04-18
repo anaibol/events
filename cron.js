@@ -120,16 +120,18 @@ function fetchEventsFromKeyword(term) {
 
         var evs = res.data;
 
-        evs.forEach(function(ev) {
-        // async.each(events, function(ev, cb){ 
+        // evs.forEach(function(ev) {
+        async.each(evs, function(ev, cb){ 
           fetchEvent(ev.id, term, function(ev){
             newEvents++;
             console.log(term + ': ' + ev.name);
-            // cb();
+            cb();
           });
-        // }, function(err) {
-        //   numEvents.info(term + ': ' + newEvents);
+        }, function(err) {
+          // numEvents.info(term + ': ' + newEvents);
+          console.log(term + ': ' + newEvents)
         });
+        // console.log(term + ': ' + newEvents)
       }
     }
   });
@@ -141,7 +143,7 @@ function fetchEvent(eid, term, cb) {
   existsInDb(eid, function(exists) {
     if (!exists) {
       var query = {
-        user_event: "SELECT description, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,
+        user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,
         // event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
         event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
         //event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
@@ -194,13 +196,13 @@ function fetchEvent(eid, term, cb) {
               }
             }
 
-            if (term == 'user') {
+            // if (term == 'user') {
               if (eve) {
                 if (!eve.tags.length) {
                   eve = null;
                 }
               }
-            }
+            // }
 
             if (eve) {
               Events.insert(eve, function(err, newEv) {
@@ -228,7 +230,7 @@ function fetchEvent(eid, term, cb) {
     }
   });
 }
-
+  
 function getTags(eve) {
   var tags = [];
 

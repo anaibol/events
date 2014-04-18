@@ -1,8 +1,10 @@
   <div class="event modal-header" style="background-image: url({{ev.pic_cover.source}})">
-    <h3 class="name">{{ev.name}}</h3>
-    <div class="title">
-      <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
-      <div class="price">{{ev.price.full}}</div>
+    <div class="box">
+      <h3>{{ev.name}}</h3>
+      <div class="title">
+        <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
+        <div class="price">{{ev.price.full}}</div>
+      </div>
     </div>
     <div class="info">
       <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
@@ -30,25 +32,17 @@
     <div class="tag-list">
       <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
     </div>
-  </div>
-<!--     <div style="background-image: url(http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false)">
+    <div style="background-image: url(http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false)">
 
     </div>  
-    <img width="203" heigth="264" src="http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=15&size=203x264&maptype=roadmap&sensor=false"/> -->
+    <img width="203" heigth="264" src="http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=15&size=203x264&maptype=roadmap&sensor=false"/>    
+  </div>
   <div class="modal-body">
     <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
     <p>{{ev.start_time | date:'EEE dd MMM HH:mm'}}</p>
     
     <p class="description">{{ev.description}}</p>
-
-    <p>{{ev.location}}</p><i class="fui-location"></i>
-
-    <div class="tag-list form-group">
-      <label class="control-label">Tags</label>
-      <span class="tag-item" ng-repeat="tag in ev.tags" class="{{tag}}">{{tag}}</span>
-    </div>
-
-    <p>{{ev.price.full}}</p>
+<!--     <p>{{ev.price.full}}</p>
 
     <span class="input-group-btn">
       <div class="dropdown">
@@ -64,7 +58,7 @@
         </ul>
       </div>
     </span>
-
+ -->
     <div ezfb-xfbml="model.reloadWidget['Commens']">
         <div class="fb-comments" data-href="https://wooeva.com/events/{{ev.eid}}">
           <div class="fb-comments" data-numposts="5" data-colorscheme="light"></div>
@@ -72,13 +66,9 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="submit(image)">
-        <i class="fui-check"></i>
-        OK
-      </button>
-      <button class="btn btn-warning" ng-click="cancel()">
+      <button class="btn" ng-click="cancel()">
         <i class="fui-cross"></i>
-        Cancel
+        Close
       </button>
     </div>
 </form>
