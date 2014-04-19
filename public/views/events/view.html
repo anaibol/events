@@ -1,4 +1,6 @@
   <div class="event modal-header" style="background-image: url({{ev.pic_cover.source}})">
+    <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
+    </a>
     <div class="box">
       <h3>{{ev.name}}</h3>
       <div class="title">
@@ -32,10 +34,6 @@
     <div class="tag-list">
       <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
     </div>
-    <div style="background-image: url(http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false)">
-
-    </div>  
-    <img width="203" heigth="264" src="http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=15&size=203x264&maptype=roadmap&sensor=false"/>    
   </div>
   <div class="modal-body">
     <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
