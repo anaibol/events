@@ -146,4 +146,21 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
       console.log("Error with status code", response.status);
     });
   };
+
+  // $scope.newEvent = function(ev) {
+  //   var modalInstance = $modal.open({
+  //     templateUrl: 'views/events/form.html',
+  //     controller: 'EventFormCtrl',
+  //     resolve: {
+  //       ev: function() {
+  //         return ev;
+  //       }
+  //     }
+  //   });
+
+  //   modalInstance.result.then(function(selected) {
+  //     $scope.ev = selected;
+  //   }, function() {});
+  // };
+
 };
