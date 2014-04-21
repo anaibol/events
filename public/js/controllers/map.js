@@ -3,7 +3,7 @@
 app.controller('MapCtrl', function($scope, $http, Restangular, $modal) {
   $scope.pos = {};
 
-  $scope.markers = new Array();
+  $scope.markers = [];
   /*
   $http({
     method: 'GET',

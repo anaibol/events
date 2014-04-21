@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mean').directive('moDateInput', function ($window) {
+app.directive('moDateInput', function ($window) {
     return {
         require:'^ngModel',
         restrict:'A',

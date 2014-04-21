@@ -13,7 +13,7 @@ module.exports = function(app, passport) {
   // app.post('/users', users.create);
 
   // Setting up the userId param
-  app.param('userId', users.user);
+  // app.param('userId', users.user);
 
   // Setting the local strategy route
   /*app.post('/users/session', passport.authenticate('local', {

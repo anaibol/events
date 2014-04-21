@@ -1,7 +1,7 @@
 'use strict';
 
 //Setting up route
-angular.module('mean').config(['$routeProvider',
+app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
     when('/', {
@@ -42,20 +42,20 @@ angular.module('mean').config(['$routeProvider',
 
 
 //Setting HTML5 Location Mode
-angular.module('mean').config(['$locationProvider',
+app.config(['$locationProvider',
   function($locationProvider) {
     $locationProvider.hashPrefix('!');
   }
 ]);
 
 //Setting HTML5 Location Mode
-angular.module('mean').config(['$locationProvider',
+app.config(['$locationProvider',
   function($locationProvider) {
     $locationProvider.hashPrefix('!');
   }
 ]);
 
-angular.module('mean').config(function(RestangularProvider) {
+app.config(function(RestangularProvider) {
   RestangularProvider.setBaseUrl('/api');
 
   RestangularProvider.setResponseExtractor(function(response, operation, what, url) {
@@ -78,7 +78,7 @@ angular.module('mean').config(function(RestangularProvider) {
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
-angular.module('mean').run(function($FB, Api) {
+app.run(function($FB, Api) {
   $FB.init({
     // This is my FB app id for plunker demo app
     appId: window.fbAppId

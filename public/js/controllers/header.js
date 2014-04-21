@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mean.system').controller('HeaderCtrl', function ($scope, $rootScope, Global, $modal) {
+app.controller('HeaderCtrl', function ($scope, $rootScope, Global, $modal) {
   $scope.global = Global;
   $scope.isCollapsed = true;
 

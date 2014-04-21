@@ -2,6 +2,11 @@ body {
   color: white;
 }
 
+.inline {
+    display:inline-block;
+    width: 33%;
+}
+
 .modal-dialog {
   color: black;
 }

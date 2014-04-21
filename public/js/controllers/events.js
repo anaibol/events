@@ -1,4 +1,4 @@
-var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, Global, $window) {
+var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, Global, $window, $document) {
   $scope.today = new Date();
 
   $scope.filter = {
@@ -42,6 +42,9 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
 
     Events.get($scope.filter).then(function(events) {
       $scope.events = events;
+
+      var elem = $('.content');
+      elem.animate({scrollTop:0}, '500', 'swing');
     });
   };
 
