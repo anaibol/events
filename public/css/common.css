@@ -383,7 +383,7 @@ pre {
 
 
 p.description {
-  white-space: pre;
+  white-space: pre-line;
   overflow: auto;
 }
 
