@@ -253,7 +253,8 @@ function getTags(eve) {
 }
 
 function getPrice(ev) {
-  var desc = ev.description.toLowerCase();
+  var desc = ev.name + ' ' + ev.description;  
+  desc = desc.toLowerCase();
 
   // var n = desc.indexOf('$');
   // var n2 = desc.indexOf('€');
