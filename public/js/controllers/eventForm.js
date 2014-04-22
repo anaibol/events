@@ -45,10 +45,10 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
       //}
     } else {
 
-      if (ev.place) {
-        venue = ev.place.split(', ');
+      if ($scope.ev.place) {
+        var venue = $scope.ev.place.split(', ');
 
-        ev.venue = {
+        $scope.ev.venue = {
           country: venue[venue.length - 1]
         };
 
