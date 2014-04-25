@@ -87,31 +87,31 @@ function fetch(eid, term, cb) {
 
             ev.saved = new Date();
 
-            ev.tags = getTags(eve);
+            ev.tags = getTags(ev);
 
-            ev.price = getPrice(eve);
+            ev.price = getPrice(ev);
 
             if (ev.place.indexOf('porto')) {
               if (term === 'porto') {
-                eve = null;
+                ev = null;
               }
             }
 
             // if (term == 'user') {
-              if (eve) {
+              if (ev) {
                 if (!ev.tags.length) {
-                  eve = null;
+                  ev = null;
                 }
               }
             // }
 
-            if (eve) {
-              Events.insert(eve, function(err, newEv) {
+            if (ev) {
+              Events.insert(ev, function(err, newEv) {
                 if (err) {
                   // console.log(err);
                 }
                 else {
-                  if (eve) {
+                  if (ev) {
                     if (ev.location && ev.venue) {
                       Locations.insert({location: ev.location, venue: ev.venue, place: ev.place});
                     }
