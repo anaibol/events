@@ -47,6 +47,12 @@ app.config(['$locationProvider',
   }
 ]);
 
+// app.config(['$locationProvider',
+//   function($locationProvider) {
+//     $locationProvider.html5Mode(true);
+//   }
+// ]);
+
 app.config(function(RestangularProvider) {
   RestangularProvider.setBaseUrl('/api');
 

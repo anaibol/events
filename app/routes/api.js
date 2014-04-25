@@ -10,8 +10,6 @@ var graph = require('fbgraph');
 var moment = require('moment');
 
 function getCountry(req, cb) {
-  cb('France');
-  return;
   if (!req.session.country) {
     var ip = '';
     if (process.env.NODE_ENV === 'development') {
