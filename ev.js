@@ -148,7 +148,7 @@ module.exports.crawlUser = function(userName) {
     var $ = cheerio.load(body);
 
     if (body) {
-      $2('.eventsGrid').each(function(i, elem) {
+      $('.eventsGrid').each(function(i, elem) {
         var url = $2(this).find('a').attr('href');
         var re = /\d+/i;
         var id = url.match(re);
