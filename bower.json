@@ -20,6 +20,7 @@
     "bootstrap-ui": "~0.10.0",
     "ng-tags-input": "~1.1.1",
     "bootstrap-select": "~1.5.2",
-    "ngInfiniteScroll": "~1.1.0"
+    "ngInfiniteScroll": "~1.1.0",
+    "angular-easyfb": "~1.0.1"
   }
 }

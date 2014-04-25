@@ -40,14 +40,6 @@ app.config(['$routeProvider',
   }
 ]);
 
-
-//Setting HTML5 Location Mode
-app.config(['$locationProvider',
-  function($locationProvider) {
-    $locationProvider.hashPrefix('!');
-  }
-]);
-
 //Setting HTML5 Location Mode
 app.config(['$locationProvider',
   function($locationProvider) {
@@ -76,13 +68,15 @@ app.config(function(RestangularProvider) {
   });
 });
 
-// angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
-
-app.run(function($FB, Api) {
-  $FB.init({
-    // This is my FB app id for plunker demo app
+app.config(function (ezfbProvider) {
+  ezfbProvider.setInitParams({
     appId: window.fbAppId
   });
+});
 
+// angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
+
+app.run(function(ezfb, Api) {
+  ezfb.init();
   Api(['user', 'event']);
 });

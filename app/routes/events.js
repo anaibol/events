@@ -15,7 +15,11 @@ var hasAuthorization = function(req, res, next) {
 };
 
 module.exports = function(app) {
-  app.get('/import/:name', events.import);
+  app.get('/import/user/:name', events.importFromUser);
+  app.get('/import/user/timeline/:name', events.importFromUserTimeline);
+  app.get('/import/page/:pid', events.importFromPage);
+  app.get('/import/page/timeline/:pid', events.importFromPageTimeline);
+  app.get('/import/event/:eid', events.import);
   app.post('/events/find', events.find);
   app.post('/api/events', authorization.requiresLogin, events.create);
   app.put('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);

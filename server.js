@@ -22,6 +22,7 @@ var config = require('./config/config');
 var app = express();
 
 global.db = require('monk')(config.db);
+global.Ev = require('./ev');
 
 // Bootstrap passport config
 require('./config/passport')(passport);
