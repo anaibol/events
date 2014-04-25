@@ -10,6 +10,8 @@ var Locations = db.get('locations');
 
 var winston = require('winston');
 
+var async = require('async');
+
 winston.loggers.add('numEvents', {
   console: {
     level: 'info',
