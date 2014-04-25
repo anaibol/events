@@ -55,7 +55,7 @@ var cronJob = require('cron').CronJob;
 var newEvents;
 
 
-// new cronJob('*/30 * * * * ', function() {
+new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -68,7 +68,7 @@ var newEvents;
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-// }, null, true);
+}, null, true);
 
 function paginate(page, term) {
   graph.get(page, function(err, res) {
@@ -123,11 +123,16 @@ function fetchEventsFromKeyword(term) {
 
         // evs.forEach(function(ev) {
         async.each(evs, function(ev, cb){ 
-          Ev.fetch(ev.id, term, function(ev){
-            newEvents++;
-            console.log(term + ': ' + ev.name);
-            cb();
-          });
+          var start_time = new Date(Date.parse(ev.start_time));
+          var now = new Date();
+
+          if (start_time > now) {
+            Ev.fetch(ev.id, term, function(ev){
+              newEvents++;
+              console.log(term + ': ' + ev.name);
+              cb();
+            });
+          }
         }, function(err) {
           // numEvents.info(term + ': ' + newEvents);
           console.log(term + ': ' + newEvents);
