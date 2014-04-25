@@ -61,7 +61,7 @@ function fetch(eid, term, cb) {
 
         if (data) {               
           if (data[0].fql_result_set[0]) {
-            eve = data[0].fql_result_set[0];
+            ev = data[0].fql_result_set[0];
 
             ev.eid = parseInt(ev.eid);
 
