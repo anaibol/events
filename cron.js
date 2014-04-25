@@ -221,8 +221,8 @@ function updateTagsAndPrice() {
       if (updatedEv) {
         if (updatedEv[0]) {
           updatedEv = updatedEv[0];
-          var price = getPrice(updatedEv);
-          var tags = getTags(updatedEv);
+          var price = Ev.getPrice(updatedEv);
+          var tags = Ev.getTags(updatedEv);
 
           ev.price = price;
           ev.tags = tags;

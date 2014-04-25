@@ -38,7 +38,7 @@ function existsInDb(eid, cb) {
   });
 }
 
-var fetch = function(eid, term, cb) {
+function fetch(eid, term, cb) {
   eid = parseInt(eid);
 
   existsInDb(eid, function(exists) {
@@ -132,7 +132,7 @@ var fetch = function(eid, term, cb) {
   });
 }
 
-module.exports.crawlUser = function(userName) {
+function crawlUser(userName) {
   var options = {
     url: format('http://facebook.com/%s/events', userName),
     headers: {
@@ -162,7 +162,7 @@ module.exports.crawlUser = function(userName) {
   });
 }
 
-module.exports.crawlUserTimeline = function(userName) {
+function crawlUserTimeline(userName) {
   var options = {
     url: format('http://facebook.com/%s', userName),
     headers: {
@@ -195,7 +195,7 @@ module.exports.crawlUserTimeline = function(userName) {
   });
 }
 
-module.exports.crawlPage = function(pageId) {
+function crawlPage(pageId) {
   var options = {
     url: format('http://facebook.com/%s', pageId),
     headers: {
@@ -225,7 +225,7 @@ module.exports.crawlPage = function(pageId) {
   });
 }
 
-module.exports.crawlPageTimeline = function(pageId) {
+function crawlPageTimeline(pageId) {
   var options = {
     url: format('http://facebook.com/%s', pageId),
     headers: {
@@ -258,7 +258,7 @@ module.exports.crawlPageTimeline = function(pageId) {
   });
 }
   
-function getTags(eve) {
+function getTags(ev) {
   var tags = [];
 
   var name = eve.name;
@@ -325,8 +325,6 @@ function getPrice(ev) {
   }
 }
 
-module.exports.fetch = fetch;
-
 Array.prototype.min = function() {
   return Math.min.apply(Math, this);
 };
@@ -338,3 +336,13 @@ String.prototype.replaceAll = function(target, replacement) {
 String.prototype.removeAll = function(target) {
   return this.split(target).join('');
 };
+
+
+module.exports.fetch = fetch;
+module.exports.getTags = getTags;
+module.exports.getPrice = getPrice;
+module.exports.crawlPage = crawlPage;
+module.exports.crawlPageTimeline = crawlPageTimeline;
+module.exports.crawlUser = crawlUser;
+module.exports.crawlUserTimeline = crawlUserTimeline;
+
