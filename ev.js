@@ -149,7 +149,7 @@ module.exports.crawlUser = function(userName) {
 
     if (body) {
       $('.eventsGrid').each(function(i, elem) {
-        var url = $2(this).find('a').attr('href');
+        var url = $(this).find('a').attr('href');
         var re = /\d+/i;
         var id = url.match(re);
 
