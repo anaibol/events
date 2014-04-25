@@ -63,35 +63,35 @@ function fetch(eid, term, cb) {
           if (data[0].fql_result_set[0]) {
             eve = data[0].fql_result_set[0];
 
-            eve.eid = parseInt(eve.eid);
+            ev.eid = parseInt(ev.eid);
 
-            eve.creator = data[1].fql_result_set[0];
+            ev.creator = data[1].fql_result_set[0];
 
-            eve.start_time = new Date(Date.parse(eve.start_time));
-            eve.end_time = new Date(Date.parse(eve.end_time));
+            ev.start_time = new Date(Date.parse(ev.start_time));
+            ev.end_time = new Date(Date.parse(ev.end_time));
 
-            eve.place = [];
+            ev.place = [];
 
-            if (eve.location) eve.place.push(eve.location);
+            if (ev.location) ev.place.push(ev.location);
 
-            if (eve.venue) {
-              if (eve.venue.street) eve.place.push(eve.venue.street);
-              if (eve.venue.city) eve.place.push(eve.venue.city);
-              if (eve.venue.state) eve.place.push(eve.venue.state);
-              if (eve.venue.country) eve.place.push(eve.venue.country);
+            if (ev.venue) {
+              if (ev.venue.street) ev.place.push(ev.venue.street);
+              if (ev.venue.city) ev.place.push(ev.venue.city);
+              if (ev.venue.state) ev.place.push(ev.venue.state);
+              if (ev.venue.country) ev.place.push(ev.venue.country);
             }
 
-            eve.place = eve.place.join(', ');
+            ev.place = ev.place.join(', ');
 
-            eve.query = term;
+            ev.query = term;
 
-            eve.saved = new Date();
+            ev.saved = new Date();
 
-            eve.tags = getTags(eve);
+            ev.tags = getTags(eve);
 
-            eve.price = getPrice(eve);
+            ev.price = getPrice(eve);
 
-            if (eve.place.indexOf('porto')) {
+            if (ev.place.indexOf('porto')) {
               if (term === 'porto') {
                 eve = null;
               }
@@ -99,7 +99,7 @@ function fetch(eid, term, cb) {
 
             // if (term == 'user') {
               if (eve) {
-                if (!eve.tags.length) {
+                if (!ev.tags.length) {
                   eve = null;
                 }
               }
@@ -112,12 +112,12 @@ function fetch(eid, term, cb) {
                 }
                 else {
                   if (eve) {
-                    if (eve.location && eve.venue) {
-                      Locations.insert({location: eve.location, venue: eve.venue, place: eve.place});
+                    if (ev.location && ev.venue) {
+                      Locations.insert({location: ev.location, venue: ev.venue, place: ev.place});
                     }
 
-                    if (eve.creator) {
-                      Creators.insert({fid: eve.creator.id, username: eve.creator.username});
+                    if (ev.creator) {
+                      Creators.insert({fid: ev.creator.id, username: ev.creator.username});
                     }
                   }
 
@@ -261,8 +261,8 @@ function crawlPageTimeline(pageId) {
 function getTags(ev) {
   var tags = [];
 
-  var name = eve.name;
-  var desc = eve.description;
+  var name = ev.name;
+  var desc = ev.description;
 
   var text = name + ' ' + desc;
   text = text.toLowerCase();
