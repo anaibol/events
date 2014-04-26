@@ -298,5 +298,7 @@ exports.importFromPageTimeline = function(req, res) {
 };
 
 exports.import = function(req, res) {
-  Ev.fetch(req.params.eid);
+  Ev.fetch(req.params.eid, 'event', function (ev) {
+    res.json(ev);
+  });
 };

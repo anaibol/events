@@ -2,7 +2,7 @@
     <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
     </a>
     <div class="box">
-      <h3>{{ev.name}}</h3>
+      <h3>{{ev.name | characters: 150}}</h3>
       <div class="title">
         <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
         <div class="price">{{ev.price.full}}</div>
