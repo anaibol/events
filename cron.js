@@ -62,13 +62,13 @@ var newEvents;
 
   fetchEventsFromKeywords();
 
-  updateAttending();
-  updateTagsAndPrice();
-  fetchEventsFromUsers();
+  // updateAttending();
+  // updateTagsAndPrice();
+  // fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-// }, null, true);
+// }, null, true) ;
 
 function paginate(page, term) {
   graph.get(page, function(err, res) {
@@ -126,7 +126,7 @@ function fetchEventsFromKeyword(term) {
           var start_time = new Date(Date.parse(ev.start_time));
           var now = new Date();
 
-          if (start_time > now) {
+          if (start_time > now || start_time.getFullYear() < 2016) {
             Ev.fetch(ev.id, term, function(ev){
               newEvents++;
               console.log(term + ': ' + ev.name);

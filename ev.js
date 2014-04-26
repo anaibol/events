@@ -59,12 +59,12 @@ function fetch(eid, term, cb) {
 
         var data = res.data;
 
-        if (data) {               
+        if (data) {
           if (data[0].fql_result_set[0]) {
+
             ev = data[0].fql_result_set[0];
 
-            ev.eid = parseInt(ev.eid);
-
+            ev.eid = eid;
             ev.creator = data[1].fql_result_set[0];
 
             ev.start_time = new Date(Date.parse(ev.start_time));
@@ -128,6 +128,9 @@ function fetch(eid, term, cb) {
           }
         }
       });
+    }
+    else {
+      cb(false);
     }
   });
 }

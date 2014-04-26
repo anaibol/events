@@ -7,6 +7,12 @@ body {
     width: 33%;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .modal-dialog {
   color: black;
 }
@@ -88,6 +94,12 @@ pre {
 .event .title {
   float: left;
   width: 100%;
+  padding: 2px 5px;
+}
+
+.event .title span {
+  float: left;
+  width: calc(100% - 80px);
   padding: 2px 5px;
 }
 
