@@ -54,6 +54,7 @@ function fetch(eid, term, cb) {
       graph.fql(query, function(err, res) {
         if (err) {
           console.log(err);
+          cb(false);
           return;
         }
 
@@ -126,6 +127,11 @@ function fetch(eid, term, cb) {
               });
             }
           }
+          else {
+            cb(false);
+          }
+        } else {
+          cb(false);
         }
       });
     }
