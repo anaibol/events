@@ -64,8 +64,8 @@ new cronJob('*/30 * * * * ', function() {
 
   // updateAttending();
   // updateTagsAndPrice();
-  fetchEventsFromUsers();
-  fetchEventsFromUsers2();
+  // fetchEventsFromUsers();
+  // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
 }, null, true) ;
@@ -152,14 +152,14 @@ function fetchEventsFromUsers() {
 
   users.forEach(function(user) {
     Ev.getFromUser(user, function() {});
-    // Ev.crawlUser(user, function(){});
+    Ev.crawlUser(user, function(){});
   });
 }
 
 function fetchEventsFromUsers2() {
   Creators.find({}).each(function(creator) {
     Ev.getFromUser(creator, function() {});
-    // Ev.crawlUser(creator, function(){});
+    Ev.crawlUser(creator, function(){});
   });
 }
 
