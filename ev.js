@@ -141,7 +141,29 @@ function fetch(eid, term, cb) {
   });
 }
 
-function crawlUser(userName) {
+
+function getFromUser(userName, cb) {
+  graph.get(userName + '/events', function(err, res) {
+    var evs = res.data;
+
+    if (evs.length) {
+      evs.forEach(function (ev) {
+        var start_time = new Date(Date.parse(ev.start_time));
+        var now = new Date();
+
+        if (start_time > now || start_time.getFullYear() < 2016) {
+          fetch(ev.id, 'user', function(ev){
+            // newEvents++;
+            console.log(userName + ': ' + ev.name);
+            cb(true);
+          });
+        }
+      });
+    }
+  });
+}
+
+function crawlUser(userName, cb) {
   var options = {
     url: format('http://facebook.com/%s/events', userName),
     headers: {
@@ -157,21 +179,26 @@ function crawlUser(userName) {
     var $ = cheerio.load(body);
 
     if (body) {
-      $('.eventsGrid').each(function(i, elem) {
-        var url = $(this).find('a').attr('href');
-        var re = /\d+/i;
-        var id = url.match(re);
+      if ($('.eventsGrid').length) {
+        $('.eventsGrid').each(function(i, elem) {
+          var url = $(this).find('a').attr('href');
+          var re = /\d+/i;
+          var id = url.match(re);
 
-        fetch(id[0], 'user', function(ev){
-          // newEvents++;
-          console.log(userName + ': ' + ev.name);
+          fetch(id[0], 'user', function(ev){
+            // newEvents++;
+            console.log(userName + ': ' + ev.name);
+            cb(true);
+          });
         });
-      });
+      } else {
+        cb(false);
+      }
     }
   });
 }
 
-function crawlUserTimeline(userName) {
+function crawlUserTimeline(userName, cb) {
   var options = {
     url: format('http://facebook.com/%s', userName),
     headers: {
@@ -187,19 +214,24 @@ function crawlUserTimeline(userName) {
     if (body) {
       var $ = cheerio.load(body);
 
-      $('.timelineUnitContainer').each(function(i, elem) {
-        var url = $(this).find('a[href^="/events/"]').attr('href');
+      if ($('.timelineUnitContainer').length) {
+        $('.timelineUnitContainer').each(function(i, elem) {
+          var url = $(this).find('a[href^="/events/"]').attr('href');
 
-        if (url) {
-          var re = /\d+/i;
-          var id = url.match(re);
+          if (url) {
+            var re = /\d+/i;
+            var id = url.match(re);
 
-          fetch(id[0], 'user', function(ev){
-            // newEvents++;
-            console.log(userName + ': ' + ev.name);
-          });
-        }
-      });
+            fetch(id[0], 'user', function(ev){
+              // newEvents++;
+              console.log(userName + ': ' + ev.name);
+              cb(true);
+            });
+          }
+        });
+      } else {
+        cb(false);
+      }
     }
   });
 }
@@ -354,4 +386,5 @@ module.exports.crawlPage = crawlPage;
 module.exports.crawlPageTimeline = crawlPageTimeline;
 module.exports.crawlUser = crawlUser;
 module.exports.crawlUserTimeline = crawlUserTimeline;
+module.exports.getFromUser = getFromUser;
 

@@ -282,19 +282,33 @@ exports.nameLike = function(req, res) {
 };
 
 exports.importFromUser = function(req, res) {
-  Ev.crawlUser(req.params.name);
+  Ev.crawlUser(req.params.name, function (result) {
+    if (!result) {
+      Ev.getFromUser(req.params.name, function (result) {
+        res.send(result);
+      });
+    } else {
+      res.send(result);
+    }
+  });
 };
 
 exports.importFromUserTimeline = function(req, res) {
-  Ev.crawlUserTimeline(req.params.name);
+  Ev.crawlUserTimeline(req.params.name, function (result) {
+    res.send(result);
+  });
 };
 
 exports.importFromPage = function(req, res) {
-  Ev.crawlPage(req.params.pid);
+  Ev.crawlPage(req.params.pid, function (result) {
+    res.send(result);
+  });
 };
 
 exports.importFromPageTimeline = function(req, res) {
-  Ev.crawlPageTimeline(req.params.pid);
+  Ev.crawlPageTimeline(req.params.pid, function (result) {
+    res.send(result);
+  });
 };
 
 exports.import = function(req, res) {
