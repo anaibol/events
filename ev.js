@@ -118,7 +118,7 @@ function fetch(eid, term, cb) {
                     }
 
                     if (ev.creator) {
-                      Creators.insert({fid: ev.creator.id, username: ev.creator.username});
+                      Creators.insert({fid: ev.creator.id, username: ev.creator.name});
                     }
                   }
 
@@ -146,7 +146,7 @@ function getFromUser(userName, cb) {
   graph.get(userName + '/events', function(err, res) {
     var evs = res.data;
 
-    if (evs.length) {
+    if (evs) {
       evs.forEach(function (ev) {
         var start_time = new Date(Date.parse(ev.start_time));
         var now = new Date();
