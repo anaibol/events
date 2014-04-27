@@ -44,7 +44,6 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
         });
       //}
     } else {
-
       if ($scope.ev.place) {
         var venue = $scope.ev.place.split(', ');
 

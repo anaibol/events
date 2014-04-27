@@ -56,10 +56,7 @@ module.exports = function(req, res) {
           //ev.venue.city = venue[venue.length - 2];
         }
 
-        console.log(123);
-
         Entity.insert(obj, function(err, ev) {
-          console.log(456);
           if (err) {
             console.log(err);
           }
