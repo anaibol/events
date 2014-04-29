@@ -36,8 +36,8 @@ module.exports = function(app) {
   //app.param('eventId', events.event);
 
 
-  app.get('/:page', function(req, res) {
-      res.render('index');
-  });
+  // app.get('/:page', function(req, res) {
+  //     res.render('index');
+  // });
 
 };
