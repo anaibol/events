@@ -15,11 +15,11 @@ var hasAuthorization = function(req, res, next) {
 };
 
 module.exports = function(app) {
-  app.get('/import/user/:name', events.importFromUser);
-  app.get('/import/user/timeline/:name', events.importFromUserTimeline);
-  app.get('/import/page/:pid', events.importFromPage);
-  app.get('/import/page/timeline/:pid', events.importFromPageTimeline);
-  app.get('/import/event/:eid', events.import);
+  app.get('/import/user/:name', authorization.requiresLogin, hasAuthorization, events.importFromUser);
+  app.get('/import/user/timeline/:name', authorization.requiresLogin, hasAuthorization, events.importFromUserTimeline);
+  app.get('/import/page/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPage);
+  app.get('/import/page/timeline/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPageTimeline);
+  app.get('/import/event/:eid', authorization.requiresLogin, hasAuthorization, events.import);
   app.post('/events/find', events.find);
   app.post('/api/events', authorization.requiresLogin, events.create);
   app.put('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
@@ -28,8 +28,16 @@ module.exports = function(app) {
   app.get('/events/:eventId', events.show);
   //app.put('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
   app.del('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.destroy);
+
+  var index = require('../controllers/index');
+
   //app.get('/:eventSlug', events.all);
   // Finish with setting up the eventId param
   //app.param('eventId', events.event);
+
+
+  app.get('/:page', function(req, res) {
+      res.render('index');
+  });
 
 };

@@ -54,21 +54,37 @@ var users = [ 'EsenciaSalsaClub',
 var cronJob = require('cron').CronJob;
 var newEvents;
 
+// var TimeQueue = require('timequeue'); 
 
-new cronJob('*/30 * * * * ', function() {
+// // create a queue with max 5 concurrency every second
+// var q = new TimeQueue(worker, { concurrency: 5, every: 1000 });
+
+// // push tasks onto the queue
+// q.push(42, 24);
+// q.push(2, 74);
+
+// // optional callback when pushing tasks
+// q.push(2, 2, function(err) {
+//   // task finished
+// });
+
+
+// new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
-  fetchEventsFromKeywords();
+  // fetchEventsFromKeywords();
 
   // updateAttending();
   // updateTagsAndPrice();
-  // fetchEventsFromUsers();
+
+  fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-}, null, true) ;
+// }, null, true);
+
 
 function paginate(page, term) {
   graph.get(page, function(err, res) {
@@ -121,8 +137,8 @@ function fetchEventsFromKeyword(term) {
 
         var evs = res.data;
 
-        // evs.forEach(function(ev) {
-        async.each(evs, function(ev, cb){ 
+        evs.forEach(function(ev) {
+        // async.each(evs, function(ev, cb){ 
           var start_time = new Date(Date.parse(ev.start_time));
           var now = new Date();
 
@@ -130,12 +146,12 @@ function fetchEventsFromKeyword(term) {
             Ev.fetch(ev.id, term, function(ev){
               newEvents++;
               console.log(term + ': ' + ev.name);
-              cb();
+              // cb();
             });
           }
-        }, function(err) {
-          // numEvents.info(term + ': ' + newEvents);
-          console.log(term + ': ' + newEvents);
+        // }, function(err) {
+        //   // numEvents.info(term + ': ' + newEvents);
+        //   console.log(term + ': ' + newEvents);
         });
         // console.log(term + ': ' + newEvents)
       }
@@ -158,8 +174,8 @@ function fetchEventsFromUsers() {
 
 function fetchEventsFromUsers2() {
   Creators.find({}).each(function(creator) {
-    Ev.getFromUser(creator, function() {});
-    Ev.crawlUser(creator, function(){});
+    Ev.getFromUser(creator.username, function() {});
+    Ev.crawlUser(creator.username, function(){});
   });
 }
 
@@ -183,20 +199,14 @@ function updateAttending() {
   }).each(function(ev) {
     var query = "SELECT attending_count FROM event WHERE eid =" + ev.eid;
 
-    graph.fql(query, function(err, res) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-
-      var updatedEv = res.data;
-
+    Ev.runQuery(query, function(updatedEv) {
       if (updatedEv) {
+        console.log(12)
         if (ev.attending_count !== updatedEv.attending_count) {
           ev.attending_count = updatedEv.attending_count;
 
           Events.updateById(ev._id, updatedEv);
-          // console.log('UPDATE ATTENDING :' + ev.name);
+          console.log('UPDATE ATTENDING :' + ev.name);
         }
       }
     });
@@ -217,14 +227,7 @@ function updateTagsAndPrice() {
   }).each(function(ev) {
     var query = "SELECT description FROM event WHERE eid =" + ev.eid;
 
-    graph.fql(query, function(err, res) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-
-      var updatedEv = res.data;
-
+    updatedEv = Ev.runQuery(query, function(updatedEv) {
       if (updatedEv) {
         if (updatedEv[0]) {
           updatedEv = updatedEv[0];

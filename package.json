@@ -1,9 +1,9 @@
-{
+  {
   "name": "mean",
   "description": "Wooeva",
   "version": "0.1.2",
-  "private": false,
-  "author": "Amos Haviv",
+  "private": true,
+  "author": "Anaibol",
   "repository": {
     "type": "git",
     "url": "https://github.com/linnovate/mean.git"
@@ -13,7 +13,7 @@
     "npm": "1.3.x"
   },
   "dependencies": {
-    "express": "~3.4.7",
+    "express": "3.x",
     "jade": "~1.0.2",
     "connect-mongo": "~0.4.0",
     "connect-flash": "~0.1.1",
@@ -26,12 +26,13 @@
     "forever": "~0.10.11",
     "request": "~2.33.0",
     "fbgraph": "~0.2.9",
-    "monk": "~0.7.1",
+    "monk": "~0.8.1",
     "cron": "~1.0.3",
     "prerender-node": "^0.1.18",
     "cheerio": "^0.15.0",
     "async": "^0.7.0",
     "winston": "^0.7.3",
-    "moment": "^2.6.0"
+    "moment": "^2.6.0",
+    "limiter": "^1.0.5"
   }
 }

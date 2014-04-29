@@ -38,6 +38,28 @@ function existsInDb(eid, cb) {
   });
 }
 
+function runQuery(query, cb) {
+  graph.fql(query, function(err, res) {
+    if (err) {
+      console.log(err);
+      cb(false)
+      return;
+    }
+
+    if (res.data) {
+      if (res.data.length) {
+        result = res.data
+      } else {
+        result = false;
+      }
+    } else {
+      result = false;
+    }
+
+    cb(result);
+  });
+}
+
 function fetch(eid, term, cb) {
   eid = parseInt(eid);
 
@@ -50,16 +72,7 @@ function fetch(eid, term, cb) {
         //event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
       };
 
-      //    console.log(query);
-      graph.fql(query, function(err, res) {
-        if (err) {
-          console.log(err);
-          cb(false);
-          return;
-        }
-
-        var data = res.data;
-
+      runQuery(query, function(data) {
         if (data) {
           if (data[0].fql_result_set[0]) {
 
@@ -126,16 +139,14 @@ function fetch(eid, term, cb) {
                 }
               });
             }
-          }
-          else {
+          } else {
             cb(false);
           }
         } else {
           cb(false);
         }
       });
-    }
-    else {
+    } else {
       cb(false);
     }
   });
@@ -154,6 +165,7 @@ function getFromUser(userName, cb) {
         if (start_time > now || start_time.getFullYear() < 2016) {
           fetch(ev.id, 'user', function(ev){
             // newEvents++;
+            console.log(ev)
             console.log(userName + ': ' + ev.name);
             cb(true);
           });
@@ -380,6 +392,7 @@ String.prototype.removeAll = function(target) {
 
 
 module.exports.fetch = fetch;
+module.exports.runQuery = runQuery;
 module.exports.getTags = getTags;
 module.exports.getPrice = getPrice;
 module.exports.crawlPage = crawlPage;

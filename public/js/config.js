@@ -1,51 +1,49 @@
 'use strict';
 
 //Setting up route
-app.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-    when('/', {
-      templateUrl: 'views/events/home.html'
-    }).
-    when('/worldwide', {
-      templateUrl: 'views/events/home.html',
-    }).
-    when('/popular', {
-      templateUrl: 'views/events/home.html',
-    }).
-    when('/free', {
-      templateUrl: 'views/events/home.html'
-    }).
-    when('/today', {
-      templateUrl: 'views/events/home.html'
-    }).
-    when('/weekend', {
-      templateUrl: 'views/events/home.html'
-    }).
-    when('/create', {
-      templateUrl: 'views/events/create.html'
-    }).
-    when('/:eventId/edit', {
-      templateUrl: 'views/events/create.html'
-    }).
-    when('/events/:eventId', {
-      templateUrl: 'views/events/view.html'
-    }).
-    /*when('/', {
-    //  templateUrl: 'views/index.html'
-    }).*/
-    otherwise({
-      redirectTo: '/'
-    });
-  }
-]);
+app.config(function($locationProvider, $routeProvider) {
+  $locationProvider.html5Mode(true);
 
-//Setting HTML5 Location Mode
-app.config(['$locationProvider',
-  function($locationProvider) {
-    $locationProvider.hashPrefix('!');
-  }
-]);
+  $routeProvider.
+  when('/', {
+    templateUrl: 'views/events/home.html'
+  }).
+  when('/worldwide', {
+    templateUrl: 'views/events/home.html',
+    controller: 'EventsCtrl'
+  }).
+  when('/w  ', {
+    templateUrl: 'views/events/home.html',
+    controller: 'EventsCtrl'
+  }).
+  when('/popular', {
+    templateUrl: 'views/events/home.html',
+  }).
+  when('/free', {
+    templateUrl: 'views/events/home.html'
+  }).
+  when('/today', {
+    templateUrl: 'views/events/home.html'
+  }).
+  when('/weekend', {
+    templateUrl: 'views/events/home.html'
+  }).
+  when('/create', {
+    templateUrl: 'views/events/create.html'
+  }).
+  when('/:eventId/edit', {
+    templateUrl: 'views/events/create.html'
+  }).
+  when('/events/:eventId', {
+    templateUrl: 'views/events/view.html'
+  }).
+  /*when('/', {
+  //  templateUrl: 'views/index.html'
+  }).*/
+  otherwise({
+    redirectTo: '/'
+  });
+});
 
 // app.config(['$locationProvider',
 //   function($locationProvider) {
@@ -79,6 +77,10 @@ app.config(function (ezfbProvider) {
     appId: window.fbAppId
   });
 });
+
+// app.config(function (ApiProvider) {
+//   ApiProvider.setEntities(['user', 'event']);
+// });
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 

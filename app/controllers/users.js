@@ -1,18 +1,14 @@
 var Users = global.db.get('users');
+
+var Ev = require('../../ev');
+
 /**
  * Auth callback
  */
 exports.authCallback = function(req, res) {
-    // graph.setAccessToken(req.user.accessToken);
-
-    // var query = 'select eid, uid, rsvp_status from event_member where uid = me()';
-    // var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
-        //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
-    // graph.fql(query, function(err, res) {
-    //     console.log(res.data);
-    // });
-
-
+    Ev.getFromUser(req.user.username, function() {});
+    Ev.crawlUser(req.user.username, function(){});
+    console.log(123)
     res.redirect('/');
 };
 

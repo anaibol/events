@@ -10,6 +10,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
   };
 
   var str = $location.$$path.replace('/', '');
+
   if (str === 'popular') {
     $scope.filter.sortBy = 'attending_count';
     $scope.filter.sortOrder = '-1';
