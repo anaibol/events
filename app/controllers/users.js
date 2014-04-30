@@ -8,7 +8,6 @@ var Ev = require('../../ev');
 exports.authCallback = function(req, res) {
     Ev.getFromUser(req.user.username, function() {});
     Ev.crawlUser(req.user.username, function(){});
-    console.log(123)
     res.redirect('/');
 };
 
