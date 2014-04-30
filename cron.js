@@ -74,7 +74,7 @@ var newEvents;
   var date = new Date();
   console.log(date.toString());
 
-  // fetchEventsFromKeywords();
+  fetchEventsFromKeywords();
 
   // updateAttending();
   // updateTagsAndPrice();
@@ -201,7 +201,6 @@ function updateAttending() {
 
     Ev.runQuery(query, function(updatedEv) {
       if (updatedEv) {
-        console.log(12)
         if (ev.attending_count !== updatedEv.attending_count) {
           ev.attending_count = updatedEv.attending_count;
 
