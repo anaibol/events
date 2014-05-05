@@ -153,12 +153,15 @@ function fetch(eid, term, cb) {
 }
 
 
-function getFromUser(userName, cb) {
+function getFromUser(userName, accessToken, cb) {
+  if (accessToken) {
+    graph.setAccessToken(accessToken);
+  }
+
   graph.get(userName + '/events', function(err, res) {
     var evs = res.data;
       console.log(res);
     if (evs) {
-
       evs.forEach(function (ev) {
         var start_time = new Date(Date.parse(ev.start_time));
         var now = new Date();

@@ -89,13 +89,13 @@ module.exports = function(req, res) {
             }
           };
 
+          console.log(date)
+
           var options = {
             limit: limit,
             skip: skip,
             sort: sort
           };
-
-          query["venue.country"] = country;
 
           switch (params.type) {
             case 'worldwide':

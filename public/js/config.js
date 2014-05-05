@@ -4,6 +4,15 @@
 app.config(function($locationProvider, $routeProvider) {
   // $locationProvider.html5Mode(true);
 
+$locationProvider.hashPrefix('!');
+
+// app.config(['$locationProvider',
+//   function($locationProvider) {
+//     $locationProvider.html5Mode(true);
+//   }
+// ]);
+
+
   $routeProvider.
   when('/', {
     templateUrl: 'views/events/home.html'
@@ -44,12 +53,6 @@ app.config(function($locationProvider, $routeProvider) {
     redirectTo: '/'
   });
 });
-
-// app.config(['$locationProvider',
-//   function($locationProvider) {
-//     $locationProvider.html5Mode(true);
-//   }
-// ]);
 
 app.config(function(RestangularProvider) {
   RestangularProvider.setBaseUrl('/api');

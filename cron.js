@@ -169,14 +169,14 @@ function fetchEventsFromUsers() {
   // });
 
   users.forEach(function(user) {
-    Ev.getFromUser(user, function() {});
+    Ev.getFromUser(user, null, function() {});
     Ev.crawlUser(user, function(){});
   });
 }
 
 function fetchEventsFromUsers2() {
   Creators.find({}).each(function(creator) {
-    Ev.getFromUser(creator.username, function() {});
+    Ev.getFromUser(creator.username, null, function() {});
     Ev.crawlUser(creator.username, function(){});
   });
 }
