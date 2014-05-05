@@ -1,4 +1,4 @@
-app.service('Api',  function (Restangular, $q) {
+app.factory('Api',  function (Restangular, $q) {
   return function(entityNames) {
     entityNames.forEach(function (entityName){
       
@@ -23,6 +23,9 @@ app.service('Api',  function (Restangular, $q) {
         },
         delete: function (obj) {
           return Rest.one(obj._id).delete();
+        },
+        upload: function (obj) {
+          return Rest.post(obj);
         }
       };
     });
@@ -32,39 +35,3 @@ app.service('Api',  function (Restangular, $q) {
     return string.charAt(0).toUpperCase() + string.slice(1) + 's';
   }
 });
-
-// app.provider('ApiProvider',  function (Restangular, $q) {
-//   this.setEntities = function (entities) {
-//   //return function(entityNames) {
-//     entityNames.forEach(function (entityName){
-      
-//       var Rest = Restangular.all(entityName + 's');
-
-//       formatted = format(entityName);
-
-//       window[formatted] = {
-//         create: function (obj) {
-//           return Rest.post(obj);
-//         },
-//         get: function (filter) {
-//           // if (window.evs) {
-//           //   var def = $q.defer();
-//           //   def.resolve(window.evs);
-//           //   return def;
-//           // }
-//           return Rest.getList(filter);
-//         },
-//         update: function (obj) {
-//           return Rest.one(obj._id).customPUT(obj);
-//         },
-//         delete: function (obj) {
-//           return Rest.one(obj._id).delete();
-//         }
-//       };
-//     });
-//   };
-
-//   function format(string) {
-//     return string.charAt(0).toUpperCase() + string.slice(1) + 's';
-//   }
-// });

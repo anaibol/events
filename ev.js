@@ -112,11 +112,11 @@ function fetch(eid, term, cb) {
             }
 
             // if (term == 'user') {
-              if (ev) {
-                if (!ev.tags.length) {
-                  ev = null;
-                }
-              }
+              // if (ev) {
+              //   if (!ev.tags.length) {
+              //     ev = null;
+              //   }
+              // }
             // }
 
             if (ev) {
@@ -156,8 +156,9 @@ function fetch(eid, term, cb) {
 function getFromUser(userName, cb) {
   graph.get(userName + '/events', function(err, res) {
     var evs = res.data;
-
+      console.log(res);
     if (evs) {
+
       evs.forEach(function (ev) {
         var start_time = new Date(Date.parse(ev.start_time));
         var now = new Date();
@@ -165,7 +166,6 @@ function getFromUser(userName, cb) {
         if (start_time > now || start_time.getFullYear() < 2016) {
           fetch(ev.id, 'user', function(ev){
             // newEvents++;
-            console.log(ev)
             console.log(userName + ': ' + ev.name);
             cb(true);
           });
@@ -333,7 +333,7 @@ function getTags(ev) {
 }
 
 function getPrice(ev) {
-  var desc = ev.name + ' ' + ev.description;  
+  var desc = ev.name + ' ' + ev.description;
   desc = desc.toLowerCase();
 
   // var n = desc.indexOf('$');

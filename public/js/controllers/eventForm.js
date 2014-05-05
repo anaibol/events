@@ -1,4 +1,4 @@
-var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter) {
+var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangular) {
   $scope.result = '';
 
   $scope.options = {
@@ -56,7 +56,13 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
 
       Events.create($scope.ev).then(function(res) {
         $scope.ev._id = res._id;
-        $modalInstance.close($scope.ev);
+
+        var formData = new FormData();
+        formData.append('image', image, image.name);
+
+        Restangular.all('events').one($scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined}).then(function(res){
+          $modalInstance.close($scope.ev);
+        });
       });
     }
   };

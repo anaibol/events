@@ -105,6 +105,9 @@
       </div>
     </div>
 
+    <input type="file" accept="image/*" image="image"/>
+<img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" />
+
     <div class="control-group">
       <label class="control-label">Tags</label>
       <tags-input ng-model="ev.tags" allowed-tags-pattern="(bachata+|salsa+|kizomba+|porto+|cubaine+|cubana+|semba+|samba+|merengue+|tango+|reggaeton)">

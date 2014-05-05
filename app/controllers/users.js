@@ -6,9 +6,11 @@ var Ev = require('../../ev');
  * Auth callback
  */
 exports.authCallback = function(req, res) {
-    Ev.getFromUser(req.user.username, function() {});
-    Ev.crawlUser(req.user.username, function(){});
-    res.redirect('/');
+  Ev.getFromUser(req.user.username, function(ev){
+    console.log(ev);
+  });
+
+  res.redirect('/');
 };
 
 /**
