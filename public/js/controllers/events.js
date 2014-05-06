@@ -1,4 +1,4 @@
-var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, Global, $window, $document) {
+var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, Global, $window, $document, $routeParams) {
   $scope.today = new Date();
 
   $scope.filter = {
@@ -6,17 +6,26 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
     limit: 25,
     page: 1,
     sortBy: 'start_time',
-    sortOrder: '1'
+    sortOrder: '1',
+    fromDate: '',
+    toDate: ''
   };
 
   var str = $location.$$path.replace('/', '');
 
-  if (str === 'popular') {
-    $scope.filter.sortBy = 'attending_count';
-    $scope.filter.sortOrder = '-1';
-  }
-  if (str) {
-    $scope.filter.type = str;
+  if ($routeParams.date) {
+    $scope.filter.type = 'date';
+
+    $scope.filter.fromDate = $routeParams.date;
+    $scope.filter.toDate = '';
+  } else {
+    if (str === 'popular') {
+      $scope.filter.sortBy = 'attending_count';
+      $scope.filter.sortOrder = '-1';
+    }
+    if (str) {
+      $scope.filter.type = str;
+    }
   }
 
   Events.get($scope.filter).then(function(events) {

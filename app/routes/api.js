@@ -98,6 +98,26 @@ module.exports = function(req, res) {
           };
 
           switch (params.type) {
+            case 'date':
+              var from = new Date(params.fromDate);
+
+              if (params.toDate) {
+                var to = new Date(params.toDate);
+
+                query.start_time = {
+                  $gte: from,
+                  $lt: to
+                };
+              } else {
+                query.start_time = {
+                  $gte: from
+                };
+              }
+
+              console.log(query.start_time)
+
+              break;
+
             case 'worldwide':
               delete query["venue.country"];
 

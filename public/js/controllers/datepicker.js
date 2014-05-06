@@ -8,6 +8,8 @@ var DatepickerCtrl = function ($scope) {
 
   $scope.minDate = new Date();
 
+  $scope.date = $scope.minDate;
+
   $scope.dateOptions = {
     'year-format': "'yy'",
     'starting-day': 1,

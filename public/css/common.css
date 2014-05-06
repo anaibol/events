@@ -204,10 +204,23 @@ pre {
   -webkit-appearance: menulist;
 }
 
+.dropdown-menu {
+  background-color: #34495e;
+  color: #cccccc;
+  padding: 4px 0 6px;  
+}
+
 .date .dropdown-menu {
   visibility: visible;
   opacity: 1;
   padding: 7px;
+}
+
+body > .dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+  padding: 7px;
+  z-index: 99999;
 }
 
 .date .dropdown-menu .text-center .btn {
@@ -216,12 +229,6 @@ pre {
 
 .date .showButtonBar {
   display: none;
-}
-
-.dropdown-menu {
-  background-color: #34495e;
-  color: #cccccc;
-  padding: 4px 0 6px;  
 }
 
 .caret {display:none;}

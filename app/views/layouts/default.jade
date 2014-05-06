@@ -16,6 +16,12 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
               a(href='#!/weekend')
                 i.glyphicon.glyphicon-calendar
                 | Weekend
+
+            li(ng-controller='DatepickerCtrl', ng-click='open($event)')
+              a(href='#!', datepicker-popup='dd-MMMM-yyyy', ng-change='changeDate(date)', ng-model='date', min='minDate', datepicker-options='dateOptions', is-open='opened')
+                i.fui-calendar-solid(ng-click='open($event)')
+                | {{date | date:'dd MMMM'}}
+                
             li
               a(href='#!/free')
                 i.glyphicon.glyphicon-usd

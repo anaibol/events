@@ -21,7 +21,7 @@ $locationProvider.hashPrefix('!');
     templateUrl: 'views/events/home.html',
     controller: 'EventsCtrl'
   }).
-  when('/w  ', {
+  when('/date/:date', {
     templateUrl: 'views/events/home.html',
     controller: 'EventsCtrl'
   }).
@@ -53,6 +53,10 @@ $locationProvider.hashPrefix('!');
     redirectTo: '/'
   });
 });
+
+  app.config(function (datepickerPopupConfig) {
+      datepickerPopupConfig.appendToBody = true;
+    });
 
 app.config(function(RestangularProvider) {
   RestangularProvider.setBaseUrl('/api');

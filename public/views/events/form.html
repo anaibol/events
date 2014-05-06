@@ -45,7 +45,7 @@
     <div class="control-group date">
       <label class="control-label">Date</label>
       <div class="input-group" ng-controller="DatepickerCtrl" ng-click="open($event)">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd-MMMM-yyyy" is-open="opened" />
+        <input type="text" class="form-control" ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
         <span class="input-group-btn">
           <button class="btn btn-default"><i class="fui-calendar-solid" ng-click="open($event)"></i></button>
         </span>
