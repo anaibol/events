@@ -1,7 +1,7 @@
 <div ng-controller="HeaderCtrl">
     <ul class="navbar-nav nav">
         <li>
-            <a class="navbar-brand" href="/">Wooeva</a>
+            <a class="navbar-brand" href="/">Wooepa</a>
         </li>
         <li ng-repeat="item in menu" ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
             <a href="#!/{{item.link}}">{{item.title}}</a>

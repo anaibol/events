@@ -86,10 +86,9 @@ module.exports = function(req, res) {
           var query = {
             start_time: {
               $gte: date
-            }
+            },
+            "venue.country": country
           };
-
-          console.log(date)
 
           var options = {
             limit: limit,
@@ -113,8 +112,6 @@ module.exports = function(req, res) {
                   $gte: from
                 };
               }
-
-              console.log(query.start_time)
 
               break;
 
