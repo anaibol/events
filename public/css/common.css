@@ -99,7 +99,7 @@ pre {
 
 .event .title span {
   float: left;
-  width: calc(100% - 80px);
+  max-width: calc(100% - 80px);
   padding: 2px 5px;
 }
 
@@ -144,6 +144,7 @@ pre {
 .event .info .place {
   float: left;
   color: white;
+  max-width: 72%;
 }
 
 .event.modal-header {
@@ -406,9 +407,14 @@ p.description {
   overflow: auto;
 }
 
-h3.name, .modal-header .box {
+.modal-header .box {
   background: rgba(0,0,0,0.6);
   color: white;
+}
+
+.box h3 {
+  max-width: calc(100% - 150px);
+  font-size: 35px;
 }
 
 .modal-header .box {
