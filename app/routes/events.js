@@ -29,8 +29,6 @@ module.exports = function(app) {
   //app.put('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
   app.del('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.destroy);
 
-  var index = require('../controllers/index');
-
   //app.get('/:eventSlug', events.all);
   // Finish with setting up the eventId param
   //app.param('eventId', events.event);
