@@ -18,6 +18,14 @@ app.factory('Api',  function (Restangular, $q) {
           // }
           return Rest.getList(filter);
         },
+        one: function (slug) {
+          // if (window.evs) {
+          //   var def = $q.defer();
+          //   def.resolve(window.evs);
+          //   return def;
+          // }
+          return Rest.get(slug);
+        },
         update: function (obj) {
           return Rest.one(obj._id).customPUT(obj);
         },

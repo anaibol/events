@@ -73,8 +73,18 @@ module.exports = function(app, passport, db) {
 
     //var resources = ['user', 'event'];
 
-    app.all('/api/:entity', function(req, res, next) {
+    app.all('/api/:entity/:slug?*', function(req, res, next) {
       require('../app/routes/api')(req, res);
+    });
+
+    app.get('/:slug', function(req, res, next) {
+      res.render('index', {
+        title: 'Wooeva',
+        user: req.user ? JSON.stringify(req.user) : 'null',
+        fbAppId: global.fbAppId,
+        //events: events,
+        //pos: pos
+      });
     });
 
     // Setting the fav icon and static folder
@@ -104,7 +114,5 @@ module.exports = function(app, passport, db) {
         error: 'Not found'
       });
     });
-
-    app.use(require('prerender-node'));
   });
 };

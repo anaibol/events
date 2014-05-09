@@ -67,123 +67,135 @@ module.exports = function(req, res) {
         break;
 
       case 'get':
-        getCountry(req, function(country) {
-          var url_parts = url.parse(req.url, true);
-          var params = url_parts.query;
-
-          var date = new Date();
-
-          date.setSeconds(0);
-          date.setMinutes(0);
-          date.setHours(0);
-
-          var limit = params.limit;
-          var skip = (params.page - 1) * params.limit;
-
-          var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
-          var sort = JSON.parse(sortStr);
-
-          var query = {
-            start_time: {
-              $gte: date
-            },
-            "venue.country": country
-          };
-
-          var options = {
-            limit: limit,
-            skip: skip,
-            sort: sort
-          };
-
-          switch (params.type) {
-            case 'date':
-              var from = new Date(params.fromDate);
-
-              if (params.toDate) {
-                var to = new Date(params.toDate);
-
-                query.start_time = {
-                  $gte: from,
-                  $lt: to
-                };
-              } else {
-                query.start_time = {
-                  $gte: from
-                };
-              }
-
-              break;
-
-            case 'worldwide':
-              delete query["venue.country"];
-
-              break;
-
-            case 'popular':
-              sort.attending_count = -1;
-
-              break;
-
-            case 'free':
-              query["price.num"] = 0;
-
-              break;
-            case 'today':
-              var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000) );
-
-              query = {
-                start_time: {
-                  $gte: date,
-                  $lt: dateIncreased
-                }
-              };
-
-              break;
-            case 'weekend':
-              var friday = moment().day(5).toDate();
-              var sunday = moment().day(7).toDate();
-
-              query.start_time = {
-                $gte: friday,
-                $lt: sunday
-              };
-
-              break;
-          }
-
-          Entity.find(query, options, function(err, data) {
+        if (req.params.slug) {
+          Entity.findOne({slug: req.params.slug}, function(err, data) {
             if (err) {
               res.render('error', {
                 status: 500
               });
             } else {
-              if (data.length < limit) {
-                var response = {
-                  data: data,
-                  count: data.length
-                };
-
-                res.json(response);
-              } else {
-                Entity.count(query, function(err, count) {
-                  if (err) {
-                    res.render('error', {
-                      status: 500
-                    });
-                  } else {
-                    var response = {
-                      data: data,
-                      count: count
-                    };
-
-                    res.json(response);
-                  }
-                });
-              }
+              res.json(data);
             }
           });
-        });
+        } else {
+          getCountry(req, function(country) {
+            var url_parts = url.parse(req.url, true);
+            var params = url_parts.query;
+
+            var date = new Date();
+
+            date.setSeconds(0);
+            date.setMinutes(0);
+            date.setHours(0);
+
+            var limit = params.limit;
+            var skip = (params.page - 1) * params.limit;
+
+            var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
+            var sort = JSON.parse(sortStr);
+
+            var query = {
+              start_time: {
+                $gte: date
+              },
+              "venue.country": country
+            };
+
+            var options = {
+              limit: limit,
+              skip: skip,
+              sort: sort
+            };
+
+            switch (params.type) {
+              case 'date':
+                var from = new Date(params.fromDate);
+
+                if (params.toDate) {
+                  var to = new Date(params.toDate);
+
+                  query.start_time = {
+                    $gte: from,
+                    $lt: to
+                  };
+                } else {
+                  query.start_time = {
+                    $gte: from
+                  };
+                }
+
+                break;
+
+              case 'worldwide':
+                delete query["venue.country"];
+
+                break;
+
+              case 'popular':
+                sort.attending_count = -1;
+
+                break;
+
+              case 'free':
+                query["price.num"] = 0;
+
+                break;
+              case 'today':
+                var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000) );
+
+                query = {
+                  start_time: {
+                    $gte: date,
+                    $lt: dateIncreased
+                  }
+                };
+
+                break;
+              case 'weekend':
+                var friday = moment().day(5).toDate();
+                var sunday = moment().day(7).toDate();
+
+                query.start_time = {
+                  $gte: friday,
+                  $lt: sunday
+                };
+
+                break;
+            }
+
+            Entity.find(query, options, function(err, data) {
+              if (err) {
+                res.render('error', {
+                  status: 500
+                });
+              } else {
+                if (data.length < limit) {
+                  var response = {
+                    data: data,
+                    count: data.length
+                  };
+
+                  res.json(response);
+                } else {
+                  Entity.count(query, function(err, count) {
+                    if (err) {
+                      res.render('error', {
+                        status: 500
+                      });
+                    } else {
+                      var response = {
+                        data: data,
+                        count: count
+                      };
+
+                      res.json(response);
+                    }
+                  });
+                }
+              }
+            });
+          });
+        }
 
         break;
 

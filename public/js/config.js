@@ -2,7 +2,8 @@
 
 //Setting up route
 app.config(function($locationProvider, $routeProvider) {
-  // $locationProvider.html5Mode(true);
+
+$locationProvider.html5Mode(true);
 
 $locationProvider.hashPrefix('!');
 
@@ -43,8 +44,9 @@ $locationProvider.hashPrefix('!');
   when('/:eventId/edit', {
     templateUrl: 'views/events/create.html'
   }).
-  when('/events/:eventId', {
-    templateUrl: 'views/events/view.html'
+  when('/:slug', {
+    templateUrl: 'views/events/view.html',
+    controller: 'EventCtrl'
   }).
   /*when('/', {
   //  templateUrl: 'views/index.html'

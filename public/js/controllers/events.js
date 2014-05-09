@@ -45,6 +45,8 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
          // ev.date = date.toUTCString();
       }
     });
+
+    $scope.htmlReady();
   });
 
   $scope.paginate = function(page) {

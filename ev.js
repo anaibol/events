@@ -1,7 +1,8 @@
 var request = require('request')
   , cheerio = require('cheerio')
   , async = require('async')
-  , format = require('util').format;
+  , format = require('util').format
+  , slugify = require('slugify');
 
 var config = require('./config/config');
 
@@ -100,6 +101,8 @@ function fetch(eid, term, cb) {
             ev.query = term;
 
             ev.saved = new Date();
+
+            ev.slug = slugify(ev.name.toLowerCase());
 
             ev.tags = getTags(ev);
 

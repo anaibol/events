@@ -26,3 +26,11 @@ app.directive('moDateInput', function ($window) {
         }
     };
 });
+
+app.directive("linkOverload", function () {
+    return function (scope, element) {
+        element.on("click", function (evt) {           
+            evt.preventDefault();
+        });
+    }
+});
