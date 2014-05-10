@@ -95,6 +95,7 @@ pre {
   float: left;
   width: 100%;
   padding: 2px 5px;
+  color: white;
 }
 
 .event .title span {
@@ -127,6 +128,14 @@ pre {
   line-height: 37px;
 }
 
+.event .info .place {
+  float: left;
+  color: white;
+  width: 70%;
+  padding: 0 7px;
+  line-height: 37px;
+}
+
 .event .info .date, .event .info .time {  
   color: white;
   text-align: center;
@@ -139,12 +148,6 @@ pre {
 .event .info i, .event .info div {
   float: left;
   padding: 0 3px;
-}
-
-.event .info .place {
-  float: left;
-  color: white;
-  max-width: 72%;
 }
 
 .event.modal-header {

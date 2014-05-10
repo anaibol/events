@@ -7,10 +7,10 @@
         <div class="price">{{ev.price.full}}</div>
       </div>
       <div class="info">
-        <div href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
-          <div class="place" ng-show="ev.location">
-            <i class="fui-location"></i>{{ev.location}}{{ev.city}}, {{ev.venue.street}}
-          </div>
+        <div class="place" ng-show="ev.location">
+          <i class="fui-location"></i>
+          <div class="location">{{ev.location | characters:50}}{{ev.city | characters:50}}</div>
+          <div class="street truncate">{{ev.venue.street}}</div>
         </div>
         <div class="datetime">
           <div class="date">
