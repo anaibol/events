@@ -1,6 +1,10 @@
 var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, Global, $window, $document, $routeParams) {
   $scope.today = new Date();
 
+  $scope.today.setSeconds(0);
+  $scope.today.setMinutes(0);
+  $scope.today.setHours(0);
+
   $scope.filter = {
     tags: [],
     limit: 25,
@@ -19,6 +23,8 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
     $scope.filter.fromDate = $routeParams.date;
     $scope.filter.toDate = '';
   } else {
+    $scope.filter.fromDate = $scope.today.getFullYear() + '-' + ($scope.today.getMonth() + 1) + '-' + $scope.today.getDate();
+
     if (str === 'popular') {
       $scope.filter.sortBy = 'attending_count';
       $scope.filter.sortOrder = '-1';

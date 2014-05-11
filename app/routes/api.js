@@ -82,24 +82,23 @@ module.exports = function(req, res) {
             var url_parts = url.parse(req.url, true);
             var params = url_parts.query;
 
-            var date = new Date();
-
-            date.setSeconds(0);
-            date.setMinutes(0);
-            date.setHours(0);
-
             var limit = params.limit;
             var skip = (params.page - 1) * params.limit;
 
             var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
             var sort = JSON.parse(sortStr);
 
+            var from = new Date(params.fromDate);
+
             var query = {
               start_time: {
-                $gte: date
+                $gte: from
               },
               "venue.country": country
             };
+
+
+            console.log(from)
 
             var options = {
               limit: limit,
@@ -109,8 +108,6 @@ module.exports = function(req, res) {
 
             switch (params.type) {
               case 'date':
-                var from = new Date(params.fromDate);
-
                 if (params.toDate) {
                   var to = new Date(params.toDate);
 
@@ -141,11 +138,11 @@ module.exports = function(req, res) {
 
                 break;
               case 'today':
-                var dateIncreased = new Date(date.getTime() + (24 * 60 * 60 * 1000) );
+                var dateIncreased = new Date(from.getTime() + (24 * 60 * 60 * 1000) );
 
                 query = {
                   start_time: {
-                    $gte: date,
+                    $gte: from,
                     $lt: dateIncreased
                   }
                 };
