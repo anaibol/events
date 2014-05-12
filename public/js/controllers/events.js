@@ -35,7 +35,11 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
   }
 
   Events.get($scope.filter).then(function(events) {
-    $scope.events = events;
+    $scope.events = events.filter(function(element, index, array) {
+      var date = new Date(element.start_time);
+      return date.getDate() > $scope.today.getDate() - 1;
+    });
+
     $scope.totalEvents = events.metadata.count;
     $scope.totalPages = events.metadata.count / $scope.filter.limit;
 
