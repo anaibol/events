@@ -85,9 +85,10 @@ pre {
 
 .event {
   /*width: 100%;*/
-  width: 720px;
+  width: 600px;
+  max-width: 100%;
   height: 264px;
-  padding: 0;
+  padding: 7px;
   text-align: left;
 }
 
@@ -123,15 +124,16 @@ pre {
 .event .info {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  padding: 0 7px;
+  left: 0;
+  width: 98%;
   line-height: 37px;
+  margin: 7px;
 }
 
 .event .info .place {
   float: left;
   color: white;
-  width: 69%;
+  /*width: 69%;*/
   padding: 0 7px;
   line-height: 37px;
 }
@@ -681,3 +683,26 @@ footer .container {
     -webkit-box-shadow: 0 0 100px 15px #F4F6AD;
   }
 }
+
+
+            body {
+                margin-top: 1em;
+            }
+
+            .masonry-brick {
+                /*margin: 1em;*/
+                display: none;
+            }
+
+            .masonry-brick.loaded {
+                display: block;
+            }
+
+            .container {
+              width: 100%
+            }
+
+            .contain {
+              width: 100%;
+              position: relative;
+            }

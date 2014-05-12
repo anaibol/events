@@ -24,6 +24,7 @@
     "angular-truncate": "*",
     "angular-easyfb": "~1.0.1",
     "classy": "*",
-    "angular-seo": "*"
+    "angular-seo": "*",
+    "angular-masonry": "~0.8.1"
   }
 }
