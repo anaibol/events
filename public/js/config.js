@@ -47,13 +47,14 @@ app.config(function($locationProvider, $routeProvider) {
   when('/:slug', {
     templateUrl: 'views/events/view.html',
     controller: 'EventCtrl'
-  }).
-  /*when('/', {
-  //  templateUrl: 'views/index.html'
-  }).*/
-  otherwise({
-    redirectTo: '/'
-  });
+  })
+  // .
+  // when('/', {
+  // //  templateUrl: 'views/index.html'
+  // }).
+  // otherwise({
+  //   redirectTo: '/'
+  // });
 });
 
   app.config(function (datepickerPopupConfig) {
