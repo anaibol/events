@@ -160,6 +160,14 @@ module.exports = function(req, res) {
                 break;
             }
 
+
+            // query.start_time = { $or: [ query.start_time, {  } ]}};
+
+
+            // query.start_tim = { $or: [ query.start_time, {  } ]}};
+
+            // $or: [ { qty: { $lt: 20 } }, { sale: true } ]
+
             Entity.find(query, options, function(err, data) {
               if (err) {
                 res.render('error', {
