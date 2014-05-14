@@ -43,17 +43,23 @@
     </div>
 
     <div class="control-group date">
-      <label class="control-label">Date</label>
+      <label class="control-label">Date and time</label>
       <div class="input-group" ng-controller="DatepickerCtrl" ng-click="open($event)">
         <input type="text" class="form-control" ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
         <span class="input-group-btn">
           <button class="btn btn-default"><i class="fui-calendar-solid" ng-click="open($event)"></i></button>
         </span>
       </div>
-    </div>
 
-    <div class="control-group">
-      <label class="control-label">Time</label>
+      <label class="control-label">Repeat</label>
+      <input type="checkbox" ng-model="ev.repeat">
+
+      <div class="repeat" ng-show="ev.repeat">
+        <select ng-model="ev.day">
+          <option ng-repeat="day in days" value="{{$index + 1}}">{{day}}</option>
+        </select>
+      </div>
+
       <div ng-controller="TimepickerCtrl" ng-model="ev.start_time">
         <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
         <i class="fui-time"></i>

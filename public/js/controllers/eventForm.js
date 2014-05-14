@@ -1,6 +1,16 @@
 var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangular) {
   $scope.result = '';
 
+  $scope.days =[
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ];
+
   $scope.options = {
     types: '(establishment)'
   };
@@ -54,11 +64,14 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
         //ev.venue.city = venue[venue.length - 2];
       }
 
+      console.log($scope.ev.repeat)
+      console.log($scope.ev.day)
+
       Events.create($scope.ev).then(function(res) {
         $scope.ev._id = res._id;
 
         var formData = new FormData();
-        formData.append('image', image, image.name);
+        formData.append('image', image);
 
         Restangular.all('events').one($scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined}).then(function(res){
           $modalInstance.close($scope.ev);
