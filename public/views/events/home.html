@@ -1,44 +1,46 @@
 <section class="events" ng-controller="EventsCtrl" class="js-packery" data-packery-options='{ "itemSelector": ".event" }'>
   <a class="event" link-overload ng-click="open(ev)" href="/{{ev.slug}}" ng-repeat="ev in events">
-    <img src="{{ev.pic_cover.source}}" />
+    <div ng-show="ev.price.num == 0" class="ribbon-wrapper-green"><div class="ribbon-green">{{ev.price.full}}</div></div>
+    <div class="title">
+      <span class="truncate">{{ev.name}}</span>
+      <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
+      <div ng-show="ev.price.num > 0" class="price">{{ev.price.full}}</div>
+    </div>
+    <div class="tag-list">
+      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+    </div>
     <div class="containing" style="background-image: url({{ev.pic_cover.source}});">
+    <img src="{{ev.pic_cover.source}}" />
       <!-- position: absolute; top: 0; left: 0; z-index: -1; 
 
 "background-image: url({{ev.pic_cover.source}})" link-overload ng-click="open(ev)" href="/{{ev.slug}} " ng-repeat="ev in events">
       <img src="{{ev.pic_cover.source}}" style="visibility:hidden; max-width: 600px;"/>
        -->
-      <div ng-show="ev.price.num == 0" class="ribbon-wrapper-green"><div class="ribbon-green">{{ev.price.full}}</div></div>
-      <div class="title">
-        <span class="truncate">{{ev.name}}</span>
-        <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
-        <div ng-show="ev.price.num > 0" class="price">{{ev.price.full}}</div>
-      </div>
-      <div class="tag-list">
-        <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
-      </div>
     </div>
-    <div class="info">
-      <div class="datetime">
-        <div class="date">
-          <i class="fui-calendar-solid"></i>
-          <div ng-if="ev.date.toDateString() !== today.toDateString()">
-            <div class="day">{{ev.start_time | date:'dd'}}</div>
-            <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+    <div class="contain">
+      <div class="info">
+        <div class="datetime">
+          <div class="date">
+            <i class="fui-calendar-solid"></i>
+            <div ng-if="ev.date.toDateString() !== today.toDateString()">
+              <div class="day">{{ev.start_time | date:'dd'}}</div>
+              <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+            </div>
+            <div ng-if="ev.date.toDateString() === today.toDateString()">
+              <div class="today">TODAY!</div>
+            </div>
           </div>
-          <div ng-if="ev.date.toDateString() === today.toDateString()">
-            <div class="today">TODAY!</div>
+          <div class="time">
+            <i class="fui-time"></i>
+            <div>{{ev.start_time | date:'HH:mm'}}</div>
           </div>
         </div>
-        <div class="time">
-          <i class="fui-time"></i>
-          <div>{{ev.start_time | date:'HH:mm'}}</div>
-        </div>
-      </div>
-      <div class="place-info">
-        <div class="place" ng-show="ev.location">
-          <i class="fui-location"></i>
-          <div class="location">{{ev.location | characters:50}}{{ev.city | characters:50}}</div>
-          <div class="street truncate">{{ev.venue.street}}</div>
+        <div class="place-info">
+          <div class="place" ng-show="ev.location">
+            <i class="fui-location"></i>
+            <div class="location">{{ev.location | characters:50}}{{ev.city | characters:50}}</div>
+            <div class="street truncate">{{ev.venue.street}}</div>
+          </div>
         </div>
       </div>
     </div>
