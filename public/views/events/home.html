@@ -17,30 +17,28 @@
       <img src="{{ev.pic_cover.source}}" style="visibility:hidden; max-width: 600px;"/>
        -->
     </div>
-    <div class="contain">
-      <div class="info">
-        <div class="datetime">
-          <div class="date">
-            <i class="fui-calendar-solid"></i>
-            <div ng-if="ev.date.toDateString() !== today.toDateString()">
-              <div class="day">{{ev.start_time | date:'dd'}}</div>
-              <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
-            </div>
-            <div ng-if="ev.date.toDateString() === today.toDateString()">
-              <div class="today">TODAY!</div>
-            </div>
+    <div class="info">
+      <div class="datetime">
+        <div class="date">
+          <i class="fui-calendar-solid"></i>
+          <div ng-if="ev.date.toDateString() !== today.toDateString()">
+            <div class="day">{{ev.start_time | date:'dd'}}</div>
+            <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
           </div>
-          <div class="time">
-            <i class="fui-time"></i>
-            <div>{{ev.start_time | date:'HH:mm'}}</div>
+          <div ng-if="ev.date.toDateString() === today.toDateString()">
+            <div class="today">TODAY!</div>
           </div>
         </div>
-        <div class="place-info">
-          <div class="place" ng-show="ev.location">
-            <i class="fui-location"></i>
-            <div class="location">{{ev.location | characters:50}}{{ev.city | characters:50}}</div>
-            <div class="street truncate">{{ev.venue.street}}</div>
-          </div>
+        <div class="time">
+          <i class="fui-time"></i>
+          <div>{{ev.start_time | date:'HH:mm'}}</div>
+        </div>
+      </div>
+      <div class="place-info">
+        <div class="place" ng-show="ev.location">
+          <i class="fui-location"></i>
+          <div class="location">{{ev.location | characters:50}}{{ev.city | characters:50}}</div>
+          <div class="street truncate">{{ev.venue.street}}</div>
         </div>
       </div>
     </div>
