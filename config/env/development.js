@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = {
-  db: "mongodb://localhost/wooeva-dev",
-  dbName: "wooeva-dev",
+  db: "mongodb://localhost/wooepa-dev",
+  dbName: "wooepa-dev",
   app: {
-    name: "Wooeva - Development"
+    name: "Wooepa - Development"
   },
   facebook: {
     clientID: "1511193072439143",

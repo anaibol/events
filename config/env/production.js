@@ -1,15 +1,15 @@
 'use strict';
 
 module.exports = {
-  db: "mongodb://localhost/wooeva",
-  dbName: "wooeva",
+  db: "mongodb://localhost/wooepa",
+  dbName: "wooepa",
   app: {
-    name: "Wooeva - Production"
+    name: "Wooepa - Production"
   },
   facebook: {
     clientID: "439472799532734",
     clientSecret: "6e940b23fdbf539939dffbe479678623",
-    callbackURL: "http://wooeva.com/auth/facebook/callback"
+    callbackURL: "http://wooepa.com/auth/facebook/callback"
   }
   /*,
   twitter: {

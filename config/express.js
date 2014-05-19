@@ -79,7 +79,7 @@ module.exports = function(app, passport, db) {
 
     app.get('/:slug', function(req, res, next) {
       res.render('index', {
-        title: 'Wooeva',
+        title: 'Wooepa',
         user: req.user ? JSON.stringify(req.user) : 'null',
         fbAppId: global.fbAppId,
         //events: events,

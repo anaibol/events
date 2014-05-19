@@ -197,7 +197,7 @@ exports.find = function(req, res) {
     pos.longitude = '-74.000';
 
     res.render('index', {
-      title: 'Wooeva',
+      title: 'Wooepa',
       user: 'null',
       pos: JSON.stringify(pos),
       evs: 'null'

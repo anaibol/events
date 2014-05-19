@@ -1,4 +1,4 @@
-var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, Global, $window, $document, $routeParams) {
+var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $routeParams) {
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -7,7 +7,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
 
   $scope.filter = {
     tags: [],
-    limit: 25,
+    limit: 50,
     page: 1,
     sortBy: 'start_time',
     sortOrder: '1',
@@ -57,6 +57,13 @@ var EventsCtrl = function($scope, $routeParams, $location, $filter, $modal, $q, 
     });
 
     $scope.htmlReady();
+
+    var container = document.querySelector('.events');
+
+    imagesLoaded(container, function(instance) {
+        var myPackery = new Packery(container, {});
+    });
+
   });
 
   $scope.paginate = function(page) {
