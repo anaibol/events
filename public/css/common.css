@@ -1,5 +1,9 @@
 body {
-  color: white;
+  background-image: url(http://www.planetevents.es/wp-content/blogs.dir/181/files/2013/09/planet_events_background.jpg);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  -webkit-background-size: cover;
+  background-size: cover;
 }
 
 .inline {
@@ -21,20 +25,19 @@ body {
   padding-left:20px;
   margin-left:0
 }
-navbar.container {
-  background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
-  background-color: #FAFAFA;
-}
 
 .leaflet-bottom.leaflet-right {
   display: none;
 }
-#wrapper {
-  margin-top: 50px;
-  pointer-events: none;
-  width: 100%;
-  height: calc(100% - 50px);
-}
+
+/*
+.content {
+  background-image: url(http://www.planetevents.es/wp-content/blogs.dir/181/files/2013/09/planet_events_background.jpg);
+  background-repeat: no-repeat;
+  background-position-x: center;
+  -webkit-background-size: cover;
+  background-size: cover;
+}*/
 
 .container {
   width: 100%;
@@ -77,9 +80,9 @@ nav .navbar-header {
 
 .content {
   overflow: auto;
-  margin-top: 50px;
   width: 100%;
   height: 100%;
+  padding: 80px;
 }
 .leaflet-top {
   display: none;
@@ -135,7 +138,7 @@ pre {
 }
 
 .event .title .price {
-  margin-right: 10px;
+margin-right: 10px;
 }
 
 .event .title, .event .info {
@@ -210,6 +213,11 @@ pre {
     position: fixed;
     display: inline-block;
     float: left;
+}
+
+.navbar-inverse {
+  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .navbar-nav > li > .dropdown-menu {

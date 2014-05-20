@@ -43,13 +43,13 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                 i.fui-plus
                 | Submit an event
                 
-          ul.nav.navbar-nav.navbar-right.navbar-inverse(ng-show='!global.authenticated')
+          ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')
             li
               a(href='/auth/facebook', target='_self')
                 i.glyphicon.glyphicon-user
                 | Login
 
-          ul.nav.navbar-nav.navbar-right.navbar-inverse(ng-show='global.authenticated')
+          ul.nav.navbar-nav.navbar-right(ng-show='global.authenticated')
             li.dropdown
               a.dropdown-toggle(href='#', toggle='dropdown')
                 {{ global.user.name }}
