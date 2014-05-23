@@ -71,9 +71,9 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
         $scope.ev._id = res._id;
 
         var formData = new FormData();
-        formData.append('image', image);
+        formData.append('image', image.dataURL);
 
-        Restangular.all('events').one($scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined}).then(function(res){
+        Restangular.all('events').one($scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
           $modalInstance.close($scope.ev);
         });
       });

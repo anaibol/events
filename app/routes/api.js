@@ -9,6 +9,10 @@ var graph = require('fbgraph');
 
 var moment = require('moment');
 
+var fs = require('fs');
+
+var formidable = require('formidable');
+
 function getCountry(req, cb) {
   if (!req.session.country) {
     var ip = '';
@@ -47,21 +51,21 @@ module.exports = function(req, res) {
         var venue;
 
         if (obj.place) {
-          venue = ev.place.split(', ');
+          venue = obj.place.split(', ');
 
           obj.venue = {
             country: venue[venue.length - 1]
           };
 
-          //ev.venue.city = venue[venue.length - 2];
+          //obj.venue.city = venue[venue.length - 2];
         }
 
-        Entity.insert(obj, function(err, ev) {
+        Entity.insert(obj, function(err, obj) {
           if (err) {
             console.log(err);
           }
 
-          res.json(ev);
+          res.json(obj);
         });
 
         break;
@@ -253,6 +257,37 @@ module.exports = function(req, res) {
 
         break;
     
+      case 'put':
+    console.log(req.body);
+    console.log(req.files);
+
+        var form = new formidable.IncomingForm();
+        //form.uploadDir = __dirname + 'public/uploads');
+
+        form.parse(req, function(err, fields, files) {
+          console.log(files)
+          res.json(req.body)
+        });
+
+
+        if (req.files.image) {
+          console.log(req.files);
+          var image = req.files.image;
+              console.log(image.name);
+          var newImageLocation = path.join(__dirname, 'public/uploads', image.name);
+          
+          fs.readFile(image.path, function(err, data) {
+              fs.writeFile(newImageLocation, data, function(err) {
+                  res.json(200, {
+                      src: 'images/' + image.name,
+                      size: image.size
+                  });
+              });
+          });
+        }
+
+        break;
+
       case 'delete':
         break;
     }

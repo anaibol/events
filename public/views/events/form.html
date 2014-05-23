@@ -1,5 +1,5 @@
 <form class="event-form form-horizontal">
-  <div ng-show="ev.name" class="event modal-header" style="background-image: url({{ev.pic_cover.source}})">
+<!--   <div ng-show="ev.name" class="event modal-header" style="background-image: url({{ev.pic_cover.source}})">
     <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" ng-show="ev.place" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
     </a>
     <div class="box">
@@ -18,20 +18,20 @@
       <div class="datetime">
         <div class="date">
           <i class="fui-calendar-solid"></i>
-          <div> <!-- ng-if="ev.date.toDateString() !== today.toDateString()" -->
+          <div ng-if="ev.date.toDateString() !== today.toDateString()">
             <div class="day">{{ev.start_time | date:'dd'}}</div>
             <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
           </div>
-         <!--  <div ng-if="ev.date.toDateString() === today.toDateString()">
+          <div ng-if="ev.date.toDateString() === today.toDateString()">
             <div class="today">TODAY!</div>
-          </div> -->
+          </div>
         </div>
         <div class="time">
           <i class="fui-time"></i>
           <div>{{ev.start_time | date:'HH:mm'}}</div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="tag-list">
       <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
     </div>
