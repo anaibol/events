@@ -183,12 +183,16 @@ margin-right: 10px;
 }
 
 .event .info .datetime {
-  float: right;
+  float: left;
 }
 
 .event .info i, .event .info div {
   float: left;
   padding: 0 3px;
+}
+
+.event .place-info .place .location {
+  font-size: 15px;
 }
 
 .event.modal-header {
