@@ -106,6 +106,8 @@ function fetch(eid, term, cb) {
 
             ev.tags = getTags(ev);
 
+            ev.festival = getFestival(ev);
+            
             ev.price = getPrice(ev);
 
             if (ev.place.indexOf('porto')) {
@@ -336,6 +338,27 @@ function getTags(ev) {
   }
 
   return tags;
+}
+
+function getFestival(ev) {
+  var festival=false;
+
+  var name = ev.name;
+  var desc = ev.description;
+
+  var text = name + ' ' + desc;
+  text = text.toLowerCase();
+  var words = ["congress", "festival"]; 
+  for (var i = 0; i < words.length; i++) {
+    var str = words[i];
+    var n = text.search(str);
+
+    if (n > 0) {
+      festival = true;
+    }
+  }
+
+  return festival;
 }
 
 function getPrice(ev) {

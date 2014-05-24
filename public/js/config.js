@@ -29,6 +29,9 @@ app.config(function($locationProvider, $routeProvider) {
   when('/popular', {
     templateUrl: 'views/events/home.html',
   }).
+  when('/festival', {
+    templateUrl: 'views/events/home.html',
+  }).
   when('/free', {
     templateUrl: 'views/events/home.html'
   }).
