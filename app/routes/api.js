@@ -139,6 +139,7 @@ module.exports = function(req, res) {
 
               case 'festival':
                 query.festival = true;
+                delete query["venue.country"];
 
                 break;
 
