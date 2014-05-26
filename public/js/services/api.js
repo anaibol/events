@@ -4,11 +4,11 @@ app.factory('Api',  function (Restangular, $q) {
       
       var Rest = Restangular.all(entityName + 's');
 
-      formatted = format(entityName);
+      var entity = format(entityName);
 
-      window[formatted] = {
-        create: function (obj) {
-          return Rest.post(obj);
+      window[entity] = {
+        put: function () {
+          return Rest.put();
         },
         get: function (filter) {
           // if (window.evs) {
@@ -31,9 +31,6 @@ app.factory('Api',  function (Restangular, $q) {
         },
         delete: function (obj) {
           return Rest.one(obj._id).delete();
-        },
-        upload: function (obj) {
-          return Rest.post(obj);
         }
       };
     });

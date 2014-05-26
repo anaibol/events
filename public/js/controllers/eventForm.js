@@ -67,15 +67,15 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
       console.log($scope.ev.repeat)
       console.log($scope.ev.day)
 
-      Events.create($scope.ev).then(function(res) {
-        $scope.ev._id = res._id;
+      var formData = new FormData();
+      formData.append('image', image.dataURL);
 
-        var formData = new FormData();
-        formData.append('image', image.dataURL);
+      for (property in $scope.ev) {
+        formData.append(property, angular.toJson($scope.ev[property]));
+      }
 
-        Restangular.all('events').one($scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
-          $modalInstance.close($scope.ev);
-        });
+      Restangular.all('events').withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
+        $modalInstance.close($scope.ev);
       });
     }
   };

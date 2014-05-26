@@ -11,7 +11,18 @@ var moment = require('moment');
 
 var fs = require('fs');
 
-var formidable = require('formidable');
+function parseDataURL(string) {
+  var regex = /^data:.+\/(.+);base64,(.*)$/;
+
+  var match = string.match(regex);
+
+  var buffer = new Buffer(match[2], 'base64');
+
+  return {
+    ext: match[1],
+    data: new Buffer(match[2], 'base64')
+  };
+}
 
 function getCountry(req, cb) {
   if (!req.session.country) {
@@ -101,9 +112,6 @@ module.exports = function(req, res) {
               "venue.country": country
             };
 
-
-            console.log(from)
-
             var options = {
               limit: limit,
               skip: skip,
@@ -134,12 +142,6 @@ module.exports = function(req, res) {
 
               case 'popular':
                 sort.attending_count = -1;
-
-                break;
-
-              case 'festival':
-                query.festival = true;
-                delete query["venue.country"];
 
                 break;
 
@@ -264,33 +266,37 @@ module.exports = function(req, res) {
         break;
     
       case 'put':
-    console.log(req.body);
-    console.log(req.files);
+        var obj = _.clone(req.body);
+        delete obj.image;
 
-        var form = new formidable.IncomingForm();
-        //form.uploadDir = __dirname + 'public/uploads');
+        obj.start_time = new Date(obj.start_time);
+        obj.end_time = new Date(obj.end_time);
 
-        form.parse(req, function(err, fields, files) {
-          console.log(files)
-          res.json(req.body)
-        });
+        var venue;
 
+        if (obj.place) {
+          venue = obj.place.split(', ');
 
-        if (req.files.image) {
-          console.log(req.files);
-          var image = req.files.image;
-              console.log(image.name);
-          var newImageLocation = path.join(__dirname, 'public/uploads', image.name);
-          
-          fs.readFile(image.path, function(err, data) {
-              fs.writeFile(newImageLocation, data, function(err) {
-                  res.json(200, {
-                      src: 'images/' + image.name,
-                      size: image.size
-                  });
-              });
-          });
+          obj.venue = {
+            country: venue[venue.length - 1]
+          };
+
+          //obj.venue.city = venue[venue.length - 2];
         }
+
+        Entity.insert(obj, function(err, obj) {
+          if (err) {
+            console.log(err);
+          }
+          console.log(req.body.image)
+          var parsed = parseDataURL(req.body.image);
+
+          var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + parsed.ext;
+                      
+          fs.writeFileSync(newImageLocation, parsed.data);
+
+          res.json(obj);
+        });
 
         break;
 
