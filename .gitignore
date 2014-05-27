@@ -4,3 +4,4 @@ public/lib/*
 sftp-config.json
 npm-debug.log
 public/logs/*
+*.png

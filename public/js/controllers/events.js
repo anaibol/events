@@ -46,6 +46,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     angular.forEach($scope.events, function(ev, key) {
       if (ev.start_time) {
         ev.date = new Date(ev.start_time);
+
         // var m_names = new Array("January", "February", "March",
         // "April", "May", "June", "July", "August", "September",
         // "October", "November", "December");

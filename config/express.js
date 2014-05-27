@@ -51,7 +51,7 @@ module.exports = function(app, passport, db) {
   app.configure(function() {
     // The cookieParser should be above session
     app.use(express.cookieParser());
-
+    app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.multipart());
 

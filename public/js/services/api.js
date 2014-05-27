@@ -7,8 +7,8 @@ app.factory('Api',  function (Restangular, $q) {
       var entity = format(entityName);
 
       window[entity] = {
-        put: function () {
-          return Rest.put();
+        post: function (data) {
+          return Rest.post(data);
         },
         get: function (filter) {
           // if (window.evs) {

@@ -53,34 +53,6 @@ module.exports = function(req, res) {
     var verb = req.method.toLowerCase();
 
     switch (verb) {
-      case 'post':
-        var obj = req.body;
-
-        obj.start_time = new Date(obj.start_time);
-        obj.end_time = new Date(obj.end_time);
-
-        var venue;
-
-        if (obj.place) {
-          venue = obj.place.split(', ');
-
-          obj.venue = {
-            country: venue[venue.length - 1]
-          };
-
-          //obj.venue.city = venue[venue.length - 2];
-        }
-
-        Entity.insert(obj, function(err, obj) {
-          if (err) {
-            console.log(err);
-          }
-
-          res.json(obj);
-        });
-
-        break;
-
       case 'get':
         if (req.params.slug) {
           Entity.findOne({slug: req.params.slug}, function(err, data) {
@@ -265,35 +237,48 @@ module.exports = function(req, res) {
 
         break;
     
-      case 'put':
-        var obj = _.clone(req.body);
-        delete obj.image;
+      case 'post':
+        var ev;
 
-        obj.start_time = new Date(obj.start_time);
-        obj.end_time = new Date(obj.end_time);
+        if (typeof req.body.model === 'string') {
+          ev = JSON.parse(req.body.model);
+        } else {
+          ev = req.body.model;
+        }
+
+        ev.start_time = new Date(ev.start_time);
+        ev.end_time = new Date(ev.end_time);
+
+        ev.venue = {
+          country: "France"
+        } 
 
         var venue;
 
-        if (obj.place) {
-          venue = obj.place.split(', ');
+        if (ev.place) {
+          venue = ev.place.split(', ');
 
-          obj.venue = {
+          ev.venue = {
             country: venue[venue.length - 1]
           };
 
           //obj.venue.city = venue[venue.length - 2];
         }
 
-        Entity.insert(obj, function(err, obj) {
+        if (req.body.image) {
+          var parsed = parseDataURL(req.body.image);
+          ev.image = parsed.ext;
+        }
+
+        Entity.insert(ev, function(err, obj) {
           if (err) {
             console.log(err);
           }
-          console.log(req.body.image)
-          var parsed = parseDataURL(req.body.image);
 
-          var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + parsed.ext;
-                      
-          fs.writeFileSync(newImageLocation, parsed.data);
+          if (req.body.image) {
+            var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + parsed.ext;
+            fs.writeFileSync(newImageLocation, parsed.data);
+          }
 
           res.json(obj);
         });

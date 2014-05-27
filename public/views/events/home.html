@@ -9,13 +9,8 @@
     <div class="tag-list">
       <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
     </div>
-    <div class="containing" style="background-image: url({{ev.pic_cover.source ? ev.pic_cover.source : 'https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-ash4/t1.0-9/s720x720/10153845_663871483649788_7061739113857324208_n.jpg'}});">
-    <img src="{{ev.pic_cover.source ? ev.pic_cover.source : 'https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-ash4/t1.0-9/s720x720/10153845_663871483649788_7061739113857324208_n.jpg'}}" />
-      <!-- position: absolute; top: 0; left: 0; z-index: -1; 
-
-"background-image: url({{ev.pic_cover.source}})" link-overload ng-click="open(ev)" href="/{{ev.slug}} " ng-repeat="ev in events">
-      <img src="{{ev.pic_cover.source}}" style="visibility:hidden; max-width: 600px;"/>
-       -->
+    <div class="containing" style="background-image: url({{ev.image ? '/uploads/' + ev._id + '.' + ev.image : ev.pic_cover.source}});">
+      <img src="{{ev.image ? '/uploads/' + ev._id + '.' + ev.image : ev.pic_cover.source}}" />
     </div>
     <div class="info">
       <div class="datetime">
