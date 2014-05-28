@@ -97,7 +97,7 @@ app.config(function(RestangularProvider) {
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
-app.run(function(ezfb, Api) {
+app.run(function(Api) { //ezfb
   // ezfb.init();
   Api(['user', 'event']);
 });
