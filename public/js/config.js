@@ -85,11 +85,11 @@ app.config(function(RestangularProvider) {
   });
 });
 
-app.config(function (ezfbProvider) {
-  ezfbProvider.setInitParams({
-    appId: window.fbAppId
-  });
-});
+// app.config(function (ezfbProvider) {
+//   ezfbProvider.setInitParams({
+//     appId: window.fbAppId
+//   });
+// });
 
 // app.config(function (ApiProvider) {
 //   ApiProvider.setEntities(['user', 'event']);
@@ -98,6 +98,6 @@ app.config(function (ezfbProvider) {
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
 app.run(function(ezfb, Api) {
-  ezfb.init();
+  // ezfb.init();
   Api(['user', 'event']);
 });
