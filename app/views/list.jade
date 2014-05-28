@@ -1,0 +1,12 @@
+extends layouts/default
+
+block content
+  section(ng-view)
+    each ev in evs
+      h1 #{ev.name}
+      h2 #{ev.description}
+      h3 #{ev.start_time}
+
+      ul
+        each tag in ev.tags
+          li= tag

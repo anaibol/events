@@ -145,14 +145,6 @@ module.exports = function(app, passport, db) {
     });
 
     app.get('/:slug', function(req, res, next) {
-      // res.render('index', {
-      //   title: 'Wooepa',
-      //   user: req.user ? JSON.stringify(req.user) : 'null',
-      //   fbAppId: global.fbAppId,
-      //   //events: events,
-      //   //pos: pos
-      // });
-
       Events.findOne({ slug: req.params.slug }, function(err, ev) {
         res.render('event', {
           title: 'Wooepa',
@@ -161,6 +153,15 @@ module.exports = function(app, passport, db) {
       });
     });
 
+    app.get('/tag/:tag', function(req, res, next) {
+      Events.find({ tags: { $all: [ req.params.tag ] } }, function(err, evs) {
+        console.log(evs)
+        res.render('list', {
+          title: 'Wooepa',
+          evs: evs
+        });
+      });
+    });
 
     app.get('/sitemap/index.xml.gz', function(req, res) {
       var siteMapFile = path.join(config.root + '/public', 'index.xml.gz');
