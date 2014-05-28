@@ -96,8 +96,7 @@ module.exports = function(app, passport, db) {
          title: 'Wooepa',
          user: req.user ? JSON.stringify(req.user) : 'null',
          fbAppId: global.fbAppId,
-         events: events,
-         pos: pos
+         events: events
        });
     });
 
@@ -154,13 +153,10 @@ module.exports = function(app, passport, db) {
       //   //pos: pos
       // });
 
-      Events.find({ slug: req.params.slug }, function(err, ev) {
-        console.log(ev)
+      Events.findOne({ slug: req.params.slug }, function(err, ev) {
         res.render('event', {
           title: 'Wooepa',
-          user: null,
-          fbAppId: global.fbAppId,
-          event: ev.name
+          ev: ev
         });
       });
     });

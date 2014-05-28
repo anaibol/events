@@ -20,10 +20,10 @@ module.exports = function(app) {
   app.get('/import/page/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPage);
   app.get('/import/page/timeline/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPageTimeline);
   app.get('/import/event/:eid', authorization.requiresLogin, hasAuthorization, events.import);
-  app.post('/events/find', events.find);
-  app.post('/api/events', authorization.requiresLogin, events.create);
-  app.put('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
-  app.get('/api/events', events.get);
+  // app.post('/events/find', events.find);
+  // app.post('/api/events', authorization.requiresLogin, events.create);
+  // app.put('/api/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);
+  // app.get('/api/events', events.get);
   
   app.get('/events/:eventId', events.show);
   //app.put('/events/:eventId', authorization.requiresLogin, hasAuthorization, events.update);

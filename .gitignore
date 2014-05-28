@@ -5,3 +5,5 @@ sftp-config.json
 npm-debug.log
 public/logs/*
 *.png
+
+*.jpeg

@@ -11,6 +11,8 @@ var moment = require('moment');
 
 var fs = require('fs');
 
+var slugify = require('slugify');
+
 function parseDataURL(string) {
   var regex = /^data:.+\/(.+);base64,(.*)$/;
 
@@ -144,13 +146,16 @@ module.exports = function(req, res) {
                 break;
             }
 
+            // var query2 = _.clone(query);
 
-            // query.start_time = { $or: [ query.start_time, {  } ]}};
+            // delete query2.start_time;
 
+            // query2.repeat = moment().format('dddd');
 
-            // query.start_tim = { $or: [ query.start_time, {  } ]}};
-
-            // $or: [ { qty: { $lt: 20 } }, { sale: true } ]
+            // query = {$or:[
+            //     query,
+            //     query2
+            // ]};
 
             Entity.find(query, options, function(err, data) {
               if (err) {
@@ -243,7 +248,7 @@ module.exports = function(req, res) {
         if (typeof req.body.model === 'string') {
           ev = JSON.parse(req.body.model);
         } else {
-          ev = req.body.model;
+          ev = req.body;
         }
 
         ev.start_time = new Date(ev.start_time);
@@ -269,6 +274,8 @@ module.exports = function(req, res) {
           var parsed = parseDataURL(req.body.image);
           ev.image = parsed.ext;
         }
+
+        ev.slug = slugify(ev.name.toLowerCase());
 
         Entity.insert(ev, function(err, obj) {
           if (err) {
