@@ -121,6 +121,7 @@ module.exports = function(req, res) {
 
               case 'festival':
                 query.festival = true;
+                delete query["venue.country"];
 
                 break;
 
@@ -260,7 +261,7 @@ module.exports = function(req, res) {
         ev.end_time = new Date(ev.end_time);
 
         ev.venue = {
-          country: "France"
+          country: "Argentina"
         } 
 
         var venue;
