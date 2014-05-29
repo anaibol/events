@@ -119,6 +119,11 @@ module.exports = function(req, res) {
 
                 break;
 
+              case 'festival':
+                query.festival = true;
+
+                break;
+
               case 'free':
                 query["price.num"] = 0;
 
