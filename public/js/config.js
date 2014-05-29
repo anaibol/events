@@ -16,44 +16,44 @@ app.config(function($locationProvider, $routeProvider) {
 
   $routeProvider.
   when('/', {
-    templateUrl: 'views/events/home.html'
+    templateUrl: '/views/events/home.html'
   }).
   when('/worldwide', {
-    templateUrl: 'views/events/home.html',
+    templateUrl: '/views/events/home.html',
     controller: 'EventsCtrl'
   }).
   when('/date/:date', {
-    templateUrl: 'views/events/home.html',
+    templateUrl: '/views/events/home.html',
     controller: 'EventsCtrl'
   }).
   when('/popular', {
-    templateUrl: 'views/events/home.html',
+    templateUrl: '/views/events/home.html',
   }).
   when('/festival', {
-    templateUrl: 'views/events/home.html',
+    templateUrl: '/views/events/home.html',
   }).
   when('/free', {
-    templateUrl: 'views/events/home.html'
+    templateUrl: '/views/events/home.html'
   }).
   when('/today', {
-    templateUrl: 'views/events/home.html'
+    templateUrl: '/views/events/home.html'
   }).
   when('/weekend', {
-    templateUrl: 'views/events/home.html'
+    templateUrl: '/views/events/home.html'
   }).
   when('/create', {
-    templateUrl: 'views/events/create.html'
+    templateUrl: '/views/events/create.html'
   }).
   when('/:eventId/edit', {
-    templateUrl: 'views/events/create.html'
+    templateUrl: '/views/events/create.html'
   }).
   when('/:slug', {
-    templateUrl: 'views/events/view.html',
+    templateUrl: '/views/events/view.html',
     controller: 'EventCtrl'
   })
   // .
   // when('/', {
-  // //  templateUrl: 'views/index.html'
+  // //  templateUrl: '/views/index.html'
   // }).
   // otherwise({
   //   redirectTo: '/'
