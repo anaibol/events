@@ -89,6 +89,17 @@ module.exports = function(app, passport, db) {
       require('../app/routes/api')(req, res);
     });
 
+    app.get('/data/:date', function(req, res, next) {
+      var events = {};
+
+       res.render('index', {
+         title: 'Wooepa',
+         user: req.user ? JSON.stringify(req.user) : 'null',
+         fbAppId: global.fbAppId,
+         events: events
+       });
+    });
+
     app.get('/popular', function(req, res, next) {
       var events = {};
 

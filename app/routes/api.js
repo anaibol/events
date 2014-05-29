@@ -286,14 +286,14 @@ module.exports = function(req, res) {
         Entity.insert(ev, function(err, obj) {
           if (err) {
             console.log(err);
-          }
+          } else {
+            if (req.body.image) {
+              var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + parsed.ext;
+              fs.writeFileSync(newImageLocation, parsed.data);
+            }
 
-          if (req.body.image) {
-            var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + parsed.ext;
-            fs.writeFileSync(newImageLocation, parsed.data);
+            res.json(obj);
           }
-
-          res.json(obj);
         });
 
         break;
