@@ -22,6 +22,10 @@ app.config(function($locationProvider, $routeProvider) {
     templateUrl: '/views/events/home.html',
     controller: 'EventsCtrl'
   }).
+  when('/:user/events', {
+    templateUrl: '/views/events/home.html',
+    controller: 'EventsCtrl'
+  }).
   when('/worldwide', {
     templateUrl: '/views/events/home.html',
     controller: 'EventsCtrl'

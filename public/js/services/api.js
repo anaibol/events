@@ -26,7 +26,7 @@ app.factory('Api',  function (Restangular, $q) {
           // }
           return Rest.get(slug);
         },
-        update: function (obj) {
+        put: function (obj) {
           return Rest.one(obj._id).customPUT(obj);
         },
         delete: function (obj) {

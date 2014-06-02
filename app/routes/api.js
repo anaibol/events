@@ -101,7 +101,11 @@ module.exports = function(req, res) {
                 delete query.start_time;
                 delete query["venue.country"];
 
-                query["creator.id"] = req.user.facebook.id;
+                if (params.user) {
+                  query["creator.name"] = params.user;
+                } else {
+                  query["creator.id"] = req.user.facebook.id;
+                }
 
                 break;
 
@@ -213,41 +217,16 @@ module.exports = function(req, res) {
 
         break;
 
-      case 'update':
-        var obj = req.obj;
+      case 'put':
+        var obj = req.body;
 
-        // if (req.files.image) {
-        //   console.log(req.files);
-        //   var image = req.files.image;
-        //       console.log(image.name);
-        //   var newImageLocation = path.join(__dirname, 'public/uploads', image.name);
-          
-        //   fs.readFile(image.path, function(err, data) {
-        //       fs.writeFile(newImageLocation, data, function(err) {
-        //           res.json(200, {
-        //               src: 'images/' + image.name,
-        //               size: image.size
-        //           });
-        //       });
-        //   });
-        // }
+        obj.start_time = new Date(obj.start_time);
+        obj.end_time = new Date(obj.end_time);
 
-        // console.log(req.body.data);
-        obj = _.extend(req.body);
-        // ev.start_time = new Date(ev.start_time);
-        // ev.end_time = new Date(ev.end_time);
-
-        // var venue;
-
-        // if (ev.place) {
-        //   venue = ev.place.split(', ');
-
-        //   ev.venue = {
-        //     country: venue[venue.length - 1]
-        //   };
-
-          //ev.venue.city = venue[venue.length - 2];
-        //}
+        if (req.body.image) {
+          var parsed = parseDataURL(req.body.image);
+          ev.image = parsed.ext;
+        }
 
         Entity.updateById(obj._id, obj, function(err) {
           if (err) {
@@ -256,6 +235,11 @@ module.exports = function(req, res) {
               obj: obj
             });
           } else {
+            if (obj.image) {
+              var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + obj.image.split('.').pop();
+              fs.writeFileSync(newImageLocation, parsed.data);
+            }
+
             res.jsonp(obj);
           }
         });
@@ -273,22 +257,6 @@ module.exports = function(req, res) {
 
         ev.start_time = new Date(ev.start_time);
         ev.end_time = new Date(ev.end_time);
-
-        ev.venue = {
-          country: "Argentina"
-        } 
-
-        var venue;
-
-        if (ev.place) {
-          venue = ev.place.split(', ');
-
-          ev.venue = {
-            country: venue[venue.length - 1]
-          };
-
-          //obj.venue.city = venue[venue.length - 2];
-        }
 
         if (req.body.image) {
           var parsed = parseDataURL(req.body.image);

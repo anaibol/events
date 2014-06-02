@@ -408,38 +408,19 @@ function getPrice(ev) {
 }
 
 function getPriceFromFullPrice(price) {
-  if (match) {
-    var numbers = price.removeAll("$").removeAll("£").removeAll("€").split(',');
-    var min = numbers.min();
+  var numbers = price.removeAll("$").removeAll("£").removeAll("€").split(',');
+  var min = numbers.min();
 
-    if (min > 1000) {
-      return {};
-    }
-
-    var price = {
-      full: match[numbers.indexOf(min.toString())],
-      num: min
-    };
-
-    return price;
+  if (min > 1000) {
+    return {};
   }
-  else {
-    var regex2 = /((gratuit)|(free)|(gratis))/;
 
-    var match2 = desc.match(regex2);
+  var price = {
+    full: price,
+    num: min
+  };
 
-    if (match2) {
-      var price = {
-        full: match2[0].toUpperCase(),
-        num: 0
-      };
-
-      return price;
-    }
-    else {
-      return {};
-    }
-  }
+  return price;
 }
 
 Array.prototype.min = function() {

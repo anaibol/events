@@ -1,41 +1,4 @@
 <form class="event-form form-horizontal">
-<!--   <div ng-show="ev.name" class="event modal-header" style="background-image: url({{ev.pic_cover.source}})">
-    <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" ng-show="ev.place" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
-    </a>
-    <div class="box">
-      <h3>{{ev.name}}</h3>
-      <div class="title">
-        <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
-        <div class="price">{{ev.price.full}}</div>
-      </div>
-    </div>
-    <div class="info">
-      <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
-        <div class="place" ng-show="ev.location">
-          <i class="fui-location"></i>{{ev.location}}{{ev.city}}
-        </div>
-      </a>
-      <div class="datetime">
-        <div class="date">
-          <i class="fui-calendar-solid"></i>
-          <div ng-if="ev.date.toDateString() !== today.toDateString()">
-            <div class="day">{{ev.start_time | date:'dd'}}</div>
-            <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
-          </div>
-          <div ng-if="ev.date.toDateString() === today.toDateString()">
-            <div class="today">TODAY!</div>
-          </div>
-        </div>
-        <div class="time">
-          <i class="fui-time"></i>
-          <div>{{ev.start_time | date:'HH:mm'}}</div>
-        </div>
-      </div>
-    </div> -->
-    <div class="tag-list">
-      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
-    </div>
-  </div>
   <div class="modal-body">
     <div class="control-group">
       <label class="control-label">Name</label>
@@ -82,6 +45,16 @@
     </div>
 
     <div class="control-group inline">
+      <label class="control-label">Country</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-autocomplete ng-model="ev.country" />
+        <span class="input-group-addon">
+          <i class="fui-location"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="control-group inline">
       <label class="control-label">City</label>
       <div class="input-append input-group">
         <input type="text" class="form-control" ng-autocomplete options="{types: '(cities)'}" ng-model="ev.city" />
@@ -103,7 +76,7 @@
     <div class="control-group">
       <label class="control-label">Picture</label>
       <div class="input-append input-group">
-        <input type="text" class="form-control" ng-model="imageName" id="pig" placeholder="Picture">
+        <input type="text" class="form-control" ng-model="ev.image" id="pig" placeholder="Picture">
         <span class="btn btn-default btn-file input-group-addon">
             Browse <input type="file" accept="image/*" name="image" onchange="angular.element(this).scope().previewImage(this)" />
             <i class="glyphicon glyphicon-picture"></i>
@@ -132,7 +105,7 @@
                <span class="caret"></span>
             </button>
             <ul class="dropdown-menu pull-right">
-               <li><i class="glyphicon glyphicon-euro"></i></li>
+               <li><i class="glyphicon glyphicon-euro"></i>$</li>
                <li><i class="glyphicon glyphicon-euro"></i></li>
                <li><i class="glyphicon glyphicon-euro"></i></li>
             </ul>

@@ -22,6 +22,14 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
     $scope.filter.fromDate = $routeParams.date;
     $scope.filter.toDate = '';
+  } else if ($routeParams.user) {
+    $scope.filter.type = 'user';
+    $scope.filter.user = $routeParams.user;
+
+    $scope.filter.fromDate = $routeParams.date;
+    $scope.filter.toDate = '';
+
+
   } else if ($routeParams.date) {
     $scope.filter.type = 'date';
 

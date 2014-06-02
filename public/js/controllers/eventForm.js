@@ -8,7 +8,7 @@ var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangula
         };
 
         if (element.files[0]) {
-          $scope.imageName = element.files[0].name;
+          $scope.ev.image = element.files[0].name;
           reader.readAsDataURL(element.files[0]);
         }
      });
@@ -52,39 +52,21 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
 
   $scope.submit = function(image) {
     if ($scope.ev._id) {
-      // if (image) {
-      //   //fd.append('data',JSON.stringify($scope.ev));
+      if (image) {
+        var formData = new FormData();
+        formData.append('image', image.dataURL);
 
-      //   var formData = new FormData();
-      //   formData.append('image', image, image.name);
+        formData.append('model', angular.toJson($scope.ev));
 
-      //   Restangular.all('events/' + $scope.ev._id).withHttpConfig({
-      //     transformRequest: angular.identity
-      //   }).customPOST(formData, '', {}, {
-      //     'Content-Type': false
-      //   }).then(function(res) {
-      //       $scope.ev._id = res._id;
-      //       events.push($scope.ev);
-      //       $modalInstance.close($scope.ev);
-      //   });
-      // }
-      // else {
-        Events.update($scope.ev).then(function(res) {
+        Restangular.all('events/' + $scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPOST(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
           $modalInstance.close($scope.ev);
         });
-      //}
-
-    } else {
-      if ($scope.ev.place) {
-        var venue = $scope.ev.place.split(', ');
-
-        $scope.ev.venue = {
-          country: venue[venue.length - 1]
-        };
-
-        //ev.venue.city = venue[venue.length - 2];
+      } else {
+        Events.put($scope.ev).then(function(res) {
+          $modalInstance.close($scope.ev);
+        });
       }
-
+    } else {
       if (image) {
         var formData = new FormData();
         formData.append('image', image.dataURL);
