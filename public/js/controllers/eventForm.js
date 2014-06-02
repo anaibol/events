@@ -1,4 +1,19 @@
 var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangular) {
+  $scope.previewImage = function(element) {
+     $scope.$apply(function(scope) {
+        var reader = new FileReader();
+
+        reader.onload = function() {scope
+            $scope.imageSrc = this.result;
+        };
+
+        if (element.files[0]) {
+          $scope.imageName = element.files[0].name;
+          reader.readAsDataURL(element.files[0]);
+        }
+     });
+  };
+
   $scope.result = '';
 
   $scope.days =[
@@ -36,7 +51,6 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
   };
 
   $scope.submit = function(image) {
-          console.log($scope.ev)
     if ($scope.ev._id) {
       // if (image) {
       //   //fd.append('data',JSON.stringify($scope.ev));
