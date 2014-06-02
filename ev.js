@@ -16,7 +16,7 @@ var Locations = db.get('locations');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BADGXeox8qWYOtUe14RLbobooZA4DMJEzReUROPJvaxbnBzI3LGgNAn9qfDUefXGZBZBzZBXwxWgw3ZCyAhKe5qZAKEAveKo9VhzdOEEceUquxWaFrlEdPwXfJKEZBAnXqI8MeprXVGrCPaqJUfpUqZCkZBZBEjWpUvNoPQxE07tINZAjKSwuM34U8wZD';
+var accessToken = 'CAAGPsrwaxr4BAK6lIvqhB2Cmml7O1ULvmvhsh8MHeAA9ZCSq9YNh42z3KvlHZADYRA4ZBz3y6me2JNerX3yAcfIyMKu9EERMOF2fvnopZBWFK0BWWGXN8eO1GpIU45jNZANhoH7rnX6WYTjPsBwkhNPophm5V4VRkQ5u9osEPEbZA1fjlfzgJ1tli6EknQab0XWbZBCJWGIlgZDZD';
 graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta'
@@ -375,6 +375,41 @@ function getPrice(ev) {
 
   if (match) {
     var numbers = match.join().removeAll("$").removeAll("£").removeAll("€").split(',');
+    var min = numbers.min();
+
+    if (min > 1000) {
+      return {};
+    }
+
+    var price = {
+      full: match[numbers.indexOf(min.toString())],
+      num: min
+    };
+
+    return price;
+  }
+  else {
+    var regex2 = /((gratuit)|(free)|(gratis))/;
+
+    var match2 = desc.match(regex2);
+
+    if (match2) {
+      var price = {
+        full: match2[0].toUpperCase(),
+        num: 0
+      };
+
+      return price;
+    }
+    else {
+      return {};
+    }
+  }
+}
+
+function getPriceFromFullPrice(price) {
+  if (match) {
+    var numbers = price.removeAll("$").removeAll("£").removeAll("€").split(',');
     var min = numbers.min();
 
     if (min > 1000) {
