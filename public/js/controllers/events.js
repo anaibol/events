@@ -120,7 +120,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
   $scope.open = function(ev) {
     if (Global.authenticated) {
       var modalInstance = $modal.open({
-        templateUrl: 'views/events/form.html',
+        templateUrl: '/views/events/form.html',
         controller: 'EventFormCtrl',
         resolve: {
           ev: function() {
@@ -135,7 +135,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     }
     else {
       var modalInstance = $modal.open({
-        templateUrl: 'views/events/view.html',
+        templateUrl: '/views/events/view.html',
         controller: 'EventCtrl',
         resolve: {
           ev: function() {
@@ -187,7 +187,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
   // $scope.newEvent = function(ev) {
   //   var modalInstance = $modal.open({
-  //     templateUrl: 'views/events/form.html',
+  //     templateUrl: '/views/events/form.html',
   //     controller: 'EventFormCtrl',
   //     resolve: {
   //       ev: function() {
