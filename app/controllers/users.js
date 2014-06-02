@@ -14,7 +14,6 @@ exports.authCallback = function(req, res) {
  * Show login form
  */
 exports.signin = function(req, res) {
-    console.log(123123123123)
     res.render('users/signin', {
         title: 'Signin',
         message: req.flash('error')
@@ -35,7 +34,6 @@ exports.signup = function(req, res) {
  * Logout
  */
 exports.signout = function(req, res) {
-     console.log(1231231231234)
     req.logout();
     res.redirect('/');
 };

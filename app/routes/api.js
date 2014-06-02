@@ -13,6 +13,10 @@ var fs = require('fs');
 
 var slugify = require('slugify');
 
+var Creators = db.get('creators');
+var Locations = db.get('locations');
+
+
 function parseDataURL(string) {
   var regex = /^data:.+\/(.+);base64,(.*)$/;
 
@@ -93,6 +97,14 @@ module.exports = function(req, res) {
             };
 
             switch (params.type) {
+              case 'user':
+                delete query.start_time;
+                delete query["venue.country"];
+
+                query["creator.id"] = req.user.facebook.id;
+
+                break;
+
               case 'date':
                 if (params.toDate) {
                   var to = new Date(params.toDate);
@@ -151,6 +163,8 @@ module.exports = function(req, res) {
 
                 break;
             }
+
+            console.log(query)
 
             // var query2 = _.clone(query);
 
@@ -283,6 +297,11 @@ module.exports = function(req, res) {
 
         ev.slug = slugify(ev.name.toLowerCase());
 
+        ev.creator = {
+          id: req.user.facebook.id,
+          name: req.user.username
+        }
+
         Entity.insert(ev, function(err, obj) {
           if (err) {
             console.log(err);
@@ -291,6 +310,17 @@ module.exports = function(req, res) {
               var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + parsed.ext;
               fs.writeFileSync(newImageLocation, parsed.data);
             }
+
+            if (obj) {
+              if (obj.location && obj.venue) {
+                Locations.insert({location: obj.location, venue: obj.venue, place: obj.place});
+              }
+
+              if (obj.creator) {
+                Creators.insert({fid: obj.creator.id, username: obj.creator.name});
+              }
+            }
+
 
             res.json(obj);
           }

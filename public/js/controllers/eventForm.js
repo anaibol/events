@@ -19,7 +19,12 @@ var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangula
     $scope.ev = ev;
   }
   else {
-    $scope.ev = {};
+    $scope.ev = {
+      start_time: new Date(),
+      venue: {
+        country: "Argentina"
+      }
+    };
   }
 
 var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru', 'suelta'];
@@ -31,6 +36,7 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
   };
 
   $scope.submit = function(image) {
+          console.log($scope.ev)
     if ($scope.ev._id) {
       // if (image) {
       //   //fd.append('data',JSON.stringify($scope.ev));
@@ -53,6 +59,7 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
           $modalInstance.close($scope.ev);
         });
       //}
+
     } else {
       if ($scope.ev.place) {
         var venue = $scope.ev.place.split(', ');
@@ -63,9 +70,6 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
 
         //ev.venue.city = venue[venue.length - 2];
       }
-
-
-      console.log($scope.ev)
 
       if (image) {
         var formData = new FormData();

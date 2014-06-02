@@ -31,21 +31,21 @@
           <div>{{ev.start_time | date:'HH:mm'}}</div>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="tag-list">
       <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
     </div>
-  </div>
+  </div> -->
   <div class="modal-body">
     <div class="control-group">
       <label class="control-label">Name</label>
-      <input type="text" class="form-control" ng-model="ev.name" id="name" placeholder="Name">
+      <input type="text" class="form-control" required ng-model="ev.name" id="name" placeholder="Name">
     </div>
 
     <div class="control-group date">
       <label class="control-label">Date and time</label>
       <div class="input-group" ng-controller="DatepickerCtrl" ng-click="open($event)">
-        <input type="text" class="form-control" ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
+        <input type="text" class="form-control" required ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
         <span class="input-group-btn">
           <button class="btn btn-default"><i class="fui-calendar-solid" ng-click="open($event)"></i></button>
         </span>
@@ -60,7 +60,7 @@
         </select>
       </div>
 
-      <div ng-controller="TimepickerCtrl" ng-model="ev.start_time">
+      <div ng-controller="TimepickerCtrl" required ng-model="ev.start_time">
         <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
         <i class="fui-time"></i>
       </div> 

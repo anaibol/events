@@ -24,7 +24,7 @@ app.controller('HeaderCtrl', function ($scope, $rootScope, Global, $location, $m
 
   $scope.newEvent = function(ev) {
     var modalInstance = $modal.open({
-      templateUrl: 'views/events/form.html',
+      templateUrl: '/views/events/form.html',
       controller: 'EventFormCtrl',
       resolve: {
         ev: function() {

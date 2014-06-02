@@ -18,6 +18,10 @@ app.config(function($locationProvider, $routeProvider) {
   when('/', {
     templateUrl: '/views/events/home.html'
   }).
+  when('/me/events', {
+    templateUrl: '/views/events/home.html',
+    controller: 'EventsCtrl'
+  }).
   when('/worldwide', {
     templateUrl: '/views/events/home.html',
     controller: 'EventsCtrl'

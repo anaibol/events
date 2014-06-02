@@ -17,7 +17,12 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
   var str = $location.$$path.replace('/', '');
 
-  if ($routeParams.date) {
+  if (str === 'me/events') {
+    $scope.filter.type = 'user';
+
+    $scope.filter.fromDate = $routeParams.date;
+    $scope.filter.toDate = '';
+  } else if ($routeParams.date) {
     $scope.filter.type = 'date';
 
     $scope.filter.fromDate = $routeParams.date;
@@ -57,7 +62,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
       }
     });
 
-    $scope.htmlReady();
+    // $scope.htmlReady();
 
     var container = document.querySelector('.events');
 
@@ -172,13 +177,13 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     });
   };
 
-  $scope.findOne = function() {
-    Restangular.one('rest/event', $routeParams.eventId).get().then(function(event) {
-      $scope.event = event;
-    }, function(response) {
-      console.log("Error with status code", response.status);
-    });
-  };
+  // $scope.findOne = function() {
+  //   Restangular.one('rest/event', $routeParams.eventId).get().then(function(event) {
+  //     $scope.event = event;
+  //   }, function(response) {
+  //     console.log("Error with status code", response.status);
+  //   });
+  // };
 
   // $scope.newEvent = function(ev) {
   //   var modalInstance = $modal.open({
