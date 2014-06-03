@@ -408,16 +408,11 @@ function getPrice(ev) {
 }
 
 function getPriceFromFullPrice(price) {
-  var numbers = price.removeAll("$").removeAll("£").removeAll("€").split(',');
-  var min = numbers.min();
-
-  if (min > 1000) {
-    return {};
-  }
+  var number = price.removeAll("$").removeAll("£").removeAll("€").split(',');
 
   var price = {
     full: price,
-    num: min
+    num: number
   };
 
   return price;
