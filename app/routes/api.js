@@ -16,6 +16,7 @@ var slugify = require('slugify');
 var Creators = db.get('creators');
 var Locations = db.get('locations');
 
+var Ev = require('./ev');
 
 function parseDataURL(string) {
   var regex = /^data:.+\/(.+);base64,(.*)$/;
@@ -241,6 +242,8 @@ module.exports = function(req, res) {
 
         ev.slug = slugify(ev.name.toLowerCase());
 
+        ev.price = Ev.getPriceFromFullPrice(ev.price.full);
+
         Entity.updateById(ev._id, ev, function(err) {
           if (err) {
             return res.send('users/signup', {
@@ -283,6 +286,8 @@ module.exports = function(req, res) {
           id: req.user.facebook.id,
           name: req.user.username
         }
+
+        ev.price = Ev.getPriceFromFullPrice(ev.price.full);
 
         Entity.insert(ev, function(err, obj) {
           if (err) {
