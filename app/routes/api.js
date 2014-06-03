@@ -242,7 +242,9 @@ module.exports = function(req, res) {
 
         ev.slug = slugify(ev.name.toLowerCase());
 
-        ev.price = Ev.getPriceFromFullPrice(ev.price.full);
+        if (ev.price) {
+          ev.price = Ev.getPriceFromFullPrice(ev.price.full);
+        }
 
         Entity.updateById(ev._id, ev, function(err) {
           if (err) {
@@ -287,7 +289,9 @@ module.exports = function(req, res) {
           name: req.user.username
         }
 
-        ev.price = Ev.getPriceFromFullPrice(ev.price.full);
+        if (ev.price) {
+          ev.price = Ev.getPriceFromFullPrice(ev.price.full);
+        }
 
         Entity.insert(ev, function(err, obj) {
           if (err) {
