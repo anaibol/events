@@ -435,6 +435,7 @@ module.exports.fetch = fetch;
 module.exports.runQuery = runQuery;
 module.exports.getTags = getTags;
 module.exports.getPrice = getPrice;
+module.exports.getPriceFromFullPrice = getPriceFromFullPrice;
 module.exports.crawlPage = crawlPage;
 module.exports.crawlPageTimeline = crawlPageTimeline;
 module.exports.crawlUser = crawlUser;

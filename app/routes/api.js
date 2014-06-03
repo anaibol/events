@@ -23,9 +23,6 @@ function parseDataURL(string) {
 
   var match = string.match(regex);
 
-
-  console.log(string)
-
   var buffer = new Buffer(match[2], 'base64');
 
   return {
