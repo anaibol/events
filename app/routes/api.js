@@ -22,6 +22,9 @@ function parseDataURL(string) {
 
   var match = string.match(regex);
 
+
+  console.log(string)
+
   var buffer = new Buffer(match[2], 'base64');
 
   return {
@@ -218,39 +221,12 @@ module.exports = function(req, res) {
         break;
 
       case 'put':
-        var obj = req.body;
-
-        obj.start_time = new Date(obj.start_time);
-        obj.end_time = new Date(obj.end_time);
-
-        if (req.body.image) {
-          var parsed = parseDataURL(req.body.image);
-          ev.image = parsed.ext;
-        }
-
-        Entity.updateById(obj._id, obj, function(err) {
-          if (err) {
-            return res.send('users/signup', {
-              errors: err.errors,
-              obj: obj
-            });
-          } else {
-            if (obj.image) {
-              var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + obj.image.split('.').pop();
-              fs.writeFileSync(newImageLocation, parsed.data);
-            }
-
-            res.jsonp(obj);
-          }
-        });
-
-        break;
-    
-      case 'post':
         var ev;
+        var image;
 
         if (typeof req.body.model === 'string') {
           ev = JSON.parse(req.body.model);
+          image = req.body.image;
         } else {
           ev = req.body;
         }
@@ -258,9 +234,47 @@ module.exports = function(req, res) {
         ev.start_time = new Date(ev.start_time);
         ev.end_time = new Date(ev.end_time);
 
-        if (req.body.image) {
-          var parsed = parseDataURL(req.body.image);
-          ev.image = parsed.ext;
+        if (image) {
+          var parsed = parseDataURL(image);
+          ev.imageExt = parsed.ext;
+        }
+
+        ev.slug = slugify(ev.name.toLowerCase());
+
+        Entity.updateById(ev._id, ev, function(err) {
+          if (err) {
+            return res.send('users/signup', {
+              errors: err.errors
+            });
+          } else {
+            if (image) {
+              var newImageLocation = __dirname + '/../../public/uploads/' + ev._id + '.' + ev.imageExt;
+              fs.writeFileSync(newImageLocation, parsed.data);
+            }
+
+            res.jsonp(ev);
+          }
+        });
+
+        break;
+    
+      case 'post':
+        var ev;
+        var image;
+
+        if (typeof req.body.model === 'string') {
+          ev = JSON.parse(req.body.model);
+          image = req.body.image;
+        } else {
+          ev = req.body;
+        }
+
+        ev.start_time = new Date(ev.start_time);
+        ev.end_time = new Date(ev.end_time);
+
+        if (image) {
+          var parsed = parseDataURL(image);
+          ev.imageExt = parsed.ext;
         }
 
         ev.slug = slugify(ev.name.toLowerCase());
@@ -274,8 +288,8 @@ module.exports = function(req, res) {
           if (err) {
             console.log(err);
           } else {
-            if (req.body.image) {
-              var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + parsed.ext;
+            if (image) {
+              var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + obj.imageExt;
               fs.writeFileSync(newImageLocation, parsed.data);
             }
 

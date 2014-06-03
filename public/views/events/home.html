@@ -9,8 +9,8 @@
         <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
       </div>
     </div>
-    <div class="containing" style="background-image: url({{ev.image ? '/uploads/' + ev._id + '.' + ev.image : ev.pic_cover.source}});">
-      <img src="{{ev.image ? '/uploads/' + ev._id + '.' + ev.image : ev.pic_cover.source}}" />
+    <div class="containing" style="background-image: url({{ev.imageExt ? '/uploads/' + ev._id + '.' + ev.imageExt : ev.pic_cover.source}});">
+      <img src="{{ev.imageExt ? '/uploads/' + ev._id + '.' + ev.imageExt : ev.pic_cover.source}}" />
     </div>
     <div class="info">
       <div class="datetime">

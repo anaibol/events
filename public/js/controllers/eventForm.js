@@ -8,7 +8,7 @@ var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangula
         };
 
         if (element.files[0]) {
-          $scope.ev.image = element.files[0].name;
+          $scope.imageFile = element.files[0].name;
           reader.readAsDataURL(element.files[0]);
         }
      });
@@ -50,15 +50,15 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
     return deferred.promise;
   };
 
-  $scope.submit = function(image) {
+  $scope.submit = function() {
     if ($scope.ev._id) {
-      if (image) {
+      if ($scope.imageFile) {
         var formData = new FormData();
-        formData.append('image', image.dataURL);
 
+        formData.append('image', $scope.imageSrc);
         formData.append('model', angular.toJson($scope.ev));
 
-        Restangular.all('events/' + $scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPOST(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
+        Restangular.all('events/' + $scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
           $modalInstance.close($scope.ev);
         });
       } else {
@@ -67,10 +67,10 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
         });
       }
     } else {
-      if (image) {
+      if ($scope.imageFile) {
         var formData = new FormData();
-        formData.append('image', image.dataURL);
 
+        formData.append('image', $scope.imageSrc);
         formData.append('model', angular.toJson($scope.ev));
 
         Restangular.all('events').withHttpConfig({transformRequest: angular.identity}).customPOST(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
