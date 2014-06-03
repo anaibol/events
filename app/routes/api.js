@@ -16,7 +16,7 @@ var slugify = require('slugify');
 var Creators = db.get('creators');
 var Locations = db.get('locations');
 
-var Ev = require('../ev');
+var Ev = require('../../ev');
 
 function parseDataURL(string) {
   var regex = /^data:.+\/(.+);base64,(.*)$/;
