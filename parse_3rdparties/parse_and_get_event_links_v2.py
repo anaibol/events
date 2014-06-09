@@ -35,7 +35,7 @@ i = 0
 
 #uvzt9uzg.default
 cookiePathMoilerat="/Users/moilerat/Library/Application Support/Firefox/Profiles/d9xv937r.dev/cookies.sqlite"
-
+sessionIdMoilerat="s%3ASBAFRz8MlSDQr3DRYgAaPieg.4UJ3iSVyjng4kcm8sc5T5VEQ9taM66F0rT3EjBehHN0"
  
 def get_cookies(cj, ff_cookies):
     con = sqlite3.connect(ff_cookies)
@@ -62,25 +62,14 @@ def get_cookies(cj, ff_cookies):
         print c
         cj.set_cookie(c)
 
-    c = cookielib.Cookie(0, "connect.sid", "s%3ASBAFRz8MlSDQr3DRYgAaPieg.4UJ3iSVyjng4kcm8sc5T5VEQ9taM66F0rT3EjBehHN0",
+def add_session_id(cj, session_id):
+    c = cookielib.Cookie(0, "connect.sid", session_id,
             None, False,
             "wooepa.com", False, False,
             "/", False,
             False,
             None, False,
             None, None, {})
-
-
-#cookie = cookielib.Cookie(version=0, name='OLRProduct',
-#                            value='OLRProduct='+serial_number+'|',
-#                            port=None, port_specified=False,
-#                            domain='.dell.com',
-#                            domain_specified=True,
-#                            domain_initial_dot=True, path='/',
-#                            path_specified=True, secure=False,
-#                            expires=None, discard=True, comment=None,
-#                            comment_url=None, rest={'HttpOnly': None})
-
     print c
     cj.set_cookie(c)
 
@@ -92,7 +81,8 @@ def loadUrlWithCookie(url) :
     #cj.load()
 
     cj = cookielib.LWPCookieJar()
-    get_cookies(cj, cookiePathMoilerat)
+    #get_cookies(cj, cookiePathMoilerat)
+    add_session_id(cj, sessionIdMoilerat)
     
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
     urllib2.install_opener(opener)
