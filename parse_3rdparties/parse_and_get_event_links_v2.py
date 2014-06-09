@@ -41,12 +41,15 @@ def get_fb_id_from_links_in_lines(lines) :
             id = m_info_get_url_id_facebook.group(2)
             print " FOUND : " + id
 
-            url = "http://wooeva.com/import/event/" + id
+            url = "http://wooepa.com/import/event/" + id
             if verbose : 
                 print url
-            print "Loading url : "
-            data = urllib.urlopen(url)
-            print data.read()
+            print "Loading url : " + url
+            try :
+                data = urllib.urlopen(url)
+                print data.read()
+            except Exception ,e :
+                print " Error loading url " + str(e)
         else :
             sys.stdout.write(",")
             sys.stdout.flush()
