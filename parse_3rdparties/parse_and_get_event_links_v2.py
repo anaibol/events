@@ -8,13 +8,16 @@ import datetime
 import time
 from subprocess import call
 import sys, os, tempfile, logging
-import urllib2
+import urllib2, cookielib
 import urllib
 import urlparse
 from optparse import OptionParser
 import re
 from os import listdir
 from os.path import isfile, join
+import sqlite3
+
+
 
 parser = OptionParser();
 parser.add_option("-f", "--filename", action="store", dest="filename", type="string", default="", help=" where to read the data ");
@@ -29,6 +32,77 @@ filename = options.filename
 limit = int(options.limit)
 
 i = 0
+
+#uvzt9uzg.default
+cookiePathMoilerat="/Users/moilerat/Library/Application Support/Firefox/Profiles/d9xv937r.dev/cookies.sqlite"
+
+ 
+def get_cookies(cj, ff_cookies):
+    con = sqlite3.connect(ff_cookies)
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM moz_cookies WHERE baseDomain like '%wooepa%' ")
+    for item in cur.fetchall():
+        print item
+
+
+#    cur.execute("SELECT DISTINCT baseDomain FROM moz_cookies ")
+#    for item in cur.fetchall():
+#        print item[0]
+
+    cur.execute("SELECT host, path, isSecure, expiry, name, value FROM moz_cookies WHERE baseDomain like '%wooepa%' ")
+    for item in cur.fetchall():
+        c = cookielib.Cookie(0, item[4], item[5],
+            None, False,
+            item[0], item[0].startswith('.'), item[0].startswith('.'),
+            item[1], False,
+            item[2],
+            item[3], item[3]=="",
+            None, None, {})
+        print c
+        cj.set_cookie(c)
+
+    c = cookielib.Cookie(0, "connect.sid", "s%3ASBAFRz8MlSDQr3DRYgAaPieg.4UJ3iSVyjng4kcm8sc5T5VEQ9taM66F0rT3EjBehHN0",
+            None, False,
+            "wooepa.com", False, False,
+            "/", False,
+            False,
+            None, False,
+            None, None, {})
+
+
+#cookie = cookielib.Cookie(version=0, name='OLRProduct',
+#                            value='OLRProduct='+serial_number+'|',
+#                            port=None, port_specified=False,
+#                            domain='.dell.com',
+#                            domain_specified=True,
+#                            domain_initial_dot=True, path='/',
+#                            path_specified=True, secure=False,
+#                            expires=None, discard=True, comment=None,
+#                            comment_url=None, rest={'HttpOnly': None})
+
+    print c
+    cj.set_cookie(c)
+
+def loadUrlWithCookie(url) :
+  try :
+    txheaders =  {'User-agent' : 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
+
+    #cj = cookielib.MozillaCookieJar(cookiePathMoilerat)
+    #cj.load()
+
+    cj = cookielib.LWPCookieJar()
+    get_cookies(cj, cookiePathMoilerat)
+    
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    urllib2.install_opener(opener)
+
+    req = urllib2.Request(url, None, txheaders)
+    handle = urllib2.urlopen(req)
+    print handle.read()
+  except Exception ,e :
+    print " Error loading url " + str(e)
+
 
 def get_fb_id_from_links_in_lines(lines) :
     for line in lines :
@@ -45,11 +119,12 @@ def get_fb_id_from_links_in_lines(lines) :
             if verbose : 
                 print url
             print "Loading url : " + url
-            try :
-                data = urllib.urlopen(url)
-                print data.read()
-            except Exception ,e :
-                print " Error loading url " + str(e)
+            loadUrlWithCookie(url)
+#            try :
+#                data = urllib.urlopen(url)
+#                print data.read()
+#            except Exception ,e :
+#                print " Error loading url " + str(e)
         else :
             sys.stdout.write(",")
             sys.stdout.flush()
