@@ -1,15 +1,15 @@
 <section class="events" ng-controller="EventsCtrl" class="js-packery" data-packery-options='{ "itemSelector": ".event" }'>
   <a class="event" link-overload ng-click="open(ev)" href="/{{ev.slug}}" ng-repeat="ev in events">
-    <div ng-show="ev.price.num == 0" class="ribbon-wrapper-green"><div class="ribbon-green">{{ev.price.full}}</div></div>
     <div class="title">
       <span class="truncate">{{ev.name}}</span>
-      <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
+      <div class="attending" ng-show="ev.attending_count > 0">{{ev.attending_count}}<i class="icon-group"></i></div>
       <div ng-show="ev.price.num > 0" class="price">{{ev.price.full}}</div>
       <div class="tag-list">
         <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
       </div>
     </div>
     <div class="containing" style="background-image: url({{ev.imageExt ? '/uploads/' + ev._id + '.' + ev.imageExt : ev.pic_cover.source}});">
+      <div ng-show="ev.price.num == 0" class="ribbon-wrapper-green"><div class="ribbon-green">{{ev.price.full}}</div></div>
       <img src="{{ev.imageExt ? '/uploads/' + ev._id + '.' + ev.imageExt : ev.pic_cover.source}}" />
     </div>
     <div class="info">

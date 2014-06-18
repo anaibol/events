@@ -309,6 +309,17 @@ module.exports = function(req, res) {
               }
             }
 
+            var fbEv = {
+              name: ev.name,
+              description: ev.description,
+              start_time: ev.start_time
+            }
+
+            graph.post('/me/events?access_token=' + req.user.accessToken, fbEv, function(err, res) {
+                // returns the post id
+                console.log(err)
+                console.log(res); // { id: xxxxx}
+            });
 
             res.json(obj);
           }

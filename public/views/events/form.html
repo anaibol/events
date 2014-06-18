@@ -2,13 +2,13 @@
   <div class="modal-body">
     <div class="control-group">
       <label class="control-label">Name</label>
-      <input type="text" class="form-control" ng-model="ev.name" id="name" placeholder="Name">
+      <input required type="text" class="form-control" ng-model="ev.name" id="name" placeholder="Name">
     </div>
 
     <div class="control-group date">
       <label class="control-label">Date and time</label>
       <div class="input-group" ng-controller="DatepickerCtrl" ng-click="open($event)">
-        <input type="text" class="form-control" ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
+        <input required type="text" class="form-control" ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
         <span class="input-group-btn">
           <button class="btn btn-default"><i class="fui-calendar-solid" ng-click="open($event)"></i></button>
         </span>
@@ -31,7 +31,7 @@
 
     <div class="control-group">
       <label class="control-label">Description</label>
-      <textarea class="form-control" ng-model="ev.description" id="description" cols="30" rows="10" placeholder="Content"></textarea>
+      <textarea required class="form-control" ng-model="ev.description" id="description" cols="30" rows="10" placeholder="Content"></textarea>
     </div>
 
     <div class="control-group inline">
