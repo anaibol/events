@@ -170,10 +170,9 @@ line-height: 30px;
 }
 
 .event .info {
-  float: left;
   width: 100%;
   line-height: 37px;
-  /*margin: 7px;*/
+  float: left;
 }
 
 .event .place {
@@ -820,14 +819,16 @@ and (min-width : 321px) {
 /* Smartphones (portrait) ----------- */
 @media only screen 
 and (max-width : 320px) {
-/* Styles */
+  .event, .event img {
+    max-width: 270px;
+  }
 }
 
 /* iPads (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) {
-  .event {
+  .event, .event img {
     max-width: 250px;
   }
 }
@@ -837,7 +838,7 @@ and (max-device-width : 1024px) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
-  .event {
+  .event, .event img {
     max-width: 250px;
   }
 }
@@ -847,7 +848,7 @@ and (orientation : landscape) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-  .event {
+  .event, .event img {
     max-width: 250px;
   }
 }
@@ -855,7 +856,7 @@ and (orientation : portrait) {
 /* Desktops and laptops ----------- */
 @media only screen 
 and (min-width : 1224px) {
-  .event {
+  .event, .event img {
     max-width: 300px;
   }
   .navbar-inverse .navbar-nav > li > a {
@@ -866,7 +867,7 @@ and (min-width : 1224px) {
 /* Large screens ----------- */
 @media only screen 
 and (min-width : 1824px) {
-  .event {
+  .event, .event img {
     max-width: 400px;
   }
   .navbar-inverse .navbar-nav > li > a {
