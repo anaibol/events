@@ -47,60 +47,62 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     }
   }
 
-  Events.get($scope.filter).then(function(events) {
-    $scope.events = events.filter(function(element, index, array) {
-      var date = new Date(element.start_time);
-      return date.getDate() > $scope.today.getDate() - 1;
-    });
+  $scope.getEvents();
 
-    $scope.totalEvents = events.metadata.count;
-    $scope.totalPages = events.metadata.count / $scope.filter.limit;
+  $scope.getEvents = function(cb) {
+    Events.get($scope.filter).then(function(events) {
+      $scope.events = events.filter(function(element, index, array) {
+        var date = new Date(element.start_time);
+        return date.getDate() > $scope.today.getDate() - 1;
+      });
 
-    angular.forEach($scope.events, function(ev, key) {
-      if (ev.start_time) {
-        ev.date = new Date(ev.start_time);
+      $scope.totalEvents = events.metadata.count;
+      $scope.totalPages = events.metadata.count / $scope.filter.limit;
 
-        // var m_names = new Array("January", "February", "March",
-        // "April", "May", "June", "July", "August", "September",
-        // "October", "November", "December");
+      angular.forEach($scope.events, function(ev, key) {
+        if (ev.start_time) {
+          ev.date = new Date(ev.start_time);
 
-        //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
+          // var m_names = new Array("January", "February", "March",
+          // "April", "May", "June", "July", "August", "September",
+          // "October", "November", "December");
 
-         // ev.date = date.toUTCString();
-      }
+          //ev.date = date.getDate() + ' - ' + m_names[date.getMonth()];
 
-      if (ev.imageExt) {
-        ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
-      } else if (ev.pic_cover) {
-        if (ev.pic_cover.source) {
-          ev.image = ev.pic_cover.source;
+           // ev.date = date.toUTCString();
         }
-        else {
+
+        if (ev.imageExt) {
+          ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
+        } else if (ev.pic_cover) {
+          if (ev.pic_cover.source) {
+            ev.image = ev.pic_cover.source;
+          }
+          else {
+            ev.image = null;
+          }
+        } else {
           ev.image = null;
         }
-      } else {
-        ev.image = null;
-      }
+      });
+
+      // $scope.htmlReady();
+
+      var container = document.querySelector('.events');
+
+      imagesLoaded(container, function(instance) {
+          var myPackery = new Packery(container, {});
+      });
+
+      cb();
     });
-
-    // $scope.htmlReady();
-
-    var container = document.querySelector('.events');
-
-    imagesLoaded(container, function(instance) {
-        var myPackery = new Packery(container, {});
-    });
-
-  });
+  }
 
   $scope.paginate = function(page) {
     $scope.filter.page = page;
 
-    Events.get($scope.filter).then(function(events) {
-      $scope.events = events;
-
-      var elem = $('.content');
-      elem.animate({scrollTop:0}, '500', 'swing');
+    $scope.getEvents(function() {
+      $('.content').animate({scrollTop:0}, '500', 'swing');
     });
   };
 
@@ -221,5 +223,4 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
   //     $scope.ev = selected;
   //   }, function() {});
   // };
-
 };
