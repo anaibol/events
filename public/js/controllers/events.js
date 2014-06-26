@@ -71,8 +71,13 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
       if (ev.imageExt) {
         ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
-      } else if (ev.pic_cover.source) {
-        ev.image = ev.pic_cover.source;
+      } else if (ev.pic_cover) {
+        if (ev.pic_cover.source) {
+          ev.image = ev.pic_cover.source;
+        }
+        else {
+          ev.image = null;
+        }
       } else {
         ev.image = null;
       }
