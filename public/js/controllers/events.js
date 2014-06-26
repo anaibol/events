@@ -47,8 +47,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     }
   }
 
-  $scope.getEvents();
-
   $scope.getEvents = function(cb) {
     Events.get($scope.filter).then(function(events) {
       $scope.events = events.filter(function(element, index, array) {
@@ -223,4 +221,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
   //     $scope.ev = selected;
   //   }, function() {});
   // };
+
+  $scope.getEvents();
 };
