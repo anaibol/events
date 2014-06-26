@@ -222,5 +222,5 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
   //   }, function() {});
   // };
 
-  $scope.getEvents();
+  $scope.getEvents(function() {});
 };
