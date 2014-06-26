@@ -1,3 +1,4 @@
+<pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 <section class="events" ng-controller="EventsCtrl" class="js-packery" data-packery-options='{ "itemSelector": ".event" }'>
   <a class="event" link-overload ng-click="open(ev)" href="/{{ev.slug}}" ng-repeat="ev in events">
     <div class="title">
@@ -39,4 +40,3 @@
     </div>
   </a>
 </section>
-<pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
