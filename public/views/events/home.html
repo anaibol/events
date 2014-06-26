@@ -10,7 +10,7 @@
     </div>
     <div ng-show="ev.image" class="containing" style="background-image: url({{ev.image}});">
       <div ng-show="ev.price.num == 0" class="ribbon-wrapper-green"><div class="ribbon-green">{{ev.price.full}}</div></div>
-      <img src="{{ev.imageExt ? '/uploads/' + ev._id + '.' + ev.imageExt : ev.pic_cover.source}}" onerror="$(this).parent().hide()" />
+      <img src="{{ev.imageExt ? '/uploads/' + ev._id + '.' + ev.imageExt : ev.pic_cover.source}}" onerror="$(this).parent().css('display', 'block')" />
     </div>
     <div class="info">
       <div class="datetime">
