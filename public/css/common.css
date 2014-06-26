@@ -96,6 +96,7 @@ nav .navbar-header {
   overflow: auto;
   width: 100%;
   height: 100%;
+  padding-top: 75px;
 }
 .leaflet-top {
   display: none;

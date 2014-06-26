@@ -68,6 +68,14 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
          // ev.date = date.toUTCString();
       }
+
+      if (ev.imageExt) {
+        ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
+      } else if (ev.pic_cover.source) {
+        ev.image = ev.pic_cover.source;
+      } else {
+        ev.image = null;
+      }
     });
 
     // $scope.htmlReady();
