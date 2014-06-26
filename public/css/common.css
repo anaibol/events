@@ -189,8 +189,6 @@ line-height: 30px;
   line-height: 20px;
 }
 
-
-
 .event .place-info .street {
   float: left;
   clear: both;
@@ -208,6 +206,7 @@ line-height: 30px;
 .event .info i, .event .info div {
   float: left;
   padding: 0 3px;
+  max-width: 100%;
 }
 
 .event .place-info .place .location {

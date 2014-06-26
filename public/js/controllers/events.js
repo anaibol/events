@@ -1,4 +1,4 @@
-var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $routeParams) {
+var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $routeParams, $rootScope) {
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -53,7 +53,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
         var date = new Date(element.start_time);
         return date.getDate() > $scope.today.getDate() - 1;
       });
-
+      console.log($scope.events[0].name)
       $scope.totalEvents = events.metadata.count;
       $scope.totalPages = events.metadata.count / $scope.filter.limit;
 
@@ -84,14 +84,11 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
         }
       });
 
-      // $scope.htmlReady();
-
       var container = document.querySelector('.events');
 
       imagesLoaded(container, function(instance) {
           var myPackery = new Packery(container, {});
       });
-
       cb();
     });
   }
