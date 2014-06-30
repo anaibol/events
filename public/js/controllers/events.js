@@ -87,6 +87,15 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
         }
       });
 
+      setTimeout(function() {
+        var container = document.querySelector('.events');
+
+        imagesLoaded(container, function(instance) {
+            alert(1)
+            var myPackery = new Packery(container, {});
+        });
+      }, 200);
+
       cb();
     });
   }
@@ -95,12 +104,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     $scope.filter.page = page;
 
     $scope.getEvents(function() {
-      // var container = document.querySelector('.events');
-
-      // imagesLoaded(container, function(instance) {
-      //     var myPackery = new Packery(container, {});
-      // });
-
       $('.content').animate({scrollTop:0}, '500', 'swing');
     });
   };
@@ -223,13 +226,5 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
   //   }, function() {});
   // };
 
-  $scope.getEvents(function() {
-
-      // var container = document.querySelector('.events');
-
-      // imagesLoaded(container, function(instance) {
-      //     var myPackery = new Packery(container, {});
-      // });
-
-  });
+  $scope.getEvents(function() {});
 };
