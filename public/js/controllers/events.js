@@ -49,10 +49,13 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
   $scope.getEvents = function(cb) {
     Events.get($scope.filter).then(function(events) {
-      $scope.events = events.filter(function(element, index, array) {
-        var date = new Date(element.start_time);
-        return date.getDate() > $scope.today.getDate() - 1;
-      });
+      // $scope.events = events.filter(function(element, index, array) {
+      //   var date = new Date(element.start_time);
+      //   return date.getDate() > $scope.today.getDate() - 1;
+      // });
+
+      $scope.events = events;
+
       console.log($scope.events[0].name)
       $scope.totalEvents = events.metadata.count;
       $scope.totalPages = events.metadata.count / $scope.filter.limit;
