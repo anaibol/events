@@ -56,7 +56,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
       $scope.events = events;
 
-      console.log($scope.events[0].name)
       $scope.totalEvents = events.metadata.count;
       $scope.totalPages = events.metadata.count / $scope.filter.limit;
 
