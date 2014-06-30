@@ -95,11 +95,11 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     $scope.filter.page = page;
 
     $scope.getEvents(function() {
-      var container = document.querySelector('.events');
+      // var container = document.querySelector('.events');
 
-      imagesLoaded(container, function(instance) {
-          var myPackery = new Packery(container, {});
-      });
+      // imagesLoaded(container, function(instance) {
+      //     var myPackery = new Packery(container, {});
+      // });
 
       $('.content').animate({scrollTop:0}, '500', 'swing');
     });
@@ -225,11 +225,11 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
   $scope.getEvents(function() {
 
-      var container = document.querySelector('.events');
+      // var container = document.querySelector('.events');
 
-      imagesLoaded(container, function(instance) {
-          var myPackery = new Packery(container, {});
-      });
+      // imagesLoaded(container, function(instance) {
+      //     var myPackery = new Packery(container, {});
+      // });
 
   });
 };
