@@ -36,6 +36,7 @@ i = 0
 #uvzt9uzg.default
 cookiePathMoilerat="/Users/moilerat/Library/Application Support/Firefox/Profiles/d9xv937r.dev/cookies.sqlite"
 sessionIdMoilerat="s%3ASBAFRz8MlSDQr3DRYgAaPieg.4UJ3iSVyjng4kcm8sc5T5VEQ9taM66F0rT3EjBehHN0"
+sessionIdRapha="s%3AOjUG1dcIhc7g8xvZEO7tcFqB.8c%2BYPEMvErHYaY7IJKLsjHi4J9E4F%2BuxoN9aAz3Z0hY"
  
 def get_cookies(cj, ff_cookies):
     con = sqlite3.connect(ff_cookies)
@@ -82,7 +83,7 @@ def loadUrlWithCookie(url) :
 
     cj = cookielib.LWPCookieJar()
     #get_cookies(cj, cookiePathMoilerat)
-    add_session_id(cj, sessionIdMoilerat)
+    add_session_id(cj, sessionIdRapha)
     
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
     urllib2.install_opener(opener)
