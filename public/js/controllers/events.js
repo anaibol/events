@@ -91,7 +91,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
         var container = document.querySelector('.events');
 
         imagesLoaded(container, function(instance) {
-            alert(1)
             var myPackery = new Packery(container, {});
         });
       }, 200);
