@@ -159,7 +159,6 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     else {
       var modalInstance = $modal.open({
         templateUrl: '/views/events/view.html',
-        controller: 'EventCtrl',
         resolve: {
           ev: function() {
             return ev;
