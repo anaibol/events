@@ -66,6 +66,10 @@ nav .navbar-header {
   padding-left: 10px;
 }
 
+.content > .container, .content > .container .container.events {
+  width: 100%;
+}
+
 .navBarBg {
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
