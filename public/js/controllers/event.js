@@ -1,4 +1,4 @@
-var EventCtrl = function($scope, $routeParams, ev) {
+var EventCtrl = function($scope, $modalInstance, $routeParams, ev) {
 	$scope.ev = ev;
 
 
