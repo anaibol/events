@@ -1,7 +1,3 @@
-var EventCtrl = function($scope, $routeParams) {
-  Events.one($routeParams.slug).then(function(ev) {
-    $scope.ev = ev;
-    $scope.htmlReady();
-  });
-
+var EventCtrl = function($scope, $routeParams, ev) {
+	$scope.ev = ev;
 };

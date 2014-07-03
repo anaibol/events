@@ -68,6 +68,7 @@ nav .navbar-header {
 
 .content > .container, .content > .container .container.events {
   width: 100%;
+  margin: auto;
 }
 
 .navBarBg {
@@ -162,10 +163,10 @@ line-height: 30px;
 }
 
 .event .info {
-  width: 100%;
   line-height: 37px;
   float: left;
   padding-bottom: 4px;
+  width: 100%;
 }
 
 .event .place {
@@ -174,7 +175,6 @@ line-height: 30px;
   /*width: 69%;*/
   padding: 0 7px;
   line-height: 37px;
-  width: 100%;
 }
 
 .event .place-info * {
@@ -187,9 +187,10 @@ line-height: 30px;
   max-width: 75%;;
 }
 
-.event .info .date, .event .info .time {  
+.event .info .date, .event .info .time, .event-detail .info .date, .event-detail .info .time {  
   color: #575757;
   text-align: center;
+  float: left;
 }
 
 .event .info .datetime {
@@ -197,9 +198,14 @@ line-height: 30px;
   line-height: 32px;
 }
 
+.event .info .datetime {
+  float: right;
+  line-height: 32px;
+}
+
 .event .info i, .event .info div {
-  float: left;
   padding: 0 3px;
+  float: left;
 }
 
 .event .info i, .event .info .place {
@@ -233,17 +239,18 @@ line-height: 30px;
   width: 75%;
 }
 
-.event.modal-header {
+.event-detail.modal-header {
   width: 100%;
   position: relative;
   background-size: 995px, 202px;
   background-repeat: no-repeat;
   background-position-x: 0, 995px;
+  height: 205px;
 }
 
-.event .map {
+.event-detail .map {
   width: 233px;
-  height: 264px;
+  height: 100%;
   position: absolute;
   right: 0;
   top: 0;
@@ -350,8 +357,7 @@ body > .dropdown-menu {
 }
 
 .tag-list {
-  float: left;
-  padding: 2px 3px;
+  display: inline-block;
 }
 
 .tag-list .tag-item {
@@ -503,8 +509,8 @@ p.description {
 }
 
 .box h3 {
-  max-width: calc(100% - 150px);
   font-size: 35px;
+  margin: 0;
 }
 
 .modal-header .box {
