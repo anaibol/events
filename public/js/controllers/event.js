@@ -1,8 +1,5 @@
-var EventCtrl = function($scope, $modalInstance, $routeParams, ev) {
-	$scope.ev = ev;
-
-
-	$scope.cancel = function() {
-	$modalInstance.dismiss('cancel');
-	};	
+var EventCtrl = function($scope, $routeParams) {
+  Events.one($routeParams.slug).then(function(ev) {
+    $scope.ev = ev;
+  });
 };

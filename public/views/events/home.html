@@ -2,7 +2,7 @@
 <section ng-controller="EventsCtrl"  >
   <pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
   <div class="container events">
-    <div class="event" link-overload ng-click="open(ev)" href="/{{ev.slug}}" ng-repeat="ev in events">
+    <div class="event" link-overload ng-click="open($event, ev)" href="/{{ev.slug}}" ng-repeat="ev in events">
       <div class="title">
         <span class="truncate">{{ev.name}}</span>
         <div class="attending" ng-show="ev.attending_count > 0">{{ev.attending_count}}<i class="icon-group"></i></div>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="place-info">
-          <a href="https://maps.google.com/maps?q={{ev.place}}" class="place" ng-show="ev.location">
+          <a ng-click="window.open('https://maps.google.com/maps?q={{ev.place}}'); $event.stopPropagation();" href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="place" ng-show="ev.location">
             <i class="fui-location"></i>
             <div class="location">{{ev.location | characters:50}}{{ev.city | characters:50}}</div>
             <div class="street truncate">{{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}</div>
