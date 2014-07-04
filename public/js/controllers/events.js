@@ -174,6 +174,10 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
     }
   };
 
+  $scope.openMap = function($event, ev) {
+    window.open('https://maps.google.com/maps?q=' + ev.place); $event.stopPropagation();
+  };
+
   $scope.remove = function(event) {
     if (event) {
       event.$remove();
