@@ -286,7 +286,7 @@ module.exports = function(req, res) {
           name: req.user.username
         }
 
-        if (ev.price) {
+        if (ev.price.full) {
           ev.price = Ev.getPriceFromFullPrice(ev.price.full);
         }
 
