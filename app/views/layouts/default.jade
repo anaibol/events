@@ -59,7 +59,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
           ul.nav.navbar-nav.navbar-right(ng-show='global.authenticated')
             li.dropdown
               a.dropdown-toggle(href='#', toggle='dropdown')
-                {{ global.user.name }}
+                {{ global.user.facebook.first_name }}
                 b.caret
               ul.dropdown-menu
                 li
