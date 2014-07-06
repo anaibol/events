@@ -565,6 +565,36 @@ tags-input .autocomplete .suggestion-item em {
   display: block\9;
 }
 
+
+.tag-list {
+  display: inline-block;
+}
+
+.tag-list .tag-item {
+  border-radius: 4px;
+  background-color: #1abc9c;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  line-height: 15px;
+  padding: 6px 15px 8px 15px;
+  position: relative;
+  vertical-align: middle;
+  -webkit-transition: 0.25s linear;
+  transition: 0.25s linear;
+}
+
+.tag-item span {
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 15px;
+}
+
 .tag-item.salsa {
   background-color: #3eb9b9;
 }
