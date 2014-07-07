@@ -371,7 +371,6 @@ tags-input *, *:before, *:after {
 }
 
 .tags {
-  border: 2px solid #bdc3c7;
   color: #34495e;
   font-family: "Lato", Helvetica, Arial, sans-serif;
   font-size: 15px;
@@ -383,7 +382,8 @@ tags-input *, *:before, *:after {
   -webkit-box-shadow: none;
   box-shadow: none;
   -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
-  transition: border .25s linear, color .25s linear, background-color .25s linear;  
+  transition: border .25s linear, color .25s linear, background-color .25s linear;
+  border: 2px solid #bdc3c7;  
 }
 
 tags-input .host {
@@ -397,7 +397,6 @@ tags-input .host:active {
 
 tags-input .tags {
   -moz-appearance: textfield;
-  -webkit-appearance: textfield;
   padding: 8px;
   overflow: hidden;
   word-wrap: break-word;

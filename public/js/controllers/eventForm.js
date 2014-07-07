@@ -42,7 +42,7 @@ var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangula
     };
   }
 
-var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru', 'suelta'];
+var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'suelta', 'kuduru'];
 
   $scope.words = function(query) {
     var deferred = $q.defer();
