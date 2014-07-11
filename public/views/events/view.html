@@ -16,6 +16,13 @@
           <i class="fui-location"></i>{{ev.location}}{{ev.city}}
         </div>
       </a>
+    </div> -->
+    <div class="tag-list">
+      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+    </div>
+  </div>
+  <div class="modal-body">
+    <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
       <div class="datetime">
         <div class="date">
           <i class="fui-calendar-solid"></i>
@@ -32,14 +39,6 @@
           <div>{{ev.start_time | date:'HH:mm'}}</div>
         </div>
       </div>
-    </div> -->
-    <div class="tag-list">
-      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
-    </div>
-  </div>
-  <div class="modal-body">
-    <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
-    <p>{{ev.start_time | date:'EEE dd MMM HH:mm'}}</p>
     
     <p class="description">{{ev.description}}</p>
 <!--     <p>{{ev.price.full}}</p>

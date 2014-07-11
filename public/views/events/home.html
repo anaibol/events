@@ -35,7 +35,7 @@
         <div class="place-info">
           <div ng-click="openMap($event, ev)" href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="place" ng-show="ev.location">
             <i class="fui-location"></i>
-            <div class="location">{{ev.location | characters:50}}{{ev.city | characters:50}}</div>
+            <div class="location">{{ev.location | characters:50}} {{ev.city | characters:50}}</div>
             <div class="street truncate">{{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}</div>
           </div>
         </div>

@@ -22,6 +22,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
     $scope.filter.fromDate = $routeParams.date;
     $scope.filter.toDate = '';
+
   } else if ($routeParams.user) {
     $scope.filter.type = 'user';
     $scope.filter.user = $routeParams.user;
@@ -35,9 +36,14 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
 
     $scope.filter.fromDate = $routeParams.date;
     $scope.filter.toDate = '';
-  } else {
-    $scope.filter.fromDate = $scope.today.getFullYear() + '-' + ($scope.today.getMonth() + 1) + '-' + $scope.today.getDate();
 
+  } else if (str === 'today') {
+    $scope.filter.type = 'date';
+
+    $scope.filter.fromDate = $scope.today.getFullYear() + '-' + ($scope.today.getMonth() + 1) + '-' + $scope.today.getDate();
+    $scope.filter.toDate = $scope.today.getFullYear() + '-' + ($scope.today.getMonth() + 1) + '-' + ($scope.today.getDate() + 1);
+
+  } else {
     if (str === 'popular') {
       $scope.filter.sortBy = 'attending_count';
       $scope.filter.sortOrder = '-1';
