@@ -169,8 +169,6 @@ module.exports = function(req, res) {
                 break;
             }
 
-            console.log(query)
-
             // var query2 = _.clone(query);
 
             // delete query2.start_time;
@@ -188,29 +186,20 @@ module.exports = function(req, res) {
                   status: 500
                 });
               } else {
-                if (data.length < limit) {
-                  var response = {
-                    data: data,
-                    count: data.length
-                  };
+                Entity.count(query, function(err, count) {
+                  if (err) {
+                    res.render('error', {
+                      status: 500
+                    });
+                  } else {
+                    var response = {
+                      data: data,
+                      count: count
+                    };
 
-                  res.json(response);
-                } else {
-                  Entity.count(query, function(err, count) {
-                    if (err) {
-                      res.render('error', {
-                        status: 500
-                      });
-                    } else {
-                      var response = {
-                        data: data,
-                        count: count
-                      };
-
-                      res.json(response);
-                    }
-                  });
-                }
+                    res.json(response);
+                  }
+                });
               }
             });
           });

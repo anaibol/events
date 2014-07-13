@@ -117,11 +117,11 @@ function fetch(eid, term, cb) {
             }
 
             // if (term == 'user') {
-              // if (ev) {
+              if (ev) {
                 if (!ev.tags.length) {
                   ev = null;
                 }
-              // }
+              }
             // }
 
             if (ev) {

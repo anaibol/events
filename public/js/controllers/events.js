@@ -57,7 +57,10 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
       $scope.events = events;
 
       $scope.totalEvents = events.metadata.count;
-      $scope.totalPages = events.metadata.count / $scope.filter.limit;
+      $scope.totalPages = Math.ceil(events.metadata.count / $scope.filter.limit);
+
+      console.log("count " + events.metadata.count);
+      console.log("totalEvents " + $scope.totalEvents);
 
       angular.forEach($scope.events, function(ev, key) {
         if (ev.start_time) {
