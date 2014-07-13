@@ -254,6 +254,20 @@ line-height: 30px;
   background-repeat: no-repeat;
   background-position-x: 0, 995px;
   height: 205px;
+  padding: 0;
+}
+
+.event-detail.modal-body {
+  padding-top: 0;
+}
+
+.event-detail h3 {
+  margin-top: 15px;
+}
+
+.event-detail i, .event-detail .day {
+  float: left;
+  margin-right: 10px;
 }
 
 .event-detail .map {

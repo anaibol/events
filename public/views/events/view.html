@@ -1,44 +1,41 @@
-  <div class="event-detail modal-header" style="background-image: url({{ev.pic_cover.source}})">
+  <div class="event-detail modal-header">
+    <div style="background-image: url({{ev.pic_cover.source}}); width: 100%; height: 204px;"></div>
     <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
     </a>
-    <div class="box">
+  </div>
+  <div class="event-detail modal-body">
       <h3 class="truncate">{{ev.name}}</h3>
-
+    <div class="tag-list">
+      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+    </div>
       <div class="title">
         <div class="attending">{{ev.attending_count}}<i class="icon-group"></i></div>
         <div class="price">{{ev.price.full}}</div>
       </div>
-      
-    </div>
-<!--     <div class="info">
+    <div class="info">
       <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank">
         <div class="place" ng-show="ev.location">
           <i class="fui-location"></i>{{ev.location}}{{ev.city}}
         </div>
       </a>
-    </div> -->
-    <div class="tag-list">
-      <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
     </div>
-  </div>
-  <div class="modal-body">
     <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
-      <div class="datetime">
-        <div class="date">
-          <i class="fui-calendar-solid"></i>
-          <div ng-if="ev.date.toDateString() !== today.toDateString()">
-            <div class="day">{{ev.start_time | date:'dd'}}</div>
-            <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
-          </div>
-          <div ng-if="ev.date.toDateString() === today.toDateString()">
-            <div class="today">TODAY!</div>
-          </div>
+    <div class="datetime">
+      <div class="date">
+        <i class="fui-calendar-solid"></i>
+        <div ng-if="ev.date.toDateString() !== today.toDateString()">
+          <div class="day">{{ev.start_time | date:'dd'}}</div>
+          <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
         </div>
-        <div class="time">
-          <i class="fui-time"></i>
-          <div>{{ev.start_time | date:'HH:mm'}}</div>
+        <div ng-if="ev.date.toDateString() === today.toDateString()">
+          <div class="today">TODAY!</div>
         </div>
       </div>
+      <div class="time">
+        <i class="fui-time"></i>
+        <div>{{ev.start_time | date:'HH:mm'}}</div>
+      </div>
+    </div>
     
     <p class="description">{{ev.description}}</p>
 <!--     <p>{{ev.price.full}}</p>
