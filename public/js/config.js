@@ -39,6 +39,7 @@ app.config(function($locationProvider, $routeProvider) {
   }).
   when('/festival', {
     templateUrl: '/views/events/home.html',
+    controller: 'EventsCtrl' // rapha add
   }).
   when('/free', {
     templateUrl: '/views/events/home.html'

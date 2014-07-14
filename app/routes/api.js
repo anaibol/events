@@ -87,7 +87,9 @@ module.exports = function(req, res) {
             var query = {
               start_time: {
                 $gte: from
-              },
+              },   
+
+
               "venue.country": country
             };
 
@@ -132,7 +134,7 @@ module.exports = function(req, res) {
                 break;
 
               case 'popular':
-                delete query["venue.country"];
+                delete query["venue.country"]; // rapha add
                 sort.attending_count = -1;
 
                 break;
@@ -140,7 +142,7 @@ module.exports = function(req, res) {
               case 'festival':
                 query.festival = true;
                 delete query["venue.country"];
-                sort.attending_count = -1;
+                sort.attending_count = -1; // rapha add
 
                 break;
 
