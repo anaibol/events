@@ -132,6 +132,7 @@ module.exports = function(req, res) {
                 break;
 
               case 'popular':
+                delete query["venue.country"];
                 sort.attending_count = -1;
 
                 break;
