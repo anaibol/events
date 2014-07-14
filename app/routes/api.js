@@ -140,6 +140,7 @@ module.exports = function(req, res) {
               case 'festival':
                 query.festival = true;
                 delete query["venue.country"];
+                sort.attending_count = -1;
 
                 break;
 
