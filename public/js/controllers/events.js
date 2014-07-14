@@ -42,6 +42,10 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
       $scope.filter.sortBy = 'attending_count';
       $scope.filter.sortOrder = '-1';
     }
+    if (str === 'festival') {
+      $scope.filter.sortBy = 'attending_count';
+      $scope.filter.sortOrder = '-1';
+    }
     if (str) {
       $scope.filter.type = str;
     }
