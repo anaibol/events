@@ -126,12 +126,14 @@ pre {
 
 .event:hover{
   box-shadow: 0px 0px 5px #666;
-  /*max-width: 415px;*/
-  z-index: 999;
+  /*z-index: 999;
+  margin-top: -5px;
+  margin-left: -10px;
+  max-width: 415px;*/
 }
 
 .event:hover .containing {
-  opacity: 0.8;
+  opacity: 0.85;
   /*width: 415px;*/
 }
 
@@ -139,7 +141,6 @@ pre {
   width: 415px;
   max-width: 415px;
 }*/
-
 .event img {
   width: 400px;
   visibility:hidden;
@@ -208,7 +209,7 @@ line-height: 30px;
 .event .place-info .street {
   line-height: 15px;
   float: left;
-  max-width: 90%;;
+  max-width: 75%;;
 }
 
 .event .info .date, .event .info .time, .event-detail .info .date, .event-detail .info .time {  
@@ -230,7 +231,6 @@ line-height: 30px;
 .event .info i, .event .info div {
   padding: 0 3px;
   float: left;
-  max-width: 100%;
 }
 
 .event .info i, .event .info .place {
@@ -254,7 +254,7 @@ line-height: 30px;
 }
 
 .event .info .place div {
-  color: #575757;
+  color: #575757 !important;
 }
 
 .event .place-info .place .location {
@@ -272,19 +272,6 @@ line-height: 30px;
   background-position-x: 0, 995px;
   height: 205px;
   padding: 0;
-}
-
-.event-detail.modal-body {
-  padding-top: 0;
-}
-
-.event-detail h3 {
-  margin-top: 15px;
-}
-
-.event-detail i, .event-detail .day {
-  float: left;
-  margin-right: 10px;
 }
 
 .event-detail .map {
@@ -1078,4 +1065,14 @@ and (min-width : 1824px) {
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5) {
 /* Styles */
+}
+.event-detail.modal-body {
+  padding-top: 0;
+}
+.event-detail h3 {
+  margin-top: 15px;
+}
+.event-detail i, .event-detail .day {
+  float: left;
+  margin-right: 10px;
 }

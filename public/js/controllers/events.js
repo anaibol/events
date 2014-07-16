@@ -1,4 +1,5 @@
-var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $routeParams, $rootScope) {
+app.controller('EventsCtrl', function($scope, $routeParams, $location, $modal, Global, $routeParams, $rootScope, $state){
+// var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $routeParams, $rootScope, $state) {
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -235,6 +236,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
   //     $scope.ev = selected;
   //   }, function() {});
   // };
-
+  alert(1)
   $scope.getEvents(function() {});
-};
+// };
+});

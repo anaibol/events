@@ -26,6 +26,7 @@
     "classy": "*",
     "angular-seo": "*",
     "angular-masonry": "~0.8.1",
-    "imagesloaded": "~3.1.5"
+    "imagesloaded": "~3.1.5",
+    "angular-ui-router": "~0.2.10"
   }
 }

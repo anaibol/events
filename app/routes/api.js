@@ -238,7 +238,7 @@ module.exports = function(req, res) {
 
         ev.slug = slugify(ev.name.toLowerCase());
 
-        if (ev.price) {
+        if (ev.price.full) {
           ev.price = Ev.getPriceFromFullPrice(ev.price.full);
         }
 
