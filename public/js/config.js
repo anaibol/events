@@ -14,67 +14,6 @@ app.config(function($locationProvider, $routeProvider) {
 // ]);
 
 
-  // $stateProvider
-  //   .state('home', {
-  //     url: '/',
-  //     templateUrl: '/views/events/home.html',
-  //     controller: 'EventsCtrl'
-  //   })
-  //   .state('myEvents', {
-  //     url: '/me/events',
-  //     templateUrl: '/views/events/home.html',
-  //     controller: 'EventsCtrl'
-  //   })
-  //   .state('userEvents', {
-  //     url: '/:user/events',
-  //     templateUrl: '/views/events/home.html',
-  //     controller: 'EventsCtrl'
-  //   })
-  //   .state('worldwide', {
-  //     url: '/worldwide',
-  //     templateUrl: '/views/events/home.html',
-  //     controller: 'EventsCtrl'
-  //   })
-  //   .state('eventsByDate', {
-  //     url: '/date/:date',
-  //     templateUrl: '/views/events/home.html',
-  //     controller: 'EventsCtrl'
-  //   })
-  //   .state('popular', {
-  //     url: '/popular',
-  //     templateUrl: '/views/events/home.html',
-  //   })
-  //   .state('festival', {
-  //     url: '/festival',
-  //     templateUrl: '/views/events/home.html',
-  //   })
-  //   .state('free', {
-  //     url: '/free',
-  //     templateUrl: '/views/events/home.html'
-  //   })
-  //   .state('today', {
-  //     url: '/today',
-  //     templateUrl: '/views/events/home.html'
-  //   })
-  //   .state('weekend', {
-  //     url: '/weekend',
-  //     templateUrl: '/views/events/home.html'
-  //   })
-  //   .state('create', {
-  //     url: '/create',
-  //     templateUrl: '/views/events/create.html'
-  //   })
-  //   .state('edit', {
-  //     url: '/:eventId/edit',
-  //     templateUrl: '/views/events/create.html'
-  //   })
-  //   .state('view', {
-  //     url: '/:slug',
-  //     templateUrl: '/views/events/view.html',
-  //     controller: 'EventCtrl'
-  //   });
-
-
   $routeProvider.
   when('/', {
     templateUrl: '/views/events/home.html'
@@ -121,9 +60,8 @@ app.config(function($locationProvider, $routeProvider) {
     templateUrl: '/views/events/view.html',
     controller: 'EventCtrl'
   })
-
   // .
-  // .state('', {'/', {
+  // when('/', {
   // //  templateUrl: '/views/index.html'
   // }).
   // otherwise({
