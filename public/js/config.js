@@ -1,7 +1,7 @@
 'use strict';
 
 //Setting up route
-app.config(function($locationProvider, $stateProvider) {
+app.config(function($locationProvider, $routeProvider) {
 
   $locationProvider.html5Mode(true);
 
