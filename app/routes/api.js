@@ -222,6 +222,12 @@ module.exports = function(req, res) {
           ev = req.body;
         }
 
+        if (!req.user.admin) {
+            if (ev.creator.id !== req.user.facebook.id) {
+               return res.send('Not allowed');
+            }
+        }
+
         ev.start_time = new Date(ev.start_time);
         ev.end_time = new Date(ev.end_time);
 

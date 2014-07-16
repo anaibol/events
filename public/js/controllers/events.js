@@ -99,7 +99,7 @@ var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $rout
         imagesLoaded(container, function(instance) {
             var myPackery = new Packery(container, {});
         });
-      }, 200);
+      }, 0);
 
       cb();
     });
