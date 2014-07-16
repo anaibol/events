@@ -122,13 +122,13 @@ app.config(function($locationProvider, $stateProvider) {
     controller: 'EventCtrl'
   })
 
-  .
-  .state('', {'/', {
-  //  templateUrl: '/views/index.html'
-  }).
-  otherwise({
-    redirectTo: '/'
-  });
+  // .
+  // .state('', {'/', {
+  // //  templateUrl: '/views/index.html'
+  // }).
+  // otherwise({
+  //   redirectTo: '/'
+  // });
 });
 
   app.config(function (datepickerPopupConfig) {
