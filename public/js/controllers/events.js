@@ -1,5 +1,5 @@
-app.controller('EventsCtrl', function($scope, $routeParams, $location, $modal, Global, $routeParams, $rootScope){
-// var EventsCtrl = function($scope, $routeParams, $location, $modal, Global, $routeParams, $rootScope, $state) {
+app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope){
+// var EventsCtrl = function($scope, $stateParams, $location, $modal, Global, $stateParams, $rootScope, $state) {
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -21,20 +21,20 @@ app.controller('EventsCtrl', function($scope, $routeParams, $location, $modal, G
   if (str === 'me/events') {
     $scope.filter.type = 'user';
 
-    $scope.filter.fromDate = $routeParams.date;
+    $scope.filter.fromDate = $stateParams.date;
     $scope.filter.toDate = '';
-  } else if ($routeParams.user) {
+  } else if ($stateParams.user) {
     $scope.filter.type = 'user';
-    $scope.filter.user = $routeParams.user;
+    $scope.filter.user = $stateParams.user;
 
-    $scope.filter.fromDate = $routeParams.date;
+    $scope.filter.fromDate = $stateParams.date;
     $scope.filter.toDate = '';
 
 
-  } else if ($routeParams.date) {
+  } else if ($stateParams.date) {
     $scope.filter.type = 'date';
 
-    $scope.filter.fromDate = $routeParams.date;
+    $scope.filter.fromDate = $stateParams.date;
     $scope.filter.toDate = '';
   } else {
     $scope.filter.fromDate = $scope.today.getFullYear() + '-' + ($scope.today.getMonth() + 1) + '-' + $scope.today.getDate();
@@ -214,7 +214,7 @@ app.controller('EventsCtrl', function($scope, $routeParams, $location, $modal, G
   };
 
   // $scope.findOne = function() {
-  //   Restangular.one('rest/event', $routeParams.eventId).get().then(function(event) {
+  //   Restangular.one('rest/event', $stateParams.eventId).get().then(function(event) {
   //     $scope.event = event;
   //   }, function(response) {
   //     console.log("Error with status code", response.status);
