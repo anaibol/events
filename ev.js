@@ -16,7 +16,7 @@ var Locations = db.get('locations');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BAK6lIvqhB2Cmml7O1ULvmvhsh8MHeAA9ZCSq9YNh42z3KvlHZADYRA4ZBz3y6me2JNerX3yAcfIyMKu9EERMOF2fvnopZBWFK0BWWGXN8eO1GpIU45jNZANhoH7rnX6WYTjPsBwkhNPophm5V4VRkQ5u9osEPEbZA1fjlfzgJ1tli6EknQab0XWbZBCJWGIlgZDZD';
+var accessToken = 'CAAGPsrwaxr4BANBarNZB64XKbfRmWXzeGCWHFzuh6osoGvKm5Y9v2XD1CCy5RfPZBC6U6zopOhHroAEZCoZAPZBYBt4TolXIFvwg6fSpLTjCbNzWPFe8u9mWo0olari2PkUQchNtJkuz2uAvwADlaeisz5CsdIFWyhZAonqnVnoMZAor6JKJhR68Y2hDXNGCrnYrrZCKkGODwrpAzmGpF6Mj';
 graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta'
@@ -65,6 +65,7 @@ function fetch(eid, term, cb) {
   eid = parseInt(eid);
 
   existsInDb(eid, function(exists) {
+    console.log('hola')
     if (!exists) {
       var query = {
         user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,

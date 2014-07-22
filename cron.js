@@ -27,7 +27,7 @@ var numEvents = winston.loggers.get('numEvents');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BABG1RVbEuPheQYBlh9Fr9hOrc4xyZBsqeNyuerLMsmxu6SLUTj0TlvkZBvko5RIIJocERbmpVjmmtLZAlc1D2rVvZAdlmFrTmaZAvyZAeysCT73RDSz0UVaPtJJQrsZBkShZAMIydZAVPMkCP3tWZCazs3lTQOvmSLnORcKYZBXivNM8QRc32bJr09ogOewLMnNzgZDZD';
+var accessToken = 'CAAGPsrwaxr4BANBarNZB64XKbfRmWXzeGCWHFzuh6osoGvKm5Y9v2XD1CCy5RfPZBC6U6zopOhHroAEZCoZAPZBYBt4TolXIFvwg6fSpLTjCbNzWPFe8u9mWo0olari2PkUQchNtJkuz2uAvwADlaeisz5CsdIFWyhZAonqnVnoMZAor6JKJhR68Y2hDXNGCrnYrrZCKkGODwrpAzmGpF6Mj';
 graph.setAccessToken(accessToken);
 
 
