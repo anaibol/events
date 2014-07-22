@@ -721,6 +721,10 @@ footer .container {
   text-align: center;
 }
 
+footer ul {
+  list-style: none;
+}
+
 .logo .title {
   font-weight: bold;
   font-size: 24pt;

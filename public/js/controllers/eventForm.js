@@ -1,4 +1,11 @@
-var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangular) {
+var EventFormCtrl = function($scope, $modalInstance, $q, $filter, Restangular, $stateParams) {
+  $scope.ev = {};
+
+  Events.one($stateParams.slug).then(function(ev) {
+    $scope.ev = ev;
+     console.log($scope.ev)
+  });
+
   $scope.previewImage = function(element) {
      $scope.$apply(function(scope) {
         var reader = new FileReader();
@@ -30,17 +37,17 @@ var EventFormCtrl = function($scope, $modalInstance, ev, $q, $filter, Restangula
     types: '(establishment)'
   };
 
-  if (ev) {
-    $scope.ev = ev;
-  }
-  else {
-    $scope.ev = {
-      start_time: new Date(),
-      venue: {
-        country: "Argentina"
-      }
-    };
-  }
+  // if (ev) {
+  //   $scope.ev = ev;
+  // }
+  // else {
+  //   $scope.ev = {
+  //     start_time: new Date(),
+  //     venue: {
+  //       country: "Argentina"
+  //     }
+  //   };
+  // }
 
 var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'suelta', 'kuduru'];
 

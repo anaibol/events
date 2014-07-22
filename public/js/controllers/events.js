@@ -68,6 +68,17 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
       console.log("totalEvents " + $scope.totalEvents);
 
       angular.forEach($scope.events, function(ev, key) {
+        if (Global.authenticated) {
+          if (window.user.admin || ev.creator.id === window.user.facebook.id) {
+            ev.sref = 'home.edit(ev)';
+          } else {
+            ev.sref = 'home.view(ev)';
+          }
+        } else {
+          ev.sref = 'home.view(ev)';
+        }
+
+
         if (ev.start_time) {
           ev.date = new Date(ev.start_time);
 
@@ -148,39 +159,39 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
       }
     });*/
 
-  $scope.open = function($event, ev) {
-    $event.preventDefault();
-    if (Global.authenticated) {
-      var modalInstance = $modal.open({
-        templateUrl: '/views/events/form.html',
-        controller: 'EventFormCtrl',
-        resolve: {
-          ev: function() {
-            return ev;
-          }
-        }
-      });
+  // $scope.open = function($event, ev) {
+  //   $event.preventDefault();
+  //   if (Global.authenticated) {
+  //     var modalInstance = $modal.open({
+  //       templateUrl: '/views/events/form.html',
+  //       controller: 'EventFormCtrl',
+  //       resolve: {
+  //         ev: function() {
+  //           return ev;
+  //         }
+  //       }
+  //     });
 
-      modalInstance.result.then(function(selected) {
-        $scope.ev = selected;
-      }, function() {});
-    }
-    else {
-      var modalInstance = $modal.open({
-        templateUrl: '/views/events/view.html',
-        controller: 'EventModalCtrl',
-        resolve: {
-          ev: function() {
-            return ev;
-          }
-        }
-      });
+  //     modalInstance.result.then(function(selected) {
+  //       $scope.ev = selected;
+  //     }, function() {});
+  //   }
+  //   else {
+  //     var modalInstance = $modal.open({
+  //       templateUrl: '/views/events/view.html',
+  //       controller: 'EventModalCtrl',
+  //       resolve: {
+  //         ev: function() {
+  //           return ev;
+  //         }
+  //       }
+  //     });
 
-      modalInstance.result.then(function(selected) {
-      }, function() {});      
-      // $window.open('https://facebook.com/' + ev.eid);
-    }
-  };
+  //     modalInstance.result.then(function(selected) {
+  //     }, function() {});      
+  //     // $window.open('https://facebook.com/' + ev.eid);
+  //   }
+  // };
 
   $scope.openMap = function($event, ev) {
     window.open('https://maps.google.com/maps?q=' + ev.place); $event.stopPropagation();

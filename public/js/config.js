@@ -65,20 +65,38 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
     
     $urlRouterProvider.otherwise('');
 
-    modalStateProvider.state('home.view', {
-        url: ':slug',
-        templateUrl: '/views/events/view.html',
-        controller: 'EventCtrl',
-        // resolve: {
-        //   ev: function() {
-        //     return ev;
-        //   }
-        // }
-    });
     modalStateProvider.state('home.edit', {
-        url: 'edit',
-        templateUrl: '/views/events/edit.html'
+      url: ':slug/edit',
+      templateUrl: '/views/events/form.html',
+      controller: 'EventFormCtrl' //,
+      // resolve: {
+      //   ev: function() {
+      //     Events.one('falsa-cubana-or-niceto-club').then(function(ev) {
+      //       alert(1)
+      //       return ev;
+      //     });
+      //   }
+      // }
     });    
+
+    modalStateProvider.state('home.privacy', {
+      url: '/privacy',
+      templateUrl: '/views/privacy.html',
+        controller: function() {
+          alert(1)
+        }
+    });
+
+    modalStateProvider.state('home.view', {
+      url: ':slug',
+      templateUrl: '/views/events/view.html',
+      controller: 'EventCtrl',
+      // resolve: {
+      //   ev: function() {
+      //     return ev;
+      //   }
+      // }
+    });
 
   // $routeProvider.
   // when('/', {
