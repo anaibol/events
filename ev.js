@@ -65,7 +65,6 @@ function fetch(eid, term, cb) {
   eid = parseInt(eid);
 
   existsInDb(eid, function(exists) {
-    console.log('hola')
     if (!exists) {
       var query = {
         user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,
@@ -118,6 +117,7 @@ function fetch(eid, term, cb) {
             }
 
             // if (term == 'user') {
+              console.log(ev)
               if (ev) {
                 if (!ev.tags.length) {
                   ev = null;
