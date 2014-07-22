@@ -80,11 +80,11 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
     });    
 
     modalStateProvider.state('home.privacy', {
-      url: '/privacy',
+      url: 'privacy',
       templateUrl: '/views/privacy.html',
-        controller: function() {
-          alert(1)
-        }
+      controller: function() {
+        alert(1)
+      }
     });
 
     modalStateProvider.state('home.view', {
@@ -97,61 +97,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       //   }
       // }
     });
-
-  // $routeProvider.
-  // when('/', {
-  //   templateUrl: '/views/events/home.html'
-  // }).
-  // when('/me/events', {
-  //   templateUrl: '/views/events/home.html',
-  //   controller: 'EventsCtrl'
-  // }).
-  // when('/:user/events', {
-  //   templateUrl: '/views/events/home.html',
-  //   controller: 'EventsCtrl'
-  // }).
-  // when('/worldwide', {
-  //   templateUrl: '/views/events/home.html',
-  //   controller: 'EventsCtrl'
-  // }).
-  // when('/date/:date', {
-  //   templateUrl: '/views/events/home.html',
-  //   controller: 'EventsCtrl'
-  // }).
-  // when('/popular', {
-  //   templateUrl: '/views/events/home.html',
-  // }).
-  // when('/festival', {
-  //   templateUrl: '/views/events/home.html',
-  //   controller: 'EventsCtrl' // rapha add
-  // }).
-  // when('/free', {
-  //   templateUrl: '/views/events/home.html'
-  // }).
-  // when('/today', {
-  //   templateUrl: '/views/events/home.html'
-  // }).
-  // when('/weekend', {
-  //   templateUrl: '/views/events/home.html'
-  // }).
-  // when('/create', {
-  //   templateUrl: '/views/events/create.html'
-  // }).
-  // when('/:eventId/edit', {
-  //   templateUrl: '/views/events/create.html'
-  // }).
-  // when('/:slug', {
-  //   templateUrl: '/views/events/view.html',
-  //   controller: 'EventCtrl'
-  // })
-
-  // .
-  // .state('', {'/', {
-  // //  templateUrl: '/views/index.html'
-  // }).
-  // otherwise({
-  //   redirectTo: '/'
-  // });
 });
 
 app.config(function (datepickerPopupConfig) {

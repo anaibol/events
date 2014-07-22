@@ -68,20 +68,27 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                   a(href='/auth/signout', target='_self') Logout
 
     //- leaflet#map(center='pos', layers='layers', markers='markers', height='100%', width='100%')
-    .content#top
-      .container
-        block content
     
-      footer
-      //-  ul
-      //-    li
-      //-      | Contact
-      //-    li
-      //-      | Privacy policy
-        .container
-          .logo(href='/')
-            span.title Wooepa
-            span.subtitle Where she's going?
+    block content
+    
+    footer
+      ul
+        li
+          a(href='/')
+            | About Us
+
+        li
+          a(href='/privacy')
+            | Pricay policy
+
+        li
+          a(href='/contact')
+            | Contact Us
+
+      .container
+        .logo(href='/')
+          span.title Wooepa
+          span.subtitle Where she's going?
 
 
     include ../includes/foot

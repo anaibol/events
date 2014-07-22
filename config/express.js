@@ -186,6 +186,15 @@ module.exports = function(app, passport, db) {
       });
     });
 
+    app.get('/:slug/edit', function(req, res, next) {
+      Events.findOne({ slug: req.params.slug }, function(err, ev) {
+        res.render('event', {
+          title: 'Wooepa',
+          ev: ev
+        });
+      });
+    });
+
     app.get('/tag/:tag', function(req, res, next) {
       Events.find({ tags: { $all: [ req.params.tag ] } }, function(err, evs) {
         console.log(evs)
