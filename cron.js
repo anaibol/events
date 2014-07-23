@@ -71,7 +71,7 @@ var newEvents;
 // });
 
 
-//new cronJob('*/30 * * * * ', function() {
+new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -85,7 +85,7 @@ var newEvents;
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-// }, null, true);
+}, null, true);
 
 
 function paginate(page, term) {

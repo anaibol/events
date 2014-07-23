@@ -18,6 +18,7 @@
           <i class="fui-location"></i>{{ev.location}}{{ev.city}}
         </div>
       </a>
+      {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}, {{ev.venue.country}}
     </div>
     <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
     <div class="datetime">
