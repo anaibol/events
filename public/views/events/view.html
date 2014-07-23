@@ -4,7 +4,8 @@
     </a>
   </div>
   <div class="event-detail modal-body">
-      <h3 class="truncate">{{ev.name}}</h3>
+    <h3 class="truncate">{{ev.name}}</h3>
+    <a class="facebook-link" target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
     <div class="tag-list">
       <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
     </div>
@@ -20,7 +21,6 @@
       </a>
       {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}, {{ev.venue.country}}
     </div>
-    <a target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
     <div class="datetime">
       <div class="date">
         <i class="fui-calendar-solid"></i>

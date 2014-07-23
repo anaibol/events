@@ -84,6 +84,16 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       templateUrl: '/views/privacy.html'
     });
 
+    modalStateProvider.state('home.terms', {
+      url: 'terms',
+      templateUrl: '/views/terms.html'
+    });
+
+    modalStateProvider.state('home.support', {
+      url: 'support',
+      templateUrl: '/views/support.html'
+    });
+
     modalStateProvider.state('home.view', {
       url: ':slug',
       templateUrl: '/views/events/view.html',

@@ -279,6 +279,11 @@ line-height: 30px;
   top: 0;
 }
 
+.event-detail a.facebook-link {
+  float: left;
+  width: 100%;
+}
+
 .pac-container {
     background-color: #FFF;
     z-index: 20000;
