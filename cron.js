@@ -71,7 +71,7 @@ var newEvents;
 // });
 
 
-new cronJob('*/30 * * * * ', function() {
+var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
