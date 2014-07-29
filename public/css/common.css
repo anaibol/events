@@ -34,6 +34,16 @@ body {
   margin-left:0
 }
 
+.navbar .nav>li>a.login {
+  background-image: url('/img/facebook.png');
+  margin: 0;
+  background-size: initial;
+  height: 46px;
+  width: 100px;
+  text-indent: -9999px;
+  margin-top: 4px;;
+}
+
 .leaflet-bottom.leaflet-right {
   display: none;
 }

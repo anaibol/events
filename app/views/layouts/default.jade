@@ -52,8 +52,7 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                 
           ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')
             li
-              a(href='/auth/facebook', target='_self')
-                i.glyphicon.glyphicon-user
+              a.login(href='/auth/facebook', target='_self')
                 | Login
 
           ul.nav.navbar-nav.navbar-right(ng-show='global.authenticated')
