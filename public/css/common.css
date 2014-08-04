@@ -141,7 +141,6 @@ pre {
 
 .event:hover .containing {
   opacity: 0.85;
-  width: 100%;
 }
 
 /*.event:hover .containing img {
@@ -156,9 +155,9 @@ pre {
 
 .event .containing {
   float: left;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  max-width: 100%;
+  width: 100%;
   position: relative;
 }
 
@@ -197,8 +196,8 @@ line-height: 30px;
 .event .info {
   line-height: 37px;
   float: left;
-  padding-bottom: 4px;
   width: 100%;
+  padding: 5px 0;
 }
 
 .event .place {
@@ -216,7 +215,6 @@ line-height: 30px;
 .event .place-info .street {
   line-height: 15px;
   float: left;
-  max-width: 75%;;
 }
 
 .event .info .date, .event .info .time, .event-detail .info .date, .event-detail .info .time {  
@@ -262,6 +260,7 @@ line-height: 30px;
 
 .event .info .place div {
   color: #575757 !important;
+  max-width: 100%;
 }
 
 .event .place-info .place .location {
@@ -686,6 +685,8 @@ tags-input .autocomplete .suggestion-item em {
 p.description {
   white-space: pre-line;
   overflow: auto;
+  word-break: break-all;
+  text-align: left;
 }
 
 .modal-header .box {

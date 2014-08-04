@@ -4,206 +4,52 @@ var url = require('url');
 
 var _ = require('lodash');
 
-var Events = global.db.get('events');
-
 var request = require('request');
 var graph = require('fbgraph');
 
+var moment = require('moment');
 
-/**
- * Find ev by id
- */
-exports.ev = function(req, res, next, id) {
-  Events.findById(id, function(err, ev) {
-    if (err) return next(err);
-    if (!ev) return next(new Error('Failed to load ev ' + id));
-    req.ev = ev;
-    next();
-  });
-};
+var fs = require('fs');
 
-/**
- * Create a ev
- */
-exports.create = function(req, res) {
-  var ev = req.body;
+var slugify = require('slugify');
 
-  ev.start_time = new Date(ev.start_time);
-  ev.end_time = new Date(ev.end_time);
+var Creators = db.get('creators');
+var Locations = db.get('locations');
+var Events = global.db.get('events');
 
-  var venue;
+var Ev = require('../../ev');
 
-  if (ev.place) {
-    venue = ev.place.split(', ');
+function parseDataURL(string) {
+  var regex = /^data:.+\/(.+);base64,(.*)$/;
 
-    ev.venue = {
-      country: venue[venue.length - 1]
-    };
+  var match = string.match(regex);
 
-    //ev.venue.city = venue[venue.length - 2];
-  }
+  var buffer = new Buffer(match[2], 'base64');
 
-  Events.insert(ev, function(err) {
-    if (err) {
-      return res.send('users/signup', {
-        errors: err.errors,
-        ev: ev
-      });
+  return {
+    ext: match[1],
+    data: new Buffer(match[2], 'base64')
+  };
+}
+
+function getCountry(req, cb) {
+  if (!req.session.country) {
+    var ip = '';
+    if (process.env.NODE_ENV === 'development') {
+      ip = '82.142.63.255';
     } else {
-      res.jsonp(ev);
+      ip = req.connection.remoteAddress;
     }
-  });
-};
-
-/**
- * Update a ev
- */
-exports.update = function(req, res) {
-  var ev = req.ev;
-
-  // if (req.files.image) {
-  //   console.log(req.files);
-  //   var image = req.files.image;
-  //       console.log(image.name);
-  //   var newImageLocation = path.join(__dirname, 'public/uploads', image.name);
-    
-  //   fs.readFile(image.path, function(err, data) {
-  //       fs.writeFile(newImageLocation, data, function(err) {
-  //           res.json(200, {
-  //               src: 'images/' + image.name,
-  //               size: image.size
-  //           });
-  //       });
-  //   });
-  // }
-
-  // console.log(req.body.data);
-  ev = _.extend(req.body);
-  ev.start_time = new Date(ev.start_time);
-  ev.end_time = new Date(ev.end_time);
-
-  var venue;
-
-  if (ev.place) {
-    venue = ev.place.split(', ');
-
-    ev.venue = {
-      country: venue[venue.length - 1]
-    };
-
-    //ev.venue.city = venue[venue.length - 2];
-  }
-
-  Events.updateById(ev._id, ev, function(err) {
-    if (err) {
-      return res.send('users/signup', {
-        errors: err.errors,
-        ev: ev
-      });
-    } else {
-      res.jsonp(ev);
-    }
-  });
-};
-
-/**
- * Delete an ev
- */
-exports.destroy = function(req, res) {
-  var ev = req.ev;
-
-  ev.remove(function(err) {
-    if (err) {
-      return res.send('users/signup', {
-        errors: err.errors,
-        ev: ev
-      });
-    } else {
-      res.jsonp(ev);
-    }
-  });
-};
-
-/**
- * Show an ev
- */
-exports.show = function(req, res) {
-  res.jsonp(req.ev);
-};
-
-/**
- * List of Events
- */
-exports.all = function(req, res) {
-  var date = new Date();
-
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
-
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }, {
-    sort: {
-      attendingNum: -1
-    },
-  }, function(err, evs) {
-    if (err) {
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.jsonp(evs);
-    }
-  });
-};
-
-
-/**
- * Find evs
- */
-exports.find = function(req, res) {
-  var pos = req.body.pos;
-
-  if (req.user) {
-    graph.setAccessToken(req.user.accessToken);
-
-    /*var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
-        //var query = 'SELECT name, pic_cover,start_time, end_time, location, description,venue  FROM ev WHERE eid in(SELECT eid FROM ev_member WHERE uid IN (SELECT page_id FROM place WHERE distance(latitude, longitude, "' + pos.latitude + '", "' + pos.longitude + '") < 50000)) ORDER BY start_time desc';
-        graph.fql(query, function(err, evs) {
-            res.json(evs.data);
-            console.log(evs.data);
-        });*/
-
-
-    var searchOptions = {
-      q: pos.city,
-      type: "ev"
-    };
-
-    graph.search(searchOptions, function(err, evs) {
-      res.json(evs.data);
-
-      Events.create(evs.data, function(err) {
-        if (err) console.log(err)
-      });
+     
+    request('http://freegeoip.net/json/' + ip, function(error, response, body) {
+      var pos = JSON.parse(body);
+      req.session.country = pos.country_name;
+      cb(req.session.country);
     });
-
   } else {
-    var pos = {};
-    pos.latitude = '40.712';
-    pos.longitude = '-74.000';
-
-    res.render('index', {
-      title: 'Wooepa',
-      user: 'null',
-      pos: JSON.stringify(pos),
-      evs: 'null'
-    });
+    cb(req.session.country);
   }
-};
+}
 
 function getCountry(req, cb) {
   if (!req.session.country) {
@@ -223,63 +69,6 @@ function getCountry(req, cb) {
     cb(req.session.country);
   }
 }
-
-exports.get = function(req, res) {
-  getCountry(req, function(country) {
-    var url_parts = url.parse(req.url, true);
-    var params = url_parts.query;
-
-    var date = new Date();
-
-    date.setSeconds(0);
-    date.setMinutes(0);
-    date.setHours(0);
-    
-    var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
-    var sort = JSON.parse(sortStr);
-
-    var query = {
-      start_time: {
-        $gte: date
-      }
-    };
-
-    if (!params.all) {
-      query["venue.country"] = country;
-    }
-
-    Events.find(query, {
-      sort: sort,
-      limit: params.limit,
-      skip: params.page * params.limit
-    }, function(err, evs) {
-      if (err) {
-        res.render('error', {
-          status: 500
-        });
-      } else {
-        res.jsonp(evs);
-      }
-    });
-  });
-};
-
-exports.nameLike = function(req, res) {
-  Events.find({
-    name: new RegExp(q.name || term, 'i'),
-    sort: {
-      start_time: 1
-    }
-  }, function(err, evs) {
-    if (err) {
-      res.render('error', {
-        status: 500
-      });
-    } else {
-      res.jsonp(evs);
-    }
-  });
-};
 
 exports.importFromUser = function(req, res) {
   Ev.crawlUser(req.params.name, function (result) {
@@ -314,5 +103,295 @@ exports.importFromPageTimeline = function(req, res) {
 exports.import = function(req, res) {
   Ev.fetch(req.params.eid, 'event', function (ev) {
     res.json(ev);
+  });
+};
+
+exports.get = function(req, res) {
+  if (req.params.slug) {
+    Events.findOne({slug: req.params.slug}, function(err, data) {
+      if (err) {
+        res.render('error', {
+          status: 500
+        });
+      } else {
+        res.json(data);
+      }
+    });
+  } else {
+    getCountry(req, function(country) {
+      var url_parts = url.parse(req.url, true);
+      var params = url_parts.query;
+
+      var limit = params.limit;
+      var skip = (params.page - 1) * params.limit;
+
+      var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
+      var sort = JSON.parse(sortStr);
+
+      var from = new Date(params.fromDate);
+
+      var query = {
+        start_time: {
+          $gte: from
+        },   
+
+
+        "venue.country": country
+      };
+
+      var options = {
+        limit: limit,
+        skip: skip,
+        sort: sort
+      };
+
+      switch (params.type) {
+        case 'user':
+          delete query.start_time;
+          delete query["venue.country"];
+
+          if (params.user) {
+            query["creator.name"] = params.user;
+          } else {
+            query["creator.id"] = req.user.facebook.id;
+          }
+
+          break;
+
+        case 'date':
+          if (params.toDate) {
+            var to = new Date(params.toDate);
+
+            query.start_time = {
+              $gte: from,
+              $lt: to
+            };
+          } else {
+            query.start_time = {
+              $gte: from
+            };
+          }
+
+          break;
+
+        case 'worldwide':
+          delete query["venue.country"];
+
+          break;
+
+        case 'popular':
+          delete query["venue.country"]; // rapha add
+          sort.attending_count = -1;
+
+          break;
+
+        case 'festival':
+          query.festival = true;
+          delete query["venue.country"];
+          sort.attending_count = -1; // rapha add
+
+          break;
+
+        case 'free':
+          query["price.num"] = 0;
+
+          break;
+        case 'today':
+          var dateIncreased = new Date(from.getTime() + (24 * 60 * 60 * 1000) );
+
+          query = {
+            start_time: {
+              $gte: from,
+              $lt: dateIncreased
+            }
+          };
+
+          break;
+        case 'weekend':
+          var friday = moment().day(5).toDate();
+          var sunday = moment().day(7).toDate();
+
+          query.start_time = {
+            $gte: friday,
+            $lt: sunday
+          };
+
+          break;
+      }
+
+      // var query2 = _.clone(query);
+
+      // delete query2.start_time;
+
+      // query2.repeat = moment().format('dddd');
+
+      // query = {$or:[
+      //     query,
+      //     query2
+      // ]};
+
+      Events.find(query, options, function(err, data) {
+        if (err) {
+          res.render('error', {
+            status: 500
+          });
+        } else {
+          Events.count(query, function(err, count) {
+            if (err) {
+              res.render('error', {
+                status: 500
+              });
+            } else {
+              var response = {
+                data: data,
+                count: count
+              };
+
+              res.json(response);
+            }
+          });
+        }
+      });
+    });
+  }
+};
+
+exports.getOne = function(req, res) {
+  Events.findOne({slug: req.params.slug}, function(err, data) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.json(data);
+    }
+  });
+};
+
+exports.create = function(req, res) {
+  var ev;
+  var image;
+
+  if (typeof req.body.model === 'string') {
+    ev = JSON.parse(req.body.model);
+    image = req.body.image;
+  } else {
+    ev = req.body;
+  }
+
+  ev.start_time = new Date(ev.start_time);
+  ev.end_time = new Date(ev.end_time);
+
+  if (image) {
+    var parsed = parseDataURL(image);
+    ev.imageExt = parsed.ext;
+  }
+
+  ev.slug = slugify(ev.name.toLowerCase());
+
+  ev.creator = {
+    id: req.user.facebook.id,
+    name: req.user.username
+  }
+
+  if (ev.price.full) {
+    ev.price = Ev.getPriceFromFullPrice(ev.price.full);
+  }
+
+  Events.insert(ev, function(err, obj) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (image) {
+        var newImageLocation = __dirname + '/../../public/uploads/' + obj._id + '.' + obj.imageExt;
+        fs.writeFileSync(newImageLocation, parsed.data);
+      }
+
+      if (obj) {
+        if (obj.location && obj.venue) {
+          Locations.insert({location: obj.location, venue: obj.venue, place: obj.place});
+        }
+
+        if (obj.creator) {
+          Creators.insert({fid: obj.creator.id, username: obj.creator.name});
+        }
+      }
+
+      var fbEv = {
+        name: ev.name,
+        description: ev.description,
+        start_time: ev.start_time
+      }
+
+      graph.post('/me/events?access_token=' + req.user.accessToken, fbEv, function(err, res) {
+          // returns the post id
+          console.log(err)
+          console.log(res); // { id: xxxxx}
+      });
+
+      res.json(obj);
+    }
+  });
+};
+
+exports.update = function(req, res) {
+  var ev;
+  var image;
+
+  if (typeof req.body.model === 'string') {
+    ev = JSON.parse(req.body.model);
+    image = req.body.image;
+  } else {
+    ev = req.body;
+  }
+
+  if (!req.user.admin) {
+      if (ev.creator.id !== req.user.facebook.id) {
+         return res.send('Not allowed');
+      }
+  }
+
+  ev.start_time = new Date(ev.start_time);
+  ev.end_time = new Date(ev.end_time);
+
+  if (image) {
+    var parsed = parseDataURL(image);
+    ev.imageExt = parsed.ext;
+  }
+
+  ev.slug = slugify(ev.name.toLowerCase());
+
+  if (ev.price.full) {
+    ev.price = Ev.getPriceFromFullPrice(ev.price.full);
+  }
+
+  Events.updateById(ev._id, ev, function(err) {
+    if (err) {
+      return res.send('users/signup', {
+        errors: err.errors
+      });
+    } else {
+      if (image) {
+        var newImageLocation = __dirname + '/../../public/uploads/' + ev._id + '.' + ev.imageExt;
+        fs.writeFileSync(newImageLocation, parsed.data);
+      }
+
+      res.jsonp(ev);
+    }
+  });
+};
+
+exports.destroy = function(req, res) {
+  var ev = req.ev;
+
+  ev.remove(function(err) {
+    if (err) {
+      return res.send('users/signup', {
+        errors: err.errors,
+        ev: ev
+      });
+    } else {
+      res.jsonp(ev);
+    }
   });
 };

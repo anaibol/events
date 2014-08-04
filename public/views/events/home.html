@@ -2,7 +2,7 @@
 <section ng-controller="EventsCtrl">
   <pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
   <div class="events">
-    <a class="event" href="/{{ev.slug}}" ui-sref="{{ev.sref}}" ng-repeat="ev in events">
+    <a class="event" href="/{{ev.slug}}" ui-sref="{{getLink(ev)}}" ng-repeat="ev in events">
       <div class="title">
         <span class="truncate">{{ev.name}}</span>
         <div class="attending" ng-show="ev.attending_count > 0">{{ev.attending_count}}<i class="icon-group"></i></div>

@@ -9,6 +9,8 @@ app.provider('modalState', function($stateProvider) {
     }
     this.state = function(stateName, options) {
         var modalInstance;
+        console.log(stateName)
+        console.log(options)
         $stateProvider.state(stateName, {
             url: options.url,
             onEnter: function($modal, $state) {

@@ -1,7 +1,7 @@
   <div class="event-detail modal-header">
     <div style="background-image: url({{ev.pic_cover.source}}); width: 100%; height: 204px;"></div>
-    <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
-    </a>
+   <!--  <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
+    </a> -->
   </div>
   <div class="event-detail modal-body">
     <h3 class="truncate">{{ev.name}}</h3>
@@ -37,8 +37,30 @@
         <div>{{ev.start_time | date:'HH:mm'}}</div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <p class="description">{{ev.description}}</p>
+      </div>
+      <div class="col-md-4">
+        <div class="event-buttons wdiv padding-10">
+          <div class="event-rsvp-btns">
+            <h6 class="wdiv-label">Are you going to this event?</h6>
+            <a class="btn btn-success" href="#">Yes</a>
+            <button class="btn" type="submit">No</button>
+          </div>
+        </div>
+        <a class="btn  show-follow-modal disabled btn-default" id="join-event-btn" href="#">You're attending!</a>
+        
+        <div class="event-buttons wdiv padding-10">
+          <div class="event-rsvp-btns">
+            <button class="btn" type="submit">Invite your friends!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     
-    <p class="description">{{ev.description}}</p>
 <!--     <p>{{ev.price.full}}</p>
 
     <span class="input-group-btn">

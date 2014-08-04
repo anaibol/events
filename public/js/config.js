@@ -77,11 +77,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       //     });
       //   }
       // }
-    });    
-
-    modalStateProvider.state('home.privacy', {
-      url: 'privacy',
-      templateUrl: '/views/privacy.html'
     });
 
     modalStateProvider.state('home.terms', {
@@ -104,6 +99,46 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       //   }
       // }
     });
+
+
+    var modalStates = ['myEvents', 'userEvents', 'worldwide', 'popular', 'festival', 'free', 'today', 'weekend', 'create'];
+
+    for (var i in modalStates) {
+      modalStateProvider.state(modalStates[i] + '.edit', {
+        url: '/:slug/edit',
+        templateUrl: '/views/events/form.html',
+        controller: 'EventFormCtrl' //,
+        // resolve: {
+        //   ev: function() {
+        //     Events.one('falsa-cubana-or-niceto-club').then(function(ev) {
+        //       alert(1)
+        //       return ev;
+        //     });
+        //   }
+        // }
+      });
+
+      modalStateProvider.state(modalStates[i] + '.terms', {
+        url: '/terms',
+        templateUrl: '/views/terms.html'
+      });
+
+      modalStateProvider.state(modalStates[i] + '.support', {
+        url: '/support',
+        templateUrl: '/views/support.html'
+      });
+
+      modalStateProvider.state(modalStates[i] + '.view', {
+        url: '/:slug',
+        templateUrl: '/views/events/view.html',
+        controller: 'EventCtrl',
+        // resolve: {
+        //   ev: function() {
+        //     return ev;
+        //   }
+        // }
+      });
+    }
 });
 
 app.config(function (datepickerPopupConfig) {
@@ -143,40 +178,62 @@ app.config(function(RestangularProvider) {
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
-app.run(function(Api, $rootScope, $state) { //ezfb
+
+// var modalStates = ['myEvents', 'userEvents', 'worldwide', 'popular', 'festival', 'free', 'today', 'weekend', 'create'];
+
+app.run(function(Api, $rootScope, $state, modalState) { //ezfb
   // ezfb.init();
   Api(['user', 'event']);
 
+  // $rootScope.$on('$stateNotFound', function(event, toState, fromState, fromParams) {
 
-// $rootScope.$on('$locationChangeSuccess', function(event,  $location, $routeParams) {
-//   alert(1)
+  //   var str = modalStates.join("|");
+  //   var re = new RegExp('/^(.*)\.' + str + '$/', "i");
 
-// console.log( $location)
+  //   var match = toState.to.match(re); // "to" could be absolute or relative
 
-//     if ($location === 'http://localhost:3000/co-voiturage-kizomba-swimming-festival-2014') {
-//     //    alert(2)
+  //   if (match) {
+  //     // if we captured something, then "to" was absolute and we use it as is
+  //     // otherwise, assume it was relative and combine it with the starting state name
+  //     var modalStateName = match[0];
 
-//     alert(2)
-//       event.preventDefault();
-//     //   return angular.element($document[0].body).addClass('can-load-modal');
-//      }
-//   });
+  //     modalState.state(modalStateName + '.edit', {
+  //       url: '/:slug/edit',
+  //       templateUrl: '/views/events/form.html',
+  //       controller: 'EventFormCtrl' //,
+  //       // resolve: {
+  //       //   ev: function() {
+  //       //     Events.one('falsa-cubana-or-niceto-club').then(function(ev) {
+  //       //       alert(1)
+  //       //       return ev;
+  //       //     });
+  //       //   }
+  //       // }
+  //     });
 
-    var lastRoute = $state.current;
-    $rootScope.$on('$locationChangeSuccess', function(event) {
-        $state.current = lastRoute;
+  //     modalState.state(modalStateName + '.terms', {
+  //       url: '/terms',
+  //       templateUrl: '/views/terms.html'
+  //     });
 
-        console.log(lastRoute)
-              event.preventDefault();
-    });
+  //     modalState.state(modalStateName + '.support', {
+  //       url: '/support',
+  //       templateUrl: '/views/support.html'
+  //     });
 
-// $rootScope.$on('$stateUpdate', function (event, nextState, currentState) {
-//   alert(1)
-//   console.log(nextState);
-//   console.log();
-//   console.log();
+  //     modalState.state(modalStateName + '.view', {
+  //       url: '/:slug',
+  //       templateUrl: '/views/events/view.html',
+  //       controller: 'EventCtrl',
+  //       // resolve: {
+  //       //   ev: function() {
+  //       //     return ev;
+  //       //   }
+  //       // }
+  //     });
 
-//         event.preventDefault();
-// });
+  //     // $state.go(toState.to);
+  //   }
+  // });
 
 });

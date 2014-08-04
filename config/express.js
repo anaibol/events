@@ -5,8 +5,6 @@
  */
 var express = require('express'),
   mongoStore = require('connect-mongo')(express),
-  flash = require('connect-flash'),
-  helpers = require('view-helpers'),
   config = require('./config');
 
 var db = require('monk')(config.db);
@@ -23,7 +21,7 @@ module.exports = function(app, passport, db) {
   app.set('showStackError', true);
 
   // Prettify HTML
-  app.locals.pretty = true;
+  // app.locals.pretty = true;
 
   // Should be placed before express.static
   // To ensure that all assets and data are compressed (utilize bandwidth)
@@ -70,140 +68,12 @@ module.exports = function(app, passport, db) {
       })
     }));
 
-    // Dynamic helpers
-    app.use(helpers(config.app.name));
-
     // Use passport session
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // Connect flash for flash messages
-    app.use(flash());
-
     // Routes should be at the last
     app.use(app.router);
-
-    //var resources = ['user', 'event'];
-
-    app.all('/api/:entity/:slug?*', function(req, res, next) {
-      require('../app/routes/api')(req, res);
-    });
-
-    app.get('/me/events', function(req, res, next) {
-      var events = {};
-
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: events
-       });
-    });
-
-    app.get('/:user/events', function(req, res, next) {
-      var events = {};
-
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: events
-       });
-    });
-
-    app.get('/date/:date', function(req, res, next) {
-      var events = {};
-
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: events
-       });
-    });
-
-    app.get('/popular', function(req, res, next) {
-      var events = {};
-
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: events
-       });
-    });
-
-    app.get('/today', function(req, res, next) {
-      var events = {};
-
-      res.render('index', {
-       title: 'Wooepa',
-       user: req.user ? JSON.stringify(req.user) : 'null',
-       fbAppId: global.fbAppId,
-       events: events
-      });
-    });
-
-    app.get('/weekend', function(req, res, next) {
-      var events = {};
-
-      res.render('index', {
-       title: 'Wooepa',
-       user: req.user ? JSON.stringify(req.user) : 'null',
-       fbAppId: global.fbAppId,
-       events: events
-      });
-    });
-
-    app.get('/free', function(req, res, next) {
-      var events = {};
-
-      res.render('index', {
-       title: 'Wooepa',
-       user: req.user ? JSON.stringify(req.user) : 'null',
-       fbAppId: global.fbAppId,
-       events: events
-      });
-    });
-
-    app.get('/worldwide', function(req, res, next) {
-      var events = {};
-
-      res.render('index', {
-       title: 'Wooepa',
-       user: req.user ? JSON.stringify(req.user) : 'null',
-       fbAppId: global.fbAppId,
-       events: events
-      });
-    });
-
-    app.get('/:slug', function(req, res, next) {
-      Events.findOne({ slug: req.params.slug }, function(err, ev) {
-        res.render('event', {
-          title: 'Wooepa',
-          ev: ev
-        });
-      });
-    });
-
-    app.get('/:slug/edit', function(req, res, next) {
-      Events.findOne({ slug: req.params.slug }, function(err, ev) {
-        res.render('event', {
-          title: 'Wooepa',
-          ev: ev
-        });
-      });
-    });
-
-    app.get('/tag/:tag', function(req, res, next) {
-      Events.find({ tags: { $all: [ req.params.tag ] } }, function(err, evs) {
-        console.log(evs)
-        res.render('list', {
-          title: 'Wooepa',
-          evs: evs
-        });
-      });
-    });
 
     app.get('/sitemap/index.xml.gz', function(req, res) {
       var siteMapFile = path.join(config.root + '/public', 'index.xml.gz');
@@ -239,6 +109,20 @@ module.exports = function(app, passport, db) {
       //  res.sendfile(siteMapFile);
       //}
       //});
+    });
+
+
+    app.use(express.static(config.root + '/public'));
+
+    app.all('/[a-z]{0,100}', function(req, res) {
+      var events = {};
+
+       res.render('index', {
+         title: 'Wooepa',
+         user: req.user ? JSON.stringify(req.user) : 'null',
+         fbAppId: global.fbAppId,
+         events: events
+       });
     });
 
     var MaxSitemapUrls = 10000;
@@ -348,7 +232,6 @@ module.exports = function(app, passport, db) {
 
     // Setting the fav icon and static folder
     app.use(express.favicon());
-    app.use(express.static(config.root + '/public'));
 
     // Assume "not found" in the error msgs is a 404. this is somewhat
     // silly, but valid, you can do whatever you like, set properties,

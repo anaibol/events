@@ -1,4 +1,4 @@
-app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope){
+app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope, $state){
 // var EventsCtrl = function($scope, $stateParams, $location, $modal, Global, $stateParams, $rootScope, $state) {
   $scope.today = new Date();
 
@@ -64,21 +64,7 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
       $scope.totalEvents = events.metadata.count;
       $scope.totalPages = Math.ceil(events.metadata.count / $scope.filter.limit);
 
-      console.log("count " + events.metadata.count);
-      console.log("totalEvents " + $scope.totalEvents);
-
       angular.forEach($scope.events, function(ev, key) {
-        if (Global.authenticated) {
-          if (window.user.admin || ev.creator.id === window.user.facebook.id) {
-            ev.sref = 'home.edit(ev)';
-          } else {
-            ev.sref = 'home.view(ev)';
-          }
-        } else {
-          ev.sref = 'home.view(ev)';
-        }
-
-
         if (ev.start_time) {
           ev.date = new Date(ev.start_time);
 
@@ -115,6 +101,18 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
 
       cb();
     });
+  }
+
+  $scope.getLink = function(ev) {
+    var sref = $state.current.name + '.view(ev)';
+
+    if (Global.authenticated) {
+      if (window.user.admin || ev.creator.id === window.user.facebook.id) {
+        sref = $state.current.name + '.edit(ev)';
+      }
+    }
+
+    return sref;
   }
 
   $scope.paginate = function(page) {

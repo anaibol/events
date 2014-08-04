@@ -30,4 +30,8 @@ module.exports = function(app, passport) {
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
   }), users.authCallback);
+
+
+  app.get('/:user/events', users.getEvents);
+  app.get('/me/events', users.getMyEvents);
 };
