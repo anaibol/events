@@ -71,14 +71,18 @@ function getCountry(req, cb) {
 }
 
 exports.importFromUser = function(req, res) {
-  Ev.crawlUser(req.params.name, function (result) {
-    if (!result) {
-      Ev.getFromUser(req.params.name, null, function (result) {
-        res.send(result);
-      });
-    } else {
-      res.send(result);
-    }
+  // Ev.crawlUser(req.params.name, function (result) {
+  //   if (!result) {
+  //     Ev.getFromUser(req.params.name, null, function (result) {
+  //       res.send(result);
+  //     });
+  //   } else {
+  //     res.send(result);
+  //   }
+  // });
+
+  Ev.getFromUser(req.params.name, null, function (result) {
+    res.send(result);
   });
 };
 

@@ -181,6 +181,26 @@ function getFromUser(userName, accessToken, cb) {
       });
     }
   });
+
+  graph.get(userName + '/events/created', function(err, res) {
+    var evs = res.data;
+      console.log(res);
+    if (evs) {
+      evs.forEach(function (ev) {
+        var start_time = new Date(Date.parse(ev.start_time));
+        var now = new Date();
+
+        if (start_time > now || start_time.getFullYear() < 2016) {
+          fetch(ev.id, 'user', function(ev){
+            // newEvents++;
+            console.log(userName + ': ' + ev.name);
+            cb(true);
+          });
+        }
+      });
+    }
+  });
+
 }
 
 function crawlUser(userName, cb) {

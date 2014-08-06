@@ -685,7 +685,7 @@ tags-input .autocomplete .suggestion-item em {
 p.description {
   white-space: pre-line;
   overflow: auto;
-  word-break: break-all;
+  word-break: break-word;
   text-align: left;
 }
 
