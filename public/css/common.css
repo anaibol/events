@@ -208,6 +208,11 @@ line-height: 30px;
   line-height: 37px;
 }
 
+
+.event .place-info {
+  width: 100%;
+}
+
 .event .place-info * {
   font-size: 13px;
 }
@@ -245,7 +250,7 @@ line-height: 30px;
 .event .info .place {
   font-size: 25px;
   line-height: 30px;
-  float: left;
+  width: 100%;
 }
 
 .event .info .place i {
@@ -266,8 +271,7 @@ line-height: 30px;
 .event .place-info .place .location {
   font-size: 15px;
   line-height: 15px;
-  float: left;
-  width: 75%;
+  width: 94%;
 }
 
 .event-detail.modal-header {

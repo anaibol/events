@@ -19,7 +19,7 @@
           <i class="fui-location"></i>{{ev.location}}{{ev.city}}
         </div>
       </a>
-      {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}, {{ev.venue.country}}
+      {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}} {{ev.venue.country}}
     </div>
     <div class="datetime">
       <div class="date">
@@ -50,8 +50,8 @@
             <button class="btn" type="submit">No</button>
           </div>
         </div>
-        <a class="btn  show-follow-modal disabled btn-default" id="join-event-btn" href="#">You're attending!</a>
-        
+        <a class="btn disabled btn-default" ng-show="" href="#">You're attending!</a>
+
         <div class="event-buttons wdiv padding-10">
           <div class="event-rsvp-btns">
             <button class="btn" type="submit">Invite your friends!</button>
