@@ -16,7 +16,7 @@ var Locations = db.get('locations');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BANBarNZB64XKbfRmWXzeGCWHFzuh6osoGvKm5Y9v2XD1CCy5RfPZBC6U6zopOhHroAEZCoZAPZBYBt4TolXIFvwg6fSpLTjCbNzWPFe8u9mWo0olari2PkUQchNtJkuz2uAvwADlaeisz5CsdIFWyhZAonqnVnoMZAor6JKJhR68Y2hDXNGCrnYrrZCKkGODwrpAzmGpF6Mj';
+var accessToken = 'CAAGPsrwaxr4BAJeLRPDmSmvGdDZBRbs5kmpyge2XZBZBvbLpy36rPCY4uA0nTVu4O1STnUMWpv9UKpoA9YzwJyT9RYROZA0oVvtxPlzEaWuYZAahfC2vEbB6wIEQOZCPPGF8iUPlzQiqrQ7Pzj9bzgFoUfDbWqFF8uO8NrOFE6CaPbMSkZBOM65vBGTWs4sGnNAI3qnHK1YghqCull98SFH';
 graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta'
@@ -68,7 +68,7 @@ function fetch(eid, term, cb) {
     if (!exists) {
       var query = {
         user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,
-        // event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
+        event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
         event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
         //event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
       };
@@ -104,6 +104,8 @@ function fetch(eid, term, cb) {
 
             ev.slug = slugify(ev.name.toLowerCase());
 
+            ev.slug = ev.slug.removeAll(',').removeAll('.').removeAll('!').removeAll('(').removeAll(')');
+
             ev.tags = getTags(ev);
 
             ev.festival = getFestival(ev);
@@ -116,13 +118,13 @@ function fetch(eid, term, cb) {
               }
             }
 
-            // if (term == 'user') {
-              // if (ev) {
-              //   if (!ev.tags.length) {
-              //     ev = null;
-              //   }
-              // }
-            // }
+            if (term === 'userLoggedIn') {
+              if (ev) {
+                if (!ev.tags.length) {
+                  ev = null;
+                }
+              }
+            }
 
             if (ev) {
               Events.insert(ev, function(err, newEv) {
@@ -158,21 +160,27 @@ function fetch(eid, term, cb) {
 }
 
 
-function getFromUser(userName, accessToken, cb) {
+function getFromUser(userName, accessToken, userLoggedIn, cb) {
   if (accessToken) {
     graph.setAccessToken(accessToken);
   }
 
   graph.get(userName + '/events', function(err, res) {
     var evs = res.data;
-      console.log(res);
+
     if (evs) {
       evs.forEach(function (ev) {
         var start_time = new Date(Date.parse(ev.start_time));
         var now = new Date();
 
         if (start_time > now || start_time.getFullYear() < 2016) {
-          fetch(ev.id, 'user', function(ev){
+          var term = 'user';
+
+          if (userLoggedIn) {
+            term = 'userLoggedIn';
+          }
+
+          fetch(ev.id, term, function(ev){
             // newEvents++;
             console.log(userName + ': ' + ev.name);
             cb(true);
@@ -181,26 +189,6 @@ function getFromUser(userName, accessToken, cb) {
       });
     }
   });
-
-  graph.get(userName + '/events/created', function(err, res) {
-    var evs = res.data;
-      console.log(res);
-    if (evs) {
-      evs.forEach(function (ev) {
-        var start_time = new Date(Date.parse(ev.start_time));
-        var now = new Date();
-
-        if (start_time > now || start_time.getFullYear() < 2016) {
-          fetch(ev.id, 'user', function(ev){
-            // newEvents++;
-            console.log(userName + ': ' + ev.name);
-            cb(true);
-          });
-        }
-      });
-    }
-  });
-
 }
 
 function crawlUser(userName, cb) {

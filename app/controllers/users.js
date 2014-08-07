@@ -6,7 +6,7 @@ var Ev = require('../../ev');
  * Auth callback
  */
 exports.authCallback = function(req, res) {
-  Ev.getFromUser(req.user.username, req.user.accessToken, function(){});
+  Ev.getFromUser(req.user.username, req.user.accessToken, true, function(){});
   res.redirect('/');
 };
 
