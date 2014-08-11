@@ -8,7 +8,7 @@ var EventCtrl = function($scope, $stateParams, $modalInstance, Restangular) {
 	
   $scope.attending = true;
 
-  Events.one($stateParams.slug).then(function(ev) {
+  Events.one($stateParams.eid).then(function(ev) {
     // Events.one(ev.eid).get('rsvp').then(function(res) {
     //   $scope.attending = true;
     // });

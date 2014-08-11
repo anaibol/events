@@ -90,7 +90,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
     });
 
     modalStateProvider.state('home.view', {
-      url: ':slug',
+      url: ':slug/:eid',
       templateUrl: '/views/events/view.html',
       controller: 'EventCtrl',
       // resolve: {
@@ -99,7 +99,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       //   }
       // }
     });
-
 
     var modalStates = ['myEvents', 'userEvents', 'worldwide', 'popular', 'festival', 'free', 'today', 'weekend', 'create'];
 
