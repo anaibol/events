@@ -1,4 +1,4 @@
-var EventCtrl = function($scope, $stateParams, $modalInstance, Restangular) {
+var EventCtrl = function($scope, $stateParams, $modalInstance, Restangular, Global) {
 	// console.log($stateParams)
   $scope.today = new Date();
 
@@ -15,9 +15,11 @@ var EventCtrl = function($scope, $stateParams, $modalInstance, Restangular) {
 
     $scope.ev = ev;
 
-    Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
-      $scope.attending = result.rsvp_status;
-    });
+    if (Global.authenticated) {
+      Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
+        $scope.attending = result.rsvp_status;
+      });
+    }
 
     // var rsvp = Events.one(ev.eid);
 
