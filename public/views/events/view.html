@@ -46,7 +46,9 @@
       <!-- ng-controller="RSVPCtrl" -->
         <div class="event-buttons wdiv padding-10">
           <div class="event-rsvp-btns">
-            <h6 class="wdiv-label">Are you going to this event?</h6>
+            <h6 class="wdiv-label" ng-show="attending === 'attending'">Your are going to this event</h6>
+            <h6 class="wdiv-label" ng-show="attending === 'declined'">Your are not going to this event</h6>
+            <h6 class="wdiv-label" ng-show="attending === ''">Are you going to this event?</h6>
             <a class="btn btn-success" href="#" ng-click="setAttending(ev.eid)">Yes</a>
             <button class="btn" ng-click="setNotAttending(ev.eid)">No</button>
           </div>

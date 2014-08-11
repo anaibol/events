@@ -66,7 +66,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
     $urlRouterProvider.otherwise('');
 
     modalStateProvider.state('home.edit', {
-      url: '/:slug/:eid/edit',
+      url: ':slug/:eid/edit',
       templateUrl: '/views/events/form.html',
       controller: 'EventFormCtrl' //,
       // resolve: {

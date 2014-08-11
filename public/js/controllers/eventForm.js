@@ -1,9 +1,9 @@
 var EventFormCtrl = function($scope, $modalInstance, $q, $filter, Restangular, $stateParams) {
   $scope.ev = {};
 
-  Events.one($stateParams.slug).then(function(ev) {
+  Events.one($stateParams.eid).then(function(ev) {
+    console.log($stateParams.eid);
     $scope.ev = ev;
-     console.log($scope.ev)
   });
 
   $scope.previewImage = function(element) {

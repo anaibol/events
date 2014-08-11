@@ -107,8 +107,12 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     var sref = $state.current.name + '.view(ev)';
 
     if (Global.authenticated) {
-      if (window.user.admin || ev.creator.id === window.user.facebook.id) {
+      if (window.user.admin) {
         sref = $state.current.name + '.edit(ev)';
+      } else if (ev.creator) {
+        if (ev.creator.uid === window.user.facebook.id) {
+
+        }
       }
     }
 
