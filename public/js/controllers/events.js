@@ -104,19 +104,7 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
   }
 
   $scope.getLink = function(ev) {
-    var sref = $state.current.name + '.view(ev)';
-
-    if (Global.authenticated) {
-      if (window.user.admin) {
-        sref = $state.current.name + '.edit(ev)';
-      } else if (ev.creator) {
-        if (ev.creator.uid === window.user.facebook.id) {
-
-        }
-      }
-    }
-
-    return sref;
+    return $state.current.name + '.view(ev)';
   }
 
   $scope.paginate = function(page) {

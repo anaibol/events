@@ -1,5 +1,4 @@
-var EventCtrl = function($scope, $stateParams, $modalInstance, Restangular, Global) {
-	// console.log($stateParams)
+var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangular, Global) {
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -7,6 +6,24 @@ var EventCtrl = function($scope, $stateParams, $modalInstance, Restangular, Glob
   $scope.today.setHours(0);
 	
   $scope.attending = '';
+
+  $scope.ev = {};
+
+  $scope.getLink = function() {
+    return $state.current.name.split('.')[0] + '.edit(ev)';
+  }
+
+  $scope.canEdit = function() {
+    if (Global.authenticated) {
+      if (window.user.admin) {
+        return true;
+      } else if ($scope.ev.creator) {
+        if (ev.creator.uid === window.user.facebook.id) {
+          return true;
+        }
+      }
+    }
+  }
 
   Events.one($stateParams.eid).then(function(ev) {
     // Events.one(ev.eid).get('rsvp').then(function(res) {
@@ -17,7 +34,11 @@ var EventCtrl = function($scope, $stateParams, $modalInstance, Restangular, Glob
 
     if (Global.authenticated) {
       Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
-        $scope.attending = result.rsvp_status;
+        if (!result) {
+          $scope.attending = '';
+        } else {
+          $scope.attending = result.rsvp_status;
+        }
       });
     }
 

@@ -5,6 +5,7 @@
   </div>
   <div class="event-detail modal-body">
     <h3 class="truncate">{{ev.name}}</h3>
+    <a class="event" ui-sref="{{getLink(ev)}}" ng-show='canEdit(ev)'>Edit event</a>
     <a class="facebook-link" target="_blank" href="https://facebook.com/{{ev.eid}}">Facebook event</a>
     <div class="tag-list">
       <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
