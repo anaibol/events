@@ -66,7 +66,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
     $urlRouterProvider.otherwise('');
 
     modalStateProvider.state('home.edit', {
-      url: ':slug/edit',
+      url: '/:slug/:eid/edit',
       templateUrl: '/views/events/form.html',
       controller: 'EventFormCtrl' //,
       // resolve: {
@@ -105,7 +105,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
 
     for (var i in modalStates) {
       modalStateProvider.state(modalStates[i] + '.edit', {
-        url: '/:slug/edit',
+        url: '/:slug/:eid/edit',
         templateUrl: '/views/events/form.html',
         controller: 'EventFormCtrl' //,
         // resolve: {
@@ -129,7 +129,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       });
 
       modalStateProvider.state(modalStates[i] + '.view', {
-        url: '/:slug',
+        url: '/:slug/:eid',
         templateUrl: '/views/events/view.html',
         controller: 'EventCtrl',
         // resolve: {
@@ -198,7 +198,7 @@ app.run(function(Api, $rootScope, $state, modalState) { //ezfb
   //     var modalStateName = match[0];
 
   //     modalState.state(modalStateName + '.edit', {
-  //       url: '/:slug/edit',
+  //       url: '/:slug/:eid/edit',
   //       templateUrl: '/views/events/form.html',
   //       controller: 'EventFormCtrl' //,
   //       // resolve: {
@@ -222,7 +222,7 @@ app.run(function(Api, $rootScope, $state, modalState) { //ezfb
   //     });
 
   //     modalState.state(modalStateName + '.view', {
-  //       url: '/:slug',
+  //       url: '/:slug/:eid',
   //       templateUrl: '/views/events/view.html',
   //       controller: 'EventCtrl',
   //       // resolve: {

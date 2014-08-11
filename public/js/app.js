@@ -31,6 +31,5 @@ app.provider('modalState', function($stateProvider) {
     };
 });
 
-
 angular.module('wooepa.system', []);
 angular.module('wooepa.events', []);

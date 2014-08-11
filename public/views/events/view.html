@@ -43,11 +43,12 @@
         <p class="description">{{ev.description}}</p>
       </div>
       <div class="col-md-4">
+      <!-- ng-controller="RSVPCtrl" -->
         <div class="event-buttons wdiv padding-10">
           <div class="event-rsvp-btns">
             <h6 class="wdiv-label">Are you going to this event?</h6>
-            <a class="btn btn-success" href="#">Yes</a>
-            <button class="btn" type="submit">No</button>
+            <a class="btn btn-success" href="#" ng-click="setAttending(ev.eid)">Yes</a>
+            <button class="btn" ng-click="setNotAttending(ev.eid)">No</button>
           </div>
         </div>
         <a class="btn disabled btn-default" ng-show="" href="#">You're attending!</a>

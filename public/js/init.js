@@ -35,14 +35,4 @@ angular.element(document).ready(function() {
        js.src = "//connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
-
-
-     FB.ui(
-     {
-          method: "apprequests",
-          message: "Choose a friend.",
-          max_recipients: 1,
-          title:"Invite a friend"
-     });
-
 });
