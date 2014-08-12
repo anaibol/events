@@ -57,6 +57,12 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
         $scope.attending = 'declined';
       });
     }
+
+    $scope.sendInvitations = function (eid) {
+      Restangular.all('invite/' + ev.eid + '/100005812353144').post().then(function(res) {
+      });
+    }
+
   });
 
   $scope.cancel = function() {

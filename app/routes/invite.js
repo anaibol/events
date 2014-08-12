@@ -4,7 +4,7 @@
 var invite = require('../controllers/invite');
 
 module.exports = function(app, passport) {
-  app.get('/invite/:eventId/:userId', invite.checkInvitation);
-  app.post('/invite/:eventId/:userId', invite.sendInvitation);
-  app.post('/invite/:eventId/invited', invite.sendInvitations);
+  app.get('/api/invite/:eid/:uid', invite.checkInvitation);
+  app.post('/api/invite/:eid/:uid', invite.sendInvitation);
+  app.post('/api/invite/:eid/:uids', invite.sendInvitations);
 };
