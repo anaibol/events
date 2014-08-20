@@ -102,42 +102,42 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
 
     var modalStates = ['myEvents', 'userEvents', 'worldwide', 'popular', 'festival', 'free', 'today', 'weekend', 'create'];
 
-    for (var i in modalStates) {
-      modalStateProvider.state(modalStates[i] + '.edit', {
-        url: '/:slug/:eid/edit',
-        templateUrl: '/views/events/form.html',
-        controller: 'EventFormCtrl' //,
-        // resolve: {
-        //   ev: function() {
-        //     Events.one('falsa-cubana-or-niceto-club').then(function(ev) {
-        //       alert(1)
-        //       return ev;
-        //     });
-        //   }
-        // }
-      });
+    // for (var i in modalStates) {
+    //   modalStateProvider.state(modalStates[i] + '.edit', {
+    //     url: '/:slug/:eid/edit',
+    //     templateUrl: '/views/events/form.html',
+    //     controller: 'EventFormCtrl' //,
+    //     // resolve: {
+    //     //   ev: function() {
+    //     //     Events.one('falsa-cubana-or-niceto-club').then(function(ev) {
+    //     //       alert(1)
+    //     //       return ev;
+    //     //     });
+    //     //   }
+    //     // }
+    //   });
 
-      modalStateProvider.state(modalStates[i] + '.terms', {
-        url: '/terms',
-        templateUrl: '/views/terms.html'
-      });
+    //   modalStateProvider.state(modalStates[i] + '.terms', {
+    //     url: '/terms',
+    //     templateUrl: '/views/terms.html'
+    //   });
 
-      modalStateProvider.state(modalStates[i] + '.support', {
-        url: '/support',
-        templateUrl: '/views/support.html'
-      });
+    //   modalStateProvider.state(modalStates[i] + '.support', {
+    //     url: '/support',
+    //     templateUrl: '/views/support.html'
+    //   });
 
-      modalStateProvider.state(modalStates[i] + '.view', {
-        url: '/:slug/:eid',
-        templateUrl: '/views/events/view.html',
-        controller: 'EventCtrl',
-        // resolve: {
-        //   ev: function() {
-        //     return ev;
-        //   }
-        // }
-      });
-    }
+    //   modalStateProvider.state(modalStates[i] + '.view', {
+    //     url: '/:slug/:eid',
+    //     templateUrl: '/views/events/view.html',
+    //     controller: 'EventCtrl',
+    //     // resolve: {
+    //     //   ev: function() {
+    //     //     return ev;
+    //     //   }
+    //     // }
+    //   });
+    // }
 });
 
 app.config(function (datepickerPopupConfig) {

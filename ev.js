@@ -79,8 +79,18 @@ function fetch(eid, term, cb) {
 
             ev = data[0].fql_result_set[0];
 
+            var attending = data[1].fql_result_set;
+
+            ev.attending = [];
+
+            for (var i = attending.length - 1; i >= 0; i--) {
+              ev.attending.push(attending[i].uid);
+            };
+
             ev.eid = eid;
-            ev.creator = data[1].fql_result_set[0];
+            ev.creator = data[2].fql_result_set[0];
+
+            console.log(ev);
 
             ev.start_time = new Date(Date.parse(ev.start_time));
             ev.end_time = new Date(Date.parse(ev.end_time));
@@ -104,7 +114,7 @@ function fetch(eid, term, cb) {
 
             ev.slug = slugify(ev.name.toLowerCase());
 
-            ev.slug = ev.slug.removeAll(',').removeAll('.').removeAll('!').removeAll('(').removeAll(')');
+            ev.slug = ev.slug.removeAll(',').removeAll('.').removeAll('!').removeAll('(').removeAll(')').removeAll('"').removeAll("'").removeAll(":").removeAll(";").removeAll("+").removeAll("@");
 
             ev.tags = getTags(ev);
 

@@ -31,7 +31,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     // });
 
     $scope.ev = ev;
-
+  
     if (Global.authenticated) {
       Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
         if (!result) {

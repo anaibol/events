@@ -35,9 +35,9 @@ module.exports = function(app, passport, db) {
   }));
 
   // Only use logger for development environment
-  if (process.env.NODE_ENV === 'development') {
-    app.use(express.logger('dev'));
-  }
+  // if (process.env.NODE_ENV === 'development') {
+  //   app.use(express.logger('dev'));
+  // }
 
   // Set views path, template engine and default layout
   app.set('views', config.root + '/app/views');
@@ -114,7 +114,8 @@ module.exports = function(app, passport, db) {
 
     app.use(express.static(config.root + '/public'));
 
-    app.all('/[a-z]{0,100}', function(req, res) {
+    app.all('/[a-z0-9-]{0,100}\/[0-9]{0,100}', function(req, res) {
+
       var events = {};
 
        res.render('index', {
