@@ -69,7 +69,7 @@ exports.setAttending = function(req, res) {
 
           for (var i = result.data.length - 1; i >= 0; i--) {
             attendings.push(parseInt(result.data[i].uid));
-          };          
+          };
 
           Events.update({ eid: parseInt(req.params.eid) }, { $set: { 'attending': attendings }});
         }
