@@ -16,7 +16,7 @@ var Locations = db.get('locations');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BAJeLRPDmSmvGdDZBRbs5kmpyge2XZBZBvbLpy36rPCY4uA0nTVu4O1STnUMWpv9UKpoA9YzwJyT9RYROZA0oVvtxPlzEaWuYZAahfC2vEbB6wIEQOZCPPGF8iUPlzQiqrQ7Pzj9bzgFoUfDbWqFF8uO8NrOFE6CaPbMSkZBOM65vBGTWs4sGnNAI3qnHK1YghqCull98SFH';
+var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
 graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta'
@@ -84,7 +84,7 @@ function fetch(eid, term, cb) {
             ev.attending = [];
 
             for (var i = attending.length - 1; i >= 0; i--) {
-              ev.attending.push(attending[i].uid);
+              ev.attending.push(parseInt(attending[i].uid));
             };
 
             ev.eid = eid;

@@ -18,7 +18,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       if (window.user.admin) {
         return true;
       } else if ($scope.ev.creator) {
-        if (ev.creator.uid === window.user.facebook.id) {
+        if ($scope.ev.creator.uid === window.user.facebook.id) {
           return true;
         }
       }
@@ -31,8 +31,12 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     // });
 
     $scope.ev = ev;
-  
+
     if (Global.authenticated) {
+      if ($scope.ev.attending.indexOf(window.user.facebook.id) > 0) {
+        $scope.attending = 'attending';
+      }
+    
       Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
         if (!result) {
           $scope.attending = '';
