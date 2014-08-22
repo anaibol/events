@@ -14,15 +14,22 @@ exports.getUserStatus = function(req, res) {
       res.json(err);
     }
     else {
-      if (result.data[0]) {
-        if (result.data[0].rsvp_status === 'attending') {
-          Events.findAndModify({ eid: req.params.eid }, { $addToSet: { attending: req.user.facebook.id}});
-        } else {
-          Events.findAndModify({ eid: req.params.eid }, { $pull: { attending: req.user.facebook.id}});
+      var query = "SELECT uid FROM event_member WHERE rsvp_status = 'attending' AND eid=" + req.params.eid + " LIMIT 50000";
+
+      graph.fql(query, function(err, result) {
+        if (err) {
+          console.log(err);
         }
-      } else {
-        Events.findAndModify({ eid: req.params.eid }, { $pull: { attending: req.user.facebook.id}});
-      }
+        else {
+          attendings = [];
+
+          for (var i = result.data.length - 1; i >= 0; i--) {
+            attendings.push(parseInt(result.data[i].uid));
+          };
+
+          Events.update({ eid: parseInt(req.params.eid) }, { $set: { 'attending': attendings }});
+        }
+      });
 
       res.json(result.data[0]);
     }
@@ -53,10 +60,6 @@ exports.setAttending = function(req, res) {
     }
     else {
       res.json(result);
-
-      // graph.setAccessToken(req.user.accessToken);
-
-      // res.json(result.data[0]);
 
       var query = "SELECT uid FROM event_member WHERE rsvp_status = 'attending' AND eid=" + req.params.eid + " LIMIT 50000";
 
