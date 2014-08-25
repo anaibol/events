@@ -230,7 +230,7 @@ module.exports = function(app, passport, db) {
           //day = ('0' + date.getDate()).slice(-2);
    
           //date = date.getFullYear() + '-' + month + '-' + day;
-          url = 'http://' + host + '/' + ev.slug;
+          url = 'http://' + host + '/' + ev.slug + '/' + ev.eid;
    
           xml += '<url>';
           xml += '<loc>' + url + '</loc>';
