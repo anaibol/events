@@ -2,7 +2,7 @@ var Events = global.db.get('events');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BAJ9QEELYsQoe5HWnJqlJWaIQ1mbiMTW6iUpsrQQopjSymZC6o1k77H0eAuyKjcFy3ei9NfBbnbMkngX1qrIUMdj3jmZA6jFNIiGFdffzagfy7Mf1p9ZCrGBFiF0hRcQGkDL9reQUNKaJZCN76p4m66igZA5OotLTdqTW2WVflkAZBscJ5KPQ2ebTm9wdnlc5BWcyPriz9a0iDmJkxHXDIZD';
+var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
 
 exports.getUserStatus = function(req, res) {
   graph.setAccessToken(accessToken);
