@@ -114,15 +114,21 @@ module.exports = function(app, passport, db) {
 
     app.use(express.static(config.root + '/public'));
 
-    app.all('/[a-z0-9-]{0,100}\/[0-9]{0,100}', function(req, res) {
-
-      var events = {};
-
+    app.all('/:keyword', function(req, res) {
        res.render('index', {
          title: 'Wooepa',
          user: req.user ? JSON.stringify(req.user) : 'null',
          fbAppId: global.fbAppId,
-         events: events
+         events: {}
+       });
+    });
+
+    app.all('/[a-z0-9-]{0,100}\/[0-9]{0,100}', function(req, res) {
+       res.render('index', {
+         title: 'Wooepa',
+         user: req.user ? JSON.stringify(req.user) : 'null',
+         fbAppId: global.fbAppId,
+         events: {}
        });
     });
 

@@ -27,7 +27,7 @@ exports.getUserStatus = function(req, res) {
             attendings.push(parseInt(result.data[i].uid));
           };
 
-          Events.update({ eid: parseInt(req.params.eid) }, { $set: { 'attending': attendings }});
+          Events.update({ eid: parseInt(req.params.eid) }, {$set: {'attending': attendings}});
         }
       });
 
