@@ -18,7 +18,7 @@ exports.getUserStatus = function(req, res) {
 
       graph.fql(query, function(err, result) {
         if (err) {
-          console.log(err);
+          res.json(err);
         }
         else {
           attendings = [];
@@ -27,11 +27,11 @@ exports.getUserStatus = function(req, res) {
             attendings.push(parseInt(result.data[i].uid));
           };
 
+          res.json(attendings);
+
           Events.update({ eid: parseInt(req.params.eid) }, {$set: {'attending': attendings}});
         }
       });
-
-      res.json(result.data[0]);
     }
   });
 };
