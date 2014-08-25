@@ -19,7 +19,6 @@ exports.sendInvitation = function(req, res) {
   });
 };
 
-
 exports.sendInvitations = function(req, res) {
   graph.post('/' + req.params.eid + '/invited/' + req.body.uids + '?access_token=' + req.user.accessToken, function(err, result) {
     if (err) {
