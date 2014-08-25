@@ -132,6 +132,24 @@ module.exports = function(app, passport, db) {
        });
     });
 
+    app.all('/user/:keyword', function(req, res) {
+       res.render('index', {
+         title: 'Wooepa',
+         user: req.user ? JSON.stringify(req.user) : 'null',
+         fbAppId: global.fbAppId,
+         events: {}
+       });
+    });
+
+    app.all('/me/:keyword', function(req, res) {
+       res.render('index', {
+         title: 'Wooepa',
+         user: req.user ? JSON.stringify(req.user) : 'null',
+         fbAppId: global.fbAppId,
+         events: {}
+       });
+    });
+
     var MaxSitemapUrls = 10000;
    
     function generateSitemapIndex(host, siteMapFile, cb) {

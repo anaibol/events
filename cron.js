@@ -71,7 +71,7 @@ var newEvents;
 // });
 
 
-var job = new cronJob('*/30 * * * * ', function() {
+// var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -85,7 +85,7 @@ var job = new cronJob('*/30 * * * * ', function() {
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-}, null, true);
+// }, null, true);
 
 
 function paginate(page, term) {
@@ -250,23 +250,5 @@ function updateTagsAndPrice() {
         }
       }
     });
-  });
-}
-
-function existsInDb(eid, cb) {
-  var res;
-
-  Events.findOne({
-    eid: eid
-  }).on('complete', function(err, doc) {
-    if (err) console.log(err);
-
-    if (!doc) {
-      res = false;
-    } else {
-      res = true;
-    }
-
-    cb(res);
   });
 }

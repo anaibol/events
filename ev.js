@@ -164,6 +164,7 @@ function fetch(eid, term, cb) {
         }
       });
     } else {
+      console.log(212312312);
       cb(false);
     }
   });

@@ -19,6 +19,10 @@ var Events = global.db.get('events');
 
 var Ev = require('../../ev');
 
+function clone(a) {
+   return JSON.parse(JSON.stringify(a));
+}
+
 function parseDataURL(string) {
   var regex = /^data:.+\/(.+);base64,(.*)$/;
 
@@ -154,11 +158,20 @@ exports.get = function(req, res) {
           delete query.start_time;
           delete query["venue.country"];
 
+          var query1 = clone(query);
+          var query2 = clone(query);
+
           if (params.user) {
-            query["creator.name"] = params.user;
+            query1["creator.name"] = params.user;
           } else {
-            query["creator.id"] = req.user.facebook.id;
+            query1["creator.id"] = req.user.facebook.id;
           }
+
+          query2.attending = { $all: [ parseInt(req.user.facebook.id) ] };
+
+          query = {$or: [ query2, query2 ]};
+
+          console.log(query2);
 
           break;
 
