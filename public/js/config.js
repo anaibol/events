@@ -24,7 +24,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       controller: 'EventsCtrl'
     })
     .state('userEvents', {
-      url: '/:user/events',
+      url: '/user/:user',
       templateUrl: '/views/events/home.html',
       controller: 'EventsCtrl'
     })
