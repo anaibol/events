@@ -2,17 +2,37 @@ var graph = require('fbgraph');
 
 var accessToken = 'CAAVebA5FD2cBAO6ZBQYJOYy7BNfSdPpJC1nA5ozH9ZCFh8ZCaDgvdgZCl2TKjJGkOVTNb94ZCn26EYzi8JKa1nV1xvZBwjfIIkKnK5idQNeWoe8ZCGBaWoST7BQmg7DJLet6cBCxvXlZCH8ikmTFIZBZArMzZCH3V3j45NwIQo9cwZAPI2ZACHdTTaIcdEG1FthZAFFCtNZC8IiRQBqg9HsIhgkNsH7eE2rKMXWji0ZD';
 
-exports.share = function(req, res)
+var Events = global.db.get('events');
+
+function shareEventOnFB(req, res, event)
 {
+  console.log("event : " + event.toString());
+
   graph.setAccessToken(accessToken);
   console.log("ligne 8");
 
   var wallPost = {
-    message: "I'm gonna come at you like a spider monkey, chip!"
+    message: "I'm gonna come at you like a spider monkey, chip!",
+    article : "http://techcrunch.com/2013/02/06/facebook-launches-developers-live-video-channel-to-keep-its-developer-ecosystem-up-to-date/"
   };
 
-  graph.post('/feed' + '?access_token=' + req.user.accessToken, function(err, result) {
-    if (err) {
+   console.log(req.user);
+   console.log("req : " + req);
+
+//https://graph.facebook.com/me/news.publishes?
+//access_token=ACCESS_TOKEN&
+//method=POST&
+//article=http%3A%2F%2Fsamples.ogp.me%2F434264856596891
+
+var message = {article : "http://techcrunch.com/2013/02/06/facebook-launches-developers-live-video-channel-to-keep-its-developer-ecosystem-up-to-date/"}
+
+ // graph.post('/' + req.user.facebook.id + '/feed?access_token=' + req.user.accessToken, {message: 'Hello world'}, function(err, result) {
+    /* ?access_token=' + req.user.accessToken, function(err, result) { */
+      // req.user.accessToken
+   graph.post('/me/news.publishes?access_token=' + req.user.accessToken + "&method=POST&", wallPost , function(err, result) {
+    if (err)
+    {
+      console.log(err);
       res.json(err);
     }
     else {
@@ -47,6 +67,22 @@ facebook: {
     {
       res.json(result);
     }
+  });
+*/
+};
+
+
+exports.share = function(req, res)
+{
+  Events.find({"eid" : req.param.eid}).then(function(ev) {
+    console.log("FOUND !");
+    shareEventOnFB(req, res, ev);
+  });
+  /*
+  Ev.fetch(req.params.eid, 'event', function (ev)
+  {
+    console.log("FOUND !");
+    shareEventOnFB(req, res, ev);
   });
 */
 };
