@@ -31,7 +31,7 @@ var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZC
 graph.setAccessToken(accessToken);
 
 
-var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'zouk', 'regueton', 'reggaeton', 'kuduru', 'chachacha', 'zumba']; //'suelta'
+var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta'
 
 var users = [ 'EsenciaSalsaClub',
 'clubastoriabcn',
@@ -71,7 +71,7 @@ var newEvents;
 // });
 
 
-// var job = new cronJob('*/30 * * * * ', function() {
+var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -85,7 +85,7 @@ var newEvents;
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-// }, null, true);
+}, null, true);
 
 
 function paginate(page, term) {

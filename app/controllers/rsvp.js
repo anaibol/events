@@ -5,7 +5,7 @@ var graph = require('fbgraph');
 var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
 
 exports.getUserStatus = function(req, res) {
-  graph.setAccessToken(req.user.accessToken);
+  graph.setAccessToken(accessToken);
 
   var query = "SELECT rsvp_status, inviter, inviter_type FROM event_member WHERE uid=me() AND eid=" + req.params.eid;
 
@@ -18,7 +18,7 @@ exports.getUserStatus = function(req, res) {
 
       graph.fql(query, function(err, result) {
         if (err) {
-          console.log(err);
+          res.json(err);
         }
         else {
           attendings = [];
@@ -27,11 +27,11 @@ exports.getUserStatus = function(req, res) {
             attendings.push(parseInt(result.data[i].uid));
           };
 
-          Events.update({ eid: parseInt(req.params.eid) }, { $set: { 'attending': attendings }});
+          res.json(attendings);
+
+          Events.update({ eid: parseInt(req.params.eid) }, {$set: {'attending': attendings}});
         }
       });
-
-      res.json(result.data[0]);
     }
   });
 };

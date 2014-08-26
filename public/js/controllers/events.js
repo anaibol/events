@@ -53,6 +53,7 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
   }
 
   $scope.getEvents = function(cb) {
+
     Events.get($scope.filter).then(function(events) {
       // $scope.events = events.filter(function(element, index, array) {
       //   var date = new Date(element.start_time);

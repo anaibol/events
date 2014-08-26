@@ -38,10 +38,12 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       }
     
       Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
-        if (!result) {
-          $scope.attending = '';
+        $scope.ev.attending = result;
+
+        if ($scope.ev.attending.indexOf(window.user.facebook.id) > 0) {
+          $scope.attending = 'attending';
         } else {
-          $scope.attending = result.rsvp_status;
+          $scope.attending = 'declined';
         }
       });
     }
@@ -62,18 +64,10 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       });
     }
 
-    // c rapha : 100004646590264
-
     $scope.sendInvitations = function (eid) {
       Restangular.all('invite/' + ev.eid + '/100004646590264').post().then(function(res) {
       });
     }
-    $scope.shareEvent = function (eid) {
-      Restangular.all('share/' + ev.eid ).post().then(function(res) {
-      });
-    }
-
-
 
   });
 
