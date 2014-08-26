@@ -1,11 +1,25 @@
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BAPKJSNN5m7L2vHx1XKNfOBdIA6jAoYBZCj8Y3C3mZBxCSlJRzZAffOJgQjbcsfYOalNWAwi9rkpFghWiesRLi0klrlyvC02iEqj3xHO4WfMmPB4SB3buVaEaJOzljE1AehVtA0MTj93sRc8BMRAJLebZBy1GTeIOK3K2Lp38ZBJUBKZCVZAoRlPus4wwl4dlF72sJtIvLf47WShxBK8xEgZD';
+var accessToken = 'CAAVebA5FD2cBAO6ZBQYJOYy7BNfSdPpJC1nA5ozH9ZCFh8ZCaDgvdgZCl2TKjJGkOVTNb94ZCn26EYzi8JKa1nV1xvZBwjfIIkKnK5idQNeWoe8ZCGBaWoST7BQmg7DJLet6cBCxvXlZCH8ikmTFIZBZArMzZCH3V3j45NwIQo9cwZAPI2ZACHdTTaIcdEG1FthZAFFCtNZC8IiRQBqg9HsIhgkNsH7eE2rKMXWji0ZD';
 
 exports.share = function(req, res)
 {
   graph.setAccessToken(accessToken);
   console.log("ligne 8");
+
+  var wallPost = {
+    message: "I'm gonna come at you like a spider monkey, chip!"
+  };
+
+  graph.post('/feed' + '?access_token=' + req.user.accessToken, function(err, result) {
+    if (err) {
+      res.json(err);
+    }
+    else {
+      res.json(result);
+    }
+});
+
  // graph.redirectLoginForm(req, res);
 
 /*
