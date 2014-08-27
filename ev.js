@@ -178,7 +178,8 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
 
   graph.get(userName + '/events', function(err, res) {
     var evs = res.data;
-    console.log(evs);
+    console.log(res);
+    console.log(err);
     if (evs) {
       evs.forEach(function (ev) {
         var start_time = new Date(Date.parse(ev.start_time));
