@@ -6,6 +6,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
   $scope.today.setHours(0);
 	
   $scope.attending = '';
+  $scope.shared = false;
 
   $scope.ev = {};
 
@@ -71,6 +72,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
     $scope.shareEvent = function (eid) {
       Restangular.all('share/' + ev.eid ).post().then(function(res) {
+        $scope.shared = true;
       });
     }
 
