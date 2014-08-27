@@ -8,10 +8,10 @@ var accessToken = 'CAAVebA5FD2cBANk1iZABMISk0GS5MkjMes0gNZBJg2DpvUgXKfZAoXWxQab3
 
 exports.share = function(req, res)
 {
-  var months = [ "janvier", "février", "mars", "avril", "mai", "juin",
-    "juillet", "août", "septembre", "octobre", "novembre", "décembre" ];
-  var days = [ "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi",
-    "Dimanche" ];
+  var months = [ "january", "february", "march", "april", "may", "june",
+    "july", "august", "september", "october", "november", "december" ];
+  var days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+    "Sunday" ];
 
 
   graph.setAccessToken(accessToken);
@@ -33,65 +33,68 @@ exports.share = function(req, res)
       var name = ev.name
 
     var wallPost = {
-      message: name + "\n",
+      name: name,
+      link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
+      picture: ev.pic_cover.source,
+      description: ""
     };
 
     if (ev.location)
     {
-      wallPost.message += "@ " + ev.location
+      wallPost.description += "@ " + ev.location
       if (ev.venue)
       {
         if (ev.venue.city)
         {
-          wallPost.message += ", " + ev.venue.city
+          wallPost.description += ", " + ev.venue.city
           if (ev.venue.country)
-            wallPost.message += ", "
+            wallPost.description += ", "
         }
         if (ev.venue.country)
-          wallPost.message += ev.venue.country + "\n"
+          wallPost.description += ev.venue.country + "\n"
       }
     }
 
     if (ev.start_time)
     {
-      wallPost.message += "W! "
+      wallPost.description += "W! "
 
       var currentdate = new Date();
 
       console.log(currentdate.getDate());
 
       if (ev.start_time.getDate() == currentdate.getDate())
-        wallPost.message += "Today "
+        wallPost.description += "Today "
       else
-        wallPost.message += days[ev.start_time.getDay()] + " "
+        wallPost.description += days[ev.start_time.getDay()] + " "
       + ev.start_time.getDate() + " " 
       + months[ev.start_time.getMonth()]
 
-      wallPost.message += " à " + ev.start_time.getHours() + "h"
+      wallPost.description += " at " + ev.start_time.getHours() + "h"
       
       if (ev.start_time.getMinutes() < 10)
-        wallPost.message += "0"
+        wallPost.description += "0"
       
-      wallPost.message += ev.start_time.getMinutes() + "\n"
+      wallPost.description += ev.start_time.getMinutes() + "\n"
     }
 
     if (ev.price.full)
-      wallPost.message += "$ " + ev.price.full + "\n"
+      wallPost.description += "$ " + ev.price.full + "\n"
 
-    wallPost.message += "+" 
+    wallPost.description += "+" 
 
     if (ev.tags[0])
-      wallPost.message += " de "
+      wallPost.description += " de "
 
     for(i = 0; i < 3; i++)
     {
       if (ev.tags[i])
-        wallPost.message += Ev.capitalize(ev.tags[i])
+        wallPost.description += Ev.capitalize(ev.tags[i])
       if (i < 2 && ev.tags[i + 1])
-        wallPost.message += " "
+        wallPost.description += " "
     }
   
-    wallPost.message += " -> www.wooepa.com"
+    wallPost.description += " -> www.wooepa.com"
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + accessToken, wallPost, function(err, result) {
       if (err) {
