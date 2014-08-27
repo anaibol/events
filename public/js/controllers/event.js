@@ -69,6 +69,11 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       });
     }
 
+    $scope.shareEvent = function (eid) {
+      Restangular.all('share/' + ev.eid ).post().then(function(res) {
+      });
+    }
+
   });
 
   $scope.cancel = function() {

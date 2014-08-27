@@ -449,7 +449,16 @@ String.prototype.removeAll = function(target) {
   return this.split(target).join('');
 };
 
+function findById(eid, cb) {
+  Events.findOne({
+    eid: eid
+  }).on('complete', function(err, doc) {
+    if (err) console.log(err);
+    cb(doc);
+  });
+}
 
+module.exports.findById= findById;
 module.exports.fetch = fetch;
 module.exports.runQuery = runQuery;
 module.exports.getTags = getTags;
