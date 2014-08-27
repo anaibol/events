@@ -4,7 +4,7 @@ var Events = global.db.get('events');
 
 var Ev = require('../../ev.js');
 
-var accessToken = 'CAAVebA5FD2cBAHH4CQZBOfzUMNZBBKssS92CYDvFyveltzmadyp8UmiLCURt5yU1gwQUGBMPzvEyBu7n40d9RiYhEc1yNkK3YWegXtSVUvbO9YCIlh1bNH2IAmzyUy3VzYkzGzQWUi1oDzkk0LulSAZAb8ZBG3aZAOSHEeZCHgsNZCP1WWJ59GCPnJeEROoJZAzL53JWve2RugVSK4dssEHXNGv3Nzr4GoYZD';
+var accessToken = 'CAAVebA5FD2cBANk1iZABMISk0GS5MkjMes0gNZBJg2DpvUgXKfZAoXWxQab3L1AMXLR6M50ZBVm5h7RZCQM3jXXfRUppsGqLkaXYCsZBOoedO8q8YB6t7JZAGXIGs33WJBWIAKLtZB6AAtvVclsIDOgIK9k76f7mHyYsG5WZAZBSpM9tKUtOaf2xBcTSnTgflEtclToUcLKkb5ixfJkceZC78hzBE1mGGuZCZARsZD';
 
 exports.share = function(req, res)
 {
@@ -15,16 +15,17 @@ exports.share = function(req, res)
 
 
   graph.setAccessToken(accessToken);
-  console.log("Facebook publishing");
-  console.log("Event id:");
-  console.log(req.params.eid);
+  console.log("Facebook publishing...");
+  console.log("Event id: " + req.params.eid);
   Ev.findById(req.params.eid, function(ev) {
     if (ev)
-      console.log("Something");
+      console.log("Mongodb found something");
     else
-      console.log("Nothing");
-    res.json(ev);
-    console.log();
+    {
+      console.log("Mongodb found nothing");
+      console.log("EXIT");
+      return (0);
+    }
 
     if (ev.name.length > 64)
       var name = ev.name.substring(0,64) + "..."
@@ -32,7 +33,7 @@ exports.share = function(req, res)
       var name = ev.name
 
     var wallPost = {
-      message: name + "\n"
+      message: name + "\n",
     };
 
     if (ev.location)
@@ -60,7 +61,7 @@ exports.share = function(req, res)
       console.log(currentdate.getDate());
 
       if (ev.start_time.getDate() == currentdate.getDate())
-        wallPost.message += "Today !" + "\n"
+        wallPost.message += "Today "
       else
         wallPost.message += days[ev.start_time.getDay()] + " "
       + ev.start_time.getDate() + " " 
@@ -98,6 +99,7 @@ exports.share = function(req, res)
       }
       else {
         console.log(result);
+        res.json(ev);
       }
     });
   });
