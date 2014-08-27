@@ -34,17 +34,17 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     $scope.ev = ev;
 
     if (Global.authenticated) {
-      if ($scope.ev.attending.indexOf(window.user.facebook.id) > 0) {
+      if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {
         $scope.attending = 'attending';
       }
-    
+
       Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
         $scope.ev.attending = result;
 
-        if ($scope.ev.attending.indexOf(window.user.facebook.id) > 0) {
+        if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {
           $scope.attending = 'attending';
         } else {
-          $scope.attending = 'declined';
+          $scope.attending = '';
         }
       });
     }
@@ -61,7 +61,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
     $scope.setNotAttending = function (eid) {
       Restangular.all('events/' + ev.eid + '/rsvp').post({attendingStatus: 'declined'}).then(function(res) {
-        $scope.attending = 'declined';
+        $scope.attending = '';
       });
     }
 

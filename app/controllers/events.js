@@ -163,6 +163,14 @@ exports.get = function(req, res) {
 
           if (params.user) {
             query1["creator.name"] = params.user;
+
+            graph.get(params.user, function(err, res) {
+              var usr = res.data;
+
+              if (usr) {
+                console.log(urs);
+              }
+            });
           } else {
             query1["creator.id"] = req.user.facebook.id;
           }
