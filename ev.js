@@ -172,8 +172,11 @@ function fetch(eid, term, cb) {
 
 
 function getFromUser(userName, accessToken, userLoggedIn, cb) {
-  if (accessToken) {
-    graph.setAccessToken(accessToken);
+  
+  var aToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
+
+  if (aToken) {
+    graph.setAccessToken(aToken);
   }
 
   graph.get(userName + '/events', function(err, res) {
