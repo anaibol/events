@@ -451,14 +451,20 @@ String.prototype.removeAll = function(target) {
 
 function findById(eid, cb) {
   Events.findOne({
-    eid: eid
+    eid: parseInt(eid)
   }).on('complete', function(err, doc) {
     if (err) console.log(err);
     cb(doc);
   });
 }
 
-module.exports.findById= findById;
+function capitalize(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+module.exports.capitalize = capitalize;
+module.exports.findById = findById;
 module.exports.fetch = fetch;
 module.exports.runQuery = runQuery;
 module.exports.getTags = getTags;
