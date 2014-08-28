@@ -5,8 +5,8 @@ var Events = global.db.get('events');
 var Ev = require('../../ev.js');
 
 
-var accessToken = 'CAAVebA5FD2cBAK7k4w9ZB0kdntsLY1obmrjiFdL5OsiaBQXLtbTRlLlZALjC4F0qeak4SZC0Cssd6HZAzKWcOrNpqtcBdbmWbFn6dwpfKxBpXyX8XkmnLYWCTWWIdZAJuacHItiw1z9ACwLEnooXNGZCZAm7haYcH9BPvDyaY3MCGV0PSuSqAZCw70SjRcUZBzrbQiZAEmnmz3jImwHO83f0nmzINiXOfyRvwZD';
-//var accessToken = 'CAAGPsrwaxr4BAMAZBm9KwZBztEf0rTuwU4lLgTm0nkcRgamQ8WoSQquFnVQpzQSJZAJo8B9ua1L1omUVVwvGcsQj6efcZAuRRAwVyyeklUDroUIY0FEflnrRfWVkXRef6qovCj5ZA8qkIGvW2ZB98MTPDzA06qaMtas0iYDRHtcs07cRAt8eaGkZBRIhV5ySgvbHCEflz8c3keDbi4UXO0I';
+var accessToken = 'CAAVebA5FD2cBAG6RgXiCc6NphVDwzL0SOxznVWSZBI5AOmtMB2dZChEnnHWHMBgtBdvPYJT0XkHRUK1x89ZAr6NIHadi0UmcAPn7qFACLM9sEiEMIHiZBPZAGHwU3lRRromjwz47ovc8kYAweRoSBN0ehvXXrG98Rf7Y88RP7ddOQ2K2PYeBAqEZBmCw6QEGctZARkOLyKPxrRLm6alnmlvE0hg3od7GssZD';
+
 exports.share = function(req, res)
 {
   var months = [ "janvier", "février", "mars", "avril", "mai", "juin",
