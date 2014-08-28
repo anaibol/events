@@ -4,17 +4,21 @@ var Events = global.db.get('events');
 
 var Ev = require('../../ev.js');
 
-var accessToken = 'CAAVebA5FD2cBANk1iZABMISk0GS5MkjMes0gNZBJg2DpvUgXKfZAoXWxQab3L1AMXLR6M50ZBVm5h7RZCQM3jXXfRUppsGqLkaXYCsZBOoedO8q8YB6t7JZAGXIGs33WJBWIAKLtZB6AAtvVclsIDOgIK9k76f7mHyYsG5WZAZBSpM9tKUtOaf2xBcTSnTgflEtclToUcLKkb5ixfJkceZC78hzBE1mGGuZCZARsZD';
+var accessToken = 'CAAVebA5FD2cBABZCLSO4rcrnN2bvJ8vLOlOmTAcilIpsKmXd8ZAoszNQdYF0REckXQDKKQQuVYjAnrFGHuQzG5QY3kjYgpegLPlqfwU79AcX8yZC1TidVx4SYS9XiMftQ1IcTOW5JQ4Ml7ZAPS3VZBYQWGZBhKeyl1Y8snYXKIjPeZAEZA4ZBMe2PJZAEwxgGyJdNqyOBC58LkxIf2nQjuRaRr';
 
 exports.share = function(req, res)
 {
-  var months = [ "january", "february", "march", "april", "may", "june",
+  var months = [ "janvier", "février", "mars", "avril", "mai", "juin",
+    "juillet", "août", "septembre", "octobre", "novembre", "décembre" ];
+  var days = [ "Lundi", "Mardi", "Mecredi", "Jeudi", "Vendredi", "Samedi",
+    "Dimanche" ];
+  /*var months = [ "january", "february", "march", "april", "may", "june",
     "july", "august", "september", "october", "november", "december" ];
   var days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-    "Sunday" ];
+    "Sunday" ];*/
 
 
-  graph.setAccessToken(accessToken);
+  //graph.setAccessToken(accessToken);
   console.log("Facebook publishing...");
   console.log("Event id: " + req.params.eid);
   Ev.findById(req.params.eid, function(ev) {
@@ -36,7 +40,8 @@ exports.share = function(req, res)
       name: name,
       link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
       picture: ev.pic_cover.source,
-      description: ""
+      description: "",
+      message: ""
     };
 
     if (ev.location)
@@ -64,7 +69,7 @@ exports.share = function(req, res)
       console.log(currentdate.getDate());
 
       if (ev.start_time.getDate() == currentdate.getDate())
-        wallPost.description += "Today "
+        wallPost.description += "Aujourd'hui "
       else
         wallPost.description += days[ev.start_time.getDay()] + " "
       + ev.start_time.getDate() + " " 
@@ -95,6 +100,8 @@ exports.share = function(req, res)
     }
   
     wallPost.description += " -> www.wooepa.com"
+
+    wallPost.message += wallPost.description
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + accessToken, wallPost, function(err, result) {
       if (err) {
