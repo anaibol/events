@@ -6,6 +6,25 @@ var Ev = require('../../ev.js');
 
 var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
 
+var shares = global.db.get('shares');
+
+exports.saveShare = function (post_id, event_id, user_id) {
+
+    var user_share = {
+      user_id: user_id,
+      post_id: post_id,
+      event_id: event_id
+    }
+
+    shares.insert(user_share, function(err) {
+      if (err)
+        console.log(err);
+      else
+        console.log(user_share);
+    });
+
+}
+
 exports.share = function(req, res)
 {
   var months = [ "janvier", "février", "mars", "avril", "mai", "juin",
@@ -103,14 +122,20 @@ exports.share = function(req, res)
 
     wallPost.message += wallPost.description
 
-    console.log(req.user.accessToken);
-
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
         console.log(err);
       }
       else {
         console.log(result);
+
+        var str = result.id;
+
+        var splited_result = str.split('_');
+
+        var post_id = splited_result[1];
+
+        exports.saveShare(post_id, req.params.eid, req.user.facebook.id);
         res.json(ev);
       }
     });
