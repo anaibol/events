@@ -19,7 +19,7 @@ exports.share = function(req, res)
     "Sunday" ];*/
 
 
-  //graph.setAccessToken(accessToken);
+  graph.setAccessToken(accessToken);
   console.log("Facebook publishing...");
   console.log("Event id: " + req.params.eid);
   Ev.findById(req.params.eid, function(ev) {
@@ -104,7 +104,7 @@ exports.share = function(req, res)
 
     wallPost.message += wallPost.description
 
-    graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + accessToken, wallPost, function(err, result) {
+    graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
         console.log(err);
       }
