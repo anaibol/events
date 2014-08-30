@@ -6,6 +6,25 @@ var Ev = require('../../ev.js');
 
 var accessToken = 'CAAVebA5FD2cBAG6RgXiCc6NphVDwzL0SOxznVWSZBI5AOmtMB2dZChEnnHWHMBgtBdvPYJT0XkHRUK1x89ZAr6NIHadi0UmcAPn7qFACLM9sEiEMIHiZBPZAGHwU3lRRromjwz47ovc8kYAweRoSBN0ehvXXrG98Rf7Y88RP7ddOQ2K2PYeBAqEZBmCw6QEGctZARkOLyKPxrRLm6alnmlvE0hg3od7GssZD';
 
+var shares = global.db.get('shares');
+
+exports.saveShare = function (post_id, event_id, user_id) {
+
+    var user_share = {
+      user_id: user_id,
+      post_id: post_id,
+      event_id: event_id
+    }
+
+    shares.insert(user_share, function(err) {
+      if (err)
+        console.log(err);
+      else
+        console.log(user_share);
+    });
+
+}
+
 exports.share = function(req, res)
 {
   var months = [ "janvier", "février", "mars", "avril", "mai", "juin",
@@ -18,7 +37,7 @@ exports.share = function(req, res)
     "Sunday" ];*/
 
 
-  //graph.setAccessToken(accessToken);
+  graph.setAccessToken(accessToken);
   console.log("Facebook publishing...");
   console.log("Event id: " + req.params.eid);
   Ev.findById(req.params.eid, function(ev) {
@@ -103,12 +122,20 @@ exports.share = function(req, res)
 
     wallPost.message += wallPost.description
 
-    graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + accessToken, wallPost, function(err, result) {
+    graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
         console.log(err);
       }
       else {
         console.log(result);
+
+        var str = result.id;
+
+        var splited_result = str.split('_');
+
+        var post_id = splited_result[1];
+
+        exports.saveShare(post_id, req.params.eid, req.user.facebook.id);
         res.json(ev);
       }
     });
