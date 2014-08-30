@@ -38,9 +38,9 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
         $scope.attending = 'attending';
       }
 
-      Restangular.all('events/' + ev.eid).get('userStatus').then(function(result) {
+      Restangular.all('events/' + ev.eid).get('attendings').then(function(result) {
         $scope.ev.attending = result;
-
+        console.log($scope.ev.attending);
         if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {
           $scope.attending = 'attending';
         } else {

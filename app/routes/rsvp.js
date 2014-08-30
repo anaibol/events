@@ -17,7 +17,6 @@ var hasAuthorization = function(req, res, next) {
 module.exports = function(app, passport) {
   // app.get('/rsvp/:eventId/status', rsvp.getStatus);
   // app.post('/rsvp/:eventId/set_attending', rsvp.setAttending);
-  app.get('/api/events/:eid/rsvp', rsvp.getUserStatus);
-  app.get('/api/events/:eid/userStatus', rsvp.getUserStatus);
+  app.get('/api/events/:eid/attendings', rsvp.getAttendings);
   app.post('/api/events/:eid/rsvp', authorization.requiresLogin, hasAuthorization, rsvp.setAttending);
 };

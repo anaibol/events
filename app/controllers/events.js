@@ -167,9 +167,9 @@ exports.get = function(req, res) {
             graph.get(params.user, function(err, res) {
               var usr = res.data;
 
-              if (usr) {
-                console.log(urs);
-              }
+              // if (usr) {
+              //   console.log(urs);
+              // }
             });
           } else {
             query1["creator.id"] = req.user.facebook.id;
@@ -177,9 +177,7 @@ exports.get = function(req, res) {
 
           query2.attending = { $all: [ parseInt(req.user.facebook.id) ] };
 
-          query = {$or: [ query2, query2 ]};
-
-          console.log(query2);
+          query = {$or: [ query1, query2 ]};
 
           break;
 
