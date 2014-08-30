@@ -234,7 +234,10 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
             cb(true);
 
             if (!result) {
-              Ev.updateAttendings(ev.id, function(attendings) {});
+              console.log(ev.id);
+              Ev.updateAttendings(ev.id, function(attendings) {
+                console.log(attendings);
+              });
             }
           });
         }
