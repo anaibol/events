@@ -213,7 +213,7 @@ function updateAttendings(eid, cb) {
 }
 
 function getFromUser(userName, accessToken, userLoggedIn, cb) {
-  graph.get(userName + '/events', function(err, res) {
+  graph.get(userName + '/events?limit=50000', function(err, res) {
     var evs = res.data;
 
     if (evs) {

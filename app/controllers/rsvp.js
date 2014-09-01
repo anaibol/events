@@ -31,7 +31,9 @@ exports.getEventAttendings = function(req, res) {
 };
 
 exports.setAttending = function(req, res) {
-  graph.post('/' + req.params.eid + '/' + req.body.attendingStatus + '?access_token=' + accessToken, function(err, result) {
+  graph.setAccessToken(req.user.accessToken);
+
+  graph.post('/' + req.params.eid + '/' + req.body.attendingStatus, function(err, result) {
     if (err) {
       res.json(err);
     }
