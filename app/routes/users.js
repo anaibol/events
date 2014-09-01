@@ -23,7 +23,7 @@ module.exports = function(app, passport) {
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: ['publish_actions', 'email', 'user_about_me', 'user_photos', 'create_event', 'rsvp_event', 'user_events', 'user_location', 'user_interests'],
+    scope: ['read_stream','publish_actions', 'email', 'user_about_me', 'user_photos', 'create_event', 'rsvp_event', 'user_events', 'user_location', 'user_interests'],
     failureRedirect: '/signin'
   }), users.signin);
 
