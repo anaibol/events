@@ -114,7 +114,17 @@ function fetch(eid, term, cb) {
 
             ev.slug = slugify(ev.name.toLowerCase());
 
-            ev.slug = ev.slug.removeAll(',').removeAll('.').removeAll('!').removeAll('(').removeAll(')').removeAll('"').removeAll("'").removeAll(":").removeAll(";").removeAll("+").removeAll("@");
+            ev.slug = ev.slug.replaceAll(',', '-')
+            .replaceAll('.', '-')
+            .replaceAll('!', '-')
+            .replaceAll('(', '-')
+            .replaceAll(')', '-')
+            .replaceAll('"', '-')
+            .replaceAll("'", '-')
+            .replaceAll(':', '-')
+            .replaceAll(';', '-')
+            .replaceAll('+', '-')
+            .replaceAll('@', '-');
 
             ev.tags = getTags(ev);
 
@@ -125,14 +135,6 @@ function fetch(eid, term, cb) {
             if (ev.place.indexOf('porto')) {
               if (term === 'porto') {
                 ev = null;
-              }
-            }
-
-            if (term === 'userLoggedIn') {
-              if (ev) {
-                if (!ev.tags.length) {
-                  ev = null;
-                }
               }
             }
 
@@ -164,18 +166,53 @@ function fetch(eid, term, cb) {
         }
       });
     } else {
-      console.log(212312312);
       cb(false);
     }
   });
 }
 
+function updateAttendings(eid, cb) {
+  graph.get(eid + '/attending', function(err, res) {
+    if (err) {
+      console.log(err);
+    }
+
+    var att = res.data;
+
+    if (att) {
+      attendings = [];
+
+      for (var i = att.length - 1; i >= 0; i--) {
+        attendings.push(parseInt(att[i].id));
+      };
+
+      cb(attendings);
+      console.log(attendings);
+      Events.update({ eid: parseInt(eid) }, {$set: {'attending': attendings}});
+    }
+  });
+
+  // var query = "SELECT uid FROM event_member WHERE rsvp_status = 'attending' AND eid=" + eid + " LIMIT 50000";
+
+  // graph.fql(query, function(err, result) {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+  //   else {
+  //     attendings = [];
+ 
+  //     for (var i = result.data.length - 1; i >= 0; i--) {
+  //       attendings.push(parseInt(result.data[i].uid));
+  //     };
+
+  //     cb(attendings);
+
+  //     Events.update({ eid: parseInt(eid) }, {$set: {'attending': attendings}});
+  //   }
+  // });
+}
 
 function getFromUser(userName, accessToken, userLoggedIn, cb) {
-  if (accessToken) {
-    graph.setAccessToken(accessToken);
-  }
-
   graph.get(userName + '/events', function(err, res) {
     var evs = res.data;
 
@@ -191,10 +228,17 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
             term = 'userLoggedIn';
           }
 
-          fetch(ev.id, term, function(ev){
+          fetch(parseInt(ev.id), term, function(result){
             // newEvents++;
             console.log(userName + ': ' + ev.name);
             cb(true);
+
+            if (!result) {
+              console.log(ev.id);
+              Ev.updateAttendings(ev.id, function(attendings) {
+                console.log(attendings);
+              });
+            }
           });
         }
       });
@@ -475,4 +519,4 @@ module.exports.crawlPageTimeline = crawlPageTimeline;
 module.exports.crawlUser = crawlUser;
 module.exports.crawlUserTimeline = crawlUserTimeline;
 module.exports.getFromUser = getFromUser;
-
+module.exports.updateAttendings = updateAttendings;

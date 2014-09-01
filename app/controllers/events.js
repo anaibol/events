@@ -163,15 +163,21 @@ exports.get = function(req, res) {
 
           if (params.user) {
             query1["creator.name"] = params.user;
+
+            graph.get(params.user, function(err, res) {
+              var usr = res.data;
+
+              // if (usr) {
+              //   console.log(urs);
+              // }
+            });
           } else {
             query1["creator.id"] = req.user.facebook.id;
           }
 
           query2.attending = { $all: [ parseInt(req.user.facebook.id) ] };
 
-          query = {$or: [ query2, query2 ]};
-
-          console.log(query2);
+          query = {$or: [ query1, query2 ]};
 
           break;
 

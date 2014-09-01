@@ -4,14 +4,37 @@ var Events = global.db.get('events');
 
 var Ev = require('../../ev.js');
 
-var accessToken = 'CAAVebA5FD2cBANk1iZABMISk0GS5MkjMes0gNZBJg2DpvUgXKfZAoXWxQab3L1AMXLR6M50ZBVm5h7RZCQM3jXXfRUppsGqLkaXYCsZBOoedO8q8YB6t7JZAGXIGs33WJBWIAKLtZB6AAtvVclsIDOgIK9k76f7mHyYsG5WZAZBSpM9tKUtOaf2xBcTSnTgflEtclToUcLKkb5ixfJkceZC78hzBE1mGGuZCZARsZD';
+var accessToken = 'CAAVebA5FD2cBAG6RgXiCc6NphVDwzL0SOxznVWSZBI5AOmtMB2dZChEnnHWHMBgtBdvPYJT0XkHRUK1x89ZAr6NIHadi0UmcAPn7qFACLM9sEiEMIHiZBPZAGHwU3lRRromjwz47ovc8kYAweRoSBN0ehvXXrG98Rf7Y88RP7ddOQ2K2PYeBAqEZBmCw6QEGctZARkOLyKPxrRLm6alnmlvE0hg3od7GssZD';
+
+var shares = global.db.get('shares');
+
+exports.saveShare = function (post_id, event_id, user_id) {
+
+    var user_share = {
+      user_id: user_id,
+      post_id: post_id,
+      event_id: event_id
+    }
+
+    shares.insert(user_share, function(err) {
+      if (err)
+        console.log(err);
+      else
+        console.log(user_share);
+    });
+
+}
 
 exports.share = function(req, res)
 {
-  var months = [ "january", "february", "march", "april", "may", "june",
+  var months = [ "janvier", "février", "mars", "avril", "mai", "juin",
+    "juillet", "août", "septembre", "octobre", "novembre", "décembre" ];
+  var days = [ "Lundi", "Mardi", "Mecredi", "Jeudi", "Vendredi", "Samedi",
+    "Dimanche" ];
+  /*var months = [ "january", "february", "march", "april", "may", "june",
     "july", "august", "september", "october", "november", "december" ];
   var days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-    "Sunday" ];
+    "Sunday" ];*/
 
 
   graph.setAccessToken(accessToken);
@@ -36,7 +59,8 @@ exports.share = function(req, res)
       name: name,
       link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
       picture: ev.pic_cover.source,
-      description: ""
+      description: "",
+      message: ""
     };
 
     if (ev.location)
@@ -64,7 +88,7 @@ exports.share = function(req, res)
       console.log(currentdate.getDate());
 
       if (ev.start_time.getDate() == currentdate.getDate())
-        wallPost.description += "Today "
+        wallPost.description += "Aujourd'hui "
       else
         wallPost.description += days[ev.start_time.getDay()] + " "
       + ev.start_time.getDate() + " " 
@@ -96,12 +120,22 @@ exports.share = function(req, res)
   
     wallPost.description += " -> www.wooepa.com"
 
-    graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + accessToken, wallPost, function(err, result) {
+    wallPost.message += wallPost.description
+
+    graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
         console.log(err);
       }
       else {
         console.log(result);
+
+        var str = result.id;
+
+        var splited_result = str.split('_');
+
+        var post_id = splited_result[1];
+
+        exports.saveShare(post_id, req.params.eid, req.user.facebook.id);
         res.json(ev);
       }
     });

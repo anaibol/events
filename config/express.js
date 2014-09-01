@@ -123,7 +123,7 @@ module.exports = function(app, passport, db) {
        });
     });
 
-    app.all('/[a-z0-9-]{0,100}\/[0-9]{0,100}', function(req, res) {
+    app.all('/.\/[0-9]{0,100}', function(req, res) {
        res.render('index', {
          title: 'Wooepa',
          user: req.user ? JSON.stringify(req.user) : 'null',

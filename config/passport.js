@@ -66,6 +66,7 @@ module.exports = function(passport) {
             return done(err, user);
           });
         } else {
+          Users.update({_id: user._id}, {$set: {accessToken: accessToken}});
           return done(err, user);
         }
       });

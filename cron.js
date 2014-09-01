@@ -71,21 +71,21 @@ var newEvents;
 // });
 
 
-var job = new cronJob('*/30 * * * * ', function() {
+// var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
-  fetchEventsFromKeywords();
+  // fetchEventsFromKeywords();
 
-  // updateAttending();
+  updateAttending();
   // updateTagsAndPrice();
 
-  fetchEventsFromUsers();
+  // fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-}, null, true);
+// }, null, true);
 
 
 function paginate(page, term) {
@@ -202,21 +202,8 @@ function updateAttending() {
       $gte: date
     }
   }).each(function(ev) {
-    // var query = "SELECT attending_count FROM event WHERE eid =" + ev.eid;
-
-    var query = "SELECT uid FROM event_member WHERE eid =" + ev.eid + " and rsvp_status = 'attending' LIMIT 50000";
-
-    //ACA FALTA LABURAR
-
-    Ev.runQuery(query, function(updatedEv) {
-      if (updatedEv) {
-        if (ev.attending_count !== updatedEv.attending_count) {
-          ev.attending_count = updatedEv.attending_count;
-
-          Events.updateById(ev._id, updatedEv);
-          console.log('UPDATE ATTENDING :' + ev.name);
-        }
-      }
+    Ev.updateAttendings(ev.id, function(attendings) {
+      console.log(attendings);
     });
   });
 }
