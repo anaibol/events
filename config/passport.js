@@ -58,7 +58,9 @@ module.exports = function(passport) {
             username: profile.username,
             provider: 'facebook',
             facebook: profile._json,
-            accessToken: accessToken
+            accessToken: accessToken,
+            created_at: new Date(),
+            updated_at: new Date()
           };
 
           Users.insert(user, function(err) {
@@ -66,7 +68,7 @@ module.exports = function(passport) {
             return done(err, user);
           });
         } else {
-          Users.update({_id: user._id}, {$set: {accessToken: accessToken}});
+          Users.update({_id: user._id}, {$set: {accessToken: accessToken, updated_at: new Date()}});
           return done(err, user);
         }
       });
