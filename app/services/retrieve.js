@@ -66,7 +66,7 @@ function searchPost(db, request, date_end) {
 										user_id: id[0],
 										post_id: id[1],
 										event_id: event_id,
-										type: "Post",
+										type: "post",
 										creation_date: created_time_obj,
 										data: data[i]
 									}
