@@ -14,10 +14,9 @@ function searchPost(db, request, date_end) {
 
 	var result_of_get = graph.get(request, function(err, result) {
 					
-					if (result.feed == null)
+					if (result.data == null)
 					{
 						console.log("Invalid");
-						console.log(result);
 						return ;
 					}
 					if (err) {
