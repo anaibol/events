@@ -6,6 +6,12 @@ var Ev = require('../../ev.js');
 
 function searchPost(db, request, date_end) {
 
+	if (!db)
+	{
+		console.log("Database is null");
+		return ;
+	}
+
 	console.log(request);
 
 	var Actions = db.get('actions');
@@ -88,6 +94,12 @@ function searchPost(db, request, date_end) {
 
 function retrieveActions(user_id, db)
 {
+	if (!db)
+	{
+		console.log("Database is null");
+		return ;
+	}
+
 	var Users = db.get('users');
 
 	Users.findOne({
@@ -96,7 +108,7 @@ function retrieveActions(user_id, db)
         if (err) {
         	console.log(err);
         }
-        else
+        else if (user)
         {
         	var less_than_2_months = 1;
 

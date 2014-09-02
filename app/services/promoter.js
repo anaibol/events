@@ -1,6 +1,12 @@
 
 function associatePromoter(db, promoter_id, event_id)
 {
+	if (!db)
+	{
+		console.log("Database is null");
+		return ;
+	}
+
 	var Users = db.get('users');
 
 	var Events = db.get('events');
@@ -11,7 +17,7 @@ function associatePromoter(db, promoter_id, event_id)
         if (err) {
         	console.log(err);
         }
-        else
+        else if (user)
         {
         	Events.findOne({
         		'eid': parseInt(event_id)
@@ -19,50 +25,50 @@ function associatePromoter(db, promoter_id, event_id)
         		if (err) {
         			console.log(err);
         		}
-       			else
+       			else if (event)
         		{
-        			var list_promoter_events = user.list_promoter_events;
-
-        			if (list_promoter_events == null )
-        				list_promoter_events = new Array();
-        			
-        			list_promoter_events.push(parseInt(event_id));
-
-        			var list_event_promoters = event.list_event_promoters;
-
-        			console.log(list_event_promoters);
-
-        			if (list_event_promoters == null )
-        				list_event_promoters = new Array();
-        			
-        			list_event_promoters.push(parseInt(promoter_id));
-
-        			console.log(list_event_promoters);
-
-        			Users.update({_id: user._id}, 
-        				{$set: {list_promoter_events: list_promoter_events}}, 
-        				function(err, event) {
-        					if (err) {
-        						console.log(err);
-        					}
-        				});
-
-        			Events.update({_id: event._id}, 
-        				{$set: {list_event_promoters: list_event_promoters}}, 
-        				function(err, event) {
-        					if (err) {
-        						console.log(err);
-        					}
-        				});
+        			if (!user.list_promoter_events || user.list_promoter_events.indexOf(event_id) == -1)
+        			{
+        				Users.update({_id: user._id}, 
+	        				{$push: {'list_promoter_events': event_id}}, 
+	        				function(err, event) {
+	        					if (err) {
+	        						console.log(err);
+	        					}
+	        				});
+        			}
+        			if (!event.list_event_promoters || event.list_event_promoters.indexOf(promoter_id) == -1)
+        			{
+        				Events.update({_id: event._id}, 
+	        				{$push: {'list_event_promoters': promoter_id}}, 
+	        				function(err, event) {
+	        					if (err) {
+	        						console.log(err);
+	        					}
+	        				});
+        			}
+        			if ((user.list_promoter_events && user.list_promoter_events.indexOf(event_id) != -1) &&
+        				(event.list_event_promoters && event.list_event_promoters.indexOf(promoter_id) != -1))
+        				console.log("Promoter: L'association existe déja");
 
         		}
+        		else
+        			console.log("Promoter: Aucun événement trouvé pour l'id " + event_id);
     		});
         }
+        else
+        	console.log("Promoter: Aucun utilisateur trouvé pour l'id " + promoter_id);
     });
 }
 
 function associatePlayer(db, player_id, event_id)
 {
+	if (!db)
+	{
+		console.log("Database is null");
+		return ;
+	}
+
 	var Users = db.get('users');
 
 	var Events = db.get('events');
@@ -73,7 +79,7 @@ function associatePlayer(db, player_id, event_id)
         if (err) {
         	console.log(err);
         }
-        else
+        else if (user)
         {
         	Events.findOne({
         		'eid': parseInt(event_id)
@@ -81,41 +87,39 @@ function associatePlayer(db, player_id, event_id)
         		if (err) {
         			console.log(err);
         		}
-       			else
+       			else if (event)
         		{
-        			var list_player_events = user.list_player_events;
-
-        			if (list_player_events == null )
-        				list_player_events = new Array();
-        			
-        			list_player_events.push(parseInt(event_id));
-
-        			var list_event_players = event.list_event_players;
-
-        			if (list_event_players == null )
-        				list_event_players = new Array();
-        			
-        			list_event_players.push(parseInt(player_id));
-
-        			Users.update({_id: user._id}, 
-        				{$set: {list_player_events: list_player_events}}, 
-        				function(err, event) {
-        					if (err) {
-        						console.log(err);
-        					}
-        				});
-
-        			Events.update({_id: event._id}, 
-        				{$set: {list_event_players: list_event_players}}, 
-        				function(err, event) {
-        					if (err) {
-        						console.log(err);
-        					}
-        				});
+        			if (!user.list_player_events || user.list_player_events.indexOf(event_id) == -1)
+        			{
+	        			Users.update({_id: user._id}, 
+	        				{$push: {'list_player_events': event_id}}, 
+	        				function(err, event) {
+	        					if (err) {
+	        						console.log(err);
+	        					}
+	        				});
+	        		}
+	        		if (!event.list_event_players || event.list_event_players.indexOf(player_id) == -1)
+	        		{
+	        			Events.update({_id: event._id}, 
+	        				{$push: {'list_event_players': player_id}}, 
+	        				function(err, event) {
+	        					if (err) {
+	        						console.log(err);
+	        					}
+	        				});
+        			}
+        			if ((user.list_player_events && user.list_player_events.indexOf(event_id) != -1) &&
+        				(event.list_event_players && event.list_event_players.indexOf(player_id) != -1))
+        				console.log("Player: L'association existe déja");
         			
         		}
+        		else
+        			console.log("Player: Aucun événement trouvé pour l'id " + event_id);
     		});
         }
+        else
+        	console.log("Player: Aucun utilisateur trouvé pour l'id " + player_id);
     });
 }
 
