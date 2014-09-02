@@ -21,7 +21,7 @@ function updatePost(db, post)
         }
         else if (user)
         {
-			graph.get('/' + post.post_id + '?access_token=' + user.accessToken, function(err, result) {
+			graph.get('/' + post.user_id + '_' + post.post_id + '?access_token=' + user.accessToken, function(err, result) {
         		if (err) {
            			console.log(err);
            			console.log("The post with id: " + post.post_id + " have been deleted");

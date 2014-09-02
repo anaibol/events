@@ -135,7 +135,7 @@ exports.share = function(req, res)
       if (err) {
         console.log(err);
       }
-      else {
+      else if (result) {
         console.log(result);
 
         var str = result.id;
@@ -146,7 +146,7 @@ exports.share = function(req, res)
 
         var data = [];
 
-        graph.get('/' + post_id + '?access_token=' + req.user.accessToken, function(err, result) {
+        graph.get('/' + req.user.facebook.id + '_' + post_id + '?access_token=' + req.user.accessToken, function(err, result) {
             if (err) {
               console.log(err);
             }
