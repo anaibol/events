@@ -6,21 +6,28 @@ var Ev = require('../../ev.js');
 
 var accessToken = 'CAAVebA5FD2cBAG6RgXiCc6NphVDwzL0SOxznVWSZBI5AOmtMB2dZChEnnHWHMBgtBdvPYJT0XkHRUK1x89ZAr6NIHadi0UmcAPn7qFACLM9sEiEMIHiZBPZAGHwU3lRRromjwz47ovc8kYAweRoSBN0ehvXXrG98Rf7Y88RP7ddOQ2K2PYeBAqEZBmCw6QEGctZARkOLyKPxrRLm6alnmlvE0hg3od7GssZD';
 
-var shares = global.db.get('shares');
+var actions = global.db.get('actions');
+
+var Pro = require('../services/promoter.js');
 
 exports.saveShare = function (post_id, event_id, user_id) {
 
-    var user_share = {
+    var action = {
       user_id: user_id,
       post_id: post_id,
-      event_id: event_id
+      event_id: event_id,
+      type: 'share',
+      creation_date: new Date()
     }
 
-    shares.insert(user_share, function(err) {
+    actions.insert(action, function(err) {
       if (err)
         console.log(err);
       else
-        console.log(user_share);
+      {
+        Pro.associatePlayer(global.db, user_id, event_id);
+        console.log(action);
+      }
     });
 
 }
