@@ -10,25 +10,27 @@ var actions = global.db.get('actions');
 
 var Pro = require('../services/promoter.js');
 
-exports.saveShare = function (post_id, event_id, user_id) {
+exports.saveShare = function (post_id, event_id, user_id, data) {
 
-    var action = {
-      user_id: user_id,
-      post_id: post_id,
-      event_id: event_id,
-      type: 'share',
-      creation_date: new Date()
-    }
-
-    actions.insert(action, function(err) {
-      if (err)
-        console.log(err);
-      else
-      {
-        Pro.associatePlayer(global.db, user_id, event_id);
-        console.log(action);
+      var action = {
+        user_id: user_id,
+        post_id: post_id,
+        event_id: event_id,
+        type: 'share',
+        creation_date: new Date(),
+        active: true,
+        data: data
       }
-    });
+
+      actions.insert(action, function(err) {
+        if (err)
+          console.log(err);
+        else
+        {
+          Pro.associatePlayer(global.db, user_id, event_id);
+          console.log(action);
+        }
+      });
 
 }
 
@@ -142,8 +144,18 @@ exports.share = function(req, res)
 
         var post_id = splited_result[1];
 
-        exports.saveShare(post_id, req.params.eid, req.user.facebook.id);
-        res.json(ev);
+        var data = [];
+
+        graph.get('/' + post_id + '?access_token=' + req.user.accessToken, function(err, result) {
+            if (err) {
+              console.log(err);
+            }
+
+            exports.saveShare(post_id, req.params.eid, req.user.facebook.id, result);
+
+            res.json(ev);
+        });
+        
       }
     });
   });

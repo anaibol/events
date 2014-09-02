@@ -4,6 +4,7 @@ var Ev = require('../../ev.js');
 
 //! Function to retrieve action for users and events
 
+//Elle enregistre tout les post dans le flux d'actualité renvoyer par la requete request
 function searchPost(db, request, date_end) {
 
 	if (!db)
@@ -18,7 +19,7 @@ function searchPost(db, request, date_end) {
 
 	var less_than_2_months = 1;
 
-	var result_of_get = graph.get(request, function(err, result) {
+	graph.get(request, function(err, result) {
 					
 					if (result.data == null)
 					{
@@ -68,6 +69,7 @@ function searchPost(db, request, date_end) {
 										event_id: event_id,
 										type: "post",
 										creation_date: created_time_obj,
+										active: true,
 										data: data[i]
 									}
 
@@ -92,6 +94,9 @@ function searchPost(db, request, date_end) {
 
 }
 
+
+/* La fonction retrieveAction va chercher dans le Flux d'actualité de l'utilisateur d'id user_id tous 
+les posts qui sont en rapport avec 'wooepa' et les enregistre dans la table action */
 function retrieveActions(user_id, db)
 {
 	if (!db)
@@ -110,15 +115,11 @@ function retrieveActions(user_id, db)
         }
         else if (user)
         {
-        	var less_than_2_months = 1;
-
-        	var accessToken = user.accessToken;
-
 			var date_end = new Date();
 
-			var request = '/' + user_id + '/feed' + '?access_token=' + accessToken;
-
 			date_end.setMonth(date_end.getMonth() - 2);
+
+			var request = '/' + user_id + '/feed' + '?access_token=' + user.accessToken;
 
 			searchPost(db, request, date_end);
 
