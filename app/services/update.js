@@ -68,12 +68,14 @@ function updateActions(event_id, db)
         if (err) {
         	console.log(err);
         }
-        else if (actions)
+        else if (actions && actions.length > 0)
         {
         	console.log("Updating " + actions.length + " actions for the event with id: " + event_id);
 			for (i = 0; i < actions.length; i++)
 				updatePost(db, actions[i]);
         }
+        else
+        	console.log("Nothing to do");
     });
 }
 
