@@ -4,6 +4,6 @@ var config = require('../../config/config');
 
 var db = require('monk')(config.db);
 
-var Re = require('../../app/services/retrieve.js');
+var Res = require('../../app/services/resolve.js');
 
-Re.retrieveActions('100004646590264', db);
+Res.resolveGames(db, '187848574716656');

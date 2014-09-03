@@ -89,6 +89,8 @@ function associatePlayer(db, player_id, event_id)
         		}
        			else if (event)
         		{
+                    console.log("Association entre l'event d'id: " + event_id + " et l'user d'id: " + player_id);
+                    
         			if (!user.list_player_events || user.list_player_events.indexOf(event_id) == -1)
         			{
 	        			Users.update({_id: user._id}, 

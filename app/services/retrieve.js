@@ -2,6 +2,8 @@ var graph = require('fbgraph');
 
 var Ev = require('../../ev.js');
 
+var Pro = require('../services/promoter.js');
+
 //! Function to retrieve action for users and events
 
 //Elle enregistre tout les post dans le flux d'actualité renvoyer par la requete request
@@ -63,6 +65,10 @@ function searchPost(db, request, date_end) {
 
 									var event_id = link_splited[link_splited.length - 1];
 
+									console.log(event_id);
+
+									Pro.associatePlayer(db, id[0], event_id);
+
 									var action = {
 										user_id: id[0],
 										post_id: id[1],
@@ -77,7 +83,9 @@ function searchPost(db, request, date_end) {
 								    if (err)
 								        console.log(err);
 								    else
-								        console.log(action);
+								    {
+								        //console.log(action);
+								    }
 								    });
 								}
 							}
