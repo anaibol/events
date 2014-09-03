@@ -61,12 +61,13 @@ module.exports = function(app, passport, db) {
     app.use(express.methodOverride());
 
     // Express/Mongo session storage
-    app.use(express.session({
-      secret: config.sessionSecret,
-      store: new mongoStore({
-        db: config.dbName,
-      })
-    }));
+    // app.use(express.session({
+    //   secret: config.sessionSecret,
+    //   store: new mongoStore({
+    //     db: config.dbName,
+        
+    //   })
+    // }));
 
     // Use passport session
     app.use(passport.initialize());
