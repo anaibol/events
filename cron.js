@@ -71,21 +71,21 @@ var newEvents;
 // });
 
 
-// var job = new cronJob('*/30 * * * * ', function() {
+var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
-  // fetchEventsFromKeywords();
+  fetchEventsFromKeywords();
 
-  updateAttending();
+  // updateAttending();
   // updateTagsAndPrice();
 
   // fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-// }, null, true);
+}, null, true);
 
 
 function paginate(page, term) {
