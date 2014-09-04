@@ -34,5 +34,6 @@ module.exports = function(app, passport) {
 
   app.get('/:user/events', users.getEvents);
   app.get('/me/events', users.getMyEvents);
-  app.get('/api/users/:uid', users.getOne);
+  app.get('/api/user/:uid', users.getOne);
+  app.get('/api/users/:uids/info', users.getInfo);
 };

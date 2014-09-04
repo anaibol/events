@@ -59,7 +59,7 @@
           <div class="panel-body">
             <p ng-hide="ev.list_event_players">No players yet</p>
             <ul class="list-group" ng-show="ev.list_event_players">
-              <li class="list-group-item" ng-repeat='player in ev.list_event_players'>{{getPlayerInfo(player)}}</li>
+              <li class="list-group-item" ng-repeat="player in ev.list_event_players">{{player.name}}</li>
             </ul>
           </div>
         </div>

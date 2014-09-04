@@ -30,14 +30,13 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     }
   }
 
+
+
   $scope.getPlayerInfo = function(player) {
-
-    /*Users.one(player).then(function(user) { 
-      return (user.name);
-    })*/
-
-    return (player);
-
+    // Users.one(player).then(function(user) {
+    //   console.log (user.name);
+    // });
+    return player
   }
 
   Events.one($stateParams.eid).then(function(ev) {
@@ -46,6 +45,17 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     // });
 
     $scope.ev = ev;
+
+//     Users.get('names').then(function(users) {
+// console.log (user);
+//     });
+
+    if (ev.list_event_players) {
+      Restangular.all('users/' + ev.list_event_players.toString()).get('info').then(function(players) {
+        ev.list_event_players = players;
+      });
+    }
+
 
     if (Global.authenticated) {
       if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {
