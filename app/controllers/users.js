@@ -116,3 +116,15 @@ exports.getMyEvents = function(req, res) {
         events: events
     });
 };
+
+exports.getOne = function(req, res) {
+  Users.findOne({'facebook.id': parseInt(req.params.uid)}, function(err, data) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.json(data);
+    }
+  });
+};
