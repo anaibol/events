@@ -34,7 +34,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
     Users.one(player).then(function(user) { 
       return (user.name);
-    })
+    });
   }
 
   Events.one($stateParams.eid).then(function(ev) {
