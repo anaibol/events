@@ -33,6 +33,8 @@ var EventFormCtrl = function($scope, $modalInstance, $q, $filter, Restangular, $
           "Sunday"
         ];
 
+  $scope.games = ['Promotion by the Facebook user', 'Promotion by a promoter'];
+
   $scope.options = {
     types: '(establishment)'
   };

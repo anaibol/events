@@ -14,6 +14,10 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     return $state.current.name.split('.')[0] + '.edit(ev)';
   }
 
+  $scope.getPromoteLink = function() {
+    return $state.current.name.split('.')[0] + '.promote(ev)';
+  }
+
   $scope.canEdit = function() {
     if (Global.authenticated) {
       if (window.user.admin) {

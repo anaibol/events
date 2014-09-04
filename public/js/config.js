@@ -79,6 +79,12 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       // }
     });
 
+    modalStateProvider.state('home.promote', {
+      url: ':slug/:eid/promote',
+      templateUrl: '/views/events/promote_form.html',
+      controller: 'EventFormCtrl',
+    });
+
     modalStateProvider.state('home.terms', {
       url: 'terms',
       templateUrl: '/views/terms.html'
