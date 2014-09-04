@@ -30,6 +30,13 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     }
   }
 
+  $scope.getPlayerInfo = function(player) {
+
+    Users.one(player).then(function(user) { 
+      return (user.name);
+    })
+  }
+
   Events.one($stateParams.eid).then(function(ev) {
     // Events.one(ev.eid).get('rsvp').then(function(res) {
     //   $scope.attending = true;

@@ -48,6 +48,12 @@
       <!-- ng-controller="RSVPCtrl" -->
 
       <div class="wdiv padding-10" ng-show="ev.in_promotion">
+        <h4>Game active</h4>
+        <p>{{ev.promotion.reward}}</p>
+        <p>End: <strong>{{ev.promotion.end_time | date:'mediumDate'}} at {{ev.promotion.end_time | date:'shortTime'}}</strong></p>
+      </div>
+
+      <div class="wdiv padding-10" ng-show="ev.in_promotion">
         <div class="panel panel-default">
           <div class="panel-heading">Players</div>
           <div class="panel-body">
