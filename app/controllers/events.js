@@ -284,7 +284,7 @@ exports.get = function(req, res) {
 };
 
 exports.getOne = function(req, res) {
-  Events.findOne({eid: req.params.eid}, function(err, data) {
+  Events.findOne({eid: parseInt(req.params.eid)}, function(err, data) {
     if (err) {
       res.render('error', {
         status: 500
