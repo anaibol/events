@@ -1,3 +1,4 @@
+
 function getActionResult(db, action) {
 
     if (!db)
@@ -5,6 +6,8 @@ function getActionResult(db, action) {
         console.log("Database is null");
         return ;
     }
+
+    var Actions = db.get('actions');
 
     var likes = 0;
 
@@ -21,7 +24,15 @@ function getActionResult(db, action) {
         }
     }
 
-    var resultat = (likes + 2 * shares);
+    var resultat = (likes + (2 * shares));
+
+    Actions.update({_id: action._id}, 
+                            {$set: {'resultat': resultat}}, 
+                            function(err, event) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
 
     return (resultat);
 }

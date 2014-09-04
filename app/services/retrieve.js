@@ -94,7 +94,10 @@ function searchPost(db, request, date_end) {
 						if (less_than_2_months)
 						{
 							console.log("Next page...");
-							searchPost(db, result.paging.next, date_end);
+							if (result.paging && result.paging.next)
+								searchPost(db, result.paging.next, date_end);
+							else
+								console.log("End");
 						}
 
 					}
