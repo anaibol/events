@@ -213,6 +213,10 @@ exports.get = function(req, res) {
           delete query["venue.country"];
           sort.attending_count = -1; // rapha add
 
+        case 'promote':
+          query.in_promotion = true;
+          delete query["venue.country"];
+
           break;
 
         case 'free':

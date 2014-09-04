@@ -46,6 +46,10 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
       url: '/festival',
       templateUrl: '/views/events/home.html',
     })
+    .state('promote', {
+      url: '/promote',
+      templateUrl: '/views/events/home.html',
+    })
     .state('free', {
       url: '/free',
       templateUrl: '/views/events/home.html'
