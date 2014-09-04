@@ -118,7 +118,7 @@ exports.getMyEvents = function(req, res) {
 };
 
 exports.getOne = function(req, res) {
-  Users.findOne({'facebook.id': parseInt(req.params.uid)}, function(err, data) {
+  Users.findOne({'facebook.id': req.params.uid}, function(err, data) {
     if (err) {
       res.render('error', {
         status: 500
