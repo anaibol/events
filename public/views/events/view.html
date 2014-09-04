@@ -46,6 +46,19 @@
       </div>
       <div class="col-md-4">
       <!-- ng-controller="RSVPCtrl" -->
+
+      <div class="wdiv padding-10" ng-show="ev.in_promotion">
+        <div class="panel panel-default">
+          <div class="panel-heading">Players</div>
+          <div class="panel-body">
+            <p ng-hide="ev.list_event_players">No players yet</p>
+            <ul class="list-group" ng-show="ev.list_event_players">
+              <li class="list-group-item" ng-repeat='player in ev.list_event_players'>{{getPlayerInfo(player)}}</li>
+            </ul>
+          </div>
+        </div>      
+      </div>
+
         <div class="event-buttons wdiv padding-10">
           <div class="event-rsvp-btns">
             <h6 ng-show="attending === 'attending'">You are going to this event!</h6>
