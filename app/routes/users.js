@@ -31,7 +31,6 @@ module.exports = function(app, passport) {
     failureRedirect: '/signin'
   }), users.authCallback);
 
-
   app.get('/:user/events', users.getEvents);
   app.get('/me/events', users.getMyEvents);
   app.get('/api/user/:uid', users.getOne);

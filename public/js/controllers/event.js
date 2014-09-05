@@ -50,12 +50,26 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 // console.log (user);
 //     });
 
+    $scope.ev.players = [];
+
+    $scope.ev.results = [];
+
     if (ev.list_event_players) {
       Restangular.all('users/' + ev.list_event_players.toString()).get('info').then(function(players) {
         ev.list_event_players = players;
+        console.log(players);
+      });
+      Restangular.all('results/' + ev.list_event_players.toString() + '/' + ev.eid).get('result').then(function(results) {
+        ev.results = results;
+
+        for(i = 0; i < ev.list_event_players.length; i++) {
+          ev.list_event_players[i].result = results[i].result;
+        }
+
       });
     }
 
+    console.log(ev.list_event_players);
 
     if (Global.authenticated) {
       if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {
