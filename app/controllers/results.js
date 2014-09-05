@@ -2,8 +2,6 @@ var Results = global.db.get('results');
 
 exports.getResult = function(req, res) {
 
-  console.log("getting");
-
   Results.find(
   	{'user_id': { $in: req.params.uids.split(',') },
   	 'event_id': req.params.eid
@@ -14,7 +12,6 @@ exports.getResult = function(req, res) {
       });
     } else {
       res.json(data);
-      console.log(data);
     }
   });
 };
