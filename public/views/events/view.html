@@ -61,7 +61,7 @@
             <ul class="list-group" ng-show="ev.list_event_players">
               <li class="list-group-item" ng-repeat="player in ev.list_event_players">{{player.name}} - {{ player.result }} pts
                   <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player.facebook.id, ev.eid)"
-                  ng-show="ev.player_id && player.facebook.id != ev.player_id && !(boosted == player.facebook.id)">
+                  ng-show="ev.player_id && player.facebook.id != ev.player_id && !(boosted == player.facebook.id) && !boosted">
                   Boost<span class="glyphicon glyphicon-flash"></span>
                   </button>
                   <button type="button" class="btn btn-default btn-xs" ng-click="supBoost(player.facebook.id, ev.eid)"
