@@ -170,7 +170,7 @@ function fetchMultiple(eids, term, cb) {
 
 
 function fetch(eid, term, cb) {
-  // eid = parseInt(eid);
+  eid = parseInt(eid);
 
   existsInDb(eid, function(exists) {
     if (!exists) {
@@ -187,6 +187,8 @@ function fetch(eid, term, cb) {
 
             ev = data[0].fql_result_set[0];
 
+            ev.eid = eid;
+
             var attending = data[1].fql_result_set;
 
             ev.attending = [];
@@ -198,6 +200,7 @@ function fetch(eid, term, cb) {
             ev.creator = data[2].fql_result_set[0];
 
             ev.query = term;
+
 
             save(ev, function(newEv) {
               console.log(newEv.eid);
