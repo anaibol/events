@@ -112,13 +112,14 @@ function updatePopular() {
 
     Ev.fetchMultiple(eids, function(eves) {
       eves.forEach(function(ev) {
-        // Ev.getAttendings(ev.eid, function(attendings) {
-          // ev.attending = attendings;
-          ev = Ev.normalize(ev);
+        ev = Ev.normalize(ev);
+
+        Ev.getAttendings(ev.eid, function(attendings) {
+          ev.attending = attendings;
 
           Events.update({eid: ev.eid}, ev);
           console.log(ev.start_time);
-        // });
+        });
       });
     });
   });
