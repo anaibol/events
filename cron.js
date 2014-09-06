@@ -71,13 +71,13 @@ var newEvents;
 // });
 
 
-var job = new cronJob('*/30 * * * * ', function() {
+// var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
-  fetchEventsFromKeywords();
-
+  // fetchEventsFromKeywords();
+  updatePopular();
   // updateAttending();
   // updateTagsAndPrice();
 
@@ -85,8 +85,38 @@ var job = new cronJob('*/30 * * * * ', function() {
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
 
-}, null, true);
+// }, null, true);
 
+
+function updatePopular() {
+  var date = new Date();
+
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+
+  Events.find({
+    start_time: {
+      $gte: date
+    }
+  },
+  {
+    sort: {
+      'attendings.length': - 1
+    },
+    limit: 10
+  }).success(function(evs) {
+    var eids = [];
+    for (var i = evs.length - 1; i >= 0; i--) {
+      eids.push(evs[i].eid);
+          // console.log(evs[i].eid);
+    };
+    console.log(eids);
+    Ev.fetchMultiple(eids, 'popular', function(result) {
+      console.log(result);
+    });
+  });
+}
 
 function paginate(page, term) {
   graph.get(page, function(err, res) {
