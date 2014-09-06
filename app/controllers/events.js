@@ -114,6 +114,13 @@ exports.import = function(req, res) {
   });
 };
 
+exports.updateEv = function(req, res) {
+  Ev.fetch(req.params.eid, 'event', function (ev) {
+    Events.update({eid: ev.eid}, ev);
+    res.json(ev);
+  });
+};
+
 exports.get = function(req, res) {
   if (req.params.slug) {
     Events.findOne({slug: req.params.slug}, function(err, data) {

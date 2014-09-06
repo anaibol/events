@@ -21,6 +21,8 @@ module.exports = function(app) {
   app.get('/import/page/timeline/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPageTimeline);
   app.get('/import/event/:eid', authorization.requiresLogin, hasAuthorization, events.import);
 
+  app.get('/update/event/:eid', authorization.requiresLogin, hasAuthorization, events.updateEv);
+
   app.get('/api/events', events.get);
   app.get('/api/events/:eid', events.getOne);
   app.put('/api/events/:eid', authorization.requiresLogin, hasAuthorization, events.update);
