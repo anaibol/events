@@ -96,24 +96,33 @@ function updatePopular() {
   date.setHours(0);
 
   Events.find({
+    eid: 865573946804400,
     start_time: {
       $gte: date
     }
   },
   {
     sort: {
-      'attendings.length': - 1
+      'attendings.length': -1
     },
-    limit: 10
+    limit: 30
   }).success(function(evs) {
     var eids = [];
-    for (var i = evs.length - 1; i >= 0; i--) {
-      eids.push(evs[i].eid);
-          // console.log(evs[i].eid);
-    };
-    console.log(eids);
-    Ev.fetchMultiple(eids, 'popular', function(result) {
-      console.log(result);
+
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
+    });
+
+    Ev.fetchMultiple(eids, function(eves) {
+      eves.forEach(function(ev) {
+        // Ev.getAttendings(ev.eid, function(attendings) {
+          // ev.attending = attendings;
+          ev = Ev.normalize(ev);
+
+          Events.update({eid: ev.eid}, ev);
+          console.log(ev.start_time);
+        // });
+      });
     });
   });
 }

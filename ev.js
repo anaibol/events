@@ -62,50 +62,6 @@ function runQuery(query, cb) {
 }
 
 function save(ev, cb) {
-  ev.start_time = new Date(Date.parse(ev.start_time));
-  ev.end_time = new Date(Date.parse(ev.end_time));
-
-  ev.place = [];
-
-  if (ev.location) ev.place.push(ev.location);
-
-  if (ev.venue) {
-    if (ev.venue.street) ev.place.push(ev.venue.street);
-    if (ev.venue.city) ev.place.push(ev.venue.city);
-    if (ev.venue.state) ev.place.push(ev.venue.state);
-    if (ev.venue.country) ev.place.push(ev.venue.country);
-  }
-
-  ev.place = ev.place.join(', ');
-
-  ev.saved = new Date();
-
-  ev.slug = slugify(ev.name.toLowerCase());
-
-  ev.slug = ev.slug.replaceAll(',', '-')
-  .replaceAll('.', '-')
-  .replaceAll('!', '-')
-  .replaceAll('(', '-')
-  .replaceAll(')', '-')
-  .replaceAll('"', '-')
-  .replaceAll("'", '-')
-  .replaceAll(':', '-')
-  .replaceAll(';', '-')
-  .replaceAll('+', '-')
-  .replaceAll('@', '-');
-
-  ev.tags = getTags(ev);
-
-  ev.festival = getFestival(ev);
-  
-  ev.price = getPrice(ev);
-
-  if (ev.place.indexOf('porto')) {
-    if (ev.term === 'porto') {
-      ev = null;
-    }
-  }
-
   if (ev) {
     Events.insert(ev, function(err, newEv) {
       if (err) {
@@ -128,37 +84,18 @@ function save(ev, cb) {
   }
 }
 
-function fetchMultiple(eids, term, cb) {
+function fetchMultiple(eids, cb) {
   eids = eids.join(',');
 
   var query = {
-    user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid IN (" + eids + ")",
-    event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
-    event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
-    //event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
+    user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid IN (" + eids + ")"
   };
 
   runQuery(query, function(data) {
     if (data) {
-      if (data[0].fql_result_set[0]) {
-
-        ev = data[0].fql_result_set[0];
-
-        var attending = data[1].fql_result_set;
-
-        ev.attending = [];
-
-        for (var i = attending.length - 1; i >= 0; i--) {
-          ev.attending.push(parseInt(attending[i].uid));
-        };
-
-        ev.creator = data[2].fql_result_set[0];
-
-        ev.query = term;
-
-        save(ev, function(newEv) {
-          cb(newEv);
-        });
+      if (data[0].fql_result_set) {
+        var evs = data[0].fql_result_set;
+        cb(evs);
       } else {
         cb(false);
       }
@@ -201,9 +138,9 @@ function fetch(eid, term, cb) {
 
             ev.query = term;
 
+            ev = normalize(ev);
 
             save(ev, function(newEv) {
-              console.log(newEv.eid);
               cb(newEv);
             });
           } else {
@@ -219,7 +156,50 @@ function fetch(eid, term, cb) {
   });
 }
 
+function normalize(ev) {
+  ev.eid = parseInt(ev.eid);
+
+  ev.start_time = new Date(Date.parse(ev.start_time));
+  ev.end_time = new Date(Date.parse(ev.end_time));
+
+  ev.saved = new Date();
+
+  ev.slug = slugify(ev.name.toLowerCase());
+
+  ev.slug = ev.slug.replaceAll(',', '-')
+  .replaceAll('.', '-')
+  .replaceAll('!', '-')
+  .replaceAll('(', '-')
+  .replaceAll(')', '-')
+  .replaceAll('"', '-')
+  .replaceAll("'", '-')
+  .replaceAll(':', '-')
+  .replaceAll(';', '-')
+  .replaceAll('+', '-')
+  .replaceAll('@', '-');
+
+  ev.tags = getTags(ev);
+
+  ev.festival = getFestival(ev);
+  
+  ev.price = getPrice(ev);
+
+  // if (ev.place.indexOf('porto')) {
+  //   if (ev.term === 'porto') {
+  //     ev = null;
+  //   }
+  // }
+
+  return ev;
+}
+
 function updateAttendings(eid, cb) {
+  getAttendings(eid, function(attendings) {
+    Events.update({ eid: parseInt(eid) }, {$set: {'attending': attendings}});
+  });
+}
+
+function getAttendings(eid, cb) {
   graph.get(eid + '/attending', function(err, res) {
     if (err) {
       console.log(err);
@@ -235,29 +215,8 @@ function updateAttendings(eid, cb) {
       };
 
       cb(attendings);
-
-      Events.update({ eid: parseInt(eid) }, {$set: {'attending': attendings}});
     }
   });
-
-  // var query = "SELECT uid FROM event_member WHERE rsvp_status = 'attending' AND eid=" + eid + " LIMIT 50000";
-
-  // graph.fql(query, function(err, result) {
-  //   if (err) {
-  //     console.log(err);
-  //   }
-  //   else {
-  //     attendings = [];
- 
-  //     for (var i = result.data.length - 1; i >= 0; i--) {
-  //       attendings.push(parseInt(result.data[i].uid));
-  //     };
-
-  //     cb(attendings);
-
-  //     Events.update({ eid: parseInt(eid) }, {$set: {'attending': attendings}});
-  //   }
-  // });
 }
 
 function getFromUser(userName, accessToken, userLoggedIn, cb) {
@@ -282,7 +241,6 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
             cb(true);
 
             if (!result) {
-              console.log(ev.id);
               Ev.updateAttendings(ev.id, function(attendings) {});
             }
           });
@@ -566,4 +524,6 @@ module.exports.crawlUser = crawlUser;
 module.exports.crawlUserTimeline = crawlUserTimeline;
 module.exports.getFromUser = getFromUser;
 module.exports.updateAttendings = updateAttendings;
+module.exports.getAttendings = getAttendings;
 module.exports.fetchMultiple = fetchMultiple;
+module.exports.normalize = normalize;
