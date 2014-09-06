@@ -195,7 +195,7 @@ function normalize(ev) {
 
 function updateAttendings(eid, cb) {
   getAttendings(eid, function(attendings) {
-    Events.update({ eid: parseInt(eid) }, {$set: {'attending': attendings}});
+    Events.update({ eid: parseInt(eid) }, {$set: {attending: attendings, attending_count: attendings.length}});
   });
 }
 

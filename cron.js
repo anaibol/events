@@ -71,20 +71,20 @@ var newEvents;
 // });
 
 
-var job = new cronJob('*/30 * * * * ', function() {
+// var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
-  fetchEventsFromKeywords();
+  // fetchEventsFromKeywords();
   updatePopular();
   // updateAttending();
   // updateTagsAndPrice();
 
-  fetchEventsFromUsers();
+  // fetchEventsFromUsers();
   // fetchEventsFromUsers2();
   // fetchEventsFromLocations();
-}, null, true);
+// }, null, true);
 
 function updatePopular() {
   var date = new Date();
@@ -100,9 +100,9 @@ function updatePopular() {
   },
   {
     sort: {
-      'attendings.length': -1
+      'attending_count': -1
     },
-    limit: 30
+    limit: 5
   }).success(function(evs) {
     var eids = [];
 
@@ -116,12 +116,13 @@ function updatePopular() {
 
         Ev.getAttendings(ev.eid, function(attendings) {
           ev.attending = attendings;
-
+          ev.attending_count = attendings.length;
           Events.update({eid: ev.eid}, ev);
-          console.log(ev.start_time);
         });
       });
     });
+  }).error(function(err) {
+    console.log(err);
   });
 }
 
