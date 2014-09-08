@@ -103,7 +103,7 @@ exports.share = function(req, res)
       + ev.start_time.getDate() + " " 
       + months[ev.start_time.getMonth()]
 
-      wallPost.description += " at " + ev.start_time.getHours() + "h"
+      wallPost.description += " à " + ev.start_time.getHours() + "h"
       
       if (ev.start_time.getMinutes() < 10)
         wallPost.description += "0"
@@ -114,20 +114,13 @@ exports.share = function(req, res)
     if (ev.price.full)
       wallPost.description += "$ " + ev.price.full + "\n"
 
-    wallPost.description += "+" 
-
-    if (ev.tags[0])
-      wallPost.description += " de "
-
     for(i = 0; i < 3; i++)
     {
       if (ev.tags[i])
-        wallPost.description += Ev.capitalize(ev.tags[i])
+        wallPost.description += '#' + Ev.capitalize(ev.tags[i])
       if (i < 2 && ev.tags[i + 1])
         wallPost.description += " "
     }
-  
-    wallPost.description += " -> www.wooepa.com"
 
     wallPost.message += wallPost.description
 
