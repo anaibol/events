@@ -206,23 +206,40 @@ function updateAttendings(eid, cb) {
 }
 
 function getAttendings(eid, cb) {
-  graph.get(eid + '/attending', function(err, res) {
+  // graph.get(eid + '/attending', function(err, res) {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+
+  //   var att = res.data;
+
+  //   if (att) {
+  //     attendings = [];
+
+  //     for (var i = att.length - 1; i >= 0; i--) {
+  //       attendings.push(parseInt(att[i].id));
+  //     };
+
+  //     cb(attendings);
+  //   }
+  // });
+
+  var query = "SELECT uid FROM event_member WHERE rsvp_status = 'attending' AND eid=" + eid + " LIMIT 50000";
+
+  graph.fql(query, function(err, result) {
     if (err) {
       console.log(err);
     }
-
-    var att = res.data;
-
-    if (att) {
+    else {
       attendings = [];
 
-      for (var i = att.length - 1; i >= 0; i--) {
-        attendings.push(parseInt(att[i].id));
+      for (var i = result.data.length - 1; i >= 0; i--) {
+        attendings.push(parseInt(result.data[i].uid));
       };
 
       cb(attendings);
     }
-  });
+  }
 }
 
 function getFromUser(userName, accessToken, userLoggedIn, cb) {
