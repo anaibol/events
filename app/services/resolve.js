@@ -74,7 +74,7 @@ function resolveGames(db, event_id) {
         				}
        					else if (actions)
                         {
-                            var resultat_user = 0;
+                            var resultat_user = 2;
 
                             for (j = 0; j < actions.length; j++) {
                                 resultat_user += getActionResult(db, actions[j]);
