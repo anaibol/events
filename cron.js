@@ -113,10 +113,12 @@ function updatePopular() {
     Ev.fetchMultiple(eids, function(eves) {
       eves.forEach(function(ev) {
         ev = Ev.normalize(ev);
+        ev.updated = new Date();
 
         Ev.getAttendings(ev.eid, function(attendings) {
           ev.attending = attendings;
           ev.attending_count = attendings.length;
+
           Events.update({eid: ev.eid}, ev);
         });
       });

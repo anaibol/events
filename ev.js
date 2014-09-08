@@ -106,7 +106,7 @@ function fetchMultiple(eids, cb) {
 }
 
 
-function fetch(eid, term, cb) {
+function fetch(eid, term,   cb) {
   eid = parseInt(eid);
 
   existsInDb(eid, function(exists) {
@@ -161,6 +161,7 @@ function normalize(ev) {
 
   ev.start_time = new Date(Date.parse(ev.start_time));
   ev.end_time = new Date(Date.parse(ev.end_time));
+  ev.update_time = new Date(Date.parse(ev.update_time));
 
   ev.saved = new Date();
 
