@@ -59,7 +59,9 @@
           <div class="panel-body">
             <p ng-hide="ev.list_event_players">No players yet</p>
             <ul class="list-group" ng-show="ev.list_event_players">
-              <li class="list-group-item" ng-repeat="player in ev.list_event_players">{{player.name}} - {{ player.result }} pts
+              <li class="list-group-item" ng-repeat="player in ev.list_event_players">
+              <img src="{{ player.facebook.picture }}" alt="{{player.name}}" class="img-circle">
+                {{ player.result }} pts
                   <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player.facebook.id, ev.eid)"
                   ng-show="ev.player_id && player.facebook.id != ev.player_id && !(boosted == player.facebook.id) && !boosted">
                   Boost<span class="glyphicon glyphicon-flash"></span>
