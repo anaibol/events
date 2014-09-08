@@ -12,6 +12,10 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
   $scope.boosted = 0;
 
+  $scope.ev.players = [];
+
+  $scope.ev.results = [];
+
   $scope.getLink = function() {
     return $state.current.name.split('.')[0] + '.edit(ev)';
   }
@@ -35,14 +39,24 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
   $scope.addBoost = function(player_id, event_id) {
     Restangular.all('boost/' + event_id + '/' + player_id).post().then(function(res) {
         $scope.boosted = res.son_id;
-        console.log("Boosted")
       });
   }
 
   $scope.supBoost = function(player_id, event_id) {
     Restangular.all('boost/' + event_id + '/' + player_id + "/sup").post().then(function(res) {
         $scope.boosted = 0;
-        console.log("Boosted")
+      });
+  }
+
+  $scope.getBoost = function(event_id) {
+    Restangular.all('boost/' + event_id).get('boost').then(function(res) {
+        if (res)
+        {
+          $scope.boosted = res.son_id;
+          return (res.son_id);
+        }
+        else
+          return (0);
       });
   }
 
@@ -57,10 +71,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 // console.log (user);
 //     });
 
-    $scope.ev.players = [];
-
-    $scope.ev.results = [];
-
     if (ev.list_event_players) {
       Restangular.all('users/' + ev.list_event_players.toString()).get('info').then(function(players) {
         ev.list_event_players = players;
@@ -71,7 +81,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
         for(i = 0; i < ev.list_event_players.length; i++) {
           if (results[i])
             ev.list_event_players[i].result = results[i].result;
-          else
+          else if (ev.list_event_players[i])
             ev.list_event_players[i].result = 0;
         }
 
@@ -79,7 +89,10 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     }
 
     if (Global.user)
+    {
       $scope.ev.player_id = Global.user.facebook.id;
+      $scope.boosted = $scope.getBoost($scope.ev.eid);
+    }
 
     if (Global.authenticated) {
       if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {

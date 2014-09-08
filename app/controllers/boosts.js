@@ -39,3 +39,16 @@ exports.addBoost = function(req, res) {
                 }
               });
 };
+
+exports.getBoost = function(req, res) {
+
+  Boosts.findOne({
+      event_id: req.params.eid,
+      father_id: req.user.facebook.id
+    }, function(err, boost) {
+                if (err)
+                  console.log(err);
+                else if (boost)
+                  res.json(boost);
+              });
+};
