@@ -2,6 +2,8 @@ var Users = global.db.get('users');
 
 var Ev = require('../../ev');
 
+var graph = require('fbgraph');
+
 /**
  * Auth callback
  */
@@ -139,4 +141,13 @@ exports.getInfo = function(req, res) {
       res.json(data);
     }
   });
+};
+
+exports.getPicture = function(req, res) {
+  graph.get('/' + req.user.facebook.id + '?fields=picture' + '&access_token=' + req.user.accessToken, function(err, result) {
+      if (err)
+        console.log(err);
+      else
+        res.json(result)
+    });
 };

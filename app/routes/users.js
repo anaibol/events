@@ -35,4 +35,5 @@ module.exports = function(app, passport) {
   app.get('/me/events', users.getMyEvents);
   app.get('/api/user/:uid', users.getOne);
   app.get('/api/users/:uids/info', users.getInfo);
+  app.get('/api/users/:uid/picture', users.getPicture)
 };

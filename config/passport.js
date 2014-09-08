@@ -12,6 +12,7 @@ var config = require('./config');
 
 var Users = global.db.get('users');
 
+var Usr = require('../app/services/user.js');
 
 module.exports = function(passport) {
 
@@ -65,9 +66,11 @@ module.exports = function(passport) {
 
           Users.insert(user, function(err) {
             if (err) console.log(err);
+            Usr.updatePicture(user, global.db);
             return done(err, user);
           });
         } else {
+          Usr.updatePicture(user, global.db);
           Users.update({_id: user._id}, {$set: {accessToken: accessToken, updated_at: new Date()}});
           return done(err, user);
         }
