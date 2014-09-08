@@ -4,6 +4,6 @@ var config = require('../../config/config');
 
 var db = require('monk')(config.db);
 
-var Res = require('../../app/services/resolve.js');
+var Con = require('../../app/services/construct.js');
 
-Res.resolveGames(db, '1448622572090381');
+Con.createTree(db, '327650783964916');
