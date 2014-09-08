@@ -36,8 +36,10 @@ exports.addBoost = function(req, res) {
                 else
                 {
                   res.json(boost);
+
                 }
               });
+
 };
 
 exports.getBoost = function(req, res) {
@@ -50,5 +52,5 @@ exports.getBoost = function(req, res) {
                   console.log(err);
                 else if (boost)
                   res.json(boost);
-              });
+    });
 };

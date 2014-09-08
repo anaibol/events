@@ -39,12 +39,36 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
   $scope.addBoost = function(player_id, event_id) {
     Restangular.all('boost/' + event_id + '/' + player_id).post().then(function(res) {
         $scope.boosted = res.son_id;
+
+        Restangular.all('results/' + player_id + '/' + event_id).get('result').then(function(player_res) {
+            if (player_res == "null")
+              Restangular.all('results/' + event_id).post().then(function(player_result) {
+                console.log(player_result);
+              });
+            else {
+              Restangular.all('results/update/' + event_id + '/' + player_id).post().then(function(player_result) {
+                console.log(player_result);
+              });
+            }
+        });
       });
   }
 
   $scope.supBoost = function(player_id, event_id) {
     Restangular.all('boost/' + event_id + '/' + player_id + "/sup").post().then(function(res) {
         $scope.boosted = 0;
+
+        Restangular.all('results/' + player_id + '/' + event_id).get('result').then(function(player_res) {
+            if (player_res == "null")
+              Restangular.all('results/' + event_id).post().then(function(player_result) {
+                console.log(player_result);
+              });
+            else {
+              Restangular.all('results/un_update/' + event_id + '/' + player_id).post().then(function(player_result) {
+                console.log(player_result);
+              });
+            }
+        });
       });
   }
 
@@ -71,27 +95,27 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 // console.log (user);
 //     });
 
-    if (ev.list_event_players) {
-      Restangular.all('users/' + ev.list_event_players.toString()).get('info').then(function(players) {
-        ev.list_event_players = players;
-      });
-      Restangular.all('results/' + ev.list_event_players.toString() + '/' + ev.eid).get('result').then(function(results) {
-        ev.results = results;
-
-        for(i = 0; i < ev.list_event_players.length; i++) {
-          if (results[i])
-            ev.list_event_players[i].result = results[i].result;
-          else if (ev.list_event_players[i])
-            ev.list_event_players[i].result = 0;
-        }
-
-      });
-    }
-
     if (Global.user)
     {
       $scope.ev.player_id = Global.user.facebook.id;
       $scope.boosted = $scope.getBoost($scope.ev.eid);
+    }
+
+    if (ev.list_event_players) {
+      Restangular.all('users/' + ev.list_event_players.toString()).get('info').then(function(players) {
+        ev.list_event_players = players;
+      });
+      Restangular.all('results/' + ev.list_event_players.toString() + '/' + ev.eid).get('results').then(function(results) {
+        ev.results = results;
+
+        for(i = 0; i < ev.list_event_players.length; i++) {
+          if (results && results[i])
+            ev.list_event_players[i].result = results[i].result;
+          else
+            ev.list_event_players[i].result = 0;
+        }
+
+      });
     }
 
     if (Global.authenticated) {
@@ -131,9 +155,14 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       });
     }
 
-    $scope.shareEvent = function (eid) {
-      Restangular.all('share/' + ev.eid ).post().then(function(res) {
+    $scope.shareEvent = function () {
+      Restangular.all('share/' + ev.eid).post().then(function(res) {
         $scope.shared = true;
+
+        Restangular.all('results/' + ev.eid).post().then(function(player_result) {
+          console.log(player_result);
+        });
+
       });
     }
   });
