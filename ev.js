@@ -1,8 +1,7 @@
 var request = require('request')
   , cheerio = require('cheerio')
   , async = require('async')
-  , format = require('util').format
-  , slugify = require('slugify');
+  , format = require('util').format;
 
 var config = require('./config/config');
 
@@ -202,7 +201,7 @@ function normalize(ev) {
 
 function updateAttendings(eid, cb) {
   getAttendings(eid, function(attendings) {
-    Events.update({ eid: parseInt(eid) }, {$set: {attending: attendings, attending_count: attendings.length}});
+    Events.update({ eid: parseInt(eid) }, {$set: {attending: attendings}});
   });
 }
 
