@@ -102,7 +102,7 @@ function updatePopular() {
     sort: {
       'attending_count': -1
     },
-    limit: 5
+    limit: 30
   }).success(function(evs) {
     var eids = [];
 
