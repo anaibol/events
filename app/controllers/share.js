@@ -119,8 +119,12 @@ exports.share = function(req, res)
     }
 
     if (ev.price.full)
-      wallPost.description += "$ " + ev.price.full + "\n"
-
+    {
+      if (ev.price.full=="GRATUIT"||ev.price.full=="GRATIS")
+          wallPost.description += "$ #" + ev.price.full + "\n"
+        else
+          wallPost.description += "$ " + ev.price.full + "\n"
+    }
     for(i = 0; i < 3; i++)
     {
       if (ev.tags[i])
