@@ -8,6 +8,9 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
   $scope.attending = '';
   $scope.shared = false;
 
+  $scope.isDisabled = false;
+  $scope.btnShareText = "Share with your friends?";
+
   $scope.ev = {};
 
   $scope.boosted = 0;
@@ -156,6 +159,9 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     }
 
     $scope.shareEvent = function () {
+      $scope.isDisabled = "true";
+      $scope.btnShareText = "Sharing...";
+
       Restangular.all('share/' + ev.eid).post().then(function(res) {
         $scope.shared = true;
 
