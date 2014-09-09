@@ -106,19 +106,44 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
     if (ev.list_event_players) {
       Restangular.all('users/' + ev.list_event_players.toString()).get('info').then(function(players) {
+        if (players) {
+          for (i = 0; i < players.length; i++) {
+            players[i].result = 2;
+          }
+        }
+
         ev.list_event_players = players;
       });
       Restangular.all('results/' + ev.list_event_players.toString() + '/' + ev.eid).get('results').then(function(results) {
-        ev.results = results;
 
         for(i = 0; i < ev.list_event_players.length; i++) {
           if (results && results[i])
             ev.list_event_players[i].result = results[i].result;
-          else
-            ev.list_event_players[i].result = 0;
         }
 
+        for (i = 0; i < ev.list_event_players.length; i++) {
+          for (j = i; j < ev.list_event_players.length; j++) {
+            if (results) {
+              if (results[i] && results[j] && results[i].result < results[j].result)
+              {
+                console.log("PERMUT");
+                var min = results[i];
+                results[i] = results[j];
+                results[j] = min;
+
+                var play = ev.list_event_players[i];
+                ev.list_event_players[i] = ev.list_event_players[j];
+                ev.list_event_players[j] = play;
+              }
+            }
+          }
+        }
+
+        ev.results = results;
+
       });
+
+
     }
 
     if (Global.authenticated) {
@@ -163,12 +188,20 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       $scope.btnShareText = "Sharing...";
 
       Restangular.all('share/' + ev.eid).post().then(function(res) {
-        $scope.shared = true;
-
-        Restangular.all('results/' + ev.eid).post().then(function(player_result) {
-          console.log(player_result);
-        });
-
+        console.log(res);
+        if (res.error)
+        {
+          $scope.isDisabled = "false";
+          $scope.btnShareText = res.error;
+        }
+        else
+        {
+          $scope.shared = true;
+          Restangular.all('results/' + ev.eid).post().then(function(player_result) {
+            console.log(player_result);
+          });
+        }
+        
       });
     }
   });
