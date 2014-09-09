@@ -324,6 +324,12 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
         return;
     }
     var obj = JSON.parse(response.body);
+
+    if (!obj.data) {
+      res.json(data);
+      return;
+    }
+
     if (obj.data.length == 0)
       res.json(data);
 
