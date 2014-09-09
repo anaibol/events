@@ -174,7 +174,10 @@ function update(eid, cb) {
 
 function updateMultiple(eids) {
   Ev.fetchMultiple(eids, function(eves) {
+    var eids = [];
+
     eves.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
       ev = Ev.normalize(ev);
       ev.updated = new Date();
 
@@ -184,6 +187,7 @@ function updateMultiple(eids) {
         Events.update({eid: ev.eid}, {$set: ev});
       });
     });
+    console.log('Updating ' + eids.length + ' events.')
   });
 }
 
