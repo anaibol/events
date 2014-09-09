@@ -347,6 +347,8 @@ function searchPlaceAndRequestRecentPhotos(data, res)
     // var obj = JSON.parse(data.body);
     // obj.push({"photos":urls});
     // res.json(obj);
+    console.log("PHOTOS");
+    console.log(urls);
     data.photos = urls;
     console.log(data);
 

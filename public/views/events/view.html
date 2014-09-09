@@ -61,7 +61,7 @@
             <ul class="list-group" ng-show="ev.list_event_players">
               <li class="list-group-item" ng-repeat="player in ev.list_event_players" ng-if="player.facebook.id == ev.player_id">
               <img ng-src="{{ player.facebook.picture }}" ng-alt="{{player.name}}" class="img-circle">
-                {{ ev.results[$index].result }} pts
+                {{ player.result }} pts
                   <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player.facebook.id, ev.eid)"
                   ng-show="ev.player_id && player.facebook.id != ev.player_id && !(boosted == player.facebook.id) && !boosted">
                   Boost<span class="glyphicon glyphicon-flash"></span>
@@ -73,7 +73,7 @@
               </li>
               <li class="list-group-item" ng-repeat="player in ev.list_event_players" ng-if="player.facebook.id != ev.player_id">
               <img ng-src="{{ player.facebook.picture }}" ng-alt="{{player.name}}" class="img-circle">
-                {{ ev.results[$index].result }} pts
+                {{ player.result }} pts
                   <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player.facebook.id, ev.eid)"
                   ng-show="ev.player_id && player.facebook.id != ev.player_id && !(boosted == player.facebook.id) && !boosted">
                   Boost<span class="glyphicon glyphicon-flash"></span>

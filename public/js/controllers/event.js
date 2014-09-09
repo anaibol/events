@@ -15,10 +15,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
   $scope.boosted = 0;
 
-  $scope.ev.players = [];
-
-  $scope.ev.results = [];
-
   $scope.getLink = function() {
     return $state.current.name.split('.')[0] + '.edit(ev)';
   }
@@ -44,15 +40,9 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
         $scope.boosted = res.son_id;
 
         Restangular.all('results/' + player_id + '/' + event_id).get('result').then(function(player_res) {
-            if (player_res == "null")
-              Restangular.all('results/' + event_id).post().then(function(player_result) {
-                console.log(player_result);
-              });
-            else {
               Restangular.all('results/update/' + event_id + '/' + player_id).post().then(function(player_result) {
                 console.log(player_result);
               });
-            }
         });
       });
   }
@@ -62,15 +52,9 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
         $scope.boosted = 0;
 
         Restangular.all('results/' + player_id + '/' + event_id).get('result').then(function(player_res) {
-            if (player_res == "null")
-              Restangular.all('results/' + event_id).post().then(function(player_result) {
-                console.log(player_result);
-              });
-            else {
               Restangular.all('results/un_update/' + event_id + '/' + player_id).post().then(function(player_result) {
                 console.log(player_result);
               });
-            }
         });
       });
   }
@@ -117,8 +101,11 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       Restangular.all('results/' + ev.list_event_players.toString() + '/' + ev.eid).get('results').then(function(results) {
 
         for(i = 0; i < ev.list_event_players.length; i++) {
-          if (results && results[i])
-            ev.list_event_players[i].result = results[i].result;
+            for (j = 0; j < results.length; j++)
+            {
+              if (ev.list_event_players[i] && ev.list_event_players[i].facebook.id == results[j].user_id)
+                ev.list_event_players[i].result = results[j].result;
+            }
         }
 
         for (i = 0; i < ev.list_event_players.length; i++) {
@@ -126,11 +113,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
             if (results) {
               if (results[i] && results[j] && results[i].result < results[j].result)
               {
-                console.log("PERMUT");
-                var min = results[i];
-                results[i] = results[j];
-                results[j] = min;
-
                 var play = ev.list_event_players[i];
                 ev.list_event_players[i] = ev.list_event_players[j];
                 ev.list_event_players[j] = play;
@@ -138,8 +120,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
             }
           }
         }
-
-        ev.results = results;
 
       });
 
