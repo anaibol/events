@@ -228,6 +228,7 @@ exports.get = function(req, res) {
 
         case 'free':
           query["price.num"] = 0;
+          delete query["venue.country"];
 
           break;
         case 'today':

@@ -82,8 +82,8 @@ exports.updateResult = function (req, res) {
             });
           } else if (father_result)
           {
-              Results.update({_id: father_result._id}, 
-                {$set: {result: father_result.result + player_result.result}}, 
+              Results.update({_id: player_result._id}, 
+                {$set: {result: player_result.result + father_result.result}}, 
                 function(err, result) {
                 if (err) {
                   console.log(err);
@@ -125,8 +125,8 @@ exports.un_updateResult = function (req, res) {
             });
           } else if (father_result)
           {
-              Results.update({_id: father_result._id}, 
-                {$set: {result: father_result.result - player_result.result}}, 
+              Results.update({_id: player_result._id}, 
+                {$set: {result: player_result.result - father_result.result}}, 
                 function(err, result) {
                 if (err) {
                   console.log(err);

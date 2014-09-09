@@ -36,6 +36,12 @@ exports.saveShare = function (post_id, event_id, user_id, data) {
 
 exports.share = function(req, res)
 {
+  if (!req.user)
+  {
+    res.json({error: "Please log-in"});
+    return (null);
+  }
+
   var months = [ "janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre" ];
   var days = [ "Lundi", "Mardi", "Mecredi", "Jeudi", "Vendredi", "Samedi",
@@ -56,6 +62,7 @@ exports.share = function(req, res)
     {
       console.log("Mongodb found nothing");
       console.log("EXIT");
+      res.json({error: "Bad event ID"});
       return (0);
     }
 
@@ -127,6 +134,7 @@ exports.share = function(req, res)
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
         console.log(err);
+        res.json({error: "Please refresh your facebook connexion"});
       }
       else if (result) {
         console.log(result);
@@ -142,14 +150,17 @@ exports.share = function(req, res)
         graph.get('/' + req.user.facebook.id + '_' + post_id + '?access_token=' + req.user.accessToken, function(err, result) {
             if (err) {
               console.log(err);
+              res.json({error: "Please refresh your facebook connexion"});
             }
-
-            exports.saveShare(post_id, req.params.eid, req.user.facebook.id, result);
-
-            res.json(ev);
+            else
+            {
+              exports.saveShare(post_id, req.params.eid, req.user.facebook.id, result);
+              res.json(ev);
+            }
         });
         
       }
+        
     });
   });
 
