@@ -8,7 +8,7 @@
         <div class="attending" ng-show="ev.attending_count > 0">{{ev.attending.length}}<i class="icon-group"></i></div>
         <div ng-show="ev.price.num > 0" class="price">{{ev.price.full}}</div>
         <div class="tag-list">
-          <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags">{{tag}}</span>
+          <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags" ng-if="$index < 3">{{tag}}</span>
         </div>
       </div>
       <div ng-show="ev.image" class="containing" style="background-image: url({{ev.image}});">
