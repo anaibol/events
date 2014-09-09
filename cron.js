@@ -85,6 +85,7 @@ var job = new cronJob('*/30 * * * *', function() {
 }, null, true);
 
 var job = new cronJob('0 */3 * * *', function() {
+  var date = new Date();
   console.log(date.toString());
   updateWeek();
 }, null, true);
