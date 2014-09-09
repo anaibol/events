@@ -117,7 +117,6 @@ function updatePopular() {
 
         Ev.getAttendings(ev.eid, function(attendings) {
           ev.attending = attendings;
-          ev.attending_count = attendings.length;
 
           Events.update({eid: ev.eid}, ev);
         });

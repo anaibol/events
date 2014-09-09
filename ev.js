@@ -1,8 +1,7 @@
 var request = require('request')
   , cheerio = require('cheerio')
   , async = require('async')
-  , format = require('util').format
-  , slugify = require('slugify');
+  , format = require('util').format;
 
 var config = require('./config/config');
 
@@ -202,12 +201,12 @@ function normalize(ev) {
 
 function updateAttendings(eid, cb) {
   getAttendings(eid, function(attendings) {
-    Events.update({ eid: parseInt(eid) }, {$set: {attending: attendings, attending_count: attendings.length}});
+    Events.update({ eid: parseInt(eid) }, {$set: {attending: attendings}});
   });
 }
 
 function getAttendings(eid, cb) {
-  graph.get(eid + '/attending', function(err, res) {
+  graph.get(eid + '/attending?limit=50000', function(err, res) {
     if (err) {
       console.log(err);
     }
@@ -224,6 +223,22 @@ function getAttendings(eid, cb) {
       cb(attendings);
     }
   });
+
+  // var query = "SELECT uid FROM event_member WHERE rsvp_status = 'attending' AND eid=" + eid + " LIMIT 50000";
+
+  // graph.fql(query, function(err, result) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     attendings = [];
+
+  //     for (var i = result.data.length - 1; i >= 0; i--) {
+  //       attendings.push(parseInt(result.data[i].uid));
+  //     };
+
+  //     cb(attendings);
+  //   }
+  // }
 }
 
 function getFromUser(userName, accessToken, userLoggedIn, cb) {
