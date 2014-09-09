@@ -122,6 +122,7 @@ exports.updateEv = function(req, res) {
 };
 
 exports.get = function(req, res) {
+  console.log(" get 125 ! ");
   if (req.params.slug) {
     Events.findOne({slug: req.params.slug}, function(err, data) {
       if (err) {
@@ -148,8 +149,7 @@ exports.get = function(req, res) {
       var query = {
         start_time: {
           $gte: from
-        },   
-
+        },
 
         "venue.country": country
       };
@@ -228,6 +228,7 @@ exports.get = function(req, res) {
 
         case 'free':
           query["price.num"] = 0;
+          delete query["venue.country"];
 
           break;
         case 'today':
@@ -290,14 +291,94 @@ exports.get = function(req, res) {
   }
 };
 
+var tokenInstagram = "1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab";
+
+function searchPlaceAndRequestRecentPhotos(data, res)
+{
+  var latitude = data.venue.latitude;
+  var longitude = data.venue.longitude;
+  var name = data.location;
+
+  var query = "https://api.instagram.com/v1/locations/search?lat=" + latitude + "&lng=" + longitude + "&access_token=" + tokenInstagram;
+
+  console.log(" query : " + query);
+  request(query, function(error, response, body)
+{
+  console.log(" name : " + name);
+  // console.log(name);
+  //console.log("res place :");
+  //console.log(res);
+  // "https://api.instagram.com/v1/locations/231066771/media/recent?access_token=" + tokenInstagram
+  //
+  //console.log(res.body);
+  var obj = JSON.parse(response.body);
+  //console.log(obj);
+  if (obj.data.length == 0)
+    return {};
+
+  var id = obj.data[0].id;
+  for (var i = 0; i < obj.data.length; i++)
+  {
+    // console.log(obj.data[i])
+    console.log(obj.data[i].name)
+    if (name == obj.data[i].name)
+    {
+      console.log("FOUND !");
+    }
+  }
+  console.log(" NOT FOUND, we take the first one !");
+  var queryPhotos = "https://api.instagram.com/v1/locations/" + id + "/media/recent?access_token=" + tokenInstagram;
+  console.log(queryPhotos);
+  request(queryPhotos, function(error, response, body)
+  {
+    obj = JSON.parse(body);
+    // console.log(obj);
+    var urls = [];
+    for (var j = 0; j < obj.data.length; j++)
+    {
+        var url = obj.data[j].images.standard_resolution.url;
+     //   console.log(url);
+        urls.push(url);
+    }
+
+    console.log(" urls : " + urls.length);
+
+//    return urls;
+    // var obj = JSON.parse(data.body);
+    // obj.push({"photos":urls});
+    // res.json(obj);
+    data.photos = urls;
+    console.log(data);
+
+    res.json(data);
+  });
+});
+  // JSON.stringify
+}
+
 exports.getOne = function(req, res) {
+  console.log(" getOne 294 ! ");
+  // console.log("req : ");
+  // console.log(req);
   Events.findOne({eid: parseInt(req.params.eid)}, function(err, data) {
     if (err) {
       res.render('error', {
         status: 500
       });
-    } else {
-      res.json(data);
+    } else
+    {
+      searchPlaceAndRequestRecentPhotos(data, res);
+      // console.log("data : ");
+      //console.log(data);
+      //obj = JSON.parse(data);
+      //data.push({"photos":data_photo});
+      //res.json({"data":data, "photos":data_photo});
+
+
+
+     // console.log(" data_photo : ");
+     // console.log(data_photo);
+   //   res.json(data);
     }
   });
 };
