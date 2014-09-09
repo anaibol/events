@@ -167,7 +167,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
         Restangular.all('results/' + ev.eid).post().then(function(player_result) {
           console.log(player_result);
-          $scope.sharing = false;
         });
 
       });
