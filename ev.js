@@ -104,47 +104,16 @@ function fetchMultiple(eids, cb) {
   });
 }
 
-
-function fetch(eid, term,   cb) {
+function fetch(eid, term, cb) {
   eid = parseInt(eid);
 
   existsInDb(eid, function(exists) {
     if (!exists) {
-      var query = {
-        user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,
-        event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
-        event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
-        //event_unsure: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'unsure' LIMIT 50000"
-      };
-
-      runQuery(query, function(data) {
-        if (data) {
-          if (data[0].fql_result_set[0]) {
-
-            ev = data[0].fql_result_set[0];
-
-            ev.eid = eid;
-
-            var attending = data[1].fql_result_set;
-
-            ev.attending = [];
-
-            for (var i = attending.length - 1; i >= 0; i--) {
-              ev.attending.push(parseInt(attending[i].uid));
-            };
-
-            ev.creator = data[2].fql_result_set[0];
-
-            ev.query = term;
-
-            ev = normalize(ev);
-
-            save(ev, function(newEv) {
-              cb(newEv);
-            });
-          } else {
-            cb(false);
-          }
+      get(eid, term, function(ev) {
+        if (ev){
+          save(ev, function(newEv) {
+            cb(newEv);
+          });
         } else {
           cb(false);
         }
@@ -155,7 +124,48 @@ function fetch(eid, term,   cb) {
   });
 }
 
-var slug = function(str) {
+function get(eid, term, cb) {
+  eid = parseInt(eid);
+
+  var query = {
+    user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid =" + eid,
+    event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
+    event_creator: "SELECT name, id FROM profile WHERE id IN (SELECT creator FROM #user_event)",
+  };
+
+  runQuery(query, function(data) {
+    if (data) {
+      if (data[0].fql_result_set[0]) {
+
+        ev = data[0].fql_result_set[0];
+
+        ev.eid = eid;
+
+        var attending = data[1].fql_result_set;
+
+        ev.attending = [];
+
+        for (var i = attending.length - 1; i >= 0; i--) {
+          ev.attending.push(parseInt(attending[i].uid));
+        };
+
+        ev.creator = data[2].fql_result_set[0];
+
+        ev.query = term;
+
+        ev = normalize(ev);
+
+        cb(ev);
+      } else {
+        cb(false);
+      }
+    } else {
+      cb(false);
+    }
+  });
+}
+
+function slug (str) {
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   str = str.toLowerCase();
 
@@ -536,6 +546,8 @@ function capitalize(string)
 module.exports.capitalize = capitalize;
 module.exports.findById = findById;
 module.exports.fetch = fetch;
+module.exports.get = get;
+module.exports.save = save;
 module.exports.runQuery = runQuery;
 module.exports.getTags = getTags;
 module.exports.getPrice = getPrice;

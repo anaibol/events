@@ -5,6 +5,7 @@ var Ev = require('./ev');
 var db = require('monk')(config.db);
 
 var Events = db.get('events');
+var Users = db.get('users');
 var Creators = db.get('creators');
 var Locations = db.get('locations');
 
@@ -71,7 +72,7 @@ var newEvents;
 // });
 
 
-var job = new cronJob('*/30 * * * * ', function() {
+// var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -79,12 +80,10 @@ var job = new cronJob('*/30 * * * * ', function() {
   fetchEventsFromKeywords();
   updatePopular();
   // updateAttending();
-  // updateTagsAndPrice();
 
-  fetchEventsFromUsers();
-  // fetchEventsFromUsers2();
+  // fetchEventsFromUsers();
   // fetchEventsFromLocations();
-}, null, true);
+// }, null, true);
 
 function updatePopular() {
   var date = new Date();
@@ -135,15 +134,22 @@ function paginate(page, term) {
       }
 
       var evs = res.data;
+      
+      if (evs) {
+        var eids = [];
 
-      evs.forEach(function(ev) {
-        Ev.fetch(ev.eid, term, function(ev){
-          if (ev) {
-            newEvents++;
-            console.log(term + ': ' + ev.name);
-          }
+        evs.forEach(function(ev) {
+          eids.push(parseInt(ev.id));
         });
-      });
+
+        Ev.fetchMultiple(eids, function(eves) {
+          eves.forEach(function(ev) {
+            Ev.save(ev, function(newEv) {
+              console.log(newEv.name);
+            });
+          });
+        });
+      }
     }
   });
 }
@@ -161,10 +167,10 @@ function fetchEventsFromKeyword(term) {
     limit: 5000,
   };
 
-  var options = {
-    /*timezone: "Europe/Paris",*/
-    since: 'now'
-  };
+  // var options = {
+  //   timezone: "Europe/Paris",
+  //   since: 'now'
+  // };
 
   graph.search(searchOptions, function(err, res) {
     if (err) {
@@ -180,46 +186,31 @@ function fetchEventsFromKeyword(term) {
 
         var evs = res.data;
 
-        evs.forEach(function(ev) {
-        // async.each(evs, function(ev, cb){ 
-          var start_time = new Date(Date.parse(ev.start_time));
-          var now = new Date();
+        var eids = [];
 
-          if (start_time > now || start_time.getFullYear() < 2016) {
-            Ev.fetch(ev.id, term, function(ev) {
-              if (ev) {
-                newEvents++;
-                console.log(term + ': ' + ev.name);
-              }
-            });
-          }
-        // }, function(err) {
-        //   // numEvents.info(term + ': ' + newEvents);
-        //   console.log(term + ': ' + newEvents);
+        evs.forEach(function(ev) {
+          eids.push(parseInt(ev.id));
         });
-        // console.log(term + ': ' + newEvents)
+
+        Ev.fetchMultiple(eids, function(eves) {
+          eves.forEach(function(eve) {
+            Ev.save(eve, function(newEv) {
+              console.log(newEv.name + ': ' + newEv.name);
+            });
+          });
+        });
       }
     }
   });
 }
 
 function fetchEventsFromUsers() {
-  // async.each(users, function (user, next) {
-  //   Ev.crawlUser(user, function(){
-  //     next();
-  //   });
-  // });
-
-  users.forEach(function(user) {
-    Ev.getFromUser(user, null, false, function() {});
-    // Ev.crawlUser(user, function(){});
-  });
-}
-
-function fetchEventsFromUsers2() {
   Creators.find({}).each(function(creator) {
     Ev.getFromUser(creator.username, null, false, function() {});
-    // Ev.crawlUser(creator.username, function(){});
+  });
+
+  Users.find({}).each(function(user) {
+    Ev.getFromUser(user.username, null, false, function() {});
   });
 }
 

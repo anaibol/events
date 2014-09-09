@@ -109,13 +109,13 @@ exports.importFromPageTimeline = function(req, res) {
 };
 
 exports.import = function(req, res) {
-  Ev.fetch(req.params.eid, 'event', function (ev) {
+  Ev.fetch(req.params.eid, 'import', function (ev) {
     res.json(ev);
   });
 };
 
 exports.updateEv = function(req, res) {
-  Ev.fetch(req.params.eid, 'event', function (ev) {
+  Ev.get(req.params.eid, 'event', function (ev) {
     Events.update({eid: ev.eid}, ev);
     res.json(ev);
   });
@@ -150,7 +150,6 @@ exports.get = function(req, res) {
         start_time: {
           $gte: from
         },
-
         "venue.country": country
       };
 
