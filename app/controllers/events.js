@@ -302,47 +302,45 @@ function searchPlaceAndRequestRecentPhotos(data, res)
   var query = "https://api.instagram.com/v1/locations/search?lat=" + latitude + "&lng=" + longitude + "&access_token=" + tokenInstagram;
 
   console.log(" query : " + query);
-  request(query, function(error, response, body)
-{
-  console.log(" name : " + name);
-  // console.log(name);
-  //console.log("res place :");
-  //console.log(res);
-  // "https://api.instagram.com/v1/locations/231066771/media/recent?access_token=" + tokenInstagram
-  //
-  //console.log(res.body);
-  var obj = JSON.parse(response.body);
-  //console.log(obj);
-  if (obj.data.length == 0)
-    return {};
-
-  var id = obj.data[0].id;
-  for (var i = 0; i < obj.data.length; i++)
+  try
   {
-    // console.log(obj.data[i])
-    console.log(obj.data[i].name)
-    if (name == obj.data[i].name)
+    request(query, function(error, response, body)
     {
-      console.log("FOUND !");
-    }
-  }
-  console.log(" NOT FOUND, we take the first one !");
-  var queryPhotos = "https://api.instagram.com/v1/locations/" + id + "/media/recent?access_token=" + tokenInstagram;
-  console.log(queryPhotos);
-  request(queryPhotos, function(error, response, body)
-  {
-    obj = JSON.parse(body);
-    // console.log(obj);
-    var urls = [];
-    for (var j = 0; j < obj.data.length; j++)
+    console.log(" name : " + name);
+    var obj = JSON.parse(response.body);
+    if (obj.data.length == 0)
+      res.json(data);
+
+    var id = obj.data[0].id;
+    for (var i = 0; i < obj.data.length; i++)
     {
-        var url = obj.data[j].images.standard_resolution.url;
-     //   console.log(url);
-        urls.push(url);
+      // console.log(obj.data[i])
+      console.log(obj.data[i].name)
+      if (name == obj.data[i].name)
+      {
+        console.log("FOUND !");
+      }
     }
+    console.log(" NOT FOUND, we take the first one !");
+    var queryPhotos = "https://api.instagram.com/v1/locations/" + id + "/media/recent?access_token=" + tokenInstagram;
+    console.log(queryPhotos);
+    try
+    {
+      request(queryPhotos, function(error, response, body)
+      {
+        obj = JSON.parse(body);
+        // console.log(obj);
+        var urls = [];
+        for (var j = 0; j < obj.data.length; j++)
+        {
+          var url = obj.data[j].images.standard_resolution.url;
+          // console.log(url);
+          urls.push(url);
+        }
 
-    console.log(" urls : " + urls.length);
+        console.log(" urls : " + urls.length);
 
+<<<<<<< HEAD
 //    return urls;
     // var obj = JSON.parse(data.body);
     // obj.push({"photos":urls});
@@ -351,10 +349,27 @@ function searchPlaceAndRequestRecentPhotos(data, res)
     console.log(urls);
     data.photos = urls;
     console.log(data);
+=======
+        data.photos = urls;
+        console.log(data);
+>>>>>>> 0136c0f779c858308a8bdec1803028ba9db7df06
 
-    res.json(data);
+        res.json(data);
+      }
+      );
+    }
+    catch (e)
+    {
+      console.log("error instagram catched !");
+      res.json(data);
+    }
   });
-});
+}
+catch (e)
+{
+    console.log("error instagram catched !");
+    res.json(data);
+}
   // JSON.stringify
 }
 
