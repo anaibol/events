@@ -165,7 +165,29 @@ function get(eid, term, cb) {
   });
 }
 
-function slug (str) {
+function update(eid, cb) {
+  get(eid, null, function (ev) {
+    Events.update({eid: ev.eid}, {$set: ev});
+    cb(ev);
+  });
+}
+
+function updateMultiple(eids) {
+  Ev.fetchMultiple(eids, function(eves) {
+    eves.forEach(function(ev) {
+      ev = Ev.normalize(ev);
+      ev.updated = new Date();
+
+      Ev.getAttendings(ev.eid, function(attendings) {
+        ev.attending = attendings;
+
+        Events.update({eid: ev.eid}, {$set: ev});
+      });
+    });
+  });
+}
+
+function slug(str) {
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   str = str.toLowerCase();
 
@@ -548,6 +570,8 @@ module.exports.findById = findById;
 module.exports.fetch = fetch;
 module.exports.get = get;
 module.exports.save = save;
+module.exports.update = update;
+module.exports.updateMultiple = updateMultiple;
 module.exports.runQuery = runQuery;
 module.exports.getTags = getTags;
 module.exports.getPrice = getPrice;

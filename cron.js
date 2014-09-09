@@ -79,7 +79,7 @@ var job = new cronJob('*/30 * * * * ', function() {
 
   fetchEventsFromKeywords();
   updatePopular();
-  // updateAttending();
+  updateWeek();
 
   // fetchEventsFromUsers();
   // fetchEventsFromLocations();
@@ -109,18 +109,32 @@ function updatePopular() {
       eids.push(parseInt(ev.eid));
     });
 
-    Ev.fetchMultiple(eids, function(eves) {
-      eves.forEach(function(ev) {
-        ev = Ev.normalize(ev);
-        ev.updated = new Date();
+    Ev.updateMultiple(eids);
+  }).error(function(err) {
+    console.log(err);
+  });
+}
 
-        Ev.getAttendings(ev.eid, function(attendings) {
-          ev.attending = attendings;
+function updateWeek() {
+  var date = new Date();
 
-          Events.update({eid: ev.eid}, ev);
-        });
-      });
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+
+  Events.find({
+    start_time: {
+      $gte: date,
+      $lt: to
+    }
+  }).success(function(evs) {
+    var eids = [];
+
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
     });
+
+    Ev.updateMultiple(eids);
   }).error(function(err) {
     console.log(err);
   });
@@ -217,55 +231,5 @@ function fetchEventsFromUsers() {
 function fetchEventsFromLocations() {
   Locations.find({}).each(function(location) {
     fetchEventsFromKeywords(location.location);
-  });
-}
-
-function updateAttending() {
-  var date = new Date();
-
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
-
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }).each(function(ev) {
-    Ev.updateAttendings(ev.id, function(attendings) {
-      console.log(attendings);
-    });
-  });
-}
-
-function updateTagsAndPrice() {
-  var date = new Date();
-
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
-
-  Events.find({
-    start_time: {
-      $gte: date
-    }
-  }).each(function(ev) {
-    var query = "SELECT description FROM event WHERE eid =" + ev.eid;
-
-    updatedEv = Ev.runQuery(query, function(updatedEv) {
-      if (updatedEv) {
-        if (updatedEv[0]) {
-          updatedEv = updatedEv[0];
-          var price = Ev.getPrice(updatedEv);
-          var tags = Ev.getTags(updatedEv);
-
-          ev.price = price;
-          ev.tags = tags;
-
-          Events.updateById(ev._id, ev);
-          // console.log('UPDATE PRICE :' + ev.name);
-        }
-      }
-    });
   });
 }

@@ -115,8 +115,7 @@ exports.import = function(req, res) {
 };
 
 exports.updateEv = function(req, res) {
-  Ev.get(req.params.eid, 'event', function (ev) {
-    Events.update({eid: ev.eid}, ev);
+  Ev.update(req.params.eid, function (ev) {
     res.json(ev);
   });
 };
