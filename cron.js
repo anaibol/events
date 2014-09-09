@@ -72,7 +72,7 @@ var newEvents;
 // });
 
 
-// var job = new cronJob('*/30 * * * * ', function() {
+var job = new cronJob('*/30 * * * * ', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -83,7 +83,7 @@ var newEvents;
 
   // fetchEventsFromUsers();
   // fetchEventsFromLocations();
-// }, null, true);
+}, null, true);
 
 function updatePopular() {
   var date = new Date();
