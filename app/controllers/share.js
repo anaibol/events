@@ -120,9 +120,9 @@ exports.share = function(req, res)
 
     if (ev.price.full)
     {
-      if (ev.price.full.indexof("GRATUIT") != -1 || ev.price.full.indexof("GRATIS") != -1)
-          wallPost.description += "$ #"+ev.price.full+"\n"
-        else
+      if (ev.price.num == 0)
+          wallPost.description += '$ #'+ ev.price.full +'\n'
+      else
           wallPost.description += "$ " + ev.price.full + "\n"
     }
     for(i = 0; i < 3; i++)
