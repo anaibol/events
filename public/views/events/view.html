@@ -53,7 +53,7 @@
         <p>End: <strong>{{ev.promotion.end_time | date:'mediumDate'}} at {{ev.promotion.end_time | date:'shortTime'}}</strong></p>
       </div>
 
-      <div class="wdiv padding-10" ng-show="ev.in_promotion">
+      <div class="wdiv padding-10">
         <div class="panel panel-default">
           <div class="panel-heading">Players</div>
           <div class="panel-body">
@@ -91,7 +91,7 @@
             <button class="btn" ng-click="sendInvitations()">Invite your friends!</button>
           </div>
           <div class="event-share-btns" ng-hide="shared">
-            <button class="btn" ng-click="shareEvent()">Share with your friends?</button>
+            <button class="btn" ng-click="shareEvent()" ng-disabled="isDisabled">{{ btnShareText }}</button>
           </div>
           <div class="event-share-btns" ng-show="shared">
             <span class="label label-success">Shared!</span>
@@ -99,7 +99,6 @@
         </div>
       </div>
     </div>
-
     
 <!--     <p>{{ev.price.full}}</p>
 
