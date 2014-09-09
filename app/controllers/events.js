@@ -387,10 +387,9 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
           photos.push(photo);
         }
 
-        console.log(" urls : " + photos.length);
+        console.log(" photos : " + photos.length);
 
         data.photos = photos;
-        console.log(data);
 
         res.json(data);
       }
