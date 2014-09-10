@@ -46,7 +46,8 @@ exports.addResult = function (req, res) {
   var result = {
     user_id: req.user.facebook.id,
     event_id: req.params.eid,
-    result: 2
+    result: 2,
+    result_boosted: 2
   } 
 
   Results.insert(result, function(err) {
@@ -83,7 +84,7 @@ exports.updateResult = function (req, res) {
           } else if (father_result)
           {
               Results.update({_id: player_result._id}, 
-                {$set: {result: player_result.result + father_result.result}}, 
+                {$set: {result_boosted: player_result.result_boosted + father_result.result}}, 
                 function(err, result) {
                 if (err) {
                   console.log(err);
@@ -126,7 +127,7 @@ exports.un_updateResult = function (req, res) {
           } else if (father_result)
           {
               Results.update({_id: player_result._id}, 
-                {$set: {result: player_result.result - father_result.result}}, 
+                {$set: {result_boosted: player_result.result_boosted - father_result.result}}, 
                 function(err, result) {
                 if (err) {
                   console.log(err);

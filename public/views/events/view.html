@@ -59,27 +59,24 @@
           <div class="panel-body">
             <p ng-hide="ev.list_event_players">No players yet</p>
             <ul class="list-group" ng-show="ev.list_event_players">
+
+              <input typ="text" class="form-control input-sm" ng-model="search.name">
+
+              <hr>
+
               <li class="list-group-item" ng-repeat="player in ev.list_event_players" ng-if="player.facebook.id == ev.player_id">
               <img ng-src="{{ player.facebook.picture }}" ng-alt="{{player.name}}" class="img-circle">
                 {{ player.result }} pts
-                  <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player.facebook.id, ev.eid)"
-                  ng-show="ev.player_id && player.facebook.id != ev.player_id && !(boosted == player.facebook.id) && !boosted">
-                  Boost<span class="glyphicon glyphicon-flash"></span>
-                  </button>
-                  <button type="button" class="btn btn-default btn-xs" ng-click="supBoost(player.facebook.id, ev.eid)"
-                  ng-show="ev.player_id && player.facebook.id != ev.player_id && boosted == player.facebook.id">
-                    Un-Boost<span class="glyphicon glyphicon-flash"></span>
-                  </button>
               </li>
-              <li class="list-group-item" ng-repeat="player in ev.list_event_players" ng-if="player.facebook.id != ev.player_id">
+              <li class="list-group-item" ng-repeat="player in ev.list_event_players | orderBy:'-result' | filter:search" ng-if="player.facebook.id != ev.player_id">
               <img ng-src="{{ player.facebook.picture }}" ng-alt="{{player.name}}" class="img-circle">
                 {{ player.result }} pts
                   <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player.facebook.id, ev.eid)"
-                  ng-show="ev.player_id && player.facebook.id != ev.player_id && !(boosted == player.facebook.id) && !boosted">
+                  ng-show="ev.player_id && !(boosted == player.facebook.id) && !boosted && player.result >= ev.player_result">
                   Boost<span class="glyphicon glyphicon-flash"></span>
                   </button>
                   <button type="button" class="btn btn-default btn-xs" ng-click="supBoost(player.facebook.id, ev.eid)"
-                  ng-show="ev.player_id && player.facebook.id != ev.player_id && boosted == player.facebook.id">
+                  ng-show="boosted == player.facebook.id">
                     Un-Boost<span class="glyphicon glyphicon-flash"></span>
                   </button>
               </li>
@@ -140,7 +137,7 @@
     <div class="modal-footer">
 
       <div class="row">
-          <div class="col-xs-6 col-md-3" ng-repeat="photo in ev.photos">
+          <div class="col-xs-6 col-md-3" ng-repeat="photo in ev.photos" ng-if="$index < 8">
             <a href="#" class="thumbnail">
               <img ng-src="{{photo.url_medium}}" onerror="$(this).parent().hide()"/>
             </a>
