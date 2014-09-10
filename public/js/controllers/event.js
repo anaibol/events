@@ -15,6 +15,8 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
   $scope.boosted = 0;
 
+  $scope.ev.player_result = 0;
+
   $scope.getLink = function() {
     return $state.current.name.split('.')[0] + '.edit(ev)';
   }
@@ -96,17 +98,21 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
           }
         }
 
-        ev.list_event_players = players;
+        $scope.ev.list_event_players = players;
       });
       Restangular.all('results/' + ev.list_event_players.toString() + '/' + ev.eid).get('results').then(function(results) {
 
-        for(i = 0; i < ev.list_event_players.length; i++) {
+        for(i = 0; i < $scope.ev.list_event_players.length; i++) {
             for (j = 0; j < results.length; j++)
             {
-              if (ev.list_event_players[i] && ev.list_event_players[i].facebook.id == results[j].user_id)
-                ev.list_event_players[i].result = results[j].result;
+              if ($scope.ev.list_event_players[i] && $scope.ev.list_event_players[i].facebook.id == results[j].user_id)
+                $scope.ev.list_event_players[i].result = results[j].result;
+              if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id && $scope.ev.list_event_players[i].facebook.id == results[j].user_id)
+                $scope.ev.player_result = results[j].result;
             }
         }
+
+        console.log($scope.ev.list_event_players)
 
         /*for (i = 0; i < ev.list_event_players.length; i++) {
           for (j = i; j < ev.list_event_players.length; j++) {
