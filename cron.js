@@ -32,7 +32,7 @@ var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZC
 graph.setAccessToken(accessToken);
 
 
-var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta'
+var keywords = ['salsa', 'bachata', 'kizomba', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta', 'porto'
 
 var users = [ 'EsenciaSalsaClub',
 'clubastoriabcn',
