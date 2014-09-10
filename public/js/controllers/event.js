@@ -108,7 +108,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
             }
         }
 
-        for (i = 0; i < ev.list_event_players.length; i++) {
+        /*for (i = 0; i < ev.list_event_players.length; i++) {
           for (j = i; j < ev.list_event_players.length; j++) {
             if (results) {
               if (results[i] && results[j] && results[i].result < results[j].result)
@@ -119,7 +119,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
               }
             }
           }
-        }
+        }*/
 
       });
 
