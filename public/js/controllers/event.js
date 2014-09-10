@@ -106,9 +106,9 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
             for (j = 0; j < results.length; j++)
             {
               if ($scope.ev.list_event_players[i] && $scope.ev.list_event_players[i].facebook.id == results[j].user_id)
-                $scope.ev.list_event_players[i].result = results[j].result;
+                $scope.ev.list_event_players[i].result = results[j].result_boosted;
               if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id && $scope.ev.list_event_players[i].facebook.id == results[j].user_id)
-                $scope.ev.player_result = results[j].result;
+                $scope.ev.player_result = results[j].result_boosted;
             }
         }
 
