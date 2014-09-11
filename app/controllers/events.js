@@ -121,7 +121,6 @@ exports.updateEv = function(req, res) {
 };
 
 exports.get = function(req, res) {
-  console.log(" get 125 ! ");
   if (req.params.slug) {
     Events.findOne({slug: req.params.slug}, function(err, data) {
       if (err) {
@@ -293,10 +292,22 @@ var tokenInstagram = "1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab";
 
 function searchPlaceAndRequestRecentPhotos(data, res)
 {
+  if (!data)
+  {
+    res.json(data);
+    return ;
+  }
+
+  if (data.photos)
+  {
+    console.log('Already in DB');
+    res.json(data);
+    return ;
+  }
+
   var latitude = data.venue.latitude;
   var longitude = data.venue.longitude;
   var name = data.location;
-
   var query = "https://api.instagram.com/v1/locations/search?lat=" + latitude + "&lng=" + longitude + "&access_token=" + tokenInstagram;
 
   console.log(" query : " + query);
@@ -310,112 +321,128 @@ function searchPlaceAndRequestRecentPhotos(data, res)
         res.json(data);
         return;
       }
-    console.log(" name : " + name);
-    console.log(body);
-    //if (body.toString().indexOf("Oops, an error occurred.") != -1 || 
-    //if (!IsJsonString(body))
-    var isJsonString = /^[\],:{}\s]*$/.test(body.replace(/\\["\\\/bfnrtu]/g, '@').
-replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
-      if (!isJsonString)
-    {
-        console.log(" error catched l319 ");
-        res.json(data);
-        return;
-    }
-    var obj = JSON.parse(response.body);
-
-    if (!obj.data) {
-      res.json(data);
-      return;
-    }
-
-    if (obj.data.length == 0)
-      res.json(data);
-
-    var id = obj.data[0].id;
-    var found = false;
-    for (var i = 0; i < obj.data.length; i++)
-    {
-      // console.log(obj.data[i])
-      console.log(obj.data[i].name)
-      if (name == obj.data[i].name)
-      {
-        console.log("FOUND !");
-        id = obj.data[0].id;
-        found = true;
-      }
-    }
-
-    if (!found)
-        console.log(" NOT FOUND, we took the first one !");
-    var queryPhotos = "https://api.instagram.com/v1/locations/" + id + "/media/recent?access_token=" + tokenInstagram;
-    console.log(queryPhotos);
-    try
-    {
-      request(queryPhotos, function(error, response, body)
-      {
-      //if (body.toString().indexOf("Oops, an error occurred.") != -1)
+      console.log(" name : " + name);
+      console.log(body);
+      //if (body.toString().indexOf("Oops, an error occurred.") != -1 || 
       //if (!IsJsonString(body))
       var isJsonString = /^[\],:{}\s]*$/.test(body.replace(/\\["\\\/bfnrtu]/g, '@').
-replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
+      replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+      replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
       if (!isJsonString)
       {
-        console.log(" error catched l319 ");
+          console.log(" error catched l319 ");
+          res.json(data);
+          return;
+      }
+
+      var obj = JSON.parse(response.body);
+
+      if (!obj.data) {
         res.json(data);
         return;
       }
-      if (error)
+
+      if (obj.data.length == 0)
+        res.json(data);
+
+      var id = obj.data[0].id;
+      var found = false;
+
+      for (var i = 0; i < obj.data.length; i++)
       {
-        console.log(" error ");
-        res.json(data);
-        return;
-      }
-        obj = JSON.parse(body);
-        // console.log(obj);
-        var photos = [];
-        for (var j = 0; j < obj.data.length; j++)
+        // console.log(obj.data[i])
+        console.log(obj.data[i].name)
+
+        if (name == obj.data[i].name)
         {
-          var photo = {};
-
-          photo.created_time=obj.data[j].created_time;
-          photo.url=obj.data[j].images.standard_resolution.url;
-          photo.url_medium=obj.data[j].images.low_resolution.url;
-          photo.tags = obj.data[j].tags;
-          photo.likes_count = obj.data[j].likes.count;
-          photo.id = obj.data[j].id;
-          photo.user = obj.data[j].user;
-
-          // console.log(url);
-          photos.push(photo);
+          console.log("FOUND !");
+          id = obj.data[0].id;
+          found = true;
         }
+      }
 
-        console.log(" photos : " + photos.length);
+      if (!found)
+          console.log(" NOT FOUND, we took the first one !");
 
-        data.photos = photos;
+      var queryPhotos = "https://api.instagram.com/v1/locations/" + id + "/media/recent?access_token=" + tokenInstagram;
+      console.log(queryPhotos);
 
+      try
+      {
+        request(queryPhotos, function(error, response, body)
+        {
+          //if (body.toString().indexOf("Oops, an error occurred.") != -1)
+          //if (!IsJsonString(body))
+          var isJsonString = /^[\],:{}\s]*$/.test(body.replace(/\\["\\\/bfnrtu]/g, '@').
+          replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+          replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
+
+          if (!isJsonString)
+          {
+            console.log(" error catched l319 ");
+            res.json(data);
+            return;
+          }
+          if (error)
+          {
+            console.log(" error ");
+            res.json(data);
+            return;
+          }
+
+          obj = JSON.parse(body);
+          // console.log(obj);
+          var photos = [];
+          for (var j = 0; j < obj.data.length; j++)
+          {
+            var photo = {};
+
+            photo.created_time=obj.data[j].created_time;
+            photo.url=obj.data[j].images.standard_resolution.url;
+            photo.url_medium=obj.data[j].images.low_resolution.url;
+            photo.tags = obj.data[j].tags;
+            photo.likes_count = obj.data[j].likes.count;
+            photo.id = obj.data[j].id;
+            photo.user = obj.data[j].user;
+
+            // console.log(url);
+            photos.push(photo);
+          }
+
+          console.log(" photos : " + photos.length);
+
+          data.photos = photos;
+
+          res.json(data);
+
+          console.log('Here to insert');
+
+          Events.update(
+            {'eid': data.eid}, 
+            {$set: {'photos': photos}}, function (err) {
+              if (err)
+                console.log(err)
+            }
+          );
+
+        });
+      }
+      catch (e)
+      {
+        console.log("error instagram catched !");
         res.json(data);
       }
-      );
-    }
-    catch (e)
-    {
+    });
+  }
+  catch (e)
+  {
       console.log("error instagram catched !");
       res.json(data);
-    }
-  });
-}
-catch (e)
-{
-    console.log("error instagram catched !");
-    res.json(data);
-}
+  }
   // JSON.stringify
 }
 
 exports.getOne = function(req, res) {
-  console.log(" getOne 294 ! ");
   // console.log("req : ");
   // console.log(req);
   Events.findOne({eid: parseInt(req.params.eid)}, function(err, data) {
@@ -425,7 +452,7 @@ exports.getOne = function(req, res) {
       });
     } else
     {
-      searchPlaceAndRequestRecentPhotos(data, res);
+        searchPlaceAndRequestRecentPhotos(data, res);
       // console.log("data : ");
       //console.log(data);
       //obj = JSON.parse(data);
