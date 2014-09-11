@@ -22,13 +22,15 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
   }
 
   $scope.convertToUTC = function(date, timezone) {
-    console.log(date);
     date = new Date(date);
-    console.log(timezone);
 
-    var newDate = new Date(moment(date.getTime()).tz(timezone).format("YYYY-MM-DD HH:mm:ss"));
+    if (!timezone) {
+      return date;
+    }
 
-    return newDate;
+    var transformed = moment(date.getTime()).tz(timezone).format("YYYY-MM-DD HH:mm:ss");
+
+    return new Date(transformed);
   }
 
   $scope.getPromoteLink = function() {
