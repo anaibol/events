@@ -137,11 +137,11 @@
     <div class="modal-footer">
 
       <div class="row">
-          <div class="col-xs-6 col-md-3" ng-repeat="photo in ev.photos" ng-if="$index < 8">
+          <figure contenteditable="true" class="col-xs-6 col-md-3" ng-repeat="photo in ev.photos" ng-if="$index < 8">
             <a href="#" class="thumbnail">
-              <img ng-src="{{photo.url_medium}}" onerror="$(this).parent().hide()"/>
+              <img ng-src="{{photo.url_medium}}" onerror="$(this).parent().hide()" contenteditable="false"/>
             </a>
-          </div>
+          </figure>
         </div>
 
       <button class="btn" ng-click="cancel()">
