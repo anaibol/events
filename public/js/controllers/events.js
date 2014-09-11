@@ -54,14 +54,19 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
 
   $scope.getEvents = function(cb) {
     Events.get($scope.filter).then(function(events) {
+      // $scope.events = events.filter(function(element, index, array) {
+      //   var date = new Date(element.start_time);
+      //   return date.getDate() > $scope.today.getDate() - 1;
+      // });
+
       $scope.events = events;
 
       $scope.totalEvents = events.metadata.count;
       $scope.totalPages = Math.ceil(events.metadata.count / $scope.filter.limit);
 
       angular.forEach($scope.events, function(ev, key) {
-        ev.start_time = $scope.convertToUTC(ev.start_time);
-        ev.end_time = $scope.convertToUTC(ev.end_time);
+        ev.start_time = $scope.convertToUTC(ev.start_time, ev.timezone);
+        ev.end_time = $scope.convertToUTC(ev.end_time, ev.timezone);
 
         if (ev.imageExt) {
           ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
@@ -89,9 +94,10 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     });
   }
 
-  $scope.convertToUTC = function(date) {
+  $scope.convertToUTC = function(date, timezone) {
     date = new Date(date);
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    var transformed = moment(date.getTime()).tz(timezone).format("YYYY-MM-DD HH:mm:ss");
+    return new Date(transformed);
   }
 
   $scope.getLink = function(ev) {

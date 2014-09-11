@@ -21,9 +21,14 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     return $state.current.name.split('.')[0] + '.edit(ev)';
   }
 
-  $scope.convertToUTC = function(date) {
+  $scope.convertToUTC = function(date, timezone) {
+    console.log(date);
     date = new Date(date);
-    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    console.log(timezone);
+
+    var newDate = new Date(moment(date.getTime()).tz(timezone).format("YYYY-MM-DD HH:mm:ss"));
+
+    return newDate;
   }
 
   $scope.getPromoteLink = function() {
@@ -85,8 +90,8 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
     $scope.ev = ev;
 
-    $scope.ev.start_time = $scope.convertToUTC($scope.ev.start_time);
-    $scope.ev.end_time = $scope.convertToUTC($scope.ev.end_time);
+    $scope.ev.start_time = $scope.convertToUTC($scope.ev.start_time, $scope.ev.timezone);
+    $scope.ev.end_time = $scope.convertToUTC($scope.ev.end_time, $scope.ev.timezone);
 
 //     Users.get('names').then(function(users) {
 // console.log (user);
