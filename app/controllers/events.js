@@ -298,11 +298,20 @@ function searchPlaceAndRequestRecentPhotos(data, res)
     return ;
   }
 
+  var currentDate = new Date();
+
+  console.log(currentDate);
+
   if (data.photos)
   {
-    console.log('Already in DB');
-    res.json(data);
-    return ;
+    var next_update = data.last_update_photos;
+    next_update.setDate(next_update.getDate() + 7);
+    if (next_update >= currentDate)
+    {
+      console.log('Already in DB, next update at :' + next_update);
+      res.json(data);
+      return ;
+    }
   }
 
   var latitude = data.venue.latitude;
@@ -315,54 +324,71 @@ function searchPlaceAndRequestRecentPhotos(data, res)
   {
     request(query, function(error, response, body)
     {
-      if (error)
+      var id = null;
+
+      if (data.location_instragram_id)
+        id = data.location_instragram_id;
+      else if (error)
       {
         console.log(" error ");
         res.json(data);
         return;
       }
-      console.log(" name : " + name);
-      console.log(body);
-      //if (body.toString().indexOf("Oops, an error occurred.") != -1 || 
-      //if (!IsJsonString(body))
-      var isJsonString = /^[\],:{}\s]*$/.test(body.replace(/\\["\\\/bfnrtu]/g, '@').
-      replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-      replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
-      if (!isJsonString)
+      else
       {
-          console.log(" error catched l319 ");
+        console.log(" name : " + name);
+        console.log(body);
+        //if (body.toString().indexOf("Oops, an error occurred.") != -1 || 
+        //if (!IsJsonString(body))
+        var isJsonString = /^[\],:{}\s]*$/.test(body.replace(/\\["\\\/bfnrtu]/g, '@').
+        replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+        replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
+        if (!isJsonString)
+        {
+            console.log(" error catched l319 ");
+            res.json(data);
+            return;
+        }
+
+        var obj = JSON.parse(response.body);
+
+        if (!obj.data) {
           res.json(data);
           return;
-      }
-
-      var obj = JSON.parse(response.body);
-
-      if (!obj.data) {
-        res.json(data);
-        return;
-      }
-
-      if (obj.data.length == 0)
-        res.json(data);
-
-      var id = obj.data[0].id;
-      var found = false;
-
-      for (var i = 0; i < obj.data.length; i++)
-      {
-        // console.log(obj.data[i])
-        console.log(obj.data[i].name)
-
-        if (name == obj.data[i].name)
-        {
-          console.log("FOUND !");
-          id = obj.data[0].id;
-          found = true;
         }
-      }
 
-      if (!found)
-          console.log(" NOT FOUND, we took the first one !");
+        if (obj.data.length == 0)
+          res.json(data);
+
+        id = obj.data[0].id;
+        var found = false;
+
+        console.log("Things:" + data.location);
+        for (var i = 0; i < obj.data.length; i++)
+        {
+          console.log(obj.data[i].name.toLowerCase());
+          if (data.location.toLowerCase() == obj.data[i].name.toLowerCase())
+          {
+            Events.update(
+              {'eid': data.eid}, 
+              {$set: {'location_instragram_id': obj.data[i].id}}, function (err) {
+                if (err)
+                  console.log(err)
+              }
+            );
+          }
+
+          if (name == obj.data[i].name)
+          {
+            console.log("FOUND !");
+            id = obj.data[0].id;
+            found = true;
+          }
+        }
+
+        if (!found)
+            console.log(" NOT FOUND, we took the first one !");
+      }
 
       var queryPhotos = "https://api.instagram.com/v1/locations/" + id + "/media/recent?access_token=" + tokenInstagram;
       console.log(queryPhotos);
@@ -397,9 +423,9 @@ function searchPlaceAndRequestRecentPhotos(data, res)
           {
             var photo = {};
 
-            photo.created_time=obj.data[j].created_time;
-            photo.url=obj.data[j].images.standard_resolution.url;
-            photo.url_medium=obj.data[j].images.low_resolution.url;
+            photo.created_time = obj.data[j].created_time;
+            photo.url = obj.data[j].images.standard_resolution.url;
+            photo.url_medium = obj.data[j].images.low_resolution.url;
             photo.tags = obj.data[j].tags;
             photo.likes_count = obj.data[j].likes.count;
             photo.id = obj.data[j].id;
@@ -415,11 +441,9 @@ function searchPlaceAndRequestRecentPhotos(data, res)
 
           res.json(data);
 
-          console.log('Here to insert');
-
           Events.update(
             {'eid': data.eid}, 
-            {$set: {'photos': photos}}, function (err) {
+            {$set: {'photos': photos, 'last_update_photos': currentDate}}, function (err) {
               if (err)
                 console.log(err)
             }
