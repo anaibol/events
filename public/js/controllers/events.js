@@ -101,7 +101,7 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
       return date;
     }
 
-    var transformed = moment(date.getTime()).tz(timezone).format("YYYY-MM-DD HH:mm:ss");
+    var transformed = moment(date.getTime()).tz(timezone).unix();
 
     return new Date(transformed);
   }
