@@ -78,17 +78,17 @@ var newEvents;
   console.log(date.toString());
 
   // fetchEventsFromKeywords();
-  updatePopular();
+  // updatePopular();
 
   // fetchEventsFromUsers();
   // fetchEventsFromLocations();
 // }, null, true);
 
-var job = new cronJob('0 */3 * * *', function() {
+// var job = new cronJob('0 */3 * * *', function() {
   var date = new Date();
   console.log(date.toString());
   updateWeek();
-}, null, true);
+// }, null, true);
 
 function updatePopular() {
   var date = new Date();
