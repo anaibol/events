@@ -96,8 +96,17 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
 
   $scope.convertToUTC = function(date, timezone) {
     date = new Date(date);
-    var transformed = moment(date.getTime()).tz(timezone).format("YYYY-MM-DD HH:mm:ss");
-    return new Date(transformed);
+    var transformed = moment(date.getTime()).tz(timezone);
+
+    if (transformed) {
+      transformed = new Date(transformed);
+
+      if (transformed.format) {
+        transformed = transformed.format("YYYY-MM-DD HH:mm:ss");
+      }
+    }
+
+    return transformed;
   }
 
   $scope.getLink = function(ev) {
