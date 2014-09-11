@@ -101,9 +101,11 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
       return date;
     }
 
-    var transformed = moment(date.getTime()).tz(timezone).unix();
+    var transformed = moment(date.getTime()).tz(timezone).format("ddd, DD MMM YYYY HH:mm:ss");
 
-    return new Date(transformed);
+    transformed = new Date(transformed);
+
+    return transformed;
   }
 
   $scope.getLink = function(ev) {

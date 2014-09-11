@@ -28,9 +28,11 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       return date;
     }
 
-    var transformed = moment(date.getTime()).tz(timezone).unix();
+    var transformed = moment(date.getTime()).tz(timezone).format("ddd, DD MMM YYYY HH:mm:ss");
 
-    return new Date(transformed);
+    transformed = new Date(transformed);
+
+    return transformed;
   }
 
   $scope.getPromoteLink = function() {
