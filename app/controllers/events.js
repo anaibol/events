@@ -302,7 +302,7 @@ function searchPlaceAndRequestRecentPhotos(data, res)
 
   console.log(currentDate);
 
-  if (data.photos)
+  if (data.photos && data.last_update_photos)
   {
     var next_update = data.last_update_photos;
     next_update.setDate(next_update.getDate() + 7);
