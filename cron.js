@@ -163,13 +163,14 @@ function updatePrioritaires() {
     users.forEach(function(user) {
       uids.push(parseInt(user.facebook.id));
     });
-
+    console.log(uids);
     Events.find({
       end_time: {
         $gte: date
       },
       attending: { $all: uids }
     }).success(function(evs) {
+      console.log(evs);
       var eids = [];
 
       evs.forEach(function(ev) {
