@@ -168,7 +168,7 @@ function updatePrioritaires() {
       end_time: {
         $gte: date
       },
-      attending: { $all: uids }
+      attending: { $in: uids }
     }).success(function(evs) {
       console.log(evs);
       var eids = [];
