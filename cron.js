@@ -72,18 +72,23 @@ var newEvents;
 // });
 
 
-// var job = new cronJob('*/30 * * * *', function() {
+var job = new cronJob('*/30 * * * *', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
-  // fetchEventsFromKeywords();
-  // updatePopular();
-  updatePrioritaires();
+  fetchEventsFromKeywords();
+  updatePopular();
 
   // fetchEventsFromUsers();
   // fetchEventsFromLocations();
-// }, null, true);
+}, null, true);
+
+var job = new cronJob('*/60 * * * *', function() {
+  var date = new Date();
+  console.log(date.toString());
+  updatePrioritaires();
+}, null, true);
 
 var job = new cronJob('0 */3 * * *', function() {
   var date = new Date();
@@ -107,7 +112,7 @@ function updatePopular() {
     sort: {
       'attending_count': -1
     },
-    limit: 30
+    limit: 50
   }).success(function(evs) {
     var eids = [];
 
