@@ -72,17 +72,18 @@ var newEvents;
 // });
 
 
-var job = new cronJob('*/30 * * * *', function() {
+// var job = new cronJob('*/30 * * * *', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
-  fetchEventsFromKeywords();
-  updatePopular();
+  // fetchEventsFromKeywords();
+  // updatePopular();
+  updatePrioritaires();
 
   // fetchEventsFromUsers();
   // fetchEventsFromLocations();
-}, null, true);
+// }, null, true);
 
 var job = new cronJob('0 */3 * * *', function() {
   var date = new Date();
@@ -98,7 +99,7 @@ function updatePopular() {
   date.setHours(0);
 
   Events.find({
-    start_time: {
+    end_time: {
       $gte: date
     }
   },
@@ -130,7 +131,7 @@ function updateWeek() {
   var datePlusWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
 
   Events.find({
-    start_time: {
+    end_time: {
       $gte: date,
       $lt: datePlusWeek
     }
@@ -144,6 +145,41 @@ function updateWeek() {
     Ev.updateMultiple(eids);
   }).error(function(err) {
     console.log(err);
+  });
+}
+
+function updatePrioritaires() {
+  var date = new Date();
+
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+
+  var datePlusWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
+
+  Users.find({}).success(function(users) {
+    var uids = [];
+
+    users.forEach(function(user) {
+      uids.push(parseInt(user.facebook.id));
+    });
+
+    Events.find({
+      end_time: {
+        $gte: date
+      },
+      attending: { $all: uids }
+    }).success(function(evs) {
+      var eids = [];
+
+      evs.forEach(function(ev) {
+        eids.push(parseInt(ev.eid));
+      });
+
+      Ev.updateMultiple(eids);
+    }).error(function(err) {
+      console.log(err);
+    });
   });
 }
 
