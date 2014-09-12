@@ -298,7 +298,7 @@ function searchPhotos(data, res) {
     return ;
   }
 
-  var accessToken = "1511193072439143|B3CXLPHQjOUyQ6Bu1wbdyLxJEwQ";
+  var accessToken = "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y";
 
   var currentDate = new Date();
 
