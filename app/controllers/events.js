@@ -302,9 +302,9 @@ function searchPhotos(data, res) {
 
   var currentDate = new Date();
 
-  if (data.images && data.last_update_photos)
+  if (data.images && data.last_update_images)
   {
-    var next_update = data.last_update_photos;
+    var next_update = data.last_update_images;
     next_update.setDate(next_update.getDate() + 7);
     if (next_update >= currentDate)
     {
@@ -345,7 +345,7 @@ function searchPhotos(data, res) {
 
               Events.update({eid: parseInt(data.eid)}, 
                   {$push: {'images': result.images}},
-                  {$set: {'last_update_photos': currentDate}},
+                  {$set: {'last_update_images': currentDate}},
                   function(err, event) {
                     if (err) {
                       console.log(err);
@@ -552,7 +552,8 @@ exports.getOne = function(req, res) {
       });
     } else
     {
-        searchPhotos(data, res);
+      //searchPhotos(data, res);
+      searchPlaceAndRequestRecentPhotos(data, res);
       // console.log("data : ");
       //console.log(data);
       //obj = JSON.parse(data);

@@ -5,6 +5,8 @@ var request = require('request')
 
 var config = require('./config/config');
 
+var Pho = require('./app/services/photos.js');
+
 var Ev = require('./ev');
 
 var db = require('monk')(config.db);
@@ -180,6 +182,8 @@ function updateMultiple(eids) {
       eids.push(parseInt(ev.eid));
       ev = Ev.normalize(ev);
       ev.updated = new Date();
+
+      Pho.searchPhotos(ev, db);
 
       Ev.getAttendings(ev.eid, function(attendings) {
         ev.attending = attendings;

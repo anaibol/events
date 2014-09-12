@@ -142,6 +142,11 @@
               <img ng-src="{{image[0].source}}" onerror="$(this).parent().hide()"/>
             </a>
           </div>
+          <div class="col-xs-6 col-md-3" ng-repeat="photo in ev.photos" ng-if="$index < 8">
+            <a href="#" class="thumbnail">
+              <img ng-src="{{photo.url}}" onerror="$(this).parent().hide()"/>
+            </a>
+          </div>
         </div>
 
       <button class="btn" ng-click="cancel()">
