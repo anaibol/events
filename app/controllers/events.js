@@ -290,6 +290,82 @@ exports.get = function(req, res) {
 
 var tokenInstagram = "1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab";
 
+function searchPhotos(data, res) {
+
+  if (!data)
+  {
+    res.json(data);
+    return ;
+  }
+
+  var accessToken = "1511193072439143|B3CXLPHQjOUyQ6Bu1wbdyLxJEwQ";
+
+  var currentDate = new Date();
+
+  if (data.images && data.last_update_photos)
+  {
+    var next_update = data.last_update_photos;
+    next_update.setDate(next_update.getDate() + 7);
+    if (next_update >= currentDate)
+    {
+      console.log('Already in DB, next update at :' + next_update);
+      res.json(data);
+      return ;
+    }
+  }
+
+  var id = [];
+
+  var images = [];
+
+  graph.get('/' + data.eid + '/feed' + '?access_token=' + accessToken, function(err, result) {
+      if (err) {
+        console.log(err);
+        res.json(data);
+      }
+      else if (result) {
+
+        for (var i = 0; i < result.data.length; i++){
+
+          if (result.data[i].type == 'photo')
+            id.push(result.data[i].object_id)
+        }
+
+        for (var j = 0; j < id.length; j++)
+        {
+          graph.get('/' + id[j] + '?access_token=' + accessToken, function(err, result) {
+            if (err) {
+              console.log(err);
+              res.json(data);
+              return ;
+            }
+            else if (result) {
+
+              images.push(result.images);
+
+              Events.update({eid: parseInt(data.eid)}, 
+                  {$push: {'images': result.images}},
+                  {$set: {'last_update_photos': currentDate}},
+                  function(err, event) {
+                    if (err) {
+                      console.log(err);
+                    }
+                  });
+
+              data.images = images;
+
+              if (data.images.length == id.length)
+                res.json(data);
+            }
+          });
+        }
+      }
+      else
+        res.json(data);
+    });
+
+}
+
 function searchPlaceAndRequestRecentPhotos(data, res)
 {
   if (!data)
@@ -476,7 +552,7 @@ exports.getOne = function(req, res) {
       });
     } else
     {
-        searchPlaceAndRequestRecentPhotos(data, res);
+        searchPhotos(data, res);
       // console.log("data : ");
       //console.log(data);
       //obj = JSON.parse(data);
