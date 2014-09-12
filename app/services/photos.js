@@ -50,7 +50,13 @@ function searchPhotos(data, db) {
 
               images.push(result.images);
 
-              Events.update({eid: parseInt(data.eid)}, 
+              Events.findOne({eid: parseInt(data.eid)}, function (err, event) {
+
+                if (event.images && event.images.indexOf(result.images))
+                  console.log("image already exist")
+                else
+                {
+                  Events.update({eid: parseInt(data.eid)}, 
                   {$push: {'images': result.images}},
                   {$set: {'last_update_images': currentDate}},
                   function(err, event) {
@@ -58,9 +64,12 @@ function searchPhotos(data, db) {
                       console.log(err);
                     }
                   });
+                  console.log("Update");
+                }
+
+              });
 
               data.images = images;
-              console.log("Insert");
 
               if (data.images.length == id.length)
                 return ;
@@ -100,6 +109,7 @@ function searchPhotoEvents(db) {
   }).success(function(evs) {
 
     evs.forEach(function(ev) {
+      console.log(ev.eid);
       exports.searchPhotos(ev, db);
     });
 
