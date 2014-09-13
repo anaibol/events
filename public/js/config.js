@@ -195,8 +195,13 @@ app.config(function(RestangularProvider) {
 
 // var modalStates = ['myEvents', 'userEvents', 'worldwide', 'popular', 'festival', 'free', 'today', 'weekend', 'create'];
 
-app.run(function(Api, $rootScope, $state, modalState) { //ezfb
+app.run(function(Api, $rootScope, $state, modalState, amMoment) { //ezfb
   // ezfb.init();
+
+  var userLang = navigator.language || navigator.userLanguage; 
+
+  amMoment.changeLocale(userLang);
+
   Api(['user', 'event']);
 
   // $rootScope.$on('$stateNotFound', function(event, toState, fromState, fromParams) {
