@@ -120,7 +120,9 @@ function fetch(eid, term, cb) {
         }
       });
     } else {
-      cb(false);
+      Ev.update(eid, function (ev) {
+        cb(ev);
+      });
     }
   });
 }
@@ -592,3 +594,4 @@ module.exports.updateAttendings = updateAttendings;
 module.exports.getAttendings = getAttendings;
 module.exports.fetchMultiple = fetchMultiple;
 module.exports.normalize = normalize;
+module.exports.existsInDb = existsInDb;
