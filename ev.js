@@ -29,7 +29,6 @@ function existsInDb(eid, cb) {
     eid: eid
   }).on('complete', function(err, doc) {
     if (err) console.log(err);
-    console.log(doc);
     if (!doc) {
       res = false;
     } else {
