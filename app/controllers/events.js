@@ -537,7 +537,7 @@ function searchPlaceAndRequestRecentPhotos(data, res)
 }
 
 exports.getOne = function(req, res) {
-  Events.findOne({eid: parseInt(req.params.eid)}, function(err, data) {
+  Events.findOne({eid: parseInt(req.params.eid)}, function(err, ev) {
     if (err) {
       res.render('error', {
         status: 500

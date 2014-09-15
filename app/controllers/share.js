@@ -10,6 +10,22 @@ var actions = global.db.get('actions');
 
 var Pro = require('../services/promoter.js');
 
+var moment = require('moment-timezone');
+
+
+function convertToUTC(date, timezone) {
+  date = new Date(date);
+
+  if (!timezone) {
+    return date;
+  }
+
+  var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
+  transformed = new Date(transformed);
+
+  return transformed;
+}
+
 exports.saveShare = function (post_id, event_id, user_id, data) {
 
       var action = {
@@ -96,6 +112,7 @@ exports.share = function(req, res)
     }
 
     if (ev.start_time)
+      ev.start_time = convertToUTC(ev.start_time, ev.timezone);
     {
       wallPost.description += "W! "
 
