@@ -116,7 +116,7 @@ function fetch(eid, term, cb) {
             cb(newEv);
           });
         } else {
-          cb(false);
+          cb('not exists');
         }
       });
     } else {
