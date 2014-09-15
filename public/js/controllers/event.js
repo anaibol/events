@@ -51,14 +51,15 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     }
   }
 
-  $scope.addBoost = function(player_id, event_id) {
-    Restangular.all('boost/' + event_id + '/' + player_id).post().then(function(res) {
+  $scope.addBoost = function(player, event_id) {
+    Restangular.all('boost/' + event_id + '/' + player.facebook.id).post().then(function(res) {
         $scope.boosted = res.son_id;
+        console.log(res);
 
-        Restangular.all('results/' + player_id + '/' + event_id).get('result').then(function(player_res) {
-              Restangular.all('results/update/' + event_id + '/' + player_id).post().then(function(player_result) {
-                console.log(player_result);
-              });
+        Restangular.all('boost/update/' + event_id + '/' + player.facebook.id).post().then(function(player_result) {
+          Restangular.all('results/update/' + event_id + '/' + player.facebook.id).post().then(function(player_result) {
+            player.result = player_result.result_boosted;
+          });
         });
       });
   }
