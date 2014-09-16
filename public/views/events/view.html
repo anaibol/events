@@ -71,13 +71,9 @@
               <li class="list-group-item" ng-repeat="player in ev.list_event_players | orderBy:'-result' | filter:search" ng-if="player.facebook.id != ev.player_id">
               <img ng-src="{{ player.facebook.picture }}" ng-alt="{{player.name}}" class="img-circle">
                 {{ player.result }} pts
-                  <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player.facebook.id, ev.eid)"
-                  ng-show="ev.player_id && !(boosted == player.facebook.id) && !boosted && (player.result > ev.player_result || player.result = 2)">
+                  <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player, ev.eid)"
+                  ng-show="boosted != player.facebook.id && ev.player_result && (player.result > ev.player_result || player.result == 2)">
                   Boost<span class="glyphicon glyphicon-flash"></span>
-                  </button>
-                  <button type="button" class="btn btn-default btn-xs" ng-click="supBoost(player.facebook.id, ev.eid)"
-                  ng-show="boosted == player.facebook.id">
-                    Un-Boost<span class="glyphicon glyphicon-flash"></span>
                   </button>
               </li>
             </ul>

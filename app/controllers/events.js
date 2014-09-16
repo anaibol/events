@@ -537,22 +537,19 @@ function searchPlaceAndRequestRecentPhotos(data, res)
 }
 
 exports.getOne = function(req, res) {
-  Ev.update(req.params.eid, function (ev) {
-    res.json(ev);
-    //searchPhotos(data, res);
-    // searchPlaceAndRequestRecentPhotos(data, res);
-    // console.log("data : ");
-    //console.log(data);
-    //obj = JSON.parse(data);
-    //data.push({"photos":data_photo});
-    //res.json({"data":data, "photos":data_photo});
-
-
-
-   // console.log(" data_photo : ");
-   // console.log(data_photo);
- //   res.json(data);
-
+  // console.log("req : ");
+  // console.log(req);
+  Events.findOne({eid: parseInt(req.params.eid)}, function(err, data) {
+    if (err) {
+    res.render('error', {
+        status: 500
+      });
+    }
+    else
+    {
+      //searchPhotos(data, res);
+      searchPlaceAndRequestRecentPhotos(data, res);
+    }
   });
 };
 

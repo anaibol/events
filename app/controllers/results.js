@@ -1,5 +1,7 @@
 var Results = global.db.get('results');
 
+var Boosts = global.db.get('boosts');
+
 exports.getResults = function(req, res) {
 
   Results.find(
@@ -61,7 +63,7 @@ exports.addResult = function (req, res) {
 
 exports.updateResult = function (req, res) {
 
-  console.log("Update result");
+  console.log("UPDATE result / Resolution");
 
   Results.findOne(
     {'user_id': req.params.uid,
@@ -73,34 +75,41 @@ exports.updateResult = function (req, res) {
       });
     } else if (player_result)
     {
-        Results.findOne(
-          {'user_id': req.user.facebook.id,
+        Boosts.find(
+          {'son_id': req.params.uid,
            'event_id': req.params.eid
-          }, function(err, father_result) {
+          }, function(err, son_boosts) {
           if (err) {
             res.render('error', {
               status: 500
             });
-          } else if (father_result)
+          } else if (son_boosts)
           {
-              Results.update({_id: player_result._id}, 
-                {$set: {result_boosted: player_result.result_boosted + father_result.result}}, 
-                function(err, result) {
-                if (err) {
-                  console.log(err);
-                }
-                res.json(result);
-              });
+            console.log("There is boosts here");
+
+            var result_boosted = 0;
+
+            for (i = 0; i < son_boosts.length; i++) {
+              result_boosted += son_boosts[i].score;
+            }
+
+            Results.update({_id: player_result._id},
+              {$set: {result_boosted: player_result.result + result_boosted}}
+              , function (err, result) {
+                if (err)
+                  console.log(err)
+              })
+            res.json({'result_boosted' : player_result.result + result_boosted});
           }
           else
-            res.json(father_result);
+            res.json(son_boosts);
         });
     }
     else
       res.json(player_result);
   });
 
-};
+}
 
 exports.un_updateResult = function (req, res) {
 

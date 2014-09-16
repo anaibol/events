@@ -1,12 +1,12 @@
 
 var graph = require('fbgraph');
 
-function updatePost(db, post)
+function updatePost(db, post, cb)
 {
 	if (!db)
 	{
 		console.log("Database is null");
-		return ;
+		cb();
 	}
 
 	var Users = db.get('users');
@@ -18,6 +18,7 @@ function updatePost(db, post)
       }, function(err, user) {
         if (err) {
         	console.log(err);
+            cb(err);
         }
         else if (user)
         {
@@ -27,11 +28,11 @@ function updatePost(db, post)
            			console.log("The post with id: " + post.post_id + " have been deleted");
            			Actions.update({_id: post._id}, 
 	        			{$set: {"active": false}}, 
-	        			function(err, action) {
-	        			if (err) {
+	        			function(err) {
+	        			if (err)
 	        				console.log(err);
-	        			}
 	        		});
+                    cb(err);
         		}
         		else if (result)
        			{
@@ -40,24 +41,30 @@ function updatePost(db, post)
 	        			function(err, action) {
 	        			if (err) {
 	        				console.log(err);
+                            cb(err);
 	        			}
-	        			console.log("Update done for the post with id: " + post.post_id);
+                        else {
+	        			    console.log("Update done for the post with id: " + post.post_id);
+                            cb();
+                        }
 	        		});
         		}
         		else
-        			console.log("The post with id: " + post.post_id + " have been deleted");
+                    cb();
     		});
 
         }
+        else
+            cb();
     });
 }
 
-function updateActions(event_id, db)
+function updateActions(db, event_id, cb)
 {
 	if (!db)
 	{
 		console.log("Database is null");
-		return ;
+		cb();
 	}
 
 	var Actions = db.get('actions');
@@ -67,16 +74,30 @@ function updateActions(event_id, db)
       }, function(err, actions) {
         if (err) {
         	console.log(err);
+            cb(err);
         }
         else if (actions && actions.length > 0)
         {
         	console.log("Updating " + actions.length + " actions for the event with id: " + event_id);
-			for (i = 0; i < actions.length; i++)
-				updatePost(db, actions[i]);
+
+            var nb_done = 0;
+
+			for (i = 0; i < actions.length; i++) {
+				updatePost(db, actions[i], function(err) {
+                    nb_done++;
+                    if (err)
+                        console.log(err);
+                    if (nb_done == actions.length)
+                        cb();
+                });
+            }
         }
-        else
+        else {
         	console.log("Nothing to do");
+            cb();
+        }
     });
+
 }
 
 module.exports.updateActions = updateActions;
