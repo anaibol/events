@@ -1,5 +1,5 @@
 body {
-  background-image: url(http://www.planetevents.es/wp-content/blogs.dir/181/files/2013/09/planet_events_background.jpg);
+  background-image: url('/assets/img/background.jpg');
   background-repeat: no-repeat;
   -webkit-background-size: cover;
   background-size: cover;
@@ -35,7 +35,7 @@ body {
 }
 
 .navbar .nav>li>a.login {
-  background-image: url('/img/facebook.png');
+  background-image: url('/assets/img/facebook.png');
   margin: 0;
   background-size: initial;
   height: 46px;

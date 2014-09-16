@@ -16,62 +16,62 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
   $stateProvider
     .state('home', {
       url: '/',
-      templateUrl: '/views/events/home.html'
+      templateUrl: '/assets/views/events/home.html'
     })
     .state('myEvents', {
       url: '/me/events',
-      templateUrl: '/views/events/home.html',
+      templateUrl: '/assets/views/events/home.html',
       controller: 'EventsCtrl'
     })
     .state('userEvents', {
       url: '/user/:user',
-      templateUrl: '/views/events/home.html',
+      templateUrl: '/assets/views/events/home.html',
       controller: 'EventsCtrl'
     })
     .state('worldwide', {
       url: '/worldwide',
-      templateUrl: '/views/events/home.html',
+      templateUrl: '/assets/views/events/home.html',
       controller: 'EventsCtrl'
     })
     .state('eventsByDate', {
       url: '/date/:date',
-      templateUrl: '/views/events/home.html',
+      templateUrl: '/assets/views/events/home.html',
       controller: 'EventsCtrl'
     })
     .state('popular', {
       url: '/popular',
-      templateUrl: '/views/events/home.html',
+      templateUrl: '/assets/views/events/home.html',
     })
     .state('festival', {
       url: '/festival',
-      templateUrl: '/views/events/home.html',
+      templateUrl: '/assets/views/events/home.html',
     })
     .state('promote', {
       url: '/promote',
-      templateUrl: '/views/events/home.html',
+      templateUrl: '/assets/views/events/home.html',
     })
     .state('free', {
       url: '/free',
-      templateUrl: '/views/events/home.html'
+      templateUrl: '/assets/views/events/home.html'
     })
     .state('today', {
       url: '/today',
-      templateUrl: '/views/events/home.html'
+      templateUrl: '/assets/views/events/home.html'
     })
     .state('weekend', {
       url: '/weekend',
-      templateUrl: '/views/events/home.html'
+      templateUrl: '/assets/views/events/home.html'
     })
     .state('create', {
       url: '/create',
-      templateUrl: '/views/events/create.html'
+      templateUrl: '/assets/views/events/create.html'
     });
     
     $urlRouterProvider.otherwise('');
 
     modalStateProvider.state('home.edit', {
       url: ':slug/:eid/edit',
-      templateUrl: '/views/events/form.html',
+      templateUrl: '/assets/views/events/form.html',
       controller: 'EventFormCtrl' //,
       // resolve: {
       //   ev: function() {
@@ -85,28 +85,28 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
 
     modalStateProvider.state('home.promote', {
       url: ':slug/:eid/promote',
-      templateUrl: '/views/events/promote_form.html',
+      templateUrl: '/assets/views/events/promote_form.html',
       controller: 'EventFormCtrl',
     });
 
     modalStateProvider.state('home.terms', {
       url: 'terms',
-      templateUrl: '/views/terms.html'
+      templateUrl: '/assets/views/terms.html'
     });
 
     modalStateProvider.state('home.privacy', {
       url: 'privacy',
-      templateUrl: '/views/privacy.html'
+      templateUrl: '/assets/views/privacy.html'
     });
 
     modalStateProvider.state('home.support', {
       url: 'support',
-      templateUrl: '/views/support.html'
+      templateUrl: '/assets/views/support.html'
     });
 
     modalStateProvider.state('home.view', {
       url: ':slug/:eid',
-      templateUrl: '/views/events/view.html',
+      templateUrl: '/assets/views/events/view.html',
       controller: 'EventCtrl',
       // resolve: {
       //   ev: function() {
@@ -120,7 +120,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
     // for (var i in modalStates) {
     //   modalStateProvider.state(modalStates[i] + '.edit', {
     //     url: '/:slug/:eid/edit',
-    //     templateUrl: '/views/events/form.html',
+    //     templateUrl: '/assets/views/events/form.html',
     //     controller: 'EventFormCtrl' //,
     //     // resolve: {
     //     //   ev: function() {
@@ -134,17 +134,17 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
 
     //   modalStateProvider.state(modalStates[i] + '.terms', {
     //     url: '/terms',
-    //     templateUrl: '/views/terms.html'
+    //     templateUrl: '/assets/views/terms.html'
     //   });
 
     //   modalStateProvider.state(modalStates[i] + '.support', {
     //     url: '/support',
-    //     templateUrl: '/views/support.html'
+    //     templateUrl: '/assets/views/support.html'
     //   });
 
     //   modalStateProvider.state(modalStates[i] + '.view', {
     //     url: '/:slug/:eid',
-    //     templateUrl: '/views/events/view.html',
+    //     templateUrl: '/assets/views/events/view.html',
     //     controller: 'EventCtrl',
     //     // resolve: {
     //     //   ev: function() {
@@ -180,11 +180,11 @@ app.config(function(RestangularProvider) {
   });
 });
 
-// app.config(function (ezfbProvider) {
-//   ezfbProvider.setInitParams({
-//     appId: window.fbAppId
-//   });
-// });
+app.config(function (ezfbProvider) {
+  ezfbProvider.setInitParams({
+    appId: window.fbAppId
+  });
+});
 
 // app.config(function (ApiProvider) {
 //   ApiProvider.setEntities(['user', 'event']);
@@ -218,7 +218,7 @@ app.run(function(Api, $rootScope, $state, modalState, amMoment) { //ezfb
 
   //     modalState.state(modalStateName + '.edit', {
   //       url: '/:slug/:eid/edit',
-  //       templateUrl: '/views/events/form.html',
+  //       templateUrl: '/assets/views/events/form.html',
   //       controller: 'EventFormCtrl' //,
   //       // resolve: {
   //       //   ev: function() {
@@ -232,17 +232,17 @@ app.run(function(Api, $rootScope, $state, modalState, amMoment) { //ezfb
 
   //     modalState.state(modalStateName + '.terms', {
   //       url: '/terms',
-  //       templateUrl: '/views/terms.html'
+  //       templateUrl: '/assets/views/terms.html'
   //     });
 
   //     modalState.state(modalStateName + '.support', {
   //       url: '/support',
-  //       templateUrl: '/views/support.html'
+  //       templateUrl: '/assets/views/support.html'
   //     });
 
   //     modalState.state(modalStateName + '.view', {
   //       url: '/:slug/:eid',
-  //       templateUrl: '/views/events/view.html',
+  //       templateUrl: '/assets/views/events/view.html',
   //       controller: 'EventCtrl',
   //       // resolve: {
   //       //   ev: function() {

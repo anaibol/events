@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('wooepa', ['ui.router', 'ui.bootstrap', 'wooepa.system', 'wooepa.events', 'restangular', 'ngAutocomplete', 'ngTagsInput', 'truncate', 'ngSanitize', 'ngSanitize', 'angularMoment']); //'imageupload', , 'seo' 'leaflet-directive',  'ngCookies', 'ngResource', 'infinite-scroll' 'akoenig.deckgrid' 'ezfb',
+var app = angular.module('wooepa', ['ui.router', 'ui.bootstrap', 'wooepa.system', 'ui.router', 'ezfb', 'restangular', 'ngAutocomplete', 'ngTagsInput', 'truncate', 'ngSanitize', 'ngSanitize', 'angularMoment']); //'imageupload', , 'seo' 'leaflet-directive',  'ngCookies', 'ngResource', 'infinite-scroll' 'akoenig.deckgrid' 'ezfb',
 
 app.provider('modalState', function($stateProvider) {
     var provider = this;
@@ -9,8 +9,6 @@ app.provider('modalState', function($stateProvider) {
     }
     this.state = function(stateName, options) {
         var modalInstance;
-        console.log(stateName)
-        console.log(options)
         $stateProvider.state(stateName, {
             url: options.url,
             onEnter: function($modal, $state) {

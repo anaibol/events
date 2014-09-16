@@ -8,7 +8,7 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
 
   $scope.filter = {
     tags: [],
-    limit: 50,
+    limit: 20,
     page: 1,
     sortBy: 'start_time',
     sortOrder: '1',

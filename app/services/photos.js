@@ -51,6 +51,7 @@ function searchPhotos(data, db) {
               images.push(result.images);
 
               Events.findOne({eid: parseInt(data.eid)}, function (err, event) {
+                if (event) return;
 
                 if (event.images && event.images.indexOf(result.images))
                   console.log("image already exist")

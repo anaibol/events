@@ -537,6 +537,7 @@ function searchPlaceAndRequestRecentPhotos(data, res)
 }
 
 exports.getOne = function(req, res) {
+<<<<<<< HEAD
   // console.log("req : ");
   // console.log(req);
   Events.findOne({eid: parseInt(req.params.eid)}, function(err, data) {
@@ -549,8 +550,22 @@ exports.getOne = function(req, res) {
     {
       //searchPhotos(data, res);
       searchPlaceAndRequestRecentPhotos(data, res);
+=======
+  Events.findOne({eid: parseInt(req.params.eid)}, function(err, ev) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      // searchPlaceAndRequestRecentPhotos(eid, function(photos){
+        // ev.photos = photos;
+        res.json(ev);
+      // });
+>>>>>>> 035b1de3978528e1c1f896a2319a8ffaf6a94433
     }
   });
+
+  Ev.update(req.params.eid, function (ev) {});
 };
 
 exports.create = function(req, res) {
