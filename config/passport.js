@@ -66,6 +66,12 @@ module.exports = function(passport) {
             updated_at: new Date()
           };
 
+          Ret.retrieveActions(user.facebook.id, global.db, function (err) {
+            if (err)
+              console.log(err);
+            console.log("Retrieve DONE on Signin");
+          });
+
           Users.insert(user, function(err) {
             if (err) console.log(err);
             Usr.updatePicture(user, global.db);
