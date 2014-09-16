@@ -73,19 +73,11 @@ module.exports = function(passport) {
           });
         } else {
           Usr.updatePicture(user, global.db);
-          if (user.list_player_events) {
-            var i = 0;
-            var nb_done = 0;
-            for (i = 0; i < user.list_player_events.length; i++) {
-              Ret.retrieveForEvent(global.db, user.list_player_events[i], function (err) {
-                nb_done++;
-                if (err)
-                  console.log(err);
-                  if (nb_done == user.list_player_events.length)
-                    console.log("Retrieve DONE on Login");
-              });
-            }
-          }
+          Ret.retrieveActions(user.facebook.id, global.db, function (err) {
+            if (err)
+              console.log(err);
+            console.log("Retrieve DONE on Login");
+          });
           Users.update({_id: user._id}, {$set: {accessToken: accessToken, updated_at: new Date()}});
           return done(err, user);
         }
