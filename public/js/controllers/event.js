@@ -118,7 +118,8 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
         $scope.ev.list_event_players = players;
       });
-      Restangular.all('results/' + ev.list_event_players.toString() + '/' + ev.eid).get('results').then(function(results) {
+
+      Restangular.all('resolve/' + ev.eid).get('results').then(function(results) {
 
         for(i = 0; i < $scope.ev.list_event_players.length; i++) {
             for (j = 0; j < results.length; j++)

@@ -81,12 +81,12 @@ function refreshResults(db, event_id, cb) {
 	});
 }
 
-function refreshOneResultsBoosted(db, event_id, result, cb) {
+function refreshOneResultsBoosted(db, event_id, result, i, cb) {
 
 	if (!db)
 	{
 		console.log("Database is null");
-		cb();
+		cb(i);
 	}
 
 	var Boosts = db.get('boosts');
@@ -99,7 +99,7 @@ function refreshOneResultsBoosted(db, event_id, result, cb) {
 	}, function (err, boosts) {
 		if (err) {
 			console.log(err);
-			cb(err);
+			cb(i, null, err);
 		}
 		else if (boosts) {
 
@@ -115,17 +115,17 @@ function refreshOneResultsBoosted(db, event_id, result, cb) {
 
 			Results.update({_id: result._id},
 				{$set: {'result_boosted': result_boosted}},
-				function (err) {
+				function (err, res) {
 				if (err) {
 					console.log(err);
-					cb(err);
+					cb(i, result, err);
 				}
 				else
-					cb();
+					cb(i, result);
 			});
 		}
 		else
-			cb();
+			cb(i);
 	});
 
 }
@@ -156,12 +156,13 @@ function refreshResultsBoosted(db, event_id, cb) {
 
 			for (i = 0; i < results.length; i++) {
 
-			exports.refreshOneResultsBoosted(db, event_id, results[i], function(err) {
+			exports.refreshOneResultsBoosted(db, event_id, results[i], i, function(i, result, err) {
 				nb_done++;
+				results[i].result_boosted = result.result_boosted;
 				if (err)
 					console.log(err);
 				if (nb_done == results.length)
-					cb();
+					cb(results);
 			});
 
 			}
