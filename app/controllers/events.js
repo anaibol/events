@@ -362,8 +362,7 @@ function searchPhotos(data, res) {
 
 function searchPlaceAndRequestRecentPhotos(data, res)
 {
-  if (!data)
-  {
+  if (!data) {
     res.json(data);
     return ;
   }
@@ -379,7 +378,7 @@ function searchPlaceAndRequestRecentPhotos(data, res)
     if (next_update >= currentDate)
     {
       console.log('Already in DB, next update at :' + next_update);
-      res.json(data);
+      res.json(data)
       return ;
     }
   }
@@ -402,7 +401,7 @@ function searchPlaceAndRequestRecentPhotos(data, res)
       {
         console.log(" error ");
         res.json(data);
-        return;
+        return ;
       }
       else
       {
@@ -417,18 +416,20 @@ function searchPlaceAndRequestRecentPhotos(data, res)
         {
             console.log(" error catched l319 ");
             res.json(data);
-            return;
+            return ;
         }
 
         var obj = JSON.parse(response.body);
 
         if (!obj.data) {
           res.json(data);
-          return;
+          return ;
         }
 
-        if (obj.data.length == 0)
+        if (obj.data.length == 0) {
           res.json(data);
+          return ;
+        }
 
         id = obj.data[0].id;
         var found = false;
@@ -477,13 +478,13 @@ function searchPlaceAndRequestRecentPhotos(data, res)
           {
             console.log(" error catched l319 ");
             res.json(data);
-            return;
+            return ;
           }
           if (error)
           {
             console.log(" error ");
             res.json(data);
-            return;
+            return ;
           }
 
           obj = JSON.parse(body);
@@ -509,8 +510,6 @@ function searchPlaceAndRequestRecentPhotos(data, res)
 
           data.photos = photos;
 
-          res.json(data);
-
           Events.update(
             {'eid': data.eid}, 
             {$set: {'photos': photos, 'last_update_photos': currentDate}}, function (err) {
@@ -519,12 +518,15 @@ function searchPlaceAndRequestRecentPhotos(data, res)
             }
           );
 
+          res.json(data);
+
         });
       }
       catch (e)
       {
         console.log("error instagram catched !");
         res.json(data);
+        return;
       }
     });
   }
@@ -532,6 +534,7 @@ function searchPlaceAndRequestRecentPhotos(data, res)
   {
       console.log("error instagram catched !");
       res.json(data);
+      return;
   }
   // JSON.stringify
 }
