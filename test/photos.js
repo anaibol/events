@@ -9,6 +9,6 @@ var Pho = require('../app/services/photos.js');
 Pho.searchPhotoEvents(db, function (err) {
 	if (err)
 		console.log(err);
-	console.log("Update Pictures DONE")
+	console.log("---- UPDATE Pictures DONE ----")
 });
 

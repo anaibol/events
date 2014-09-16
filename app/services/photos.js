@@ -22,6 +22,7 @@ function searchPhotos(data, db, cb) {
     {
       console.log('Facebook: Already in DB, next update at :' + next_update);
       cb(data);
+      return ;
     }
   }
 
@@ -30,8 +31,10 @@ function searchPhotos(data, db, cb) {
   var images = [];
 
   graph.get('/' + data.eid + '/feed' + '?access_token=' + accessToken, function(err, result) {
-      if (err)
+      if (err) {
         console.log(err);
+        cb(data, err);
+      }
       else if (result) {
 
         for (var i = 0; i < result.data.length; i++){
@@ -50,7 +53,7 @@ function searchPhotos(data, db, cb) {
               console.log(err);
               nb_done++;
                 if (nb_done == id.length)
-                  cb(data);
+                  cb(data, err);
             }
             else if (result) {
 
@@ -127,6 +130,7 @@ function searchPlaceAndRequestRecentPhotos(data, db, cb)
     {
       console.log('Instagram: Already in DB, next update at :' + next_update);
       cb(data);
+      return ;
     }
   }
 
@@ -270,7 +274,7 @@ function searchPlaceAndRequestRecentPhotos(data, db, cb)
   catch (e)
   {
       console.log("---- ERROR instagram catched ! ----");
-      cb(data) ;
+      cb(data);
   }
   // JSON.stringify
 }
@@ -315,7 +319,7 @@ function searchPhotoEvents(db, cb) {
           if (nb_done == (2 * evs.length))
               cb();
         });
-        searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {   
+        searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
           if (err)
               console.log(err)
           else if (ev) {
@@ -323,7 +327,8 @@ function searchPhotoEvents(db, cb) {
           }
           nb_done++;
           if (nb_done == (2 * evs.length))
-              cb();
+            cb();
+              
         });
       }
     }
