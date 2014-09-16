@@ -81,13 +81,10 @@ function refreshResults(db, event_id, cb) {
 	});
 }
 
-function refreshOneResultsBoosted(db, event_id, result, i, cb) {
+function refreshOneResultsBoosted(db, event_id, result, cb) {
 
 	if (!db)
-	{
-		console.log("Database is null");
-		cb(i);
-	}
+		cb({err: 'Database is null'});
 
 	var Boosts = db.get('boosts');
 
@@ -99,7 +96,7 @@ function refreshOneResultsBoosted(db, event_id, result, i, cb) {
 	}, function (err, boosts) {
 		if (err) {
 			console.log(err);
-			cb(i, null, err);
+			cb(err);
 		}
 		else if (boosts) {
 
@@ -113,19 +110,21 @@ function refreshOneResultsBoosted(db, event_id, result, i, cb) {
 
 			console.log("Result boosted : " + result_boosted);
 
+			result.result_boosted = result_boosted;
+
 			Results.update({_id: result._id},
 				{$set: {'result_boosted': result_boosted}},
-				function (err, res) {
+				function (res, err) {
 				if (err) {
 					console.log(err);
-					cb(i, result, err);
+					cb(err);
 				}
 				else
-					cb(i, result);
+					cb();
 			});
 		}
 		else
-			cb(i);
+			cb();
 	});
 
 }
@@ -156,9 +155,8 @@ function refreshResultsBoosted(db, event_id, cb) {
 
 			for (i = 0; i < results.length; i++) {
 
-			exports.refreshOneResultsBoosted(db, event_id, results[i], i, function(i, result, err) {
+			exports.refreshOneResultsBoosted(db, event_id, results[i], function(err) {
 				nb_done++;
-				results[i].result_boosted = result.result_boosted;
 				if (err)
 					console.log(err);
 				if (nb_done == results.length)
