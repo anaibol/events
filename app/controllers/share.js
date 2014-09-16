@@ -123,7 +123,7 @@ exports.share = function(req, res)
       if (ev.start_time.getDate() == currentdate.getDate())
         wallPost.description += "Aujourd'hui "
       else
-        wallPost.description += days[ev.start_time.getDay()] + " "
+        wallPost.description += days[ev.start_time.getDay() - 1] + " "
       + ev.start_time.getDate() + " " 
       + months[ev.start_time.getMonth()]
 
