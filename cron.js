@@ -31,7 +31,6 @@ var graph = require('fbgraph');
 var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
 graph.setAccessToken(accessToken);
 
-
 var keywords = ['salsa', 'bachata', 'kizomba', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta', 'porto'
 
 var users = [ 'EsenciaSalsaClub',
@@ -72,20 +71,20 @@ var newEvents;
 // });
 
 
-var job = new cronJob('*/30 * * * *', function() {
+// var job = new cronJob('*/30 * * * *', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
 
   fetchEventsFromKeywords();
-  updatePopular();
+  // updatePopular();
 
   // fetchEventsFromUsers();
   // fetchEventsFromLocations();
-}, null, true);
+// }, null, true);
 
 var job = new cronJob('*/60 * * * *', function() {
-  var date = new Date();
+  // var date = new Date();
   console.log(date.toString());
   updatePrioritaires();
 }, null, true);
@@ -205,13 +204,7 @@ function paginate(page, term) {
           eids.push(parseInt(ev.id));
         });
 
-        Ev.fetchMultiple(eids, function(eves) {
-          eves.forEach(function(ev) {
-            Ev.save(ev, function(newEv) {
-              console.log(newEv.name);
-            });
-          });
-        });
+        Ev.fetchMultiple(eids, function(eves) {});
       }
     }
   });
@@ -230,10 +223,10 @@ function fetchEventsFromKeyword(term) {
     limit: 5000,
   };
 
-  // var options = {
-  //   timezone: "Europe/Paris",
-  //   since: 'now'
-  // };
+  var options = {
+    // timezone: "Europe/Paris",
+    since: 'now'
+  };
 
   graph.search(searchOptions, function(err, res) {
     if (err) {
@@ -255,13 +248,7 @@ function fetchEventsFromKeyword(term) {
           eids.push(parseInt(ev.id));
         });
 
-        Ev.fetchMultiple(eids, function(eves) {
-          eves.forEach(function(eve) {
-            Ev.save(eve, function(newEv) {
-              console.log(newEv.name + ': ' + newEv.name);
-            });
-          });
-        });
+        Ev.fetchMultiple(eids, term, function(eves) {});
       }
     }
   });

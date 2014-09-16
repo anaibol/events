@@ -112,18 +112,9 @@ module.exports = function(app, passport, db) {
     });
 
 
-    app.use(express.static(config.root + '/public'));
+    app.use('/assets', express.static(config.root + '/public'));
 
     app.all('/:keyword', function(req, res) {
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: {}
-       });
-    });
-
-    app.all('/.\/[0-9]{0,100}', function(req, res) {
        res.render('index', {
          title: 'Wooepa',
          user: req.user ? JSON.stringify(req.user) : 'null',
@@ -142,6 +133,15 @@ module.exports = function(app, passport, db) {
     });
 
     app.all('/me/:keyword', function(req, res) {
+       res.render('index', {
+         title: 'Wooepa',
+         user: req.user ? JSON.stringify(req.user) : 'null',
+         fbAppId: global.fbAppId,
+         events: {}
+       });
+    });
+
+    app.all('/.\/[0-9]{0,100}', function(req, res) {
        res.render('index', {
          title: 'Wooepa',
          user: req.user ? JSON.stringify(req.user) : 'null',

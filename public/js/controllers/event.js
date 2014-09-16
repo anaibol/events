@@ -1,4 +1,4 @@
-var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangular, Global) {
+var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangular, Global, ezfb) {
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -16,6 +16,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
   $scope.boosted = 0;
 
   $scope.ev.player_result = 0;
+
 
   $scope.getLink = function() {
     return $state.current.name.split('.')[0] + '.edit(ev)';
