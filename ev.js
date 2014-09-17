@@ -361,8 +361,8 @@ function updateAttendings(eid, cb) {
   getAttendings(eid, function(attendings) {
     Events.update({ eid: parseInt(eid) }, {$set: {attending: attendings}});
   });
-}
 
+}
 function getAttendings(eid, cb) {
   graph.get(eid + '/attending?limit=50000', function(err, res) {
     if (err) {

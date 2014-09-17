@@ -1,0 +1,47 @@
+<div class="wrapper sortRow visible-xs">
+    <div class="container">
+        <div class="table" ng-click="mobileSortList = !mobileSortList">
+            <div class="valign">Sorting: {{sort.name}} <i class="icon icon-down"></i>
+            </div>
+        </div>
+        <ul class="sortList animateOpacity ng-hide" ng-show="mobileSortList === true" ng-click="mobileSortList = !mobileSortList" ng-animate="">
+            <li ng-repeat="(sortName, sortObject) in availableSortMethods" ng-class="{ active:sort.id===sortObject.id }" ng-click="setSort(sortName);">{{sortObject.name}}<i class="icon icon-checkmark"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="wrapper">
+    <div class="container eventsListContainer">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                <div class="row">
+                    <div ng-if="!errorDisabled && events.length === 0" class="col-xs-12 noEvents">
+                        <div ng-if="startDay.getTime() === today.getTime()">
+                            <h1>Oops!</h1>
+                            <p>We cannot find any events in your area.</p>
+                            <p>But you can still explore other cities.</p>
+                        </div>
+                        <div ng-if="startDay.getTime() !== today.getTime()">
+                            <h1>Oops!</h1>
+                            <p>We cannot find any events in your area for this date.</p>
+                            <p>Select another date or search for another city nearby.</p>
+                        </div>
+                    </div>
+                    <div list-event="" class="col-xs-12 col-md-6 col-lg-4 eventCol" ng-repeat="event in filteredEvents | orderBy:sort.by:sort.reversed | limitTo:numberOfEventsToShow" on-finish-render="onEventsListRendered()" event="event" sort="sort" responsive="true" data-track-category="view:homepage" data-track-action="open view:event overview {{event.name}}/{{event.id}}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 loadMore">
+                        <div ng-click="loadMore();" ng-show="filteredEvents.length > numberOfEventsToShow" class="loadMoreButton hand"><i class="icon icon-down left"></i>Load more<i class="icon icon-down right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden-xs col-sm-5 col-md-4 col-lg-3">
+                <div id="listRight">
+                    <div datepicker="" sort=""></div>
+                    <div ng-controller="CampaignsSliderCtrl" campaigns-slider=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

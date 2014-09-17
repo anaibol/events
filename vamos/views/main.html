@@ -1,0 +1,86 @@
+<div class="eventsList">
+    <div id="fullscreenDatepicker" class="hidden-sm hidden-md hidden-lg animateOpacity" ng-show="fullscreenDatepickerVisible" ng-animate="">
+        <div class="inner">
+            <div id="fullscreenDatepickerHolder">
+                <div class="topBar"><a class="close" ng-click="closeFullscreenDatepicker()">Close</a>
+                </div>
+                <div class="datepickerHolder" datepicker="" ng-click="closeFullscreenDatepicker()"></div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper categories">
+        <div class="coverImage">
+            <div class="grayImage" ng-style="campaignCssCoverImage || (user.city.image ? { 'background-image': 'url(' + user.city.image +')' } : {})"></div>
+            <div class="overlay" ng-class="coverImageOverlayClass"></div>
+        </div>
+        <div class="table">
+            <div class="valign">
+                <div class="moveButton categoryBack" ng-click="goOneCategoryBack();" ng-if="categories.length > 1"><i class="icon icon-back"></i>
+                </div>
+                <ul class="categorySlider" id="categorySlider" ng-style="{ 'width' : categories.length * 100 + '%', 'margin-left' : '-' + (100 * activeCategoryIndex) + '%' }" ng-if="categories.length > 0" ng-click="$parent.showFullscreenDatepicker();">
+                    <li class="category" ng-repeat="category in categories" ng-style="{ width: 100 / categories.length + '%' };" on-finish-render="onCategoriesRendered()"><span ng-switch="" on="$index"><span ng-switch-when="0"><div class="name categoryBig" ng-if="category.name || campaign" ng-cloak=""><span ng-if="campaign">{{ campaign.title || campaign.name }}</span><span ng-if="!campaign">{{ category.name | translate }}</span>
+            </div>
+            <div class="name categoryBig" ng-if="!category.name && !campaign" ng-cloak="">Events</div>
+            </span> <span ng-switch-default=""><div class="name categoryBig" ng-if="category.name" ng-cloak="">{{ category.name | translate }}</div><div class="name categoryBig" ng-if="!category.name" ng-cloak="">Events</div></span></span>
+            <div class="timespan" ng-if="!category.timespan" ng-cloak=""><i class="icon icon-calendar"></i>{{ (startDate.today() ? 'Today' : false) || (startDay.getTime() === today.clone().add(1).day().getTime() ? 'Tomorrow' : false) || (startDate | date:'EEE') }}{{ startDate | date:', MMM d' }}<span ng-if="startDay.getTime() !== endDate.clone().clearTime().getTime()">&nbsp;-&nbsp;{{ endDate | date:'EEE, MMM d' }}</span>
+            </div>
+            <div class="timespan" ng-if="category.timespan" ng-cloak=""><i class="icon icon-calendar"></i>{{ category.timespan }}</div>
+            </li>
+            </ul>
+            <div class="moveButton categoryForward" ng-click="goOneCategoryForward();" ng-if="categories.length > 1"><i class="icon icon-forward"></i>
+            </div>
+        </div>
+    </div>
+    <div class="locationChooser">
+        <div class="container">
+            <form ng-submit="searchCity()" class="cityForm" ng-class="{ focused:citySearchisFocused }">
+                <button class="submit icon icon-search hand" type="submit" ng-mouseover="isOverSearch = true;" ng-mouseout="isOverSearch = false;"></button>
+                <input type="text" ng-model="city_name" id="cityNameSearchField" class="citySearch" placeholder="Search for city" ng-focus="citySearchisFocused=true;" ng-blur="citySearchisFocused = isOverSearch || false;">
+            </form>
+            <div class="download" ng-show="showDownloadOnAppStore">
+                <div class="phone hidden-sm">
+                    <a href="http://smarturl.it/vamos3.0" target="_blank" data-track-category="view:homepage" data-track-action="App store (phone)" data-track-label="{{ device.info }}" onclick="gaTrack(this)">
+                        <img ng-if="device.retina" src="/images/c3ab1def.phone-with-shadow@2x.png" width="164" height="141" class="block">
+                        <img ng-if="!device.retina" src="/images/224e3091.phone-with-shadow.png" width="164" height="141" class="block">
+                    </a>
+                </div>
+                <div class="appStore hidden-xs">
+                    <a href="http://smarturl.it/vamos3.0" target="_blank" data-track-category="view:homepage" data-track-action="App store" data-track-label="{{ device.info }}" onclick="gaTrack(this)">
+                        <img ng-if="device.retina" src="/images/b3f1183b.Download_on_the_App_Store_Badge@4x.png" width="128" height="38" class="block">
+                        <img ng-if="!device.retina" src="/images/3932ded4.Download_on_the_App_Store_Badge.png" width="128" height="38" class="block">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="categoryFilterHolder" ng-class="{ 'hidden-xs':categories.length < 2}">
+        <div class="container">
+            <div class="valign">
+                <div class="filterBy hidden-xs animateOpacity" ng-hide="categories.length < 1" ng-animate="">Filter:</div>
+                <ul class="categoryFilter">
+                    <li class="category animateOpacityStagger" ng-repeat="category in categories" ng-click="setActiveCategoryIndex($index)" ng-class="{ active:$index === activeCategoryIndex }" ng-animate=""><span ng-if="$first">{{ category.filterName || (category.filter ? category.name : 'All') | translate }}</span><span ng-if="!$first">{{ category.name | translate }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div events-list="" ng-if="viewMode === 'list'"></div>
+<div class="wrapper" id="mapView" ng-show="viewMode === 'map'">
+    <div class="datepickerHolder hidden-xs hidden-sm" datepicker=""></div>
+    <div id="mapHolder">
+        <div id="map"></div>
+    </div>
+    <div id="activeEvent" ng-hide="!activeEvent" ng-animate="">
+        <div class="wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-offset-3 col-md-6">
+                        <div list-event="" event="activeEvent" no-description="true" data-track-category="view:map" data-track-action="open view:event overview {{activeEvent.name}}/{{activeEvent.id}}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

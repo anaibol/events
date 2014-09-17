@@ -1,0 +1,16 @@
+{
+	"today"					: "Today",
+	"tomorrow"			: "Tomorrow",
+	"weekend"				: "Weekend",
+
+	"All"						: "All",
+	"Arts_culture"	: "Arts & Culture",
+	"Food_drink"		: "Food & Drink",
+	"Nightlife"			: "Nightlife",
+	"Sport"					: "Sport",
+	"Music"					: "Music",
+	"Networking"		: "Networking",
+	"Family"				: "Family",
+	"Other"					: "Other",
+	"Fashion"				: "Fashion"
+}
