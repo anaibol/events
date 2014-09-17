@@ -4,6 +4,8 @@ var Ev = require('./ev');
 
 var db = require('monk')(config.db);
 
+var Pho = require('./app/services/photos.js');
+
 var Events = db.get('events');
 var Users = db.get('users');
 var Creators = db.get('creators');
@@ -69,6 +71,16 @@ var newEvents;
 // q.push(2, 2, function(err) {
 //   // task finished
 // });
+
+
+
+var job = new cronJob('*/60 * * * *', function() {
+  Pho.searchPhotoEvents(db, function (err) {
+    if (err)
+      console.log(err);
+    console.log("---- UPDATE Pictures DONE ----")
+  });
+}, null, true);
 
 
 var job = new cronJob('*/30 * * * *', function() {
