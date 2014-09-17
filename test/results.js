@@ -12,17 +12,17 @@ var Rso = require('../app/services/resolve.js')
 
 var Ret = require('../app/services/retrieve.js');
 
-	Upd.updateActions(db, '772837492738201' , function(err) {
+	Upd.updateActions(db, '1448622572090381' , function(err) {
 		if (err)
 			console.log(err)
 
 		console.log("UPDATE DONE");
-		Rso.resolveGames(db, '772837492738201', function(err) {
+		Rso.resolveGames(db, '1448622572090381', function(err) {
 			if (err)
 				console.log(err)
 			console.log("RESOLVE DONE");
 
-			Rsu.refreshResultsBoosted(db, '772837492738201', function (results, err) {
+			Rsu.refreshResultsBoosted(db, '1448622572090381', function (results, err) {
 				if (err)
 					console.log(err);
 				console.log("REFRESH DONE");

@@ -142,7 +142,7 @@ function refreshResultsBoosted(db, event_id, cb) {
 	Boosts = db.get('boosts');
 
 	Results.find({
-		'event_id': event_id
+		'event_id': parseInt(event_id)
 	}, function (err, results) {
 		if (err) {
 			console.log(err);
@@ -152,6 +152,9 @@ function refreshResultsBoosted(db, event_id, cb) {
 			console.log("There is " + results.length + " results");
 
 			var nb_done = 0;
+
+			if (results.length == 0)
+				cb(results);
 
 			for (i = 0; i < results.length; i++) {
 

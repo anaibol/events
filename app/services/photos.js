@@ -1,6 +1,124 @@
 
 var tokenInstagram = "1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab";
 
+function insertPhoto(db, data, current_image, cb) {
+
+  if (!data)
+    cb(data);
+
+  var Events = db.get('events');
+
+  Events.findOne({eid: parseInt(data.eid)}, function (err, event) {
+            if (err) {
+              console.log(err);
+              cb(err);
+            }
+            if (event) {
+              if (event.images && event.images.indexOf(current_image))
+                cb("Image already exist ---- no UPDATE !");
+              else
+              {
+                  data.images.push(current_image);
+
+                  Events.update({eid: parseInt(data.eid)}, 
+                  {$push: {'images': current_image}},
+                  function(err, event) {
+                    if (err) {
+                      console.log(err);
+                      cb(err);
+                    }
+                    else
+                      cb();
+                  });
+              }
+            }
+          });
+}
+
+function searchPhotosBest(data, db, cb) {
+
+  if (!data)
+    cb(data);
+
+  var Events = db.get('events');
+
+  var graph = require('fbgraph');
+
+  var accessToken = "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y";
+
+  var currentDate = new Date();
+
+  if (data.images && data.last_update_images)
+  {
+    var next_update = data.last_update_images;
+    next_update.setDate(next_update.getDate() + 7);
+    if (next_update >= currentDate)
+    {
+      console.log('Facebook: Already in DB, next update at :' + next_update);
+      cb(data);
+      return ;
+    }
+  }
+
+  graph.get('/' + data.eid + '/photos' + '?access_token=' + accessToken, function(err, result) {
+      if (err) {
+        console.log(err);
+        cb(data, err);
+      }
+      else if (result) {
+
+        var nb_done = 0;
+
+        var images = [];
+
+        if (!data.images)
+          data.images = [];
+
+        for (var i = 0; i < result.data.length; i++){
+
+          current_image = result.data[i].images;
+
+          if (data.images.indexOf(current_image) == -1 && images.indexOf(current_image) == -1) {
+            images.push(current_image);
+
+            insertPhoto(db, data, current_image, function(err) {
+              if (err)
+                console.log(err);
+              nb_done++;
+
+              if (nb_done == result.data.length) {
+                Events.update({eid: parseInt(data.eid)},
+                {$set: {'last_update_images': currentDate}},
+                function(err, event) {
+                  if (err)
+                    console.log(err);
+                  cb(data);
+                }); 
+              }
+            });
+          }
+          else {
+            nb_done++;
+            console.log("Already exist");
+
+            if (nb_done == result.data.length) {
+                Events.update({eid: parseInt(data.eid)},
+                {$set: {'last_update_images': currentDate}},
+                function(err, event) {
+                  if (err)
+                    console.log(err);
+                  cb(data);
+                });
+              }
+          }
+        }
+      }
+      else
+        cb(data);
+    });
+
+}
+
 function searchPhotos(data, db, cb) {
 
   if (!data)
@@ -30,7 +148,7 @@ function searchPhotos(data, db, cb) {
 
   var images = [];
 
-  graph.get('/' + data.eid + '/feed' + '?access_token=' + accessToken, function(err, result) {
+  graph.get('/' + data.eid + '/photos' + '?access_token=' + accessToken, function(err, result) {
       if (err) {
         console.log(err);
         cb(data, err);
@@ -309,17 +427,17 @@ function searchPhotoEvents(db, cb) {
     if (evs) {
       for (i = 0; i < evs.length; i++) {
 
-        searchPhotos(evs[i], db, function(ev, err) {
+        searchPhotosBest(evs[i], db, function(ev, err) {
           if (err)
             console.log(err);
           else if (ev) {
               console.log("UPDATE FACEBOOK done for event with id: " + ev.eid);
           }
           nb_done++;
-          if (nb_done == (2 * evs.length))
+          if (nb_done == (evs.length))
               cb();
         });
-        searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
+        /*searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
           if (err)
               console.log(err)
           else if (ev) {
@@ -329,7 +447,7 @@ function searchPhotoEvents(db, cb) {
           if (nb_done == (2 * evs.length))
             cb();
               
-        });
+        });*/
       }
     }
     else
