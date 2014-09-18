@@ -189,12 +189,12 @@ function fetch(eid, term, cb) {
             cb(newEv);
           });
         } else {
-          cb(false);
+          cb(false, "Le Get eid term function(ev) part à la casse --------- ");
         }
       });
     } else {
       Ev.update(eid, function (ev) {
-        cb(ev);
+        cb(ev, "Existe déjà dans la base de donnée Wooepa ------------------- Raphastar updates a Panther for the future ");
       });
     }
   });
