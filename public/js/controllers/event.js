@@ -154,6 +154,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     if (Global.authenticated) {
       if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {
         $scope.attending = 'attending';
+
       }
 
       Restangular.all('events/' + ev.eid).get('attendings').then(function(result) {
@@ -174,11 +175,21 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     $scope.setAttending = function (eid) {
       Restangular.all('events/' + ev.eid + '/rsvp').post({attendingStatus: 'attending'}).then(function(res) {
         $scope.attending = 'attending';
+        for (i = 0; i < $scope.ev.list_event_players.length; i++) {
+          if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id)
+            $scope.ev.list_event_players[i].result += 6;
+        }
       });
     }
 
     $scope.setNotAttending = function (eid) {
       Restangular.all('events/' + ev.eid + '/rsvp').post({attendingStatus: 'declined'}).then(function(res) {
+        if ($scope.attending == "attending") {
+             for (i = 0; i < $scope.ev.list_event_players.length; i++) {
+                if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id)
+                  $scope.ev.list_event_players[i].result -= 6;
+              }
+        }
         $scope.attending = '';
       });
     }
@@ -191,6 +202,24 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     $scope.shareEvent = function () {
       $scope.isDisabled = "true";
       $scope.btnShareText = "Sharing...";
+
+      var link = "http://www.ted.com/talks/andrew_connolly_what_s_the_next_window_into_our_universe";
+
+      /*FB.ui(
+        {
+          method: 'share',
+          href: link,
+        },
+        function(response) {
+          if (response && !response.error_code) {
+            $scope.shared = true;
+            console.log("Shared");
+          } else {
+            $scope.isDisabled = "";
+            $scope.btnShareText = "Share with your friends?";
+          }
+        }
+      );*/
 
       Restangular.all('share/' + ev.eid).post().then(function(res) {
         console.log(res);
