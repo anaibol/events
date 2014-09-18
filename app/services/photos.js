@@ -434,10 +434,10 @@ function searchPhotoEvents(db, cb) {
               console.log("UPDATE FACEBOOK done for event with id: " + ev.eid);
           }
           nb_done++;
-          if (nb_done == (evs.length))
+          if (nb_done == (2 * evs.length))
               cb();
         });
-        /*searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
+        searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
           if (err)
               console.log(err)
           else if (ev) {
@@ -447,7 +447,7 @@ function searchPhotoEvents(db, cb) {
           if (nb_done == (2 * evs.length))
             cb();
               
-        });*/
+        });
       }
     }
     else
