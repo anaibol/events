@@ -51,7 +51,7 @@ function searchPhotosBest(data, db, cb) {
   if (data.images && data.last_update_images)
   {
     var next_update = data.last_update_images;
-    next_update.setDate(next_update.getDate() + 7);
+    next_update.setDate(next_update.getDate() + 1);
     if (next_update >= currentDate)
     {
       console.log('Facebook: Already in DB, next update at :' + next_update);
@@ -243,7 +243,7 @@ function searchPlaceAndRequestRecentPhotos(data, db, cb)
   if (data.photos && data.last_update_photos)
   {
     var next_update = data.last_update_photos;
-    next_update.setDate(next_update.getDate() + 7);
+    next_update.setDate(next_update.getDate() + 1);
     if (next_update >= currentDate)
     {
       console.log('Instagram: Already in DB, next update at :' + next_update);
