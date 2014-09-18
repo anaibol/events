@@ -74,7 +74,7 @@ var newEvents;
 
 
 
-var job = new cronJob('*/60 * * * *', function() {
+var job = new cronJob('0 */1 * * *', function() {
   Pho.searchPhotoEvents(db, function (err) {
     if (err)
       console.log(err);
@@ -83,7 +83,7 @@ var job = new cronJob('*/60 * * * *', function() {
   
 }, null, true);
 
-var job = new cronJob('*/60 * * * *', function() {
+var job = new cronJob('0 */1 * * *', function() {
   Pho.searchPhotoEventsLastMonth(db, function (err) {
     if (err)
       console.log(err);
@@ -111,7 +111,7 @@ var job = new cronJob('*/60 * * * *', function() {
   updatePrioritaires();
 }, null, true);
 
-var job = new cronJob('0 */3 * * *', function() {
+var job = new cronJob('0 */1 * * *', function() {
   var date = new Date();
   console.log(date.toString());
   updateWeek();
