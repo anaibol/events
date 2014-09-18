@@ -231,9 +231,13 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
         else
         {
           $scope.shared = true;
-          Restangular.all('results/' + ev.eid).post().then(function(player_result) {
-            console.log(player_result);
-          });
+          if (Global.user) {
+            if (!$scope.ev.list_event_players)
+              $scope.ev.list_event_players = [];
+            if (!Global.user.result)
+              Global.user.result = 2;
+            $scope.ev.list_event_players.push(Global.user);
+          }
         }
         
       });
