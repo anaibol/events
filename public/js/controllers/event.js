@@ -10,6 +10,13 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
   $scope.isDisabled = false;
   $scope.btnShareText = "Share with your friends?";
+  $scope.btnShareClass = "btn btn-success";
+
+  $scope.isBtnJoinDisabled = false;
+  $scope.btnJoinText = "Join";
+
+  $scope.isBtnLeaveDisabled = false;
+  $scope.btnLeaveText = "Leave";
 
   $scope.ev = {};
 
@@ -126,8 +133,10 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
             {
               if ($scope.ev.list_event_players[i] && $scope.ev.list_event_players[i].facebook.id == results[j].user_id)
                 $scope.ev.list_event_players[i].result = results[j].result_boosted;
-              if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id && $scope.ev.list_event_players[i].facebook.id == results[j].user_id)
+              if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id && $scope.ev.list_event_players[i].facebook.id == results[j].user_id) {
                 $scope.ev.player_result = results[j].result_boosted;
+                $scope.btnShareClass = "btn";
+              }
             }
         }
 
@@ -173,16 +182,32 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     // Restangular.one('events', ev.eid)
 
     $scope.setAttending = function (eid) {
-      Restangular.all('events/' + ev.eid + '/rsvp').post({attendingStatus: 'attending'}).then(function(res) {
-        $scope.attending = 'attending';
-        for (i = 0; i < $scope.ev.list_event_players.length; i++) {
-          if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id)
-            $scope.ev.list_event_players[i].result += 6;
+      $scope.isBtnJoinDisabled = "true";
+      $scope.btnJoinText = "...";
+
+      Restangular.all('events/' + ev.eid + '/rsvp').post({attendingStatus: 'attending'}).then(function(res, err) {
+        if (err) {
+          console.log(err);
+          $scope.isBtnJoinDisabled = false;
+          $scope.btnJoinText = "Please log-in";
+        }
+        else {
+          $scope.attending = 'attending';
+          $scope.isBtnJoinDisabled = false;
+          $scope.btnJoinText = "Join";
+
+          for (i = 0; i < $scope.ev.list_event_players.length; i++) {
+            if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id)
+              $scope.ev.list_event_players[i].result += 6;
+          }
         }
       });
     }
 
     $scope.setNotAttending = function (eid) {
+      $scope.isBtnLeaveDisabled = "true";
+      $scope.btnLeaveText = "...";
+
       Restangular.all('events/' + ev.eid + '/rsvp').post({attendingStatus: 'declined'}).then(function(res) {
         if ($scope.attending == "attending") {
              for (i = 0; i < $scope.ev.list_event_players.length; i++) {
@@ -191,6 +216,8 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
               }
         }
         $scope.attending = '';
+        $scope.isBtnLeaveDisabled = false;
+        $scope.btnLeaveText = "Leave";
       });
     }
 

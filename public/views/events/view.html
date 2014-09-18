@@ -83,20 +83,14 @@
 
         <div class="event-buttons wdiv padding-10">
           <div class="event-rsvp-btns">
-            <h6 ng-show="attending === 'attending'">You are going to this event!</h6>
-            <h6 ng-show="attending === ''">Are you going to this event?</h6>
-            <a class="btn btn-success" href="#" ng-click="setAttending(ev.eid)">Yes</a>
-            <button class="btn" ng-click="setNotAttending(ev.eid)">No</button>
+            <a class="btn btn-success" href="#" ng-show="attending === ''" ng-click="setAttending(ev.eid)" ng-disabled="isBtnJoinDisabled">{{ btnJoinText }}</a>
+            <button class="btn" ng-show="attending === 'attending'" ng-click="setNotAttending(ev.eid)" ng-disabled="isBtnLeaveDisabled">{{ btnLeaveText }}</button>
           </div>
-        </div>
-        <a class="btn disabled btn-default" ng-show="" href="#">You're attending!</a>
-
-        <div class="event-buttons wdiv padding-10">
           <div class="event-rsvp-btns">
             <button class="btn" ng-click="sendInvitations()">Invite your friends!</button>
           </div>
           <div class="event-share-btns" ng-hide="shared">
-            <button class="btn" ng-click="shareEvent()" ng-disabled="isDisabled">{{ btnShareText }}</button>
+            <button ng-class="btnShareClass" ng-click="shareEvent()" ng-disabled="isDisabled">{{ btnShareText }}</button>
           </div>
           <div class="event-share-btns" ng-show="shared">
             <span class="label label-success">Shared!</span>
