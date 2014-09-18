@@ -457,5 +457,70 @@ function searchPhotoEvents(db, cb) {
 
 }
 
+function searchPhotoEventsLastMonth(db, cb) {
+
+  if (!db)
+  {
+    console.log("Database is null");
+    cb();
+  }
+
+  var Events = db.get('events');
+
+  var date = new Date();
+
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+
+  var dateLessMonth = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+
+  console.log(dateLessMonth)
+
+  Events.find({
+    'start_time': {
+      $gte: dateLessMonth,
+      $lt: date
+    }
+  }).success(function(evs) {
+
+    var nb_done = 0;
+
+    if (evs) {
+      for (i = 0; i < evs.length; i++) {
+
+        searchPhotosBest(evs[i], db, function(ev, err) {
+          if (err)
+            console.log(err);
+          else if (ev) {
+              console.log("UPDATE FACEBOOK done for event with id: " + ev.eid);
+          }
+          nb_done++;
+          if (nb_done == (2 * evs.length))
+              cb();
+        });
+        searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
+          if (err)
+              console.log(err)
+          else if (ev) {
+              console.log("UPDATE INSTAGRAM done for event with id: "  + ev.eid);
+          }
+          nb_done++;
+          if (nb_done == (2 * evs.length))
+            cb();
+              
+        });
+      }
+    }
+    else
+      cb();
+
+    }).error(function(err) {
+      cb();
+    });
+
+}
+
+module.exports.searchPhotoEventsLastMonth = searchPhotoEventsLastMonth;
 module.exports.searchPhotoEvents = searchPhotoEvents;
 module.exports.searchPhotos = searchPhotos;
