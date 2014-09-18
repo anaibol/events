@@ -24,7 +24,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
   $scope.ev.player_result = 0;
 
-
   $scope.getLink = function() {
     return $state.current.name.split('.')[0] + '.edit(ev)';
   }
@@ -99,6 +98,9 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     // Events.one(ev.eid).get('rsvp').then(function(res) {
     //   $scope.attending = true;
     // });
+
+    if (!$scope.ev.list_event_players)
+      $scope.ev.list_event_players = [];
 
     $scope.ev = ev;
 
@@ -195,11 +197,45 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
           $scope.attending = 'attending';
           $scope.isBtnJoinDisabled = false;
           $scope.btnJoinText = "Join";
+          $scope.ev.attending.push(Global.user.facebook.id);
 
-          for (i = 0; i < $scope.ev.list_event_players.length; i++) {
-            if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id)
-              $scope.ev.list_event_players[i].result += 6;
+          if (!$scope.ev.list_event_players)
+              $scope.ev.list_event_players = [];
+
+          
+          var find = 0;
+
+          for (i = 0; i < $scope.ev.list_event_players.length && find == 0; i++) {
+            if ($scope.ev.list_event_players[i].facebook.id == Global.user.facebook.id)
+              find = 1;
           }
+
+          if (find) {
+            console.log("Ok");
+            for (i = 0; i < $scope.ev.list_event_players.length; i++) {
+              if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id) {
+                $scope.ev.list_event_players[i].result += 6;
+                i = $scope.ev.list_event_players.length;
+              }
+            }
+          }
+          else {
+            console.log("Test");
+            if (Global.user) {
+              if (!Global.user.result)
+                Global.user.result = 2;
+              for (i = 0; i < $scope.ev.attending.length; i++) {
+                if ($scope.ev.attending[i] == Global.user.facebook.id)
+                  Global.user.result += 6;
+              }
+              console.log($scope.ev.list_event_players);
+
+              $scope.ev.list_event_players.push(Global.user);
+              Restangular.all('results/' + $scope.ev.eid).post().then(function(res) {
+              });
+            }
+          }
+          
         }
       });
     }
@@ -210,14 +246,31 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
       Restangular.all('events/' + ev.eid + '/rsvp').post({attendingStatus: 'declined'}).then(function(res) {
         if ($scope.attending == "attending") {
+            if (!$scope.ev.list_event_players)
+              $scope.ev.list_event_players = [];
+            else
              for (i = 0; i < $scope.ev.list_event_players.length; i++) {
-                if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id)
+                if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id) {
                   $scope.ev.list_event_players[i].result -= 6;
+                  i = $scope.ev.list_event_players.length;
+                }
               }
         }
+
         $scope.attending = '';
         $scope.isBtnLeaveDisabled = false;
         $scope.btnLeaveText = "Leave";
+
+
+        var index = -1;
+
+        for (i = 0; i < $scope.ev.list_event_players.length && index == -1; i++) {
+          if ($scope.ev.list_event_players[i].facebook.id == Global.user.facebook.id)
+            index = i;
+        }
+
+        if (index != -1)
+          $scope.ev.attending.splice(index, 1);
       });
     }
 
@@ -229,8 +282,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     $scope.shareEvent = function () {
       $scope.isDisabled = "true";
       $scope.btnShareText = "Sharing...";
-
-      var link = "http://www.ted.com/talks/andrew_connolly_what_s_the_next_window_into_our_universe";
 
       /*FB.ui(
         {
@@ -252,21 +303,42 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
         console.log(res);
         if (res.error)
         {
-          $scope.isDisabled = "false";
+          $scope.isDisabled = false;
           $scope.btnShareText = res.error;
         }
         else
         {
-          $scope.shared = true;
-          if (Global.user) {
-            if (!$scope.ev.list_event_players)
-              $scope.ev.list_event_players = [];
-            if (!Global.user.result)
-              Global.user.result = 2;
-            $scope.ev.list_event_players.push(Global.user);
+          $scope.isDisabled = false;
+          $scope.btnShareText = "Share again?";
+          $scope.btnShareClass = "btn";
+
+          console.log($scope.ev.list_event_players.indexOf(Global.user));
+
+          var find = 0;
+
+          if (!$scope.ev.list_event_players)
+            $scope.ev.list_event_players = [];
+
+          for (i = 0; i < $scope.ev.list_event_players.length && find == 0; i++) {
+            if ($scope.ev.list_event_players[i].facebook.id == Global.user.facebook.id)
+              find = 1;
           }
+
+          if (!find) {
+            if (Global.user) { 
+              if (!Global.user.result)
+                Global.user.result = 2;
+              for (i = 0; i < $scope.ev.attending.length; i++) {
+                if ($scope.ev.attending[i] == Global.user.facebook.id)
+                  Global.user.result += 6;
+              }
+              $scope.ev.list_event_players.push(Global.user);
+            }
+          }
+
         }
-        
+        Restangular.all('results/' + $scope.ev.eid).post().then(function(res) {
+        });
       });
     }
   });

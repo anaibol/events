@@ -2,6 +2,8 @@ var Results = global.db.get('results');
 
 var Boosts = global.db.get('boosts');
 
+var Pro = require('../services/promoter.js');
+
 exports.getResults = function(req, res) {
 
   Results.find(
@@ -50,7 +52,9 @@ exports.addResult = function (req, res) {
     event_id: req.params.eid,
     result: 2,
     result_boosted: 2
-  } 
+  }
+
+  Pro.associatePlayer(global.db, req.user.facebook.id, req.params.eid)
 
   Results.insert(result, function(err) {
     if (err)
