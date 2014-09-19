@@ -182,7 +182,7 @@ function fetchMultiple(eids, term, cb) {
 
 function fetch(eid, term, cb) {
   eid = parseInt(eid);
-
+  console.log("l'eid est " + eid)
   existsInDb(eid, function(exists) {
     if (!exists) {
       get(eid, term, function(ev) {
@@ -191,7 +191,7 @@ function fetch(eid, term, cb) {
             cb(newEv);
           });
         } else {
-          cb(false, "Le Get eid term function(ev) part à la casse --------- ");
+          cb("Le Get eid term function(ev) part à la casse --------- ");
         }
       });
     } else {

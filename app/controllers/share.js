@@ -88,13 +88,14 @@ exports.share = function(req, res)
       var name = ev.name
 
     var wallPost = {
-      name: name,
+      name: "To win some champagne: share this with your friends! "
       link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
       picture: ev.pic_cover.source,
       description: "",
       message: ""
     };
 
+    wallPost.description += name + ' \n'
     if (ev.location)
     {
       wallPost.description += "@ " + ev.location
@@ -134,13 +135,20 @@ exports.share = function(req, res)
       
       wallPost.description += ev.start_time.getMinutes() + "\n"
     }
+    if (ev.attending_count)
+    {
+      if (ev.attending_count > 10)
+      {
+        wallPost.description += 'A! ' + ev.attending_count + ' \n'
 
+      }  
+    }  
     if (ev.price.full)
     {
       if (ev.price.num == 0)
-          wallPost.description += '$ #'+ ev.price.full +'\n'
+          wallPost.description += '$ #'+ ev.price.full +' \n'
       else
-          wallPost.description += "$ " + ev.price.full + "\n"
+          wallPost.description += "$ " + ev.price.full + " \n"
     }
     for(i = 0; i < 3; i++)
     {
@@ -150,7 +158,7 @@ exports.share = function(req, res)
         wallPost.description += " "
     }
 
-    wallPost.message += wallPost.description
+    wallPost.message = "Untel is offering a botlle of champagne whom will best promote his or her event. Fency some Champagne? \n Wooepa helps promoters to boost attendance through social media strategies. " 
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
