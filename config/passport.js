@@ -74,11 +74,11 @@ module.exports = function(passport) {
 
           Users.insert(user, function(err) {
             if (err) console.log(err);
-            Usr.updatePicture(user, global.db);
+            Usr.updatePicture(user);
             return done(err, user);
           });
         } else {
-          Usr.updatePicture(user, global.db);
+          Usr.updatePicture(user);
           Ret.retrieveActions(user.facebook.id, global.db, function (err) {
             if (err)
               console.log(err);

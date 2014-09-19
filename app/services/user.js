@@ -3,7 +3,7 @@ var graph = require('fbgraph');
 
 /* La fonction retrieveAction va chercher dans le Flux d'actualité de l'utilisateur d'id user_id tous 
 les posts qui sont en rapport avec 'wooepa' et les enregistre dans la table action */
-function updatePicture(user, db)
+function updatePicture(user)
 {
 
 	if (!db)

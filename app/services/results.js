@@ -1,90 +1,8 @@
+var config = require('../../config/config');
 
-function refreshBoosts(db, result, cb) {
+var db = require('monk')(config.db);
 
-	if (!db)
-	{
-		console.log("Database is null");
-		return ;
-	}
-
-	Results = db.get('results');
-
-	Boosts = db.get('boosts');
-
-	Boosts.find({
-		father_id: result.user_id,
-			event_id: result.event_id
-	}, function (err, boosts) {
-		if (err) {
-			console.log(err);
-			cb(err);
-		}
-		else if (boosts) {
-
-			for (j = 0; j < boosts.length; j++) {
-				console.log("Boosts n°:" + j);
-				console.log(boosts[j]);
-				Boosts.update({_id: boosts[j]._id},
-					{$set: {score: result.result}},
-						function (err) {
-						if (err)
-							console.log(err)
-					});
-				if (j == (boosts.length - 1))
-					cb();
-			}
-
-		}
-		else
-			cb();
-	});
-
-}
-
-function refreshResults(db, event_id, cb) {
-
-	if (!db)
-	{
-		console.log("Database is null");
-		return ;
-	}
-
-	Results = db.get('results');
-
-	Boosts = db.get('boosts');
-
-	Results.find({
-		'event_id': event_id
-	}, function (err, results) {
-		if (err)
-		{
-			console.log(err)
-			cb(err)
-		}
-		else if (results) {
-			console.log("There is " + results.length + " results");
-			for (i = 0; i < results.length; i++) {
-			console.log("Result n°:" + i);
-			console.log(results[i]);
-
-			exports.refreshBoosts(db, results[i], function (err) {
-				if (err)
-					console.log(err);
-			});
-
-			if (i == (results.length - 1))
-				cb();
-			}
-		}
-		else
-			console.log("No results for this event")
-	});
-}
-
-function refreshOneResultsBoosted(db, event_id, result, cb) {
-
-	if (!db)
-		cb({err: 'Database is null'});
+function refreshOneResultsBoosted(event_id, result, cb) {
 
 	var Boosts = db.get('boosts');
 
@@ -129,13 +47,7 @@ function refreshOneResultsBoosted(db, event_id, result, cb) {
 
 }
 
-function refreshResultsBoosted(db, event_id, cb) {
-
-	if (!db)
-	{
-		console.log("Database is null");
-		cb();
-	}
+function refreshResultsBoosted(event_id, cb) {
 
 	Results = db.get('results');
 
@@ -158,7 +70,7 @@ function refreshResultsBoosted(db, event_id, cb) {
 
 			for (i = 0; i < results.length; i++) {
 
-			exports.refreshOneResultsBoosted(db, event_id, results[i], function(err) {
+			exports.refreshOneResultsBoosted(event_id, results[i], function(err) {
 				nb_done++;
 				if (err)
 					console.log(err);
@@ -175,7 +87,5 @@ function refreshResultsBoosted(db, event_id, cb) {
 	});
 }
 
-module.exports.refreshResults = refreshResults;
 module.exports.refreshResultsBoosted = refreshResultsBoosted;
 module.exports.refreshOneResultsBoosted = refreshOneResultsBoosted;
-module.exports.refreshBoosts = refreshBoosts;

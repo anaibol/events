@@ -43,7 +43,7 @@ exports.saveShare = function (post_id, event_id, user_id, data) {
           console.log(err);
         else
         {
-          Pro.associatePlayer(global.db, user_id, event_id);
+          Pro.associatePlayer(user_id, event_id);
           console.log(action);
         }
       });

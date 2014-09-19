@@ -72,7 +72,7 @@
               <img ng-src="{{ player.facebook.picture }}" ng-alt="{{player.name}}" class="img-circle">
                 {{ player.result }} pts
                   <button type="button" class="btn btn-default btn-xs" ng-click="addBoost(player, ev.eid)"
-                  ng-show="boosted != player.facebook.id && ev.player_result && (player.result > ev.player_result || player.result == 2)">
+                  ng-show="ev.player_result && (player.result > ev.player_result || (player.result == 2 && ev.player_result == 2)) && (!boosted || boosted != player.facebook.id)">
                   Boost<span class="glyphicon glyphicon-flash"></span>
                   </button>
               </li>

@@ -215,6 +215,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
             for (i = 0; i < $scope.ev.list_event_players.length; i++) {
               if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id) {
                 $scope.ev.list_event_players[i].result += 6;
+                $scope.ev.player_result += 6;
                 i = $scope.ev.list_event_players.length;
               }
             }
@@ -231,6 +232,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
               console.log($scope.ev.list_event_players);
 
               $scope.ev.list_event_players.push(Global.user);
+              $scope.ev.player_result = Global.user.result;
               Restangular.all('results/' + $scope.ev.eid).post().then(function(res) {
               });
             }
@@ -252,6 +254,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
              for (i = 0; i < $scope.ev.list_event_players.length; i++) {
                 if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id) {
                   $scope.ev.list_event_players[i].result -= 6;
+                  $scope.ev.player_result -= 6;
                   i = $scope.ev.list_event_players.length;
                 }
               }
@@ -312,8 +315,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
           $scope.btnShareText = "Share again?";
           $scope.btnShareClass = "btn";
 
-          console.log($scope.ev.list_event_players.indexOf(Global.user));
-
           var find = 0;
 
           if (!$scope.ev.list_event_players)
@@ -333,6 +334,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
                   Global.user.result += 6;
               }
               $scope.ev.list_event_players.push(Global.user);
+              $scope.ev.player_result = Global.user.result;
             }
           }
 

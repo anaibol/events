@@ -1,7 +1,11 @@
 
+var config = require('../../config/config');
+
+var db = require('monk')(config.db);
+
 var tokenInstagram = "1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab";
 
-function insertPhoto(db, data, current_image, cb) {
+function insertPhoto(data, current_image, cb) {
 
   if (!data)
     cb(data);
@@ -35,7 +39,7 @@ function insertPhoto(db, data, current_image, cb) {
           });
 }
 
-function searchPhotosBest(data, db, cb) {
+function searchPhotosBest(data, cb) {
 
   if (!data)
     cb(data);
@@ -43,8 +47,6 @@ function searchPhotosBest(data, db, cb) {
   var Events = db.get('events');
 
   var graph = require('fbgraph');
-
-  var accessToken = "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y";
 
   var currentDate = new Date();
 
@@ -60,7 +62,7 @@ function searchPhotosBest(data, db, cb) {
     }
   }
 
-  graph.get('/' + data.eid + '/photos' + '?access_token=' + accessToken, function(err, result) {
+  graph.get('/' + data.eid + '/photos' + '?access_token=' + config.app.accessToken, function(err, result) {
       if (err) {
         console.log(err);
         cb(data, err);
@@ -81,7 +83,7 @@ function searchPhotosBest(data, db, cb) {
           if (data.images.indexOf(current_image) == -1 && images.indexOf(current_image) == -1) {
             images.push(current_image);
 
-            insertPhoto(db, data, current_image, function(err) {
+            insertPhoto(data, current_image, function(err) {
               if (err)
                 console.log(err);
               nb_done++;
@@ -119,117 +121,7 @@ function searchPhotosBest(data, db, cb) {
 
 }
 
-function searchPhotos(data, db, cb) {
-
-  if (!data)
-    cb(data);
-
-  var Events = db.get('events');
-
-  var graph = require('fbgraph');
-
-  var accessToken = "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y";
-
-  var currentDate = new Date();
-
-  if (data.images && data.last_update_images)
-  {
-    var next_update = data.last_update_images;
-    next_update.setDate(next_update.getDate() + 7);
-    if (next_update >= currentDate)
-    {
-      console.log('Facebook: Already in DB, next update at :' + next_update);
-      cb(data);
-      return ;
-    }
-  }
-
-  var id = [];
-
-  var images = [];
-
-  graph.get('/' + data.eid + '/photos' + '?access_token=' + accessToken, function(err, result) {
-      if (err) {
-        console.log(err);
-        cb(data, err);
-      }
-      else if (result) {
-
-        for (var i = 0; i < result.data.length; i++){
-
-          if (result.data[i].type == 'photo')
-            id.push(result.data[i].object_id)
-        }
-
-        var nb_done = 0;
-
-        for (var j = 0; j < id.length; j++)
-        {
-          graph.get('/' + id[j] + '?access_token=' + accessToken, function(err, result) {
-            if (err)
-            {
-              console.log(err);
-              nb_done++;
-                if (nb_done == id.length)
-                  cb(data, err);
-            }
-            else if (result) {
-
-              images.push(result.images);
-
-              Events.findOne({eid: parseInt(data.eid)}, function (err, event) {
-                if (!event) {
-                  nb_done++;
-                  if (nb_done == id.length)
-                    cb(data);
-                }
-                else if (event.images && event.images.indexOf(result.images)) {
-                  console.log("Image already exist / No UPDATE")
-                  nb_done++;
-                  if (nb_done == id.length)
-                    cb(data);
-                }
-                else
-                {
-                  Events.update({eid: parseInt(data.eid)}, 
-                  {$push: {'images': result.images}},
-                  function(err, event) {
-                    if (err)
-                      console.log(err);
-                    
-                    Events.update({eid: parseInt(data.eid)},
-                      {$set: {'last_update_images': currentDate}},
-                      function(err, event) {
-                        if (err)
-                          console.log(err);
-
-                        nb_done++;
-                        console.log("Update");
-                        if (nb_done == id.length)
-                          cb(data);
-                    });
-
-                  });
-                }
-
-              });
-            }
-            else {
-              nb_done++;
-              if (nb_done == id.length)
-                cb(data);
-            }
-
-          });
-        }
-      }
-      else
-        cb(data);
-    });
-
-}
-
-function searchPlaceAndRequestRecentPhotos(data, db, cb)
+function searchPlaceAndRequestRecentPhotos(data, cb)
 {
   if (!data)
     cb(data, 'No Database or no Data');
@@ -397,13 +289,7 @@ function searchPlaceAndRequestRecentPhotos(data, db, cb)
   // JSON.stringify
 }
 
-function searchPhotoEvents(db, cb) {
-
-  if (!db)
-  {
-    console.log("Database is null");
-    cb();
-  }
+function searchPhotoEvents(cb) {
 
   var Events = db.get('events');
 
@@ -427,7 +313,7 @@ function searchPhotoEvents(db, cb) {
     if (evs) {
       for (i = 0; i < evs.length; i++) {
 
-        searchPhotosBest(evs[i], db, function(ev, err) {
+        searchPhotosBest(evs[i], function(ev, err) {
           if (err)
             console.log(err);
           else if (ev) {
@@ -437,7 +323,7 @@ function searchPhotoEvents(db, cb) {
           if (nb_done == (2 * evs.length))
               cb();
         });
-        searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
+        searchPlaceAndRequestRecentPhotos(evs[i], function(ev, err) {
           if (err)
               console.log(err)
           else if (ev) {
@@ -457,70 +343,4 @@ function searchPhotoEvents(db, cb) {
 
 }
 
-function searchPhotoEventsLastMonth(db, cb) {
-
-  if (!db)
-  {
-    console.log("Database is null");
-    cb();
-  }
-
-  var Events = db.get('events');
-
-  var date = new Date();
-
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
-
-  var dateLessMonth = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
-
-  console.log(dateLessMonth)
-
-  Events.find({
-    'start_time': {
-      $gte: dateLessMonth,
-      $lt: date
-    }
-  }).success(function(evs) {
-
-    var nb_done = 0;
-
-    if (evs) {
-      for (i = 0; i < evs.length; i++) {
-
-        searchPhotosBest(evs[i], db, function(ev, err) {
-          if (err)
-            console.log(err);
-          else if (ev) {
-              console.log("UPDATE FACEBOOK done for event with id: " + ev.eid);
-          }
-          nb_done++;
-          if (nb_done == (2 * evs.length))
-              cb();
-        });
-        searchPlaceAndRequestRecentPhotos(evs[i], db, function(ev, err) {
-          if (err)
-              console.log(err)
-          else if (ev) {
-              console.log("UPDATE INSTAGRAM done for event with id: "  + ev.eid);
-          }
-          nb_done++;
-          if (nb_done == (2 * evs.length))
-            cb();
-              
-        });
-      }
-    }
-    else
-      cb();
-
-    }).error(function(err) {
-      cb();
-    });
-
-}
-
-module.exports.searchPhotoEventsLastMonth = searchPhotoEventsLastMonth;
 module.exports.searchPhotoEvents = searchPhotoEvents;
-module.exports.searchPhotos = searchPhotos;

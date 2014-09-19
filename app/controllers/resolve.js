@@ -13,17 +13,17 @@ exports.getResults = function(req, res) {
 
   console.log("Resolve the game for the event with id: " + req.params.eid);
 
-    Upd.updateActions(db, req.params.eid , function(err) {
+    Upd.updateActions(req.params.eid , function(err) {
       if (err)
         console.log(err)
 
       console.log("UPDATE DONE");
-      Rso.resolveGames(db, req.params.eid, function(err) {
+      Rso.resolveGames(req.params.eid, function(err) {
         if (err)
           console.log(err)
         console.log("RESOLVE DONE");
 
-        Rsu.refreshResultsBoosted(db, req.params.eid, function (results, err) {
+        Rsu.refreshResultsBoosted(req.params.eid, function (results, err) {
           if (err)
             console.log(err);
           console.log("REFRESH DONE");

@@ -1,4 +1,8 @@
 
+var config = require('../../config/config');
+
+var db = require('monk')(config.db);
+
 function associatePromoter(db, promoter_id, event_id)
 {
 	if (!db)
@@ -61,13 +65,8 @@ function associatePromoter(db, promoter_id, event_id)
     });
 }
 
-function associatePlayer(db, player_id, event_id)
+function associatePlayer(player_id, event_id)
 {
-	if (!db)
-	{
-		console.log("Database is null");
-		return ;
-	}
 
 	var Users = db.get('users');
 

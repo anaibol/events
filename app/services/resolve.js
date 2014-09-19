@@ -1,5 +1,9 @@
 
-function getActionResult(db, action, cb) {
+var config = require('../../config/config');
+
+var db = require('monk')(config.db);
+
+function getActionResult(action, cb) {
 
     if (!db)
     {
@@ -36,7 +40,7 @@ function getActionResult(db, action, cb) {
                             });
 }
 
-function getAllActionsResult(db, actions, cb) {
+function getAllActionsResult(actions, cb) {
 
     var nb_done = 0;
 
@@ -48,7 +52,7 @@ function getAllActionsResult(db, actions, cb) {
         cb(resultat_user);
 
     for (j = 0; j < actions.length; j++) {
-        getActionResult(db, actions[j], function(resultat, err) {
+        getActionResult(actions[j], function(resultat, err) {
             nb_done++;
             resultat_user += resultat;
             if (err) {
@@ -63,7 +67,7 @@ function getAllActionsResult(db, actions, cb) {
 
 }
 
-function getAttendingBonus(db, event, user_id, cb) {
+function getAttendingBonus(event, user_id, cb) {
 
     var nb_done = 0;
 
@@ -81,13 +85,7 @@ function getAttendingBonus(db, event, user_id, cb) {
 
 }
 
-function getActionsResult(db, event, event_id, user_id, cb) {
-
-    if (!db)
-    {
-        console.log("Database is null");
-        cb();
-    }
+function getActionsResult(event, event_id, user_id, cb) {
 
     var Actions = db.get('actions');
 
@@ -109,14 +107,14 @@ function getActionsResult(db, event, event_id, user_id, cb) {
 
                             console.log("GETTING");
                             console.log(actions.length);
-                            getAllActionsResult(db, actions, function(resultat_user, err) {
+                            getAllActionsResult(actions, function(resultat_user, err) {
                                 if (err)
                                     console.log(err);
                                 console.log("GET ALL ENDED");
 
                                 console.log(resultat_user);
 
-                                getAttendingBonus(db, event, user_id, function(attending_bonus) {
+                                getAttendingBonus(event, user_id, function(attending_bonus) {
                                     if (err)
                                         console.log(err);
                                     resultat_user += attending_bonus;
@@ -182,13 +180,8 @@ function getActionsResult(db, event, event_id, user_id, cb) {
 
 }
 
-function resolveGames(db, event_id, cb) {
+function resolveGames(event_id, cb) {
 
-    if (!db)
-    {
-        console.log("Database is null");
-        cb();
-    }
 
 	var Events = db.get('events');
 
@@ -213,7 +206,7 @@ function resolveGames(db, event_id, cb) {
 
             for (i = 0; i < list_players.length; i++) {
 
-            	exports.getActionsResult(db, event, event_id, list_players[i], function(err) {
+            	exports.getActionsResult(event, event_id, list_players[i], function(err) {
                     nb_done++;
                     if (err)
                         console.log(err)

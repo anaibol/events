@@ -29,13 +29,17 @@ exports.addBoost = function(req, res) {
 
   console.log("Add");
 
+  console.log(req.user.facebook.id);
+  console.log(req.params.eid);
+
   Results.findOne({
     user_id: req.user.facebook.id,
-    event_id: req.params.eid
+    event_id: parseInt(req.params.eid)
   }, function (err, result) {
     if (err)
       console.log('err');
 
+    if (result) {
     console.log(result);
 
       var boost = {
@@ -45,12 +49,14 @@ exports.addBoost = function(req, res) {
         score: result.result
       }
 
-      Boosts.insert(boost, function(err) {
-                  if (err)
-                    console.log(err);
-                  else
-                    res.json(boost);
+      Boosts.insert(boost, function(err, boost) {
+          if (err)
+            console.log(err);
+          res.json(boost);
       });
+    }
+    else
+      res.json(null);
 
   })
 

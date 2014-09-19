@@ -4,7 +4,8 @@ module.exports = {
   db: "mongodb://admin:0303456@localhost/wooepa",
   dbName: "wooepa",
   app: {
-    name: "Wooepa - Production"
+    name: "Wooepa - Production",
+    accessToken: "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y"
   },
   facebook: {
     clientID: "439472799532734",

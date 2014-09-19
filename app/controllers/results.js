@@ -54,7 +54,7 @@ exports.addResult = function (req, res) {
     result_boosted: 2
   }
 
-  Pro.associatePlayer(global.db, req.user.facebook.id, req.params.eid)
+  Pro.associatePlayer(req.user.facebook.id, req.params.eid)
 
   Results.insert(result, function(err) {
     if (err)
@@ -71,7 +71,7 @@ exports.updateResult = function (req, res) {
 
   Results.findOne(
     {'user_id': req.params.uid,
-     'event_id': req.params.eid
+     'event_id': parseInt(req.params.eid)
     }, function(err, player_result) {
     if (err) {
       res.render('error', {
@@ -79,6 +79,8 @@ exports.updateResult = function (req, res) {
       });
     } else if (player_result)
     {
+        console.log("Find");
+        console.log(player_result);
         Boosts.find(
           {'son_id': req.params.uid,
            'event_id': req.params.eid
@@ -90,6 +92,7 @@ exports.updateResult = function (req, res) {
           } else if (son_boosts)
           {
             console.log("There is boosts here");
+            console.log(son_boosts);
 
             var result_boosted = 0;
 
@@ -102,15 +105,19 @@ exports.updateResult = function (req, res) {
               , function (err, result) {
                 if (err)
                   console.log(err)
+                console.log(result);
               })
-            res.json({'result_boosted' : player_result.result + result_boosted});
+            player_result.result_boosted = player_result.result + result_boosted;
+            res.json(player_result);
           }
           else
-            res.json(son_boosts);
+            res.json(player_result);
         });
     }
-    else
+    else {
+      console.log("No find");
       res.json(player_result);
+    }
   });
 
 }

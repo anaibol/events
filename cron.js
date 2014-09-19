@@ -6,6 +6,8 @@ var db = require('monk')(config.db);
 
 var Pho = require('./app/services/photos.js');
 
+var Upd = require('./app/services/update.js');
+
 var Events = db.get('events');
 var Users = db.get('users');
 var Creators = db.get('creators');
@@ -74,8 +76,8 @@ var newEvents;
 
 
 
-var job = new cronJob('0 */1 * * *', function() {
-  Pho.searchPhotoEvents(db, function (err) {
+var job = new cronJob('*/1 * * * *', function() {
+  Pho.searchPhotoEvents(function (err) {
     if (err)
       console.log(err);
     console.log("---- UPDATE Pictures of week DONE ----")
@@ -83,11 +85,11 @@ var job = new cronJob('0 */1 * * *', function() {
   
 }, null, true);
 
-var job = new cronJob('0 */1 * * *', function() {
-  Pho.searchPhotoEventsLastMonth(db, function (err) {
+var job = new cronJob('*/1 * * * *', function() {
+  Upd.updateLastMonthEvents(function (err) {
     if (err)
       console.log(err);
-    console.log("---- UPDATE Pictures of last month DONE ----")
+    console.log("---- UPDATE Event of last month DONE ----")
   });
   
 }, null, true);

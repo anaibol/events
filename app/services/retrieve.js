@@ -77,7 +77,7 @@ function searchPost(db, request, date_end, cb) {
 
 									var event_id = link_splited[link_splited.length - 1];
 
-									Pro.associatePlayer(db, id[0], event_id);
+									Pro.associatePlayer(id[0], event_id);
 
 									var action = {
 										user_id: id[0],
@@ -176,7 +176,7 @@ function searchPostForEvent(db, request, date_end, eid, cb) {
 									var event_id = link_splited[link_splited.length - 1];
 
 									if (event_id == eid) {
-										Pro.associatePlayer(db, id[0], event_id);
+										Pro.associatePlayer(id[0], event_id);
 
 										var action = {
 											user_id: id[0],
@@ -282,6 +282,8 @@ function retrieveEventActions(db, user_id, event_id, cb)
 
 			var request = '/' + user_id + '/feed' + '?access_token=' + user.accessToken;
 
+			var requestAttending
+
 			searchPostForEvent(db, request, date_end, event_id, function(err) {
 				if (err)
 					console.log(err);
@@ -326,6 +328,7 @@ function retrieveForEvent(db, event_id, cb) {
 	    			if (nb_done == list_players.length)
 	    				cb();
 	    		});
+
 	      	}
 	    }
 	    else
@@ -335,6 +338,15 @@ function retrieveForEvent(db, event_id, cb) {
 
 }
 
+function retrieveEventAttendingUser(db, user_id, cb) {
+	graph.get(request , function(err, result) {
+		if (err)
+			console.log(err);
+		console.log(result)
+	});
+}
+
+module.exports.retrieveEventAttendingUser = retrieveEventAttendingUser;
 module.exports.retrieveActions = retrieveActions;
 module.exports.retrieveForEvent = retrieveForEvent;
 module.exports.unique = unique;
