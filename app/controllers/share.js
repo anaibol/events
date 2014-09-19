@@ -88,7 +88,7 @@ exports.share = function(req, res)
       var name = ev.name
 
     var wallPost = {
-      name: "TO WIN SOME CHAMPAGNE: SHARE THIS WITH YOUR FRIENDS! ",
+      name: "UN BISOU A GAGNER WOOEPA ! ",
       link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
       picture: ev.pic_cover.source,
       description: "",
