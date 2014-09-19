@@ -48,6 +48,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, modal
     })
     .state('promote', {
       url: '/promote',
+      promote: "true",
       templateUrl: '/assets/views/events/home.html',
     })
     .state('free', {

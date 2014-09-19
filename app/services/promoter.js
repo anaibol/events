@@ -3,13 +3,8 @@ var config = require('../../config/config');
 
 var db = require('monk')(config.db);
 
-function associatePromoter(db, promoter_id, event_id)
+function associatePromoter(promoter_id, event_id)
 {
-	if (!db)
-	{
-		console.log("Database is null");
-		return ;
-	}
 
 	var Users = db.get('users');
 

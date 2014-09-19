@@ -24,6 +24,8 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
   $scope.ev.player_result = 0;
 
+  $scope.current_date = new Date();
+
   $scope.getLink = function() {
     return $state.current.name.split('.')[0] + '.edit(ev)';
   }
@@ -115,6 +117,14 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     {
       $scope.ev.player_id = Global.user.facebook.id;
       $scope.boosted = $scope.getBoost($scope.ev.eid);
+    }
+
+    if ($scope.ev.in_promotion) {
+      console.log($scope.ev.creator.id);
+      Restangular.all('user/' + $scope.ev.creator.id).get('').then(function(user) {
+        $scope.ev.promoter = user;
+        console.log(user);
+      });
     }
 
     if (ev.list_event_players) {

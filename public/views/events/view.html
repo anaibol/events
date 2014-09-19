@@ -47,10 +47,36 @@
       <div class="col-md-4">
       <!-- ng-controller="RSVPCtrl" -->
 
+      <div class="event-buttons wdiv padding-10">
+          <div class="event-rsvp-btns">
+            <a class="btn btn-success" href="#" ng-show="attending === ''" ng-click="setAttending(ev.eid)" ng-disabled="isBtnJoinDisabled">{{ btnJoinText }}</a>
+            <button class="btn" ng-show="attending === 'attending'" ng-click="setNotAttending(ev.eid)" ng-disabled="isBtnLeaveDisabled">{{ btnLeaveText }}</button>
+          </div>
+          <div class="event-rsvp-btns">
+            <button class="btn" ng-click="sendInvitations()">Invite your friends!</button>
+          </div>
+          <div class="event-share-btns">
+            <button ng-class="btnShareClass" ng-click="shareEvent()" ng-disabled="isDisabled">{{ btnShareText }}</button>
+          </div>
+      </div>
+
+      <hr>
+
       <div class="wdiv padding-10" ng-show="ev.in_promotion">
-        <h4>Game active</h4>
-        <p>{{ev.promotion.reward}}</p>
-        <p>End: <strong>{{ev.promotion.end_time | date:'mediumDate'}} at {{ev.promotion.end_time | date:'shortTime'}}</strong></p>
+
+        <div class="panel panel-success">
+          <div class="panel-heading">Game Active</div>
+          <div class="panel-body">
+            <ul class="list-group" ng-if"ev.promoter">
+              <li class="list-group-item">
+                <img ng-src="{{ ev.promoter.facebook.picture }}" ng-alt="{{ev.promoter.name}}" class="img-circle">
+                  {{ ev.promoter.name }}
+              </li>
+              <li class="list-group-item">{{ev.promotion.reward}}</li>
+              <li class="list-group-item">End: <strong>{{ev.promotion.end_time | date:'mediumDate'}} at {{ev.promotion.end_time | date:'shortTime'}}</strong></li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div class="wdiv padding-10">
@@ -80,19 +106,6 @@
           </div>
         </div>
       </div>
-
-        <div class="event-buttons wdiv padding-10">
-          <div class="event-rsvp-btns">
-            <a class="btn btn-success" href="#" ng-show="attending === ''" ng-click="setAttending(ev.eid)" ng-disabled="isBtnJoinDisabled">{{ btnJoinText }}</a>
-            <button class="btn" ng-show="attending === 'attending'" ng-click="setNotAttending(ev.eid)" ng-disabled="isBtnLeaveDisabled">{{ btnLeaveText }}</button>
-          </div>
-          <div class="event-rsvp-btns">
-            <button class="btn" ng-click="sendInvitations()">Invite your friends!</button>
-          </div>
-          <div class="event-share-btns">
-            <button ng-class="btnShareClass" ng-click="shareEvent()" ng-disabled="isDisabled">{{ btnShareText }}</button>
-          </div>
-        </div>
 
       </div>
 

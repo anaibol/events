@@ -1,10 +1,15 @@
-var EventFormCtrl = function($scope, $modalInstance, $q, $filter, Restangular, $stateParams) {
+var EventFormCtrl = function($scope, $modalInstance, $q, $filter, Restangular, $stateParams, Global) {
   $scope.ev = {};
 
   Events.one($stateParams.eid).then(function(ev) {
     console.log($stateParams.eid);
     $scope.ev = ev;
+    if (Global.user && $scope.ev.creator.id == Global.user.facebook.id)
+      Restangular.all('promote/' + $scope.ev.eid).post();
+    else
+      console.log(Global.user);
   });
+
 
   $scope.previewImage = function(element) {
      $scope.$apply(function(scope) {
