@@ -7,6 +7,8 @@ var config = require('./config/config');
 
 var Pho = require('./app/services/photos.js');
 
+var Pro = require('./app/services/promoter.js');
+
 var Ev = require('./ev');
 
 var db = require('monk')(config.db);
@@ -407,6 +409,8 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
       evs.forEach(function (ev) {
         var start_time = new Date(Date.parse(ev.start_time));
         var now = new Date();
+
+        console.log("----- RECUP ----");
 
         if (start_time > now || start_time.getFullYear() < 2016) {
           var term = 'user';
