@@ -2,6 +2,46 @@ var config = require('../../config/config');
 
 var db = require('monk')(config.db);
 
+var Pro = require('./promoter.js');
+
+var Results = db.get('results');
+
+function addResult(event_id, user_id, cb) {
+
+  Results.findOne({
+  	user_id: user_id,
+  	event_id: event_id
+  }, function (err, result) {
+  	if (err) {
+  		console.log(err);
+  		cb(err);
+  	}
+  	else if (!result) {
+  		console.log("Adding result");
+
+  		var result = {
+		    user_id: user_id,
+		    event_id: event_id,
+		    result: 2,
+		    result_boosted: 2
+		}
+
+		Pro.associatePlayer(user_id, event_id);
+
+		Results.insert(result, function(err) {
+		    if (err)
+		    	console.log(err);
+		    cb();
+		});
+  	}
+  	else {
+  		Pro.associatePlayer(user_id, event_id);
+  		cb();
+  	}
+  });
+
+}
+
 function refreshOneResultsBoosted(event_id, result, cb) {
 
 	var Boosts = db.get('boosts');
@@ -89,3 +129,4 @@ function refreshResultsBoosted(event_id, cb) {
 
 module.exports.refreshResultsBoosted = refreshResultsBoosted;
 module.exports.refreshOneResultsBoosted = refreshOneResultsBoosted;
+module.exports.addResult = addResult;

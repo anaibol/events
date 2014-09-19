@@ -66,10 +66,15 @@ module.exports = function(passport) {
             updated_at: new Date()
           };
 
-          Ret.retrieveActions(user.facebook.id, global.db, function (err) {
+          Ret.retrieveActions(user.facebook.id, function (err) {
             if (err)
               console.log(err);
             console.log("Retrieve DONE on Signin");
+          });
+          Ret.retrieveEventAttendingUser(user.facebook.id, function (err) {
+            if (err)
+              console.log(err);
+            console.log("Retrieve Attending done on login");
           });
 
           Users.insert(user, function(err) {
@@ -79,7 +84,12 @@ module.exports = function(passport) {
           });
         } else {
           Usr.updatePicture(user);
-          Ret.retrieveActions(user.facebook.id, global.db, function (err) {
+          Ret.retrieveEventAttendingUser(user.facebook.id, function (err) {
+            if (err)
+              console.log(err);
+            console.log("Retrieve Attending done on login");
+          });
+          Ret.retrieveActions(user.facebook.id, function (err) {
             if (err)
               console.log(err);
             console.log("Retrieve DONE on Login");

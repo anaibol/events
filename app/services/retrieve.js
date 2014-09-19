@@ -1,8 +1,16 @@
+var config = require('../../config/config');
+
+var db = require('monk')(config.db);
+
 var graph = require('fbgraph');
 
 var Ev = require('../../ev.js');
 
-var Pro = require('../services/promoter.js');
+var Res = require('./results.js');
+
+var Pro = require('./promoter.js');
+
+var Users = db.get('users');
 
 function unique(array) {
   var result = [];
@@ -18,13 +26,7 @@ function unique(array) {
 //! Function to retrieve action for users and events
 
 //Elle enregistre tout les post dans le flux d'actualité renvoyer par la requete request
-function searchPost(db, request, date_end, cb) {
-
-	if (!db)
-	{
-		console.log("Database is null");
-		cb();
-	}
+function searchPost(request, date_end, cb) {
 
 	//console.log(request);
 
@@ -101,7 +103,7 @@ function searchPost(db, request, date_end, cb) {
 						{
 							//console.log("Next page...");
 							if (result.paging && result.paging.next)
-								searchPost(db, result.paging.next, date_end, function(err) {
+								searchPost(result.paging.next, date_end, function(err) {
 									if (err)
 										console.log(err);
 									cb();
@@ -116,7 +118,7 @@ function searchPost(db, request, date_end, cb) {
 
 }
 
-function searchPostForEvent(db, request, date_end, eid, cb) {
+function searchPostForEvent(request, date_end, eid, cb) {
 
 	if (!db)
 	{
@@ -219,15 +221,8 @@ function searchPostForEvent(db, request, date_end, eid, cb) {
 
 /* La fonction retrieveAction va chercher dans le Flux d'actualité de l'utilisateur d'id user_id tous 
 les posts qui sont en rapport avec 'wooepa' et les enregistre dans la table action */
-function retrieveActions(user_id, db, cb)
+function retrieveActions(user_id, cb)
 {
-	if (!db)
-	{
-		console.log("Database is null");
-		cb();
-	}
-
-	var Users = db.get('users');
 
 	Users.findOne({
         'facebook.id': user_id
@@ -244,7 +239,7 @@ function retrieveActions(user_id, db, cb)
 
 			var request = '/' + user_id + '/feed' + '?access_token=' + user.accessToken;
 
-			searchPost(db, request, date_end, function(err) {
+			searchPost(request, date_end, function(err) {
 				if (err)
 					console.log(err);
 				console.log("End for: " + user_id);
@@ -265,8 +260,6 @@ function retrieveEventActions(db, user_id, event_id, cb)
 		cb();
 	}
 
-	var Users = db.get('users');
-
 	Users.findOne({
         'facebook.id': user_id
       }, function(err, user) {
@@ -284,7 +277,7 @@ function retrieveEventActions(db, user_id, event_id, cb)
 
 			var requestAttending
 
-			searchPostForEvent(db, request, date_end, event_id, function(err) {
+			searchPostForEvent(request, date_end, event_id, function(err) {
 				if (err)
 					console.log(err);
 				console.log("End for: " + user_id);
@@ -297,7 +290,7 @@ function retrieveEventActions(db, user_id, event_id, cb)
     });
 }
 
-function retrieveForEvent(db, event_id, cb) {
+function retrieveForEvent(event_id, cb) {
 
 	if (!db)
 	{
@@ -338,12 +331,35 @@ function retrieveForEvent(db, event_id, cb) {
 
 }
 
-function retrieveEventAttendingUser(db, user_id, cb) {
-	graph.get(request , function(err, result) {
+function retrieveEventAttendingUser(user_id, cb) {
+
+	Users.findOne({'facebook.id': user_id}, function(err, user) {
 		if (err)
-			console.log(err);
-		console.log(result)
+			cb(err);
+		else if (user) {
+			var request = '/' + user_id + '/events' + '?access_token=' + user.accessToken;
+
+			graph.get(request , function(err, result) {
+				if (err)
+					cb(err);
+				console.log(result);
+				var nb_done = 0;
+				if (result.data.length == 0)
+					cb();
+
+				for (i = 0; i < result.data.length; i++) {
+					Res.addResult(result.data[i].id, user_id, function (err) {
+						if (err)
+							cb(err);
+						nb_done++;
+						if (nb_done == result.data.length)
+							cb();
+					});
+				}
+			});
+		}
 	});
+	
 }
 
 module.exports.retrieveEventAttendingUser = retrieveEventAttendingUser;
