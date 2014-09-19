@@ -74,13 +74,13 @@ var newEvents;
 
 
 
-var job = new cronJob('*/60 * * * *', function() {
+// var job = new cronJob('*/60 * * * *', function() {
   Pho.searchPhotoEvents(db, function (err) {
     if (err)
       console.log(err);
     console.log("---- UPDATE Pictures DONE ----")
   });
-}, null, true);
+// }, null, true);
 
 
 var job = new cronJob('*/30 * * * *', function() {
