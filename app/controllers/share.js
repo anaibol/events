@@ -134,13 +134,20 @@ exports.share = function(req, res)
       
       wallPost.description += ev.start_time.getMinutes() + "\n"
     }
+    if (ev.attending_count)
+    {
+      if (ev.attending_count > 10)
+      {
+        wallPost.description += ev.attending_count + 'Going \n'
 
+      }  
+    }  
     if (ev.price.full)
     {
       if (ev.price.num == 0)
-          wallPost.description += '$ #'+ ev.price.full +'\n'
+          wallPost.description += '$ #'+ ev.price.full +' \n'
       else
-          wallPost.description += "$ " + ev.price.full + "\n"
+          wallPost.description += "$ " + ev.price.full + " \n"
     }
     for(i = 0; i < 3; i++)
     {
@@ -151,6 +158,7 @@ exports.share = function(req, res)
     }
 
     wallPost.message += wallPost.description
+    wallPost.description = "Reward XXX - " + wallPost.description 
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
