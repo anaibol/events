@@ -74,26 +74,34 @@ var newEvents;
 //   // task finished
 // });
 
+<<<<<<< HEAD
 
 
 var job = new cronJob('*/1 * * * *', function() {
   Pho.searchPhotoEvents(function (err) {
+=======
+var job = new cronJob('0 */1 * * *', function() {
+  Pho.searchPhotoEvents(db, function (err) {
+>>>>>>> f857e98074e53c54ef90155a6eaa957c430f9874
     if (err)
       console.log(err);
     console.log("---- UPDATE Pictures of week DONE ----")
   });
-  
 }, null, true);
 
 var job = new cronJob('*/1 * * * *', function() {
   Upd.updateLastMonthEvents(function (err) {
     if (err)
       console.log(err);
+<<<<<<< HEAD
     console.log("---- UPDATE Event of last month DONE ----")
   });
   
+=======
+    console.log("---- UPDATE Pictures of last month DONE ----")
+  });  
+>>>>>>> f857e98074e53c54ef90155a6eaa957c430f9874
 }, null, true);
-
 
 var job = new cronJob('*/30 * * * *', function() {
   newEvents = 0;
