@@ -88,7 +88,7 @@ exports.share = function(req, res)
       var name = ev.name
 
     var wallPost = {
-      name: "To win some champagne: share this with your friends! ",
+      name: "Win a bottle of champagne ",
       link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
       picture: ev.pic_cover.source,
       description: "",
@@ -158,7 +158,7 @@ exports.share = function(req, res)
         wallPost.description += " "
     }
 
-    wallPost.message = "Untel is offering a botlle of champagne whom will best promote his or her event. Fency some Champagne? \n Wooepa helps promoters to boost attendance through social media strategies. " 
+    wallPost.message = "Help me win a botlle of champagne! \n Simply like and share this! " 
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
