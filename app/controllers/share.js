@@ -158,8 +158,9 @@ exports.share = function(req, res)
       if (i < 2 && ev.tags[i + 1])
         wallPost.description += " "
     }
-
-    wallPost.message += name + ' \n' + wallPost.description
+ 
+    wallPost.message += name + ' \n' 
+    wallPost.message += wallPost.description
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
