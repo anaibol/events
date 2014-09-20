@@ -159,7 +159,7 @@ exports.share = function(req, res)
         wallPost.description += " "
     }
 
-    wallPost.message += name name + ' \n' + wallPost.description
+    wallPost.message += name + ' \n' + wallPost.description
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
