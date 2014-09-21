@@ -161,7 +161,7 @@ exports.share = function(req, res)
 
     wallPost.message += name + ' \n'
     wallPost.message += wallPost.description
-    wallPost.message += "E: https://www.facebook.com/events/" + ev.eid + "/"
+    wallPost.message += + ' \n' + "E: https://www.facebook.com/events/" + ev.eid + "/"
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
