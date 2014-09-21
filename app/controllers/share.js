@@ -82,8 +82,8 @@ exports.share = function(req, res)
       return (0);
     }
 
-    if (ev.name.length > 64)
-      var name = ev.name.substring(0,64) + "..."
+    if (ev.name.length > 56)
+      var name = ev.name.substring(0,56) + "..."
     else
       var name = ev.name
 
@@ -96,7 +96,7 @@ exports.share = function(req, res)
       message: ""
     };
 
-    wallPost.description += name + ' \n'
+    //wallPost.description += name + ' \n'
     if (ev.location)
     {
       wallPost.description += "@ " + ev.location
@@ -159,7 +159,9 @@ exports.share = function(req, res)
         wallPost.description += " "
     }
 
+    wallPost.message += name + ' \n'
     wallPost.message += wallPost.description
+    wallPost.message += "E: https://www.facebook.com/events/" + ev.eid + "/"
 
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
