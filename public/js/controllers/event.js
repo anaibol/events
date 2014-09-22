@@ -52,7 +52,7 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       if (window.user.admin) {
         return true;
       } else if ($scope.ev.creator) {
-        if ($scope.ev.creator.uid === window.user.facebook.id) {
+        if ($scope.ev.creator.id === window.user.facebook.id) {
           return true;
         }
       }
