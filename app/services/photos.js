@@ -1,10 +1,13 @@
 
+//Recuperation du fichier de configuration
 var config = require('../../config/config');
 
+//Recuperation de la base de donnée
 var db = require('monk')(config.db);
 
 var tokenInstagram = "1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab";
 
+//Insertion d'une photo dans la base de donnée
 function insertPhoto(data, current_image, cb) {
 
   if (!data)
@@ -39,6 +42,7 @@ function insertPhoto(data, current_image, cb) {
           });
 }
 
+//Fonction 
 function searchPhotosBest(data, cb) {
 
   if (!data)
