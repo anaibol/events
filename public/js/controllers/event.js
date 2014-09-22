@@ -59,7 +59,37 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     }
   }
 
-  $scope.addBoost = function(player, event_id) {
+  function convertToUTC(date, timezone) {
+    date = new Date(date);
+
+    if (!timezone) {
+      return date;
+    }
+
+    var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
+    transformed = new Date(transformed);
+
+    return transformed;
+  }
+
+  $scope.isInPromotion = function() {
+    var currentDate = new Date();
+
+    if ($scope.ev) {
+      if ($scope.ev.in_promotion) {
+
+        var end_date = convertToUTC($scope.ev.promotion.end_time, "UTC");
+
+        if (end_date >= currentDate) {
+          return (true);
+        }
+      }
+    }
+    return (false);
+  }
+
+  $scope.addBoost = function(player, event_id, btn) {
+
     Restangular.all('boost/' + event_id + '/' + player.facebook.id).post().then(function(res) {
         $scope.boosted = res.son_id;
         console.log(res);
