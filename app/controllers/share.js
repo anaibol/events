@@ -4,14 +4,11 @@ var Events = global.db.get('events');
 
 var Ev = require('../../ev.js');
 
-var accessToken = 'CAAVebA5FD2cBAG6RgXiCc6NphVDwzL0SOxznVWSZBI5AOmtMB2dZChEnnHWHMBgtBdvPYJT0XkHRUK1x89ZAr6NIHadi0UmcAPn7qFACLM9sEiEMIHiZBPZAGHwU3lRRromjwz47ovc8kYAweRoSBN0ehvXXrG98Rf7Y88RP7ddOQ2K2PYeBAqEZBmCw6QEGctZARkOLyKPxrRLm6alnmlvE0hg3od7GssZD';
-
 var actions = global.db.get('actions');
 
 var Pro = require('../services/promoter.js');
 
 var moment = require('moment-timezone');
-
 
 function convertToUTC(date, timezone) {
   date = new Date(date);
@@ -67,8 +64,6 @@ exports.share = function(req, res)
   var days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
     "Sunday" ];*/
 
-
-  graph.setAccessToken(accessToken);
   console.log("Facebook publishing...");
   console.log("Event id: " + req.params.eid);
   Ev.findById(req.params.eid, function(ev) {
@@ -87,11 +82,16 @@ exports.share = function(req, res)
     else
       var name = ev.name
 
+    if (ev.pic_cover)
+      var pic = ev.pic_cover.source;
+    else
+      var pic = "";
+
     var wallPost = {
       //name: "UN BISOU A GAGNER WOOEPA ! ",
       name: name,
       link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
-      picture: ev.pic_cover.source,
+      picture: pic,
       description: "",
       message: ""
     };

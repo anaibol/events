@@ -3,10 +3,6 @@ var Ev = require('../../ev');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
-
-graph.setAccessToken(accessToken);
-
 exports.getAttendings = function(req, res) {
   Ev.updateAttendings(req.params.eid, function(attendings) {
     res.json(attendings);
