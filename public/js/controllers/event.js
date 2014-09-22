@@ -59,26 +59,13 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
     }
   }
 
-  function convertToUTC(date, timezone) {
-    date = new Date(date);
-
-    if (!timezone) {
-      return date;
-    }
-
-    var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
-    transformed = new Date(transformed);
-
-    return transformed;
-  }
-
   $scope.isInPromotion = function() {
     var currentDate = new Date();
 
     if ($scope.ev) {
       if ($scope.ev.in_promotion) {
 
-        var end_date = convertToUTC($scope.ev.promotion.end_time, "UTC");
+        var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, "UTC");
 
         if (end_date >= currentDate) {
           return (true);
