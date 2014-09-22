@@ -374,11 +374,18 @@ function searchPlaceAndRequestRecentPhotos(data, res)
   if (data.photos && data.last_update_photos)
   {
     var next_update = data.last_update_photos;
-    next_update.setDate(next_update.getDate() + 7);
-    if (next_update >= currentDate)
-    {
-      console.log('Already in DB, next update at :' + next_update);
-      res.json(data)
+    if (next_update.getDate) {
+      next_update.setDate(next_update.getDate() + 7);
+      if (next_update >= currentDate)
+      {
+        console.log('Already in DB, next update at :' + next_update);
+        res.json(data)
+        return ;
+      }
+    }
+    else {
+      console.log("data.last_update_photos : " + data.last_update_photos + "Has no function getDate()");
+      res.json(data);
       return ;
     }
   }
