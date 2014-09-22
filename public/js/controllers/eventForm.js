@@ -67,6 +67,7 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
   $scope.submit = function() {
     if ($scope.ev._id) {
       if ($scope.imageFile) {
+
         var formData = new FormData();
 
         formData.append('image', $scope.imageSrc);
@@ -76,12 +77,16 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
           $modalInstance.close($scope.ev);
         });
       } else {
+        if ($scope.ev.promotion)
+          $scope.ev.in_promotion = true;
+
         Events.put($scope.ev).then(function(res) {
           $modalInstance.close($scope.ev);
         });
       }
     } else {
       if ($scope.imageFile) {
+
         var formData = new FormData();
 
         formData.append('image', $scope.imageSrc);

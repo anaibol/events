@@ -22,21 +22,11 @@
     </div>
 
     <div class="control-group">
-      <label class="control-label">Game</label>
-      <div class="input-group">
-        <select ng-model="ev.promotion.game">
-          <option ng-repeat="game in games" value="{{$index + 1}}">{{game}}</option>
-        </select>
-        </div>
-    </div>
-
-    <div class="control-group">
       <label class="control-label">Commentary</label>
       <textarea required class="form-control" ng-model="ev.promotion.commentary" id="description" cols="30" rows="5" placeholder="Content"></textarea>
     </div>
 
-    <label class="control-label">Start now</label>
-      <input type="checkbox" checked="checked" ng-model="ev.in_promotion">
+      <input type="hidden" name="in_promotion" ng-model="ev.in_promotion" value"{{ev.in_promotion}}" ng-init="ev.in_promotion=true">
     
     <!--<div ezfb-xfbml="model.reloadWidget['Commens']">
         <div class="fb-comments center-widget" ng-style="{width: widgetWidth + 'px'}" data-href="{{pageUrl}}" data-width="{{widgetWidth}}">
