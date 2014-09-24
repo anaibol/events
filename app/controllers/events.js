@@ -136,11 +136,11 @@ exports.get = function(req, res) {
       var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
       var sort = JSON.parse(sortStr);
 
-      var from = new Date(params.fromDate);
+      var since = new Date(params.since);
 
       var query = {
         start_time: {
-          $gte: from
+          $gte: since
         },
         "venue.country": country
       };
@@ -180,16 +180,16 @@ exports.get = function(req, res) {
           break;
 
         case 'date':
-          if (params.toDate) {
-            var to = new Date(params.toDate);
+          if (params.until) {
+            var until = new Date(params.until);
 
             query.start_time = {
-              $gte: from,
-              $lt: to
+              $gte: since,
+              $lt: until
             };
           } else {
             query.start_time = {
-              $gte: from
+              $gte: since
             };
           }
 
@@ -262,20 +262,22 @@ exports.get = function(req, res) {
             status: 500
           });
         } else {
-          Events.count(query, function(err, count) {
-            if (err) {
-              res.render('error', {
-                status: 500
-              });
-            } else {
-              var response = {
-                data: data,
-                count: count
-              };
+          res.json(data);
 
-              res.json(response);
-            }
-          });
+          // Events.count(query, function(err, count) {
+          //   if (err) {
+          //     res.render('error', {
+          //       status: 500
+          //     });
+          //   } else {
+          //     var response = {
+          //       data: data,
+          //       count: count
+          //     };
+
+          //     res.json(response.data);
+          //   }
+          // });
         }
       });
     });

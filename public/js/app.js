@@ -1,33 +1,42 @@
 'use strict';
 
-var app = angular.module('wooepa', ['ui.router', 'ui.bootstrap', 'wooepa.system', 'ui.router', 'ezfb', 'restangular', 'ngAutocomplete', 'ngTagsInput', 'truncate', 'ngSanitize', 'ngSanitize', 'angularMoment']); //'imageupload', , 'seo' 'leaflet-directive',  'ngCookies', 'ngResource', 'infinite-scroll' 'akoenig.deckgrid' 'ezfb',
+var app = angular.module('wooepa', ['ui.router', 'ui.bootstrap', 'ui.router', 'ezfb', 'restangular', 'ngAutocomplete', 'ngTagsInput', 'truncate', 'ngSanitize', 'angular-data.DS', 'angular-data.DSCacheFactory', 'angularMoment']); //'imageupload', , 'seo' 'leaflet-directive',  'ngCookies', 'ngResource', 'infinite-scroll' 'akoenig.deckgrid'
 
-app.provider('modalState', function($stateProvider) {
-    var provider = this;
-    this.$get = function() {
-        return provider;
-    }
-    this.state = function(stateName, options) {
-        var modalInstance;
-        $stateProvider.state(stateName, {
-            url: options.url,
-            onEnter: function($modal, $state) {
-                modalInstance = $modal.open(options);
-                modalInstance.result['finally'](function() {
-                    modalInstance = null;
-                    if ($state.$current.name === stateName) {
-                        $state.go('^');
-                    }
-                });
-            },
-            onExit: function() {
-                if (modalInstance) {
-                    modalInstance.close();
-                }
-            }
-        });
-    };
+app.factory('Event', function (DS) {
+  return DS.defineResource('api/events');
+    DS.defineResource({
+      name: 'event',
+      endpoint: 'events',
+      idAttribute: '_id',
+    });
 });
+ 
+// app.factory('eventsManager', ['$http', '$q', 'Event', function($http, $q, Event) {
+//     var events = [];
 
-angular.module('wooepa.system', []);
-angular.module('wooepa.events', []);
+//     var eventsManager = {
+//         get: function(eid) {
+//           for (var i = events.length - 1; i >= 0; i--) {
+//             if (events[i].eid === eid) {
+//               return events[i];
+//             }
+//           };
+//         },
+//         getAll: function() {
+//           return events;
+//         },
+//         set: function(eid, ev) {
+//           for (var i = events.length - 1; i >= 0; i--) {
+//             if (events[i].eid === eid) {
+//               return events[i] = ev;
+//             }
+//           };
+//         },
+//         setAll: function(evs) {
+//           events = evs;
+//         },
+
+//     };
+
+//     return eventsManager;
+// }]);

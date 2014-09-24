@@ -1,0 +1,46 @@
+<!-- <pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination> -->
+<section ng-controller="EventsCtrl">
+  <pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+  <div class="events">
+    <a class="event" href="/events/{{ev.slug}}/{{ev.eid}}" ng-repeat="ev in events">
+      <div class="title">
+        <span class="truncate">{{ev.name}}</span>
+        <div class="attending" ng-show="ev.attending_count > 0">{{ev.attending_count}}<i class="icon-group"></i></div>
+        <div ng-show="ev.price.num > 0" class="price">{{ev.price.full}}</div>
+        <div class="tag-list">
+          <span class="tag-item {{tag}}" ng-repeat="tag in ev.tags" ng-if="$index < 3">{{tag}}</span>
+        </div>
+      </div>
+      <div ng-show="ev.image" class="containing" style="background-image: url({{ev.image}});">
+        <div ng-show="ev.price.num == 0" class="ribbon-wrapper-green"><div class="ribbon-green">{{ev.price.full}}</div></div>
+        <img ng-src="{{ev.imageExt ? '/uploads/' + ev._id + '.' + ev.imageExt : ev.pic_cover.source}}" onerror="$(this).parent().hide()" />
+      </div>
+      <div class="info">
+        <div class="datetime">
+          <div class="date">
+            <i class="fui-calendar-solid"></i>
+            <div ng-if="ev.start_time.toDateString() !== today.toDateString()">
+              <div class="day">{{ev.start_time | date:'dd'}}</div>
+              <div class="month">{{ev.start_time | date:'MMM' | uppercase}}</div>
+            </div>
+            <div ng-if="ev.start_time.toDateString() === today.toDateString()">
+              <div class="today">TODAY!</div>
+            </div>
+          </div>
+          <div class="time">
+            <i class="fui-time"></i>
+            <div>{{ev.start_time | amDateFormat:'LT'}}</div>
+          </div>
+        </div>
+        <div class="place-info">
+          <div ng-click="openMap($event, ev)" href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="place" ng-show="ev.location">
+            <i class="fui-location"></i>
+            <div class="location">{{ev.location | characters:50}} {{ev.city | characters:50}}</div>
+            <div class="street truncate">{{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}}{{ev.venue.country}}</div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+<pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+</section>

@@ -1,5 +1,8 @@
-app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope, $state){
+app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope, $state, Event){
 // var EventsCtrl = function($scope, $stateParams, $location, $modal, Global, $stateParams, $rootScope, $state) {
+  
+
+
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -7,13 +10,10 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
   $scope.today.setHours(0);
 
   $scope.filter = {
-    tags: [],
-    limit: 20,
-    page: 1,
     sortBy: 'start_time',
     sortOrder: '1',
-    fromDate: '',
-    toDate: ''
+    since: '',
+    until: ''
   };
 
   var str = $location.$$path.replace('/', '');
@@ -21,23 +21,23 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
   if (str === 'me/events') {
     $scope.filter.type = 'user';
 
-    $scope.filter.fromDate = $stateParams.date;
-    $scope.filter.toDate = '';
+    $scope.filter.since = $stateParams.date;
+    $scope.filter.until = '';
   } else if ($stateParams.user) {
     $scope.filter.type = 'user';
     $scope.filter.user = $stateParams.user;
 
-    $scope.filter.fromDate = $stateParams.date;
+    $scope.filter.since = $stateParams.date;
     $scope.filter.toDate = '';
 
 
   } else if ($stateParams.date) {
     $scope.filter.type = 'date';
 
-    $scope.filter.fromDate = $stateParams.date;
+    $scope.filter.since = $stateParams.date;
     $scope.filter.toDate = '';
   } else {
-    $scope.filter.fromDate = $scope.today.getFullYear() + '-' + ($scope.today.getMonth() + 1) + '-' + $scope.today.getDate();
+    $scope.filter.since = $scope.today.getFullYear() + '-' + ($scope.today.getMonth() + 1) + '-' + $scope.today.getDate();
 
     if (str === 'popular') {
       $scope.filter.sortBy = 'attending_count';
@@ -52,7 +52,14 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     }
   }
 
+  $scope.filter.eid = 123;
+
+  Event.findAll($scope.filter);
+  Event.bindAll($scope, 'events', $scope.filter);  
+
   $scope.getEvents = function(cb) {
+
+
     Events.get($scope.filter).then(function(events) {
       // $scope.events = events.filter(function(element, index, array) {
       //   var date = new Date(element.start_time);
@@ -135,58 +142,6 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     return tags;
   };
 
-  /*angular.forEach($scope.events, function(value, key) {
-      if (value.venue) {
-        if (value.venue.latitude !== undefined) {
-          $scope.markers.push({
-            lat: value.venue.latitude,
-            lng: value.venue.longitude,
-            message: value.name
-          });
-
-          $scope.$parent.pos = {
-            lat: value.venue.latitude,
-            lng: value.venue.longitude,
-            zoom: 10
-          };
-        }
-      }
-    });*/
-
-  // $scope.open = function($event, ev) {
-  //   $event.preventDefault();
-  //   if (Global.authenticated) {
-  //     var modalInstance = $modal.open({
-  //       templateUrl: '/views/events/form.html',
-  //       controller: 'EventFormCtrl',
-  //       resolve: {
-  //         ev: function() {
-  //           return ev;
-  //         }
-  //       }
-  //     });
-
-  //     modalInstance.result.then(function(selected) {
-  //       $scope.ev = selected;
-  //     }, function() {});
-  //   }
-  //   else {
-  //     var modalInstance = $modal.open({
-  //       templateUrl: '/views/events/view.html',
-  //       controller: 'EventModalCtrl',
-  //       resolve: {
-  //         ev: function() {
-  //           return ev;
-  //         }
-  //       }
-  //     });
-
-  //     modalInstance.result.then(function(selected) {
-  //     }, function() {});      
-  //     // $window.open('https://facebook.com/' + ev.eid);
-  //   }
-  // };
-
   $scope.openMap = function($event, ev) {
     window.open('https://maps.google.com/maps?q=' + ev.place); $event.stopPropagation();
   };
@@ -218,30 +173,5 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     });
   };
 
-  // $scope.findOne = function() {
-  //   Restangular.one('rest/event', $stateParams.eventId).get().then(function(event) {
-  //     $scope.event = event;
-  //   }, function(response) {
-  //     console.log("Error with status code", response.status);
-  //   });
-  // };
-
-  // $scope.newEvent = function(ev) {
-  //   var modalInstance = $modal.open({
-  //     templateUrl: '/views/events/form.html',
-  //     controller: 'EventFormCtrl',
-  //     resolve: {
-  //       ev: function() {
-  //         return ev;
-  //       }
-  //     }
-  //   });
-
-  //   modalInstance.result.then(function(selected) {
-  //     $scope.ev = selected;
-  //   }, function() {});
-  // };
-
-  $scope.getEvents(function() {});
-// };
+  // $scope.getEvents(function() {});
 });

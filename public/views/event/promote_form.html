@@ -1,0 +1,46 @@
+<form class="event-form form-horizontal">
+  <div class="modal-header">Event Promotion</div>
+  <div class="modal-body">
+    <div class="control-group">
+      <label class="control-label">Reward</label>
+      <input required type="text" class="form-control" ng-model="ev.promotion.reward" id="reward" placeholder="Reward for the game">
+    </div>
+
+    <div class="control-group date">
+      <label class="control-label">Date of end of the game</label>
+      <div class="input-group" ng-controller="DatepickerCtrl" ng-click="open($event)">
+        <input required type="text" class="form-control" ng-model="ev.promotion.end_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
+        <span class="input-group-btn">
+          <button class="btn btn-default"><i class="fui-calendar-solid" ng-click="open($event)"></i></button>
+        </span>
+      </div>
+
+      <div ng-controller="TimepickerCtrl" ng-model="ev.promotion.end_time">
+        <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        <i class="fui-time"></i>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Commentary</label>
+      <textarea required class="form-control" ng-model="ev.promotion.commentary" id="description" cols="30" rows="5" placeholder="Content"></textarea>
+    </div>
+
+      <input type="hidden" name="in_promotion" ng-model="ev.in_promotion" value"{{ev.in_promotion}}" ng-init="ev.in_promotion=true">
+    
+    <!--<div ezfb-xfbml="model.reloadWidget['Commens']">
+        <div class="fb-comments center-widget" ng-style="{width: widgetWidth + 'px'}" data-href="{{pageUrl}}" data-width="{{widgetWidth}}">
+          <div class="fb-comments" data-href="https://wooepa.com/events/{{ev.eid}}" data-numposts="5" data-colorscheme="light"></div>
+        </div>
+      </div>-->
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="submit()">
+        <i class="fui-check"></i>
+        OK
+      </button>
+      <button class="btn btn-warning" ng-click="cancel()">
+        <i class="fui-cross"></i>
+        Cancel
+      </button>
+    </div>
+</form>

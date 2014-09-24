@@ -1,0 +1,131 @@
+<form class="event-form form-horizontal">
+  <div class="modal-body">
+    <div class="control-group">
+      <label class="control-label">Name</label>
+      <input required type="text" class="form-control" ng-model="ev.name" id="name" placeholder="Name">
+    </div>
+
+    <div class="control-group date">
+      <label class="control-label">Date and time</label>
+      <div class="input-group" ng-controller="DatepickerCtrl" ng-click="open($event)">
+        <input required type="text" class="form-control" ng-model="ev.start_time" min="minDate" datepicker-options="dateOptions" datepicker-popup="dd - MMMM" is-open="opened" />
+        <span class="input-group-btn">
+          <button class="btn btn-default"><i class="fui-calendar-solid" ng-click="open($event)"></i></button>
+        </span>
+      </div>
+
+      <label class="control-label">Repeat</label>
+      <input type="checkbox" ng-model="ev.repeat">
+
+      <div class="repeat" ng-show="ev.repeat">
+        <select ng-model="ev.day">
+          <option ng-repeat="day in days" value="{{$index + 1}}">{{day}}</option>
+        </select>
+      </div>
+
+      <div ng-controller="TimepickerCtrl" ng-model="ev.start_time">
+        <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        <i class="fui-time"></i>
+      </div> 
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Description</label>
+      <textarea required class="form-control" ng-model="ev.description" id="description" cols="30" rows="10" placeholder="Content"></textarea>
+    </div>
+
+    <div class="control-group inline">
+      <label class="control-label">Location name</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-model="ev.location" />
+        <span class="input-group-addon">
+          <i class="fui-location"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="control-group inline">
+      <label class="control-label">Country</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-autocomplete ng-model="ev.country" />
+        <span class="input-group-addon">
+          <i class="fui-location"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="control-group inline">
+      <label class="control-label">City</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-autocomplete options="{types: '(cities)'}" ng-model="ev.city" />
+        <span class="input-group-addon">
+          <i class="fui-location"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Address</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-autocomplete ng-model="ev.place" />
+        <span class="input-group-addon">
+          <i class="fui-location"></i>
+        </span>
+      </div>      
+    </div>      
+    <div class="control-group">
+      <label class="control-label">Picture</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-model="imageFile" id="pig" placeholder="Picture">
+        <span class="btn btn-default btn-file input-group-addon">
+            Browse <input type="file" accept="image/*" name="image" onchange="angular.element(this).scope().previewImage(this)" />
+            <i class="glyphicon glyphicon-picture"></i>
+        </span>
+      </div>
+                  <img ng-src="{{imageSrc}}" />
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Tags</label>
+        <tags-input ng-model="ev.tags" allowed-tags-pattern="(salsa+|bachata+|kizomba+|porto+|cubaine+|cubana+|semba+|samba+|merengue+|tango+|lambazouk+|regueton+|reggaeton+|suelta+|kuduru)">
+          <auto-complete source="words($query)" min-length="0"></auto-complete>
+        </tags-input>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Price</label>
+      <div class="input-append input-group">
+        <input type="text" class="form-control" ng-model="ev.price.full" id="pig" placeholder="Price">
+
+        <span class="input-group-btn">
+          <div class="dropdown">
+            <button type="button" class="btn btn-default 
+               dropdown-toggle" data-toggle="dropdown">
+               <i class="glyphicon glyphicon-euro"></i> 
+               <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+               <li><i class="glyphicon glyphicon-euro"></i>$</li>
+               <li><i class="glyphicon glyphicon-euro"></i></li>
+               <li><i class="glyphicon glyphicon-euro"></i></li>
+            </ul>
+          </div>
+        </span>
+      </div>      
+    </div>
+    <!--<div ezfb-xfbml="model.reloadWidget['Commens']">
+        <div class="fb-comments center-widget" ng-style="{width: widgetWidth + 'px'}" data-href="{{pageUrl}}" data-width="{{widgetWidth}}">
+          <div class="fb-comments" data-href="https://wooepa.com/events/{{ev.eid}}" data-numposts="5" data-colorscheme="light"></div>
+        </div>
+      </div>-->
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="submit(image)">
+        <i class="fui-check"></i>
+        OK
+      </button>
+      <button class="btn btn-warning" ng-click="cancel()">
+        <i class="fui-cross"></i>
+        Cancel
+      </button>
+    </div>
+</form>

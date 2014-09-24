@@ -43,9 +43,6 @@ module.exports = function(app, passport, db) {
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'jade');
 
-  // Enable jsonp
-  // app.enable("jsonp callback");
-
   app.configure(function() {
     // The cookieParser should be above session
     app.use(express.cookieParser());
@@ -73,6 +70,9 @@ module.exports = function(app, passport, db) {
     app.use(passport.session());
 
     // Routes should be at the last
+
+    app.use(express.static(path.join(config.root + '/public')));
+
     app.use(app.router);
 
     app.get('/sitemap/index.xml.gz', function(req, res) {
@@ -109,45 +109,6 @@ module.exports = function(app, passport, db) {
       //  res.sendfile(siteMapFile);
       //}
       //});
-    });
-
-
-    app.use('/assets', express.static(config.root + '/public'));
-
-    app.all('/:keyword', function(req, res) {
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: {}
-       });
-    });
-
-    app.all('/user/:keyword', function(req, res) {
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: {}
-       });
-    });
-
-    app.all('/me/:keyword', function(req, res) {
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: {}
-       });
-    });
-
-    app.all('/.\/[0-9]{0,100}', function(req, res) {
-       res.render('index', {
-         title: 'Wooepa',
-         user: req.user ? JSON.stringify(req.user) : 'null',
-         fbAppId: global.fbAppId,
-         events: {}
-       });
     });
 
     var MaxSitemapUrls = 10000;

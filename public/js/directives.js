@@ -45,3 +45,10 @@ app.directive('backImg', function() {
         });
     };
 });
+
+app.directive("eventsList", function() {
+  return {
+    restrict: "A",
+    templateUrl: "/views/events/list.html"
+  }
+});

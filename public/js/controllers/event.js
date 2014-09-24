@@ -26,10 +26,6 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
 
   $scope.current_date = new Date();
 
-  $scope.getLink = function() {
-    return $state.current.name.split('.')[0] + '.edit(ev)';
-  }
-
   $scope.convertToUTC = function(date, timezone) {
     date = new Date(date);
 
