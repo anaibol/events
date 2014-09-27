@@ -1,8 +1,4 @@
 app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope, $state, Event){
-// var EventsCtrl = function($scope, $stateParams, $location, $modal, Global, $stateParams, $rootScope, $state) {
-  
-
-
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -13,7 +9,8 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     sortBy: 'start_time',
     sortOrder: '1',
     since: '',
-    until: ''
+    until: '',
+    limit: 30
   };
 
   var str = $location.$$path.replace('/', '');
@@ -52,24 +49,9 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     }
   }
 
-  $scope.filter.eid = 123;
-
-  Event.findAll($scope.filter);
-  Event.bindAll($scope, 'events', $scope.filter);  
-
   $scope.getEvents = function(cb) {
-
-
-    Events.get($scope.filter).then(function(events) {
-      // $scope.events = events.filter(function(element, index, array) {
-      //   var date = new Date(element.start_time);
-      //   return date.getDate() > $scope.today.getDate() - 1;
-      // });
-
+    Event.findAll($scope.filter).then(function (events) {
       $scope.events = events;
-
-      $scope.totalEvents = events.metadata.count;
-      $scope.totalPages = Math.ceil(events.metadata.count / $scope.filter.limit);
 
       angular.forEach($scope.events, function(ev, key) {
         ev.start_time = $scope.convertToUTC(ev.start_time, ev.timezone);
@@ -89,13 +71,11 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
         }
       });
 
-      setTimeout(function() {
-        var container = document.querySelector('.events');
+      var container = document.querySelector('.events');
 
-        imagesLoaded(container, function(instance) {
-            var myPackery = new Packery(container, {});
-        });
-      }, 0);
+      imagesLoaded(container, function(instance) {
+          var myPackery = new Packery(container, {});
+      });
 
       cb();
     });
@@ -173,5 +153,5 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     });
   };
 
-  // $scope.getEvents(function() {});
+  $scope.getEvents(function() {});
 });

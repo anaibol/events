@@ -23,21 +23,21 @@ module.exports = function(app, passport, db) {
   // Prettify HTML
   // app.locals.pretty = true;
 
+  // Only use logger for development environment
+  if (process.env.NODE_ENV === 'production') {
+    // app.use(express.logger('dev'));
+
   // Should be placed before express.static
   // To ensure that all assets and data are compressed (utilize bandwidth)
-  app.use(express.compress({
-    filter: function(req, res) {
-      return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
-    },
-    // Levels are specified in a range of 0 to 9, where-as 0 is
-    // no compression and 9 is best compression, but slowest
-    level: 9
-  }));
-
-  // Only use logger for development environment
-  // if (process.env.NODE_ENV === 'development') {
-  //   app.use(express.logger('dev'));
-  // }
+    app.use(express.compress({
+      filter: function(req, res) {
+        return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
+      },
+      // Levels are specified in a range of 0 to 9, where-as 0 is
+      // no compression and 9 is best compression, but slowest
+      level: 9
+    }));
+  }
 
   // Set views path, template engine and default layout
   app.set('views', config.root + '/app/views');

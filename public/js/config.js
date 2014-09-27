@@ -7,28 +7,32 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
 
   $locationProvider.hashPrefix('!');
 
+
   $stateProvider
     .state('main', {
       url: '/',
       templateUrl: '/views/main.html'
     })
-    .state('event', {
+    .state('main.event', {
       url: '/events/:slug/:eid',
-      templateUrl: '/views/event/view.html',
+      templateUrl: "/views/event/view.html",
+      controller: function() {
+        alert(1);
+      }
     })
     .state('events', {
       url: ':keyword',
-      templateUrl: '/views/event/list.html',
+      templateUrl: '/views/event/list.html'
     })
     .state('me', {
       parent: "",
       url: '/me/events',
-      templateUrl: '/views/user/user.html',
+      templateUrl: '/views/user/user.html'
     })
     .state('me.events', {
       parent: "me",
       url: '/me/events',
-      templateUrl: '/views/event/user.html',
+      templateUrl: '/views/event/user.html'
     })
     .state('me.logout', {
       parent: "me",
@@ -46,6 +50,26 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
       url: '/create',
       templateUrl: '/views/event/create.html'
     });
+
+
+  // $routeSegmentProvider
+  //   .when('/',                  'main')
+  //   .when(':keyword',           'main')
+  //   .when('/date/:date',        'main')
+  //   .when('/events/:slug/:eid', 'event')
+  //   .when('/me/events',         'main')
+  //   .when('/me',                'me')
+  //   .when('/me/logout',         'me.logout')
+  //   .when('/create',            'create')
+    
+  //   segment('main', { templateUrl: 'views/main.html' })
+  //   .within()
+  //     .segment('event', { templateUrl: 'views/event/view.html' })
+  //     .up()
+  //   .segment('me', { templateUrl: 'views/me.html' })
+  //   .segment('me.logout', { templateUrl: 'views/logout.html' })
+  //   .segment('create', { templateUrl: 'views/create.html' });
+
     
     $urlRouterProvider.otherwise('');
 });

@@ -1,3 +1,4 @@
+<section ng-controller="EventCtrl">
   <div class="event-detail modal-header">
     <div style="background-image: url({{ev.pic_cover.source}}); width: 100%; height: 204px;"></div>
    <!--  <a href="https://maps.google.com/maps?q={{ev.place}}" target="_blank" class="map" style="background-image: url('http://maps.googleapis.com/maps/api/staticmap?center={{ev.place}}&zoom=13&size=233x264&maptype=roadmap&sensor=false')">
@@ -115,48 +116,49 @@
       </div>
 
     </div>
-    
-<!--     <p>{{ev.price.full}}</p>
+      
+  <!--     <p>{{ev.price.full}}</p>
 
-    <span class="input-group-btn">
-      <div class="dropdown">
-        <button type="button" class="btn btn-default 
-           dropdown-toggle" data-toggle="dropdown">
-           <i class="glyphicon glyphicon-euro"></i> 
-           <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu pull-right">
-           <li><i class="glyphicon glyphicon-euro"></i></li>
-           <li><i class="glyphicon glyphicon-euro"></i></li>
-           <li><i class="glyphicon glyphicon-euro"></i></li>
-        </ul>
+      <span class="input-group-btn">
+        <div class="dropdown">
+          <button type="button" class="btn btn-default 
+             dropdown-toggle" data-toggle="dropdown">
+             <i class="glyphicon glyphicon-euro"></i> 
+             <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+             <li><i class="glyphicon glyphicon-euro"></i></li>
+             <li><i class="glyphicon glyphicon-euro"></i></li>
+             <li><i class="glyphicon glyphicon-euro"></i></li>
+          </ul>
+        </div>
+      </span>
+   -->
+  <!--     <div ezfb-xfbml="model.reloadWidget['Commens']">
+          <div class="fb-comments" data-href="https://wooepa.com/events/{{ev.eid}}">
+            <div class="fb-comments" data-numposts="5" data-colorscheme="light"></div>
+          </div>
       </div>
-    </span>
- -->
-<!--     <div ezfb-xfbml="model.reloadWidget['Commens']">
-        <div class="fb-comments" data-href="https://wooepa.com/events/{{ev.eid}}">
-          <div class="fb-comments" data-numposts="5" data-colorscheme="light"></div>
-        </div>
-    </div>
- -->
-    <div class="modal-footer">
+   -->
+      <div class="modal-footer">
 
-      <div class="row">
-          <div class="col-xs-6 col-md-3" ng-repeat="image in ev.images" ng-if="$index < 8">
-            <a href="#" class="thumbnail">
-              <img ng-src="{{image[0].source}}" onerror="$(this).parent().hide()"/>
-            </a>
+        <div class="row">
+            <div class="col-xs-6 col-md-3" ng-repeat="image in ev.images" ng-if="$index < 8">
+              <a href="#" class="thumbnail">
+                <img ng-src="{{image[0].source}}" onerror="$(this).parent().hide()"/>
+              </a>
+            </div>
+            <div class="col-xs-6 col-md-3" ng-repeat="photo in ev.photos" ng-if="$index < 8">
+              <a href="#" class="thumbnail">
+                <img ng-src="{{photo.url}}" onerror="$(this).parent().hide()"/>
+              </a>
+            </div>
           </div>
-          <div class="col-xs-6 col-md-3" ng-repeat="photo in ev.photos" ng-if="$index < 8">
-            <a href="#" class="thumbnail">
-              <img ng-src="{{photo.url}}" onerror="$(this).parent().hide()"/>
-            </a>
-          </div>
-        </div>
 
-      <button class="btn" ng-click="cancel()">
-        <i class="fui-cross"></i>
-        Close
-      </button>
-    </div>
-</form>
+        <button class="btn" ng-click="cancel()">
+          <i class="fui-cross"></i>
+          Close
+        </button>
+      </div>
+  </form>
+</section>

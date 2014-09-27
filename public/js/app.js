@@ -3,10 +3,9 @@
 var app = angular.module('wooepa', ['ui.router', 'ui.bootstrap', 'ui.router', 'ezfb', 'restangular', 'ngAutocomplete', 'ngTagsInput', 'truncate', 'ngSanitize', 'angular-data.DS', 'angular-data.DSCacheFactory', 'angularMoment']); //'imageupload', , 'seo' 'leaflet-directive',  'ngCookies', 'ngResource', 'infinite-scroll' 'akoenig.deckgrid'
 
 app.factory('Event', function (DS) {
-  return DS.defineResource('api/events');
-    DS.defineResource({
+  return DS.defineResource({
       name: 'event',
-      endpoint: 'events',
+      endpoint: '/api/events',
       idAttribute: '_id',
     });
 });

@@ -1,4 +1,4 @@
-var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangular, Global, ezfb) {
+var EventCtrl = function($scope, $state, $stateParams, Restangular, Global, ezfb, Event) {
   $scope.today = new Date();
 
   $scope.today.setSeconds(0);
@@ -109,13 +109,10 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       });
   }
 
-  Events.one($stateParams.eid).then(function(ev) {
-    // Events.one(ev.eid).get('rsvp').then(function(res) {
-    //   $scope.attending = true;
-    // });
-
-    if (!$scope.ev.list_event_players)
+  Event.find($stateParams.eid).then(function(ev) {
+    if (!$scope.ev.list_event_players) {
       $scope.ev.list_event_players = [];
+    }
 
     $scope.ev = ev;
 
@@ -367,8 +364,4 @@ var EventCtrl = function($scope, $state, $stateParams, $modalInstance, Restangul
       });
     }
   });
-
-  $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
-  };
 };

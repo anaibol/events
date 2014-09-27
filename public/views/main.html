@@ -1,8 +1,7 @@
-<!-- <pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination> -->
 <section ng-controller="EventsCtrl">
-  <pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
   <div class="events">
-    <a class="event" href="/events/{{ev.slug}}/{{ev.eid}}" ng-repeat="ev in events">
+  <!-- href="/events/{{ev.slug}}/{{ev.eid}}" -->
+    <a class="event"  ui-sref="main.event({slug: ev.slug, eid: ev.eid})" ng-repeat="ev in events">
       <div class="title">
         <span class="truncate">{{ev.name}}</span>
         <div class="attending" ng-show="ev.attending_count > 0">{{ev.attending_count}}<i class="icon-group"></i></div>
@@ -42,5 +41,5 @@
       </div>
     </a>
   </div>
-<pagination class="pagination" ng-show="totalPages > 1" total-items="totalEvents" items-per-page="filter.limit" total-pages="totalPages" on-select-page="paginate(page)" page="filter.page" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 </section>
+<div ui-view></div>
