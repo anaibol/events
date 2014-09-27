@@ -13,12 +13,9 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
       url: '/',
       templateUrl: '/views/main.html'
     })
-    .state('main.event', {
+    .state('event', {
       url: '/events/:slug/:eid',
-      templateUrl: "/views/event/view.html",
-      controller: function() {
-        alert(1);
-      }
+      templateUrl: "/views/event/view.html"
     })
     .state('events', {
       url: ':keyword',

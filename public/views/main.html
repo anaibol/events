@@ -1,7 +1,6 @@
 <section ng-controller="EventsCtrl">
   <div class="events">
-  <!-- href="/events/{{ev.slug}}/{{ev.eid}}" -->
-    <a class="event"  ui-sref="main.event({slug: ev.slug, eid: ev.eid})" ng-repeat="ev in events">
+    <a class="event"  ui-sref="event({slug: ev.slug, eid: ev.eid})" href="/events/{{ev.slug}}/{{ev.eid}}" ng-repeat="ev in events">
       <div class="title">
         <span class="truncate">{{ev.name}}</span>
         <div class="attending" ng-show="ev.attending_count > 0">{{ev.attending_count}}<i class="icon-group"></i></div>

@@ -1,10 +1,135 @@
-<div id="event" ng-if="!event_not_found"><div class="wrapper eventTopWrapper" itemscope itemtype="//schema.org/Event" ng-class=""><div class="bgImage" ng-class="{ filtersSupported : filtersSupported }"><div id="backgroundImage" class="animateOpacity ng-hide" ng-show="showBgImage" ng-animate=""></div><div class="overlay"></div></div><div class="container text-center"><div class="table eventTop"><div class="valign"><div class="inner"><h3 id="eventTitle" class="name" itemprop="name" ng-cloak="">{{ event.name }}</h3><div ng-if="event.venue.id && event.venue.name" class="hand" ui-sref="venues.events({ id: event.venue.id , parameterized_name: event.venue.name.parameterize() })"><span class="venue" ng-if="event.location"><i class="icon icon-pin-filled"></i><span itemprop="location" itemtype="//schema.org/Place" ng-cloak=""><span itemprop="name">{{ event.venue.name || event.location }}</span></span> <span class="address" ng-show="event.venue.street"><br>{{ event.venue.street }}, {{ event.venue.city }}</span></span></div><div ng-if="!event.venue.id && !event.venue.name" class=""><span class="venue" ng-if="event.location"><i class="icon icon-pin-filled"></i><span itemprop="location" itemtype="//schema.org/Place" ng-cloak=""><span itemprop="name">{{ event.venue.name || event.location }}</span></span> <span class="address" ng-show="event.venue.street"><br>{{ event.venue.street }}, {{ event.venue.city }}</span></span></div><div class="date"><time class="startDate" itemprop="startDate" content="{{ event.start_time }}" ng-if="event.dateString"><i class="icon icon-calendar-add"></i>{{ event.dateString }}</time><meta itemprop="endDate" content="{{ event.end_time }}"></div></div></div></div></div></div><div class="wrapper"><div class="container"><div class="row"><div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"><div class="interestedButtonHolder"><div class="roundButton interestedButton" ng-click="toggleInterested();"><i class="icon icon-heart" ng-if="!event.is_favorite"></i><i class="icon icon-heart-filled" ng-if="event.is_favorite"></i><span class="interestedText">I'm interested</span></div></div></div></div><div class="row content"><div class="col-xs-12 contentCol"><div class="row attendees red" ng-class="{ hasFriends: event.facebookFriends.length > 0 }"><div class="col-xs-12 images col" ng-show="event.facebookFriends.length > 0"><span ng-repeat="friend in event.facebookFriends" class="friend animateOpacityStagger" ng-class="{ last:$last }" ng-animate=""><a href="https://facebook.com/{{ friend.uid }}" title="{{ friend.name }}" target="_blank"><img ng-src="{{ friend.pic_square || 'http://graph.facebook.com/' + friend.fid + '/picture' }}" alt="{{ friend.name }}" title="{{ friend.name }}"></a></span></div><div class="col col-xs-12 text"><span ng-pluralize="" ng-show="event.facebookFriends" count="event.facebookFriends.length" offset="1" when="{
+<div id="event" ng-if="!event_not_found">
+  <div class="wrapper eventTopWrapper" itemscope itemtype="//schema.org/Event" ng-class="">
+    <div class="bgImage" ng-class="{ filtersSupported : filtersSupported }">
+      <div id="backgroundImage" class="animateOpacity ng-hide" ng-show="showBgImage" ng-animate=""></div>
+      <div class="overlay"></div>
+    </div>
+    <div class="container text-center">
+      <div class="table eventTop">
+        <div class="valign">
+          <div class="inner">
+            <h3 id="eventTitle" class="name" itemprop="name" ng-cloak="">{{ event.name }}</h3>
+            <div ng-if="event.venue.id && event.venue.name" class="hand" ui-sref="venues.events({ id: event.venue.id , parameterized_name: event.venue.name.parameterize() })"><span class="venue" ng-if="event.location"><i class="icon icon-pin-filled"></i><span itemprop="location" itemtype="//schema.org/Place" ng-cloak=""><span itemprop="name">{{ event.venue.name || event.location }}</span></span> <span class="address" ng-show="event.venue.street"><br>{{ event.venue.street }}, {{ event.venue.city }}</span></span>
+            </div>
+            <div ng-if="!event.venue.id && !event.venue.name" class=""><span class="venue" ng-if="event.location"><i class="icon icon-pin-filled"></i><span itemprop="location" itemtype="//schema.org/Place" ng-cloak=""><span itemprop="name">{{ event.venue.name || event.location }}</span></span> <span class="address" ng-show="event.venue.street"><br>{{ event.venue.street }}, {{ event.venue.city }}</span></span>
+            </div>
+            <div class="date">
+              <time class="startDate" itemprop="startDate" content="{{ event.start_time }}" ng-if="event.dateString"><i class="icon icon-calendar-add"></i>{{ event.dateString }}</time>
+              <meta itemprop="endDate" content="{{ event.end_time }}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+          <div class="interestedButtonHolder">
+            <div class="roundButton interestedButton" ng-click="toggleInterested();"><i class="icon icon-heart" ng-if="!event.is_favorite"></i><i class="icon icon-heart-filled" ng-if="event.is_favorite"></i><span class="interestedText">I'm interested</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row content">
+        <div class="col-xs-12 contentCol">
+          <div class="row attendees red" ng-class="{ hasFriends: event.facebookFriends.length > 0 }">
+            <div class="col-xs-12 images col" ng-show="event.facebookFriends.length > 0"><span ng-repeat="friend in event.facebookFriends" class="friend animateOpacityStagger" ng-class="{ last:$last }" ng-animate=""><a href="https://facebook.com/{{ friend.uid }}" title="{{ friend.name }}" target="_blank"><img ng-src="{{ friend.pic_square || 'http://graph.facebook.com/' + friend.fid + '/picture' }}" alt="{{ friend.name }}" title="{{ friend.name }}"></a></span>
+            </div>
+            <div class="col col-xs-12 text"><span ng-pluralize="" ng-show="event.facebookFriends" count="event.facebookFriends.length" offset="1" when="{
 								'0': 'No friends attending.',
 								'1': '{{ event.facebookFriends[0].first_name }} joined',
 								'2': '{{ event.facebookFriends[0].first_name }} and {{ event.facebookFriends[1].first_name }} joined',
 								'other': '{{ event.facebookFriends[0].first_name }} and {} other friends joined'
-							}"></span> <span ng-pluralize="" ng-hide="event.facebookFriends" count="event.num_attending" when="{
+							}"></span>  <span ng-pluralize="" ng-hide="event.facebookFriends" count="event.num_attending" when="{
 								'0': 'Undisclosed guestlist',
 								'1': '1 attendee',
 								'other': '{} attendees'
-							}"></span></div></div><div class="row shareAction"><div class="col-xs-12 col"><a id="fbShare" title="Share this event on Facebook" class="shareBtn fbShare" target="_blank" ng-href="{{'http://www.facebook.com/sharer/sharer.php?u=' + event.shortUrl()}}" data-track-category="view:event overview" data-track-action="share on facebook {{ event.name }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></a> <a id="twShare" title="Tweet about this event" class="shareBtn twShare" target="_blank" ng-href="{{'http://www.twitter.com/share?url=' + event.shortUrl()}}" data-track-category="view:event overview" data-track-action="share on twitter {{ event.name }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></a> <a id="gpShare" title="Share this event on Google Plus" class="shareBtn gpShare" target="_blank" ng-href="{{'https://plus.google.com/share?url=' + event.shortUrl()}}" data-track-category="view:event overview" data-track-action="share on G+ {{ event.name }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></a><ng-switch on="event.provider_name"><a title="{{ event.joined ? 'Unjoin this event' : 'Join this event on Facebook'}}" class="facebookButton" ng-switch-when="facebook" ng-if="event.fid" ng-click="toggleFacebookJoin()" ng-class="{ joined:event.joined }" ng-mouseenter="mouseOverFbButton = true;" ng-mouseleave="mouseOverFbButton = false;"><i class="icon icon-fb-filled fbIcon animateOpacity"></i> <i class="icon icon-checkmark checkmark animateOpacity" ng-show="event.joined" ng-animate=""></i> <span ng-if="!event.joined">Join on Facebook</span> <span ng-if="event.joined">Going</span></a>  <a ng-switch-default="" ng-if="event.booking[0]" class="actionButton hand" ng-href="{{event.booking[0].target_url}}" target="_blank" data-track-category="view:event overview" data-track-action="buy ticket {{ (event.provider_name.toUpperCase()) }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"><span class="lefty"><span class="action">Get tickets</span> <span class="platform">via <span style="text-transform: capitalize">{{event.provider_name}}</span></span></span> <i class="icon icon-ticket"></i></a></ng-switch></div></div><div class="row description" ng-if="event.description"><div class="col-xs-12 col"><div id="eventDescription" ng-class="{ opened: descriptionOpened }" ng-click="descriptionOpened = true;"><div class="descriptionHolder" ng-bind-html="event.htmlDescription"></div><a title="Show more" id="showMore" class="animateOpacity" ng-class="{ noGradients : !device.supports.gradients }" ng-hide="descriptionOpened" ng-animate=""><i class="icon icon-down red"></i></a></div></div></div><div class="row"><div class="col-xs-12 col"><div class="row media"><div class="col col-xs-12 col-sm-6 gMap item hand" ng-class="{ nonMobile:!device.mobile }" ng-click="openGoogleMap();"><div ng-if="event.latitude && event.longitude" class="inner" ng-style="{ 'background-image': 'url(//maps.google.com/maps/api/staticmap?center={{ event.latitude }},{{ event.longitude }}&markers=icon:http://vamos.s3.amazonaws.com/web/assets/map_pin_red.png|{{ event.latitude }},{{ event.longitude }}&zoom=15&size=640x640&scale=2&sensor=false)' }"></div></div><div class="col col-xs-6 col-sm-3 item hand" ng-class="{ nonMobile:!device.mobile }" ng-repeat="item in event.mediaItems" ng-click="openGallery($index)" ng-switch="" on="item.mediaType"><div class="inner" ng-switch-when="video"><div class="thumb" ng-style="{ 'background-image': 'url(' + item.thumb + ')' }"></div><div class="imageOverlay"><div class="playButton"><i class="icon icon-play"></i></div></div></div><div class="inner" ng-switch-default=""><div class="thumb" ng-style="{ 'background-image': 'url(' + item.thumb + ')' }"></div></div></div></div></div></div></div></div></div></div></div><div id="event" ng-if="event_not_found"><div class="wrapper eventTopWrapper" ng-class="topWrapperClass"><div class="bgImage animateOpacity" ng-class="{ filtersNotSupported : !device.supports.filters }" ng-animate=""><div class="blur"></div><div class="overlay" style="background: rgb(237, 74, 86); opacity: 1 !important"></div></div><div class="container text-center"><div class="table eventTop"><div class="valign"><div class="inner"><h3 id="eventTitle" class="name" style="color: white">Whoops...<br>Event couldn't be found.</h3><a ui-sref="main" style="color: white; text-decoration: underline">Go back to the list</a></div></div></div></div></div></div><div class="mediaGallery animateOpacity" ng-show="galleryOpened" ng-animate="" keypress-events=""><div class="overlay" ng-click="closeGallery()"></div><div class="holder"><div class="close control" ng-click="closeGallery()"><i class="icon icon-close"></i></div><div class="back control" ng-click="galleryBack()"><i class="icon icon-back"></i></div><div class="forward control" ng-click="galleryForward()"><i class="icon icon-forward"></i></div><div class="content"><div ng-repeat="item in event.mediaItems" class="mediaItem animateOpacity" ng-show="activeMediaItem === $index" ng-animate="" ng-switch="" on="item.mediaType"><div class="iframe" ng-switch-when="video" ng-class="item.provider" ng-bind-html="item.iframe"></div><img class="image" ng-switch-when="image" ng-src="{{ item.large }}"></div></div><div class="bottom"><table><tr><td class="image" ng-if="event.mediaItems[activeMediaItem].user"><img ng-src="{{ event.mediaItems[activeMediaItem].user.profile_picture }}" title="{{ event.mediaItems[activeMediaItem].user.full_name }}"><td class="person" ng-if="event.mediaItems[activeMediaItem].user"><span class="name">{{ event.mediaItems[activeMediaItem].user.full_name }}</span> <span class="date">{{ event.mediaItems[activeMediaItem].dateCreated | date:'mediumDate' }}</span><td class="time_ago">via {{ event.mediaItems[activeMediaItem].provider }}</table></div></div></div>
+							}"></span>
+            </div>
+          </div>
+          <div class="row shareAction">
+            <div class="col-xs-12 col">
+              <a id="fbShare" title="Share this event on Facebook" class="shareBtn fbShare" target="_blank" ng-href="{{'http://www.facebook.com/sharer/sharer.php?u=' + event.shortUrl()}}" data-track-category="view:event overview" data-track-action="share on facebook {{ event.name }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></a>
+              <a id="twShare" title="Tweet about this event" class="shareBtn twShare" target="_blank" ng-href="{{'http://www.twitter.com/share?url=' + event.shortUrl()}}" data-track-category="view:event overview" data-track-action="share on twitter {{ event.name }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></a>
+              <a id="gpShare" title="Share this event on Google Plus" class="shareBtn gpShare" target="_blank" ng-href="{{'https://plus.google.com/share?url=' + event.shortUrl()}}" data-track-category="view:event overview" data-track-action="share on G+ {{ event.name }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"></a>
+              <ng-switch on="event.provider_name"><a title="{{ event.joined ? 'Unjoin this event' : 'Join this event on Facebook'}}" class="facebookButton" ng-switch-when="facebook" ng-if="event.fid" ng-click="toggleFacebookJoin()" ng-class="{ joined:event.joined }" ng-mouseenter="mouseOverFbButton = true;" ng-mouseleave="mouseOverFbButton = false;"><i class="icon icon-fb-filled fbIcon animateOpacity"></i> <i class="icon icon-checkmark checkmark animateOpacity" ng-show="event.joined" ng-animate=""></i> <span ng-if="!event.joined">Join on Facebook</span> <span ng-if="event.joined">Going</span></a>  <a ng-switch-default="" ng-if="event.booking[0]" class="actionButton hand" ng-href="{{event.booking[0].target_url}}" target="_blank" data-track-category="view:event overview" data-track-action="buy ticket {{ (event.provider_name.toUpperCase()) }}/{{ event.fid }}" data-track-label="{{ device.info }}" onclick="gaTrack(this)"><span class="lefty"><span class="action">Get tickets</span> <span class="platform">via <span style="text-transform: capitalize">{{event.provider_name}}</span></span></span> <i class="icon icon-ticket"></i></a>
+              </ng-switch>
+            </div>
+          </div>
+          <div class="row description" ng-if="event.description">
+            <div class="col-xs-12 col">
+              <div id="eventDescription" ng-class="{ opened: descriptionOpened }" ng-click="descriptionOpened = true;">
+                <div class="descriptionHolder" ng-bind-html="event.htmlDescription"></div><a title="Show more" id="showMore" class="animateOpacity" ng-class="{ noGradients : !device.supports.gradients }" ng-hide="descriptionOpened" ng-animate=""><i class="icon icon-down red"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col">
+              <div class="row media">
+                <div class="col col-xs-12 col-sm-6 gMap item hand" ng-class="{ nonMobile:!device.mobile }" ng-click="openGoogleMap();">
+                  <div ng-if="event.latitude && event.longitude" class="inner" ng-style="{ 'background-image': 'url(//maps.google.com/maps/api/staticmap?center={{ event.latitude }},{{ event.longitude }}&markers=icon:http://vamos.s3.amazonaws.com/web/assets/map_pin_red.png|{{ event.latitude }},{{ event.longitude }}&zoom=15&size=640x640&scale=2&sensor=false)' }"></div>
+                </div>
+                <div class="col col-xs-6 col-sm-3 item hand" ng-class="{ nonMobile:!device.mobile }" ng-repeat="item in event.mediaItems" ng-click="openGallery($index)" ng-switch="" on="item.mediaType">
+                  <div class="inner" ng-switch-when="video">
+                    <div class="thumb" ng-style="{ 'background-image': 'url(' + item.thumb + ')' }"></div>
+                    <div class="imageOverlay">
+                      <div class="playButton"><i class="icon icon-play"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="inner" ng-switch-default="">
+                    <div class="thumb" ng-style="{ 'background-image': 'url(' + item.thumb + ')' }"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="event" ng-if="event_not_found">
+  <div class="wrapper eventTopWrapper" ng-class="topWrapperClass">
+    <div class="bgImage animateOpacity" ng-class="{ filtersNotSupported : !device.supports.filters }" ng-animate="">
+      <div class="blur"></div>
+      <div class="overlay" style="background: rgb(237, 74, 86); opacity: 1 !important"></div>
+    </div>
+    <div class="container text-center">
+      <div class="table eventTop">
+        <div class="valign">
+          <div class="inner">
+            <h3 id="eventTitle" class="name" style="color: white">Whoops...<br>Event couldn't be found.</h3><a ui-sref="main" style="color: white; text-decoration: underline">Go back to the list</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mediaGallery animateOpacity" ng-show="galleryOpened" ng-animate="" keypress-events="">
+  <div class="overlay" ng-click="closeGallery()"></div>
+  <div class="holder">
+    <div class="close control" ng-click="closeGallery()"><i class="icon icon-close"></i>
+    </div>
+    <div class="back control" ng-click="galleryBack()"><i class="icon icon-back"></i>
+    </div>
+    <div class="forward control" ng-click="galleryForward()"><i class="icon icon-forward"></i>
+    </div>
+    <div class="content">
+      <div ng-repeat="item in event.mediaItems" class="mediaItem animateOpacity" ng-show="activeMediaItem === $index" ng-animate="" ng-switch="" on="item.mediaType">
+        <div class="iframe" ng-switch-when="video" ng-class="item.provider" ng-bind-html="item.iframe"></div>
+        <img class="image" ng-switch-when="image" ng-src="{{ item.large }}">
+      </div>
+    </div>
+    <div class="bottom">
+      <table>
+        <tr>
+          <td class="image" ng-if="event.mediaItems[activeMediaItem].user">
+            <img ng-src="{{ event.mediaItems[activeMediaItem].user.profile_picture }}" title="{{ event.mediaItems[activeMediaItem].user.full_name }}">
+            <td class="person" ng-if="event.mediaItems[activeMediaItem].user"><span class="name">{{ event.mediaItems[activeMediaItem].user.full_name }}</span>  <span class="date">{{ event.mediaItems[activeMediaItem].dateCreated | date:'mediumDate' }}</span>
+              <td class="time_ago">via {{ event.mediaItems[activeMediaItem].provider }}</table>
+    </div>
+  </div>
+</div>
