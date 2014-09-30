@@ -4,9 +4,8 @@
  * Module dependencies.
  */
 var express = require('express'),
-    fs = require('fs'),
-    passport = require('passport');
-
+  fs = require('fs'),
+  passport = require('passport');
 /**
  * Main application entry file.
  * Please note that the order of loading is important.
@@ -33,20 +32,20 @@ require('./config/express')(app, passport, config.db);
 // Bootstrap routes
 var routes_path = __dirname + '/app/routes';
 var walk = function(path) {
-    fs.readdirSync(path).forEach(function(file) {
-        var newPath = path + '/' + file;
-        var stat = fs.statSync(newPath);
-        if (stat.isFile()) {
-            if (/(.*)\.(js$|coffee$)/.test(file)) {
-                require(newPath)(app, passport, db);
-            }
-        // We skip the app/routes/middlewares directory as it is meant to be
-        // used and shared by routes as further middlewares and is not a 
-        // route by itself
-        } else if (stat.isDirectory() && file !== 'middlewares') {
-            walk(newPath);
-        }
-    });
+  fs.readdirSync(path).forEach(function(file) {
+    var newPath = path + '/' + file;
+    var stat = fs.statSync(newPath);
+    if (stat.isFile()) {
+      if (/(.*)\.(js$|coffee$)/.test(file)) {
+        require(newPath)(app, passport, db);
+      }
+      // We skip the app/routes/middlewares directory as it is meant to be
+      // used and shared by routes as further middlewares and is not a 
+      // route by itself
+    } else if (stat.isDirectory() && file !== 'middlewares') {
+      walk(newPath);
+    }
+  });
 };
 walk(routes_path);
 

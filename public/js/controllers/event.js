@@ -109,12 +109,14 @@ var EventCtrl = function($scope, $state, $stateParams, Restangular, Global, ezfb
       });
   }
 
-  Event.find($stateParams.eid).then(function(ev) {
+  Event.find(parseInt($stateParams.eid)).then(function (ev) {
+
+
+    $scope.ev = ev;
+
     if (!$scope.ev.list_event_players) {
       $scope.ev.list_event_players = [];
     }
-
-    $scope.ev = ev;
 
     $scope.ev.start_time = $scope.convertToUTC($scope.ev.start_time, $scope.ev.timezone);
     $scope.ev.end_time = $scope.convertToUTC($scope.ev.end_time, $scope.ev.timezone);

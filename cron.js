@@ -37,25 +37,26 @@ graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta', 'porto'
 
-var users = [ 'EsenciaSalsaClub',
-'clubastoriabcn',
-'SevenDanceEscuelaBaile',
-'manisero.delasalsa',
-'antillasalsabarcelona',
-'aguadelunasalsa',
-'El.Cel.Badalona‎',
-'pacomorenotheclub',
-'mojito.barcelona',
-'bailongu',
-'kizombafusionmadrid',
-'lelebahia',
-'bikinitheoriginal',
-'Camanaclub',
-'thebeachmilano1',
-'puertoalegre.zythum',
-'TropicanaMilano',
-'MangosTropCafe',
-'victorsuco'];
+var users = ['EsenciaSalsaClub',
+  'clubastoriabcn',
+  'SevenDanceEscuelaBaile',
+  'manisero.delasalsa',
+  'antillasalsabarcelona',
+  'aguadelunasalsa',
+  'El.Cel.Badalona‎',
+  'pacomorenotheclub',
+  'mojito.barcelona',
+  'bailongu',
+  'kizombafusionmadrid',
+  'lelebahia',
+  'bikinitheoriginal',
+  'Camanaclub',
+  'thebeachmilano1',
+  'puertoalegre.zythum',
+  'TropicanaMilano',
+  'MangosTropCafe',
+  'victorsuco'
+];
 
 var cronJob = require('cron').CronJob;
 var newEvents;
@@ -75,7 +76,7 @@ var newEvents;
 // });
 
 var job = new cronJob('0 */1 * * *', function() {
-  Pho.searchPhotoEvents(db, function (err) {
+  Pho.searchPhotoEvents(db, function(err) {
     if (err)
       console.log(err);
     console.log("---- UPDATE Pictures of week DONE ----")
@@ -83,14 +84,14 @@ var job = new cronJob('0 */1 * * *', function() {
 }, null, true);
 
 var job = new cronJob('*/1 * * * *', function() {
-  Upd.updateLastMonthEvents(function (err) {
+  Upd.updateLastMonthEvents(function(err) {
     if (err)
       console.log(err);
     console.log("---- UPDATE Event of last month DONE ----")
   });
 });
 
-var job = new cronJob('*/30 * * * *', function() {
+// var job = new cronJob('*/30 * * * *', function() {
   newEvents = 0;
   var date = new Date();
   console.log(date.toString());
@@ -100,7 +101,7 @@ var job = new cronJob('*/30 * * * *', function() {
 
   // fetchEventsFromUsers();
   // fetchEventsFromLocations();
-}, null, true);
+// }, null, true);
 
 var job = new cronJob('*/60 * * * *', function() {
   // var date = new Date();
@@ -125,8 +126,7 @@ function updatePopular() {
     end_time: {
       $gte: date
     }
-  },
-  {
+  }, {
     sort: {
       'attending_count': -1
     },
@@ -191,7 +191,9 @@ function updatePrioritaires() {
       end_time: {
         $gte: date
       },
-      attending: { $in: uids }
+      attending: {
+        $in: uids
+      }
     }).success(function(evs) {
       console.log(evs);
       var eids = [];
@@ -215,7 +217,7 @@ function paginate(page, term) {
       }
 
       var evs = res.data;
-      
+
       if (evs) {
         var eids = [];
 
@@ -223,7 +225,7 @@ function paginate(page, term) {
           eids.push(parseInt(ev.id));
         });
 
-        Ev.fetchMultiple(eids, function(eves) {});
+        Ev.fetchMultiple(eids, term, function(eves) {});
       }
     }
   });

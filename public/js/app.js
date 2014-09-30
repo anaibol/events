@@ -6,7 +6,7 @@ app.factory('Event', function (DS) {
   return DS.defineResource({
       name: 'event',
       endpoint: '/api/events',
-      idAttribute: '_id',
+      idAttribute: 'eid',
     });
 });
  

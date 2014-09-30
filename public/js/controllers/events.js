@@ -49,6 +49,7 @@ app.controller('EventsCtrl', function($scope, $location, $modal, Global, $stateP
     }
   }
 
+
   $scope.getEvents = function(cb) {
     Event.findAll($scope.filter).then(function (events) {
       $scope.events = events;

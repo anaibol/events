@@ -293,7 +293,7 @@ function update(eid, cb) {
 }
 
 function updateMultiple(eids) {
-  Ev.fetchMultiple(eids, function(eves) {
+  Ev.fetchMultiple(eids, '', function(eves) {
     var eids = [];
 
     eves.forEach(function(ev) {
