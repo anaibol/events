@@ -67,7 +67,8 @@ module.exports = function(app, passport, db) {
   app.use(session({
     secret: config.sessionSecret,
     store: new MongoStore({
-      url: config.db
+      url: config.db,
+      auto_reconnect: true
     })
   }));
 
