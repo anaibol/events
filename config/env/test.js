@@ -2,7 +2,7 @@
 
 module.exports = {
   port: 3001,
-  db: "mongodb://admin:0303456@localhost/wooepa-test",
+  db: "mongodb://admin:0303456@localhost/wooepa",
   app: {
     name: "Wooepa - Test",
     accessToken: "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y"

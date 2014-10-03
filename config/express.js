@@ -10,9 +10,7 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var methodOverride = require('method-override');
 var favicon = require('serve-favicon');
-var MongoStore = require('connect-mongo')({
-  session: session
-});
+var MongoStore = require('connect-mongo');
 var flash = require('connect-flash');
 var config = require('./config');
 
@@ -63,13 +61,13 @@ module.exports = function(app, passport, db) {
   app.use(express.urlencoded());
   app.use(express.json());
 
-  // Express/Mongo session storage
-  app.use(session({
-    secret: config.sessionSecret,
-    store: new MongoStore({
-      url: config.db
-    })
-  }));
+  var sessionStore = new MongoStore({
+    url: config.db
+  }, function(e) {
+    app.use(session({
+      store: sessionStore
+    }));
+  });
 
   // Use passport session
   app.use(passport.initialize());
