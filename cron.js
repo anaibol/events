@@ -59,61 +59,53 @@ var users = ['EsenciaSalsaClub',
 ];
 
 var cronJob = require('cron').CronJob;
-var newEvents;
 
-// var TimeQueue = require('timequeue'); 
+var env = process.env.NODE_ENV || 'development';
 
-// // create a queue with max 5 concurrency every second
-// var q = new TimeQueue(worker, { concurrency: 5, every: 1000 });
+if (env === 'production') {
+  var job = new cronJob('0 */1 * * *', function() {
+    Pho.searchPhotoEvents(db, function(err) {
+      if (err)
+        console.log(err);
+      console.log("---- UPDATE Pictures of week DONE ----")
+    });
+  }, null, true);
 
-// // push tasks onto the queue
-// q.push(42, 24);
-// q.push(2, 74);
-
-// // optional callback when pushing tasks
-// q.push(2, 2, function(err) {
-//   // task finished
-// });
-
-var job = new cronJob('0 */1 * * *', function() {
-  Pho.searchPhotoEvents(db, function(err) {
-    if (err)
-      console.log(err);
-    console.log("---- UPDATE Pictures of week DONE ----")
+  var job = new cronJob('*/1 * * * *', function() {
+    Upd.updateLastMonthEvents(function(err) {
+      if (err)
+        console.log(err);
+      console.log("---- UPDATE Event of last month DONE ----")
+    });
   });
-}, null, true);
 
-var job = new cronJob('*/1 * * * *', function() {
-  Upd.updateLastMonthEvents(function(err) {
-    if (err)
-      console.log(err);
-    console.log("---- UPDATE Event of last month DONE ----")
-  });
-});
+  var job = new cronJob('*/30 * * * *', function() {
+    var date = new Date();
+    console.log(date.toString());
 
-// var job = new cronJob('*/30 * * * *', function() {
-  newEvents = 0;
-  var date = new Date();
-  console.log(date.toString());
+    fetchEventsFromKeywords();
+    updatePopular();
 
+    // fetchEventsFromUsers();
+    // fetchEventsFromLocations();
+  }, null, true);
+
+  var job = new cronJob('*/60 * * * *', function() {
+    // var date = new Date();
+    console.log(date.toString());
+    updatePrioritaires();
+  }, null, true);
+
+  var job = new cronJob('0 */1 * * *', function() {
+    var date = new Date();
+    console.log(date.toString());
+    updateWeek();
+  }, null, true);
+}
+
+if (env === 'development') {
   fetchEventsFromKeywords();
-  updatePopular();
-
-  // fetchEventsFromUsers();
-  // fetchEventsFromLocations();
-// }, null, true);
-
-var job = new cronJob('*/60 * * * *', function() {
-  // var date = new Date();
-  console.log(date.toString());
-  updatePrioritaires();
-}, null, true);
-
-var job = new cronJob('0 */1 * * *', function() {
-  var date = new Date();
-  console.log(date.toString());
-  updateWeek();
-}, null, true);
+}
 
 function updatePopular() {
   var date = new Date();

@@ -2,10 +2,9 @@
 
 module.exports = {
   db: "mongodb://localhost/wooepa-dev",
-  dbName: "wooepa-dev",
   app: {
     name: "Wooepa - Development",
-    accessToken: "1511193072439143|B3CXLPHQjOUyQ6Bu1wbdyLxJEwQ"  
+    accessToken: "1511193072439143|B3CXLPHQjOUyQ6Bu1wbdyLxJEwQ"
   },
   facebook: {
     clientID: "1511193072439143",

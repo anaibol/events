@@ -1,40 +1,46 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
-var express = require('express'),
-  mongoStore = require('connect-mongo')(express),
-  config = require('./config');
+var express = require('express');
+var session = require('express-session');
+var helpers = require('view-helpers');
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var serveStatic = require('serve-static');
+var bodyParser = require('body-parser');
+var compression = require('compression');
+var methodOverride = require('method-override');
+var favicon = require('serve-favicon');
+var MongoStore = require('connect-mongo')({
+  session: session
+});
+var flash = require('connect-flash');
+var config = require('./config');
 
 var db = require('monk')(config.db);
 
 var Events = db.get('events');
 
 var url = require('url');
-var path = require('path');
-var zlib = require('zlib');
-var fs = require('fs');
+
+var env = process.env.NODE_ENV || 'development';
 
 module.exports = function(app, passport, db) {
 
-  app.set('showStackError', true);
 
-  // Prettify HTML
-  // app.locals.pretty = true;
+  if (env === 'development') {
+    app.use(morgan('dev'));
+    app.locals.pretty = true;
+    app.set('showStackError', true);
+    app.use(express.logger('dev'));
+  }
 
-  // Only use logger for development environment
-  if (process.env.NODE_ENV === 'production') {
-    // app.use(express.logger('dev'));
+  if (env === 'production') {
+    app.locals.cache = 'memory';
 
-  // Should be placed before express.static
-  // To ensure that all assets and data are compressed (utilize bandwidth)
-    app.use(express.compress({
+    app.use(compression({
       filter: function(req, res) {
         return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
       },
-      // Levels are specified in a range of 0 to 9, where-as 0 is
-      // no compression and 9 is best compression, but slowest
       level: 9
     }));
   }
@@ -43,204 +49,63 @@ module.exports = function(app, passport, db) {
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'jade');
 
-  app.configure(function() {
-    // The cookieParser should be above session
-    app.use(express.cookieParser());
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(express.multipart());
+  app.use(cookieParser());
 
-    app.use(express.limit('15mb'));
+  app.use(bodyParser.urlencoded());
+  app.use(bodyParser.json());
+  app.use(methodOverride());
 
-    // Request body parsing middleware should be above methodOverride
-    app.use(express.urlencoded());
-    app.use(express.json());
-    app.use(express.methodOverride());
+  app.use(express.multipart());
 
-    // Express/Mongo session storage
-    app.use(express.session({
-      secret: config.sessionSecret,
-      store: new mongoStore({
-        url: config.db
-      })
-    }));
+  app.use(express.limit('15mb'));
 
-    // Use passport session
-    app.use(passport.initialize());
-    app.use(passport.session());
+  // Request body parsing middleware should be above methodOverride
+  app.use(express.urlencoded());
+  app.use(express.json());
 
-    // Routes should be at the last
+  // Express/Mongo session storage
+  app.use(session({
+    secret: config.sessionSecret,
+    store: new MongoStore({
+      url: config.db
+    })
+  }));
 
-    app.use(express.static(path.join(config.root + '/public')));
+  // Use passport session
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-    app.use(app.router);
+  app.use(helpers(config.app.name));
 
-    app.get('/sitemap/index.xml.gz', function(req, res) {
-      var siteMapFile = path.join(config.root + '/public', 'index.xml.gz');
-      //fs.exists(siteMapFile, function(exists) {
-      //if (!exists) {
-      generateSitemapIndex(req.headers.host, siteMapFile, function(success) {
-        if (success) {
-          res.type('gzip');
-          res.sendfile(siteMapFile);
-        }
-      });
-      //}
-      //else {
-      //  res.sendfile(siteMapFile);
-      //}
+  app.use(flash());
+
+  app.use(favicon(config.root + '/public/favicon.ico'));
+
+  app.use(serveStatic(config.root + '/public'));
+
+  app.use(app.router);
+
+  // Assume "not found" in the error msgs is a 404. this is somewhat
+  // silly, but valid, you can do whatever you like, set properties,
+  // use instanceof etc.
+  app.use(function(err, req, res, next) {
+    // Treat as 404
+    if (~err.message.indexOf('not found')) return next();
+
+    // Log it
+    console.error(err.stack);
+
+    // Error page
+    res.status(500).render('500', {
+      error: err.stack
     });
- 
-    app.get('/sitemap/:id.xml.gz', function(req, res) {
-      var id = req.params.id;
-      var siteMapFile = path.join(config.root + '/public', id + '.xml.gz');
- 
-      //fs.exists(siteMapFile, function(exists) {
-      //if (!exists) {
- 
-      generateSitemap(id, req.headers.host, siteMapFile, function(success) {
-        if (success) {
-          res.type('gzip');
-          res.sendfile(siteMapFile);
-        }
-      });
-      //}
-      //else {
-      //  res.sendfile(siteMapFile);
-      //}
-      //});
-    });
+  });
 
-    var MaxSitemapUrls = 10000;
-   
-    function generateSitemapIndex(host, siteMapFile, cb) {
-      var url;
-      var priority = 0.5;
-      var freq = 'monthly';
-      var xml = '<sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
- 
-      var siteMap = {};
-      var slug;
-      var dateModified;
-
-      var options = {
-        sort: { id: 1 }
-      };
-
-      return Events.find({}, options, function(err, evs) {
-        var numSiteMaps = Math.floor(evs.length / MaxSitemapUrls);
-        if (numSiteMaps < 1) {
-          numSiteMaps = 1;
-        }
-
-        for (var i = 1; i <= numSiteMaps; i++) {
-          //dateModified = post.dateModified;
-          url = 'http://' + host + '/sitemap/' + i + '.xml.gz';
-          xml += '<sitemap>';
-          xml += '<loc>' + url + '</loc>';
-          //xml += '<lastmod>' + dateModified + '</lastmod>';
-          //xml += '<changefreq>' + freq + '</changefreq>';
-          //xml += '<priority>' + priority + '</priority>';
-          xml += '</sitemap>';
-        }
-   
-        xml += '</sitemapindex>';
-   
-        zlib.gzip(xml, function(_, result) { // The callback will give you the 
-          fs.writeFile(siteMapFile, result, function(err) {
-            if (err) {
-              console.log(err);
-   
-            } else {
-              if (typeof cb == "function") cb(true);
-            }
-          }); // result, so just send it.
-        });
-      });
-    }
- 
-    function generateSitemap(id, host, siteMapFile, cb) {
-      var from = MaxSitemapUrls * (id - 1);
-
-      var options = {
-        limit: MaxSitemapUrls,
-        skip: from,
-        sort: { id: 1 }
-      };
-
-      return Events.find({}, options, function(err, evs) {
-        console.log(err)
-        if (err) return;
-   
-        var url;
-        var priority = 0.5;
-        var freq = 'monthly';
-        var xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-   
-        var ev = {};
-        var slug;
-   
-        var date;
-        var month;
-        var day;
-   
-        for (var i = 0; i < evs.length; i++) {
-          ev = evs[i];
-          //date = new Date(post.dateModified);
-          //month = ('0' + date.getMonth() + 1).slice(-2);
-          //day = ('0' + date.getDate()).slice(-2);
-   
-          //date = date.getFullYear() + '-' + month + '-' + day;
-          url = 'http://' + host + '/' + ev.slug + '/' + ev.eid;
-   
-          xml += '<url>';
-          xml += '<loc>' + url + '</loc>';
-          //xml += '<lastmod>' + date + '</lastmod>';
-          //xml += '<changefreq>' + freq + '</changefreq>';
-          //xml += '<priority>' + priority + '</priority>';
-          xml += '</url>';
-        }
-   
-        xml += '</urlset>';
-   
-        zlib.gzip(xml, function(_, result) { // The callback will give you the 
-          fs.writeFile(siteMapFile, result, function(err) {
-            if (err) {
-              console.log(err);
-   
-            } else {
-              if (typeof cb == "function") cb(true);
-            }
-          }); // result, so just send it.
-        });
-      });
-    }
-
-    // Setting the fav icon and static folder
-    app.use(express.favicon());
-
-    // Assume "not found" in the error msgs is a 404. this is somewhat
-    // silly, but valid, you can do whatever you like, set properties,
-    // use instanceof etc.
-    app.use(function(err, req, res, next) {
-      // Treat as 404
-      if (~err.message.indexOf('not found')) return next();
-
-      // Log it
-      console.error(err.stack);
-
-      // Error page
-      res.status(500).render('500', {
-        error: err.stack
-      });
-    });
-
-    // Assume 404 since no middleware responded
-    app.use(function(req, res, next) {
-      res.status(404).render('404', {
-        url: req.originalUrl,
-        error: 'Not found'
-      });
+  // // Assume 404 since no middleware responded
+  app.use(function(req, res, next) {
+    res.status(404).render('404', {
+      url: req.originalUrl,
+      error: 'Not found'
     });
   });
 };

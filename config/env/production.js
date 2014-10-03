@@ -2,7 +2,6 @@
 
 module.exports = {
   db: "mongodb://admin:0303456@localhost/wooepa",
-  dbName: "wooepa",
   app: {
     name: "Wooepa - Production",
     accessToken: "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y"
