@@ -14,7 +14,81 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                 span.icon-bar
 
         .navbar-collapse.collapse
-          ul.nav.navbar-nav
+          //- ul.nav.navbar-nav
+          //-   li
+          //-     a(href='/today')
+          //-       i.glyphicon.glyphicon-calendar
+          //-       | Today
+          //-   li
+          //-     a(href='/weekend')
+          //-       i.glyphicon.glyphicon-calendar
+          //-       | Weekend
+
+          //-   li(ng-controller='DatepickerCtrl', ng-click='open($event)')
+          //-     a(href='#!', datepicker-popup='dd-MMMM-yyyy', ng-change='changeDate(date)', ng-model='date', min='minDate', datepicker-options='dateOptions', is-open='opened')
+          //-       i.fui-calendar-solid(ng-click='open($event)')
+          //-       | {{date | date:'dd MMMM'}}
+                
+          //-   li
+          //-     a(href='/free')
+          //-       i.glyphicon.glyphicon-usd
+          //-       | Free
+          //-   li
+          //-     a(href='/popular')
+          //-       i.glyphicon.glyphicon-heart
+          //-       | Popular
+          //-   li
+          //-     a(href='/festival')
+          //-       i.glyphicon.glyphicon-star
+          //-       | Festival
+          //-   li
+          //-     a(href='/worldwide')
+          //-       i.glyphicon.glyphicon-globe
+          //-       | World
+          //-   li
+          //-     a(href='/promote')
+          //-       i.glyphicon.glyphicon-user
+          //-       | Promoting
+          //-   li(ng-show='global.authenticated')
+          //-     a(ng-click='newEvent()')
+          //-       i.fui-plus
+          //-       | Submit an event
+                
+          ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')
+            li
+              a.login(href='/auth/facebook', target='_self')
+                | Login
+
+          ul.nav.navbar-nav.navbar-right(ng-show='global.authenticated')
+            li.dropdown
+              a.dropdown-toggle(href='#', toggle='dropdown')
+                img.img-circle(src='{{ global.user.facebook.picture }}', alt='{{ global.user.facebook.name }}')
+                b.caret
+              ul.dropdown-menu
+                li
+                  a(href='/me/events', target='_self') My events
+                li
+                  a(href='/auth/signout', target='_self') Logout
+
+    header
+      h1 Welcome to Wooepa
+
+    .wrapper
+      .container
+        .col-xs-12.col-sm-7.col-md-8.col-lg-9
+          block content
+
+        .hidden-xs.col-sm-5.col-md-4.col-lg-3
+          //- ul.nav.nav-sidebar
+          //-   li.active
+          //-     a(href='#') Overview
+          //-   li
+          //-     a(href='#') Reports
+          //-   li
+          //-     a(href='#') Analytics
+          //-   li
+          //-     a(href='#') Export
+          ul.nav.nav-sidebar
             li
               a(href='/today')
                 i.glyphicon.glyphicon-calendar
@@ -53,26 +127,8 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
               a(ng-click='newEvent()')
                 i.fui-plus
                 | Submit an event
-                
-          ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')
-            li
-              a.login(href='/auth/facebook', target='_self')
-                | Login
-
-          ul.nav.navbar-nav.navbar-right(ng-show='global.authenticated')
-            li.dropdown
-              a.dropdown-toggle(href='#', toggle='dropdown')
-                img.img-circle(src='{{ global.user.facebook.picture }}', alt='{{ global.user.facebook.name }}')
-                b.caret
-              ul.dropdown-menu
-                li
-                  a(href='/me/events', target='_self') My events
-                li
-                  a(href='/auth/signout', target='_self') Logout
 
     //- leaflet#map(center='pos', layers='layers', markers='markers', height='100%', width='100%')
-    
-    block content
     
     footer
       ul
