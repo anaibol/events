@@ -1,0 +1,22 @@
+section.content(ng-controller='EventsCtrl')
+    form.form-horizontal.col-md-6(role='form', ng-submit='create()')
+        h1 New event
+        .form-group
+          label.col-md-2.control-label(for='title') Title
+          .col-md-10
+            input#name.form-control(type='text', ng-model='title', placeholder='Name', required='required')
+        .form-group
+          label.col-md-2.control-label(for='title') Start date
+          .col-md-10
+            p.input-group
+              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='dt', is-open='opened', min='minDate', max='\'2015-06-22\'', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+              span.input-group-btn
+                button.btn.btn-default(ng-click='open($event)')
+                  i.glyphicon.glyphicon-calendar
+        .form-group
+          label.col-md-2.control-label(for='content') Content
+          .col-md-10
+            textarea#content.form-control(ng-model='content', cols='30', rows='10', placeholder='Content', required='required')
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type='submit') Submit

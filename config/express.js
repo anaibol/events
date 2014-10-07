@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var assets = require('connect-assets');
 var session = require('express-session');
 var helpers = require('view-helpers');
 var morgan = require('morgan');
@@ -30,8 +31,9 @@ module.exports = function(app, passport, db) {
   if (env === 'development') {
     app.use(morgan('dev'));
     app.locals.pretty = true;
+    app.set('dumpExceptions', true);
     app.set('showStackError', true);
-    app.use(express.logger('dev'));
+    // app.use(express.logger('dev'));
   }
 
   if (env === 'production') {
@@ -46,7 +48,7 @@ module.exports = function(app, passport, db) {
   }
 
   // Set views path, template engine and default layout
-  app.set('views', config.root + '/app/views');
+  app.set('views', viewsDir);
   app.set('view engine', 'jade');
 
   app.use(cookieParser());
@@ -80,33 +82,46 @@ module.exports = function(app, passport, db) {
 
   app.use(flash());
 
-  app.use(favicon(config.root + '/public/favicon.ico'));
+  app.use(favicon(publicDir + 'favicon.ico'));
 
-  app.use(serveStatic(config.root + '/public'));
+  app.use(require("connect-assets")());
+
+  app.use(assets({
+    buildDir: publicDir,
+    paths: [assetsDir + "js", assetsDir + "css"]
+  }));
+
+  // app.use(connectAssets({
+  //   src: __dirname + "/app/assets",
+  //   jsDir: 'js',
+  //   cssDir: 'css'
+  // }));
+
+  app.use(serveStatic(publicDir));
 
   app.use(app.router);
 
   // Assume "not found" in the error msgs is a 404. this is somewhat
   // silly, but valid, you can do whatever you like, set properties,
   // use instanceof etc.
-  app.use(function(err, req, res, next) {
-    // Treat as 404
-    if (~err.message.indexOf('not found')) return next();
+  // app.use(function(err, req, res, next) {
+  //   // Treat as 404
+  //   if (~err.message.indexOf('not found')) return next();
 
-    // Log it
-    console.error(err.stack);
+  //   // Log it
+  //   console.error(err.stack);
 
-    // Error page
-    res.status(500).render('500', {
-      error: err.stack
-    });
-  });
+  //   // Error page
+  //   res.status(500).render('500', {
+  //     error: err.stack
+  //   });
+  // });
 
-  // // Assume 404 since no middleware responded
-  app.use(function(req, res, next) {
-    res.status(404).render('404', {
-      url: req.originalUrl,
-      error: 'Not found'
-    });
-  });
+  // // // Assume 404 since no middleware responded
+  // app.use(function(req, res, next) {
+  //   res.status(404).render('404', {
+  //     url: req.originalUrl,
+  //     error: 'Not found'
+  //   });
+  // });
 };

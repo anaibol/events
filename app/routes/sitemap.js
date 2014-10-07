@@ -5,7 +5,7 @@ var zlib = require('zlib');
 
 module.exports = function(app) {
   app.get('/sitemap/index.xml.gz', function(req, res) {
-    var siteMapFile = config.root + '/public' + 'index.xml.gz';
+    var siteMapFile = publicDir + 'index.xml.gz';
     //fs.exists(siteMapFile, function(exists) {
     //if (!exists) {
     generateSitemapIndex(req.headers.host, siteMapFile, function(success) {
@@ -22,7 +22,7 @@ module.exports = function(app) {
 
   app.get('/sitemap/:id.xml.gz', function(req, res) {
     var id = req.params.id;
-    var siteMapFile = config.root + '/public' + id + '.xml.gz';
+    var siteMapFile = publicDir + id + '.xml.gz';
 
     //fs.exists(siteMapFile, function(exists) {
     //if (!exists) {

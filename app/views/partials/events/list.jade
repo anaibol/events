@@ -1,0 +1,15 @@
+section.right.events(data-ng-controller='EventsCtrl', data-ng-init='find()')
+    ul.events.unstyled
+        li(data-ng-repeat='event in events')
+          span {{event.start_time | date:'medium'}}
+          | /
+          span {{event.owner.name}}
+          h2
+            a(data-ng-href='#!/events/{{event._id}}') {{event.name}}
+          div {{event.description}}
+      h1(data-ng-hide='!events || events.length')
+        | No events yet.
+        br
+        | Why don't you
+        a(href='/#!/events/create') Create One
+        | ?

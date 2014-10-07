@@ -23,6 +23,15 @@ var app = express();
 global.db = require('monk')(config.db);
 global.Ev = require('./ev');
 
+global.rootDir = __dirname + '/app/';
+global.publicDir = __dirname + '/public/';
+global.routesDir = rootDir + 'routes/';
+global.middlewaresDir = routesDir + 'middlewares/';
+global.viewsDir = rootDir + 'views/';
+global.controllersDir = rootDir + 'controllers/';
+
+global.assetsDir = rootDir + 'assets/';
+
 // Bootstrap passport config
 require('./config/passport')(passport);
 
@@ -30,7 +39,6 @@ require('./config/passport')(passport);
 require('./config/express')(app, passport, config.db);
 
 // Bootstrap routes
-var routes_path = __dirname + '/app/routes';
 var walk = function(path) {
   fs.readdirSync(path).forEach(function(file) {
     var newPath = path + '/' + file;
@@ -47,9 +55,22 @@ var walk = function(path) {
     }
   });
 };
-walk(routes_path);
+walk(routesDir);
 
+// app.get('partials/:name', function(req, res) {
+//   res.send(1);
+//   // res.render('partials/' + req.params.name);
+// });
 
+// app.get('/', function(req, res) {
+//   res.render('index', {
+//     title: 'Wooepa',
+//     user: req.user ? JSON.stringify(req.user) : 'null',
+//     fbAppId: global.fbAppId,
+//     //events: events,
+//     //pos: pos
+//   });
+// });
 
 // Start the app by listening on <port>
 var port = process.env.PORT || config.port;
