@@ -178,6 +178,6 @@ module.exports = function(grunt) {
   grunt.registerTask('build:dev', ['clean', 'less:dev', 'jade', 'concat:dev']);
 
 
-  grunt.registerTask('default', ['build:prod', 'nodemon:dev', 'watch']);
+  grunt.registerTask('default', ['build:dev', 'nodemon:dev', 'watch']);
 
 };
