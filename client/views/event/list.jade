@@ -1,0 +1,32 @@
+section(ng-controller='EventsCtrl')
+  .events
+    a.event(ui-sref='event({slug: ev.slug, eid: ev.eid})', href='/events/{{ev.slug}}/{{ev.eid}}', ng-repeat='ev in events')
+      .title
+        span.truncate {{ev.name}}
+        .attending(ng-show='ng-show', ev.attending_count='ev.attending_count') {{ev.attending_count}}
+          i.icon-group
+        div.price(ng-show='ng-show', ev.price.num='ev.price.num') {{ev.price.full}}
+        .tag-list
+          span.tag-item(ng-class='{{tag}}', ng-repeat='tag in ev.tags', ng-if='ng-if')
+      .containing(ng-show='ev.image', style='background-image: url({{ev.image}});')
+        .ribbon-wrapper-green(ng-show='ev.price.num == 0')
+          .ribbon-green {{ev.price.full}}
+        img(ng-src='{{ev.imageExt ? \'/uploads/\' + ev._id + \'.\' + ev.imageExt : ev.pic_cover.source}}', onerror='this.parentNode.style.display = "none"')
+      .info
+        .datetime
+          .date
+            i.fui-calendar-solid
+            div(ng-if='ev.start_time.toDateString() !== today.toDateString()')
+              .day {{ev.start_time | date:'dd'}}
+              .month {{ev.start_time | date:'MMM' | uppercase}}
+            div(ng-if='ev.start_time.toDateString() === today.toDateString()')
+              .today TODAY!
+          .time
+            i.fui-time
+            div {{ev.start_time | amDateFormat:'LT'}}
+        .place-info
+          a.place(href='https://maps.google.com/maps?q={{ev.location}}', target='_blank', ng-show='ev.location')
+            i.fui-location
+            .location {{ev.location | characters:50}} {{ev.city | characters:50}}
+            .street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}}{{ev.venue.country}}
+div(ui-view='ui-view')

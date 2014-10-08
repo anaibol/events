@@ -1,0 +1,87 @@
+section(ng-controller='EventCtrl')
+    .event-detail.modal-header
+        div(style='background-image: url({{ev.pic_cover.source}}); width: 100%; height: 204px;')
+      .event-detail.modal-body
+        h3.truncate {{ev.name}}
+        a.event(ui-sref='{{getPromoteLink()}}', ng-show='canEdit()') Promote event
+        a.facebook-link(target='_blank', href='https://facebook.com/{{ev.eid}}') Facebook event
+        .tag-list
+          span.tag-item(ng-class='{{tag}}', ng-repeat='tag in ev.tags') {{tag}}
+        .title
+          .attending
+            | {{ev.attending_count}}
+            i.icon-group
+          .price {{ev.price.full}}
+        .info
+          a(href='https://maps.google.com/maps?q={{ev.place}}', target='_blank')
+            .place(ng-show='ev.location')
+              i.fui-location
+              | {{ev.location}}{{ev.city}}
+          | {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}} {{ev.venue.country}}
+        .datetime
+          .date
+            i.fui-calendar-solid
+            div(ng-if='ev.date.toDateString() !== today.toDateString()')
+              .day {{ev.start_time | date:'dd'}}
+              .month {{ev.start_time | date:'MMM' | uppercase}}
+            div(ng-if='ev.date.toDateString() === today.toDateString()')
+              .today TODAY!
+          .time
+            i.fui-time
+            div {{ev.start_time | amDateFormat:'LT'}}
+        .row
+          .col-md-8
+            p.description(ng-bind-html='ev.description | linky')
+          .col-md-4
+            //
+               ng-controller="RSVPCtrl" 
+            .event-buttons.wdiv.padding-10(ng-show='isInPromotion()')
+              .event-rsvp-btns
+                a.btn.btn-success(href='#', ng-show='attending === \'\'', ng-click='setAttending(ev.eid)', ng-disabled='isBtnJoinDisabled') {{ btnJoinText }}
+                button.btn(ng-show='attending === \'attending\'', ng-click='setNotAttending(ev.eid)', ng-disabled='isBtnLeaveDisabled') {{ btnLeaveText }}
+              .event-rsvp-btns
+                button.btn(ng-click='sendInvitations()') Invite your friends!
+              .event-share-btns
+                button(ng-class='btnShareClass', ng-click='shareEvent()', ng-disabled='isDisabled') {{ btnShareText }}
+            .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if='ev.in_promotion')
+              .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
+            hr
+            .wdiv.padding-10(ng-show='ev.in_promotion && isInPromotion()')
+              .panel.panel-success
+                .panel-heading Game Active
+                .panel-body
+                  ul.list-group(ng-if='ev.promoter')
+                    li.list-group-item(ng-if='!ev.promoter')
+                      img.img-circle(ng-src='{{ ev.promoter.facebook.picture }}', ng-alt='{{ev.promoter.name}}')
+                      | {{ ev.promoter.name }}
+                    li.list-group-item {{ev.promotion.reward}}
+                    li.list-group-item
+                      | End:
+                      strong
+                        | {{ev.promotion.end_time | date:'mediumDate'}} at {{ev.promotion.end_time | date:'shortTime'}}
+            .wdiv.padding-10
+              .panel.panel-default
+                .panel-heading Players
+                .panel-body
+                  p(ng-hide='ev.list_event_players') No players yet
+                  ul.list-group(ng-show='ev.list_event_players')
+                    input.form-control.input-sm(typ='text', ng-model='search.name')
+                    hr
+                    li.list-group-item(ng-repeat='player in ev.list_event_players', ng-if='player.facebook.id == ev.player_id')
+                      img.img-circle(ng-src='{{ player.facebook.picture }}', ng-alt='{{player.name}}')
+                      | {{ player.result }} pts
+                    li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
+                      img.img-circle(ng-src='{{ player.facebook.picture }}', ng-alt='{{player.name}}')
+                      | {{ player.result }} pts
+                      button.btn.btn-default.btn-xs(onclick='this.disabled=true;', type='button', ng-click='this.innerHtml=\'...\'; addBoost(player, ev.eid)', ng-show='ng-show', ev.player_result='ev.player_result')
+                        | ev.player_result || (player.result == 2 && ev.player_result == 2)) && (!boosted || boosted != player.facebook.id)"
+                        | Boost
+                        span.glyphicon.glyphicon-flash
+             
+        .modal-footer
+          .row
+            .col-xs-6.col-md-3(ng-repeat='image in ev.images', ng-if='ng-if')
+            .col-xs-6.col-md-3(ng-repeat='photo in ev.photos', ng-if='ng-if')
+          button.btn(ng-click='cancel()')
+            i.fui-cross
+            | Close

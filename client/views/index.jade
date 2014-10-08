@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  .content(ui-view)
+
+block inline-scripts
+  script.
+    window.user = !{user};
+    window.fbAppId = !{fbAppId};
+    //window.events = !{JSON.stringify(events)};
+

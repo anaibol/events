@@ -1,55 +1,33 @@
 {
-  "name": "mean",
+  "name": "wooeva",
+  "version": "1.0.0",
   "description": "Wooepa",
-  "version": "0.1.2",
-  "private": true,
-  "author": "Anaibol",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/linnovate/mean.git"
+    "url": "https://github.com/Rester-Libre/Wooeva.git"
   },
-  "engines": {
-    "node": "0.10.x",
-    "npm": "1.3.x"
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rester-Libre/Wooeva/issues"
   },
-  "dependencies": {
-    "angular-cache": "^3.1.1",
-    "async": "^0.7.0",
-    "body-parser": "^1.9.0",
-    "bower": "~1.2.8",
-    "cheerio": "^0.15.0",
-    "compression": "^1.1.0",
-    "connect-assets": "^4.3.3",
-    "connect-flash": "~0.1.1",
-    "connect-mongo": "~0.4.0",
-    "cookie-parser": "^1.3.3",
-    "cron": "~1.0.3",
-    "crypto": "0.0.3",
-    "express": "3.x",
-    "express-session": "^1.8.2",
-    "fbgraph": "~0.2.9",
-    "forever": "~0.10.11",
-    "formidable": "^1.0.14",
-    "jade": "~1.0.2",
-    "limiter": "^1.0.5",
-    "lodash": "~2.4.1",
-    "method-override": "^2.2.0",
-    "moment": "^2.8.3",
-    "moment-timezone": "^0.2.2",
-    "monk": "~0.8.1",
-    "morgan": "^1.3.2",
-    "passport": "~0.1.18",
-    "passport-facebook": "~1.0.2",
-    "prerender-node": "^0.1.18",
-    "request": "~2.33.0",
-    "serve-favicon": "^2.1.5",
-    "serve-static": "^1.6.3",
-    "slugify": "^0.1.0",
-    "stylus": "^0.49.1",
-    "view-helpers": "~0.1.4",
-    "winston": "^0.7.3"
-  },
+  "homepage": "https://github.com/Rester-Libre/Wooeva",
   "devDependencies": {
-    "broccoli": "^0.12.3"
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-jade": "^0.13.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-less": "^0.11.4",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ng-annotate": "^0.4.0",
+    "grunt-nodemon": "^0.3.0",
+    "load-grunt-tasks": "^0.6.0"
   }
 }

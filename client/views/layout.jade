@@ -1,0 +1,17 @@
+doctype html
+html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.facebook.com/2008/fbml', itemscope='itemscope', itemtype='http://schema.org/Product')
+  include head
+  body
+    include header
+
+    .wrapper
+      .container
+        .col-xs-12.col-sm-7.col-md-8.col-lg-9
+          block content
+
+        include sidebar
+
+    script(type='text/javascript', src='/js/app.min.js')
+    script(type='text/javascript', src='http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false')
+
+    block inline-scripts

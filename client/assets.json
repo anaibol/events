@@ -1,0 +1,30 @@
+{
+  "css": {
+    "client/dist/css/app.min.css": [
+      "client/dist/css/app.css"
+    ]
+  },
+  "js": [
+    "client/lib/angular/angular.js",
+    "client/lib/angular-ui-router/release/angular-ui-router.js",
+    "client/lib/angular-bootstrap/ui-bootstrap.js",
+    "client/lib/angular-bootstrap/ui-bootstrap-tpls.js",
+    "client/lib/angular-easyfb/angular-easyfb.js",
+    "client/lib/imagesloaded/imagesloaded.pkgd.js",
+    "client/lib/packery/dist/packery.pkgd.js",
+    "client/lib/angular-sanitize/angular-sanitize.js",
+    "client/lib/moment/min/moment-with-locales.js",
+    "client/lib/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
+    "client/lib/angular-moment/angular-moment.js",
+    "client/lib/angular-cache/dist/angular-cache.js",
+    "client/lib/angular-data/dist/angular-data.js",
+    "client/lib/angular-truncate/src/truncate.js",
+    "client/js/app.js",
+    "client/js/config.js",
+    "client/js/controllers/*.js",
+    "client/js/services/*.js",
+    "client/js/directives/*.js",
+    "client/js/filters/*.js",
+    "client/js/init.js"
+  ]
+}
