@@ -53,25 +53,6 @@ function getCountry(req, cb) {
   }
 }
 
-function getCountry(req, cb) {
-  if (!req.session.country) {
-    var ip = '';
-    if (process.env.NODE_ENV === 'development') {
-      ip = '82.142.63.255';
-    } else {
-      ip = req.connection.remoteAddress;
-    }
-
-    request('http://freegeoip.net/json/' + ip, function(error, response, body) {
-      var pos = JSON.parse(body);
-      req.session.country = pos.country_name;
-      cb(pos);
-    });
-  } else {
-    cb(req.session.country);
-  }
-}
-
 exports.importFromUser = function(req, res) {
   // Ev.crawlUser(req.params.name, function (result) {
   //   if (!result) {
