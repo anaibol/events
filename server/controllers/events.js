@@ -148,7 +148,10 @@ exports.get = function(req, res) {
       var options = {
         limit: limit,
         skip: skip,
-        sort: sort
+        sort: sort,
+        fields: {
+          attending: 0
+        }
       };
 
       switch (params.type) {
