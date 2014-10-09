@@ -1,30 +1,29 @@
 {
-  "css": [
-    "dist/css/app.css"
-  ],
-  "js": [
-    "lib/angular/angular.js",
-    "lib/angular-route/angular-route.js",
-    "lib/angular-ui-router/release/angular-ui-router.js",
-    "lib/angular-bootstrap/ui-bootstrap.js",
-    "lib/angular-bootstrap/ui-bootstrap-tpls.js",
-    "lib/angular-easyfb/angular-easyfb.js",
-    "lib/imagesloaded/imagesloaded.pkgd.js",
-    "lib/packery/dist/packery.pkgd.js",
-    "lib/angular-sanitize/angular-sanitize.js",
-    "lib/moment/min/moment-with-locales.js",
-    "lib/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
-    "lib/angular-moment/angular-moment.js",
-    "lib/angular-cache/dist/angular-cache.js",
-    "lib/angular-data/dist/angular-data.js",
-    "lib/angular-truncate/src/truncate.js",
-    "tmp/js/templates.js",
-    "js/app.js",
-    "js/config.js",
-    "js/controllers/*.js",
-    "js/services/*.js",
-    "js/directives/*.js",
-    "js/filters/*.js",
-    "js/init.js"
-  ]
+    "css": [
+        "dist/css/app.css"
+    ],
+    "js": [
+        "lib/angular/angular.js",
+        "lib/angular-ui-router/release/angular-ui-router.js",
+        "lib/angular-bootstrap/ui-bootstrap.js",
+        "lib/angular-bootstrap/ui-bootstrap-tpls.js",
+        "lib/angular-easyfb/angular-easyfb.js",
+        "lib/imagesloaded/imagesloaded.pkgd.js",
+        "lib/packery/dist/packery.pkgd.js",
+        "lib/angular-sanitize/angular-sanitize.js",
+        "lib/moment/min/moment-with-locales.js",
+        "lib/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
+        "lib/angular-moment/angular-moment.js",
+        "lib/angular-cache/dist/angular-cache.js",
+        "lib/angular-data/dist/angular-data.js",
+        "lib/angular-truncate/src/truncate.js",
+        "tmp/js/templates.js",
+        "js/app.js",
+        "js/config.js",
+        "js/controllers/*.js",
+        "js/services/*.js",
+        "js/directives/*.js",
+        "js/filters/*.js",
+        "js/init.js"
+    ]
 }
