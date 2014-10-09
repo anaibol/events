@@ -42,7 +42,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          'tmp/css/app.css': 'less/index.less'
+          'dist/css/app.min.css': 'less/index.less'
         }
       },
       dev: {
@@ -51,17 +51,17 @@ module.exports = function(grunt) {
         }
       }
     },
-    jade: {
-      compile: {
-        files: [{
-          cwd: "views",
-          src: "**/*.jade",
-          dest: "views",
-          expand: true,
-          ext: ".html"
-        }]
-      }
-    },
+    // jade: {
+    //   compile: {
+    //     files: [{
+    //       cwd: "views",
+    //       src: "**/*.jade",
+    //       dest: "views",
+    //       expand: true,
+    //       ext: ".html"
+    //     }]
+    //   }
+    // },
     html2js: {
       main: {
         src: ['views/*.jade', 'views/**/*.jade'],
@@ -117,12 +117,17 @@ module.exports = function(grunt) {
       options: {
         add: true,
         singleQuotes: true
-      }
+      },
+      annotate: {
+        files: {
+          'tmp/js/app.annotated.js': 'tmp/js/app.concat.js'
+        },
+      },
     },
     uglify: {
       prod: {
         files: {
-          'dist/js/app.min.js': 'tmp/js/app.concat.js'
+          'dist/js/app.min.js': 'tmp/js/app.annotated.js'
         }
       }
     },
@@ -132,22 +137,13 @@ module.exports = function(grunt) {
       },
       src: paths.less
     },
-    cssmin: {
-      dev: {
-        combine: {
-          files: {
-            'dist/css/app.min.css': '<%= assets.css %>'
-          }
-        }
-      },
-      prod: {
-        combine: {
-          files: {
-            'tmp/css/app.min.css': '<%= assets.css %>'
-          }
-        }
-      }
-    },
+    // cssmin: {
+    //   combine: {
+    //     files: {
+    //       'tmp/css/app.min.css': '<%= assets.css %>'
+    //     }
+    //   }
+    // },
     nodemon: {
       dev: {
         script: '../server/server.js',
@@ -191,10 +187,10 @@ module.exports = function(grunt) {
 
   // grunt.registerTask('build', ['clean', 'less', 'jade', 'useminPrepare', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
 
-  grunt.registerTask('build:prod', ['clean', 'less:prod', 'html2js', 'concat:prod', 'ngAnnotate', 'uglify', 'cssmin']);
+  grunt.registerTask('build:prod', ['clean', 'less:prod', 'html2js', 'concat:dev']);
   grunt.registerTask('build:dev', ['clean', 'less:dev', 'html2js', 'concat:dev']);
 
 
-  grunt.registerTask('default', ['build:dev', 'nodemon:dev', 'watch']);
+  grunt.registerTask('default', ['build:prod', 'nodemon:dev', 'watch']);
 
 };
