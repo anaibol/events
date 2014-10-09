@@ -3,9 +3,9 @@ section(ng-controller='EventsCtrl')
     a.event(ui-sref='event({slug: ev.slug, eid: ev.eid})', href='/events/{{ev.slug}}/{{ev.eid}}', ng-repeat='ev in events')
       .title
         span.truncate {{ev.name}}
-        .attending(ng-show='ng-show', ev.attending_count='ev.attending_count') {{ev.attending_count}}
+        .attending(ng-show='ev.attending_count > 0', ev.attending_count='ev.attending_count') {{ev.attending_count}}
           i.icon-group
-        div.price(ng-show='ng-show', ev.price.num='ev.price.num') {{ev.price.full}}
+        div.price(ng-show='ev.price', ev.price.num='ev.price.num') {{ev.price.full}}
         .tag-list
           span.tag-item(ng-class='{{tag}}', ng-repeat='tag in ev.tags', ng-if='ng-if')
       .containing(ng-show='ev.image', style='background-image: url({{ev.image}});')

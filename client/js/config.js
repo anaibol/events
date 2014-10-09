@@ -7,36 +7,39 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
 
   $locationProvider.hashPrefix('!');
 
+  // $routeProvider.when('/', {
+  //   templateUrl: 'event/list'
+  // });
   $stateProvider
     .state('main', {
       url: '/',
-      templateUrl: '/views/event/list.html'
+      templateUrl: 'event/list'
     })
     .state('events', {
       url: ':keyword',
-      templateUrl: '/views/event/list.html'
+      templateUrl: 'event/list'
     })
     .state('eventsByDate', {
       url: '/date/:date',
-      templateUrl: '/views/event/list.html',
+      templateUrl: 'event/list',
     })
     .state('keyword', {
       url: '/:keyword',
-      templateUrl: '/views/event/list.html'
+      templateUrl: 'event/list'
     })
     .state('event', {
       url: '/events/:slug/:eid',
-      templateUrl: "/views/event/view.html"
+      templateUrl: "event/view"
     })
     .state('me', {
       parent: "",
       url: '/me/events',
-      templateUrl: '/views/user/user.html'
+      templateUrl: 'user/user'
     })
     .state('me.events', {
       parent: "me",
       url: '/me/events',
-      templateUrl: '/views/event/user.html'
+      templateUrl: 'event/user'
     })
     .state('me.logout', {
       parent: "me",
@@ -44,9 +47,8 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
     })
     .state('create', {
       url: '/create',
-      templateUrl: '/views/event/create.html'
+      templateUrl: 'event/create'
     });
-
 
   // $routeSegmentProvider
   //   .when('/',                  'main')
@@ -58,13 +60,13 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
   //   .when('/me/logout',         'me.logout')
   //   .when('/create',            'create')
 
-  //   segment('main', { templateUrl: 'views/main.html' })
+  //   segment('main', { templateUrl: 'main' })
   //   .within()
-  //     .segment('event', { templateUrl: 'views/event/view.html' })
+  //     .segment('event', { templateUrl: 'event/view' })
   //     .up()
-  //   .segment('me', { templateUrl: 'views/me.html' })
-  //   .segment('me.logout', { templateUrl: 'views/logout.html' })
-  //   .segment('create', { templateUrl: 'views/create.html' });
+  //   .segment('me', { templateUrl: 'me' })
+  //   .segment('me.logout', { templateUrl: 'logout' })
+  //   .segment('create', { templateUrl: 'create' });
 
 
   $urlRouterProvider.otherwise('');
