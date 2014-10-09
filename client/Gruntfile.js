@@ -120,8 +120,10 @@ module.exports = function(grunt) {
       }
     },
     uglify: {
-      files: {
-        'dist/js/app.min.js': 'dist/js/app.concat.js'
+      prod: {
+        files: {
+          'dist/js/app.min.js': 'tmp/js/app.concat.js'
+        }
       }
     },
     lesslint: {
@@ -189,8 +191,8 @@ module.exports = function(grunt) {
 
   // grunt.registerTask('build', ['clean', 'less', 'jade', 'useminPrepare', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
 
-  grunt.registerTask('build:prod', ['clean', 'less:prod', 'jade', 'html2js', 'concat:prod', 'ngAnnotate', 'uglify', 'cssmin']);
-  grunt.registerTask('build:dev', ['clean', 'less:dev', 'jade', 'html2js', 'concat:dev']);
+  grunt.registerTask('build:prod', ['clean', 'less:prod', 'html2js', 'concat:prod', 'ngAnnotate', 'uglify', 'cssmin']);
+  grunt.registerTask('build:dev', ['clean', 'less:dev', 'html2js', 'concat:dev']);
 
 
   grunt.registerTask('default', ['build:dev', 'nodemon:dev', 'watch']);
