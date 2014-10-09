@@ -34,16 +34,12 @@ module.exports = function(app, passport, db) {
     // app.use(express.logger('dev'));
   }
 
-  if (env === 'production') {
-    app.locals.cache = 'memory';
-
-    app.use(compression({
-      filter: function(req, res) {
-        return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
-      },
-      level: 9
-    }));
-  }
+  app.use(compression({
+    filter: function(req, res) {
+      return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
+    },
+    level: 9
+  }));
 
   // Set views path, template engine and default layout
   app.set('views', viewsDir);
