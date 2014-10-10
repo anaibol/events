@@ -1,6 +1,6 @@
-'use strict';
+var app = angular.module('wooepa', ['wooepa-templates', 'ui.router', 'ui.bootstrap', 'ui.router', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DS', 'angular-data.DSCacheFactory', 'angularMoment', 'infinite-scroll']); //'imageupload', , 'seo' 'leaflet-directive'
 
-var app = angular.module('wooepa', ['wooepa-templates', 'ui.router', 'ui.bootstrap', 'ui.router', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DS', 'angular-data.DSCacheFactory', 'angularMoment']); //'imageupload', , 'seo' 'leaflet-directive',  'ngCookies', 'ngResource', 'infinite-scroll' 'akoenig.deckgrid'
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000)
 
 app.factory('Event', function(DS) {
 	return DS.defineResource({
@@ -10,32 +10,43 @@ app.factory('Event', function(DS) {
 	});
 });
 
-// app.factory('eventsManager', ['$http', '$q', 'Event', function($http, $q, Event) {
-//     var events = [];
+app.directive('packery', function($rootScope) {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			if ($rootScope.packery === undefined || $rootScope.packery === null) {
+				imagesLoaded(element[0].parentElement, function(instance) {
+					$rootScope.packery = new Packery(element[0].parentElement);
 
-//     var eventsManager = {
-//         get: function(eid) {
-//           for (var i = events.length - 1; i >= 0; i--) {
-//             if (events[i].eid === eid) {
-//               return events[i];
-//             }
-//           };
-//         },
-//         getAll: function() {
-//           return events;
-//         },
-//         set: function(eid, ev) {
-//           for (var i = events.length - 1; i >= 0; i--) {
-//             if (events[i].eid === eid) {
-//               return events[i] = ev;
-//             }
-//           };
-//         },
-//         setAll: function(evs) {
-//           events = evs;
-//         },
 
-//     };
+					$rootScope.packery.bindResize();
+					$rootScope.packery.appended(element[0]);
+					$rootScope.packery.items.splice(1, 1); // hack to fix a bug where the first element was added twice in two different positions
+				});
+			}
+			// else {
+			// 	imagesLoaded(element[0].parentElement, function(instance) {
+			// 		$rootScope.packery.appended(element[0]);
+			// 	});
+			// }
+			// imagesLoaded(element[0].parentElement, function(instance) {
+			// 	$rootScope.packery.layout();
+			// });
 
-//     return eventsManager;
-// }]);
+		}
+	};
+});
+
+
+// app.directive("scroll", function() {
+// 	return function(scope, elm, attr) {
+// 		var raw = elm[0];
+// 		console.log(raw);
+// 		elm.bind('scroll', function() {
+// 			alert(1);
+// 			if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+// 				scope.$apply(attr.whenScrolled);
+// 			}
+// 		});
+// 	};
+// });

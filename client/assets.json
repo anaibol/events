@@ -3,6 +3,7 @@
         "dist/css/app.css"
     ],
     "js": [
+        "lib/jquery/dist/jquery.js",
         "lib/angular/angular.js",
         "lib/angular-ui-router/release/angular-ui-router.js",
         "lib/angular-bootstrap/ui-bootstrap.js",
@@ -17,6 +18,7 @@
         "lib/angular-cache/dist/angular-cache.js",
         "lib/angular-data/dist/angular-data.js",
         "lib/angular-truncate/src/truncate.js",
+        "lib/ngInfiniteScroll/build/ng-infinite-scroll.js",
         "tmp/js/templates.js",
         "js/app.js",
         "js/config.js",

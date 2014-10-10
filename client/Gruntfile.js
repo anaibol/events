@@ -13,28 +13,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('../server/package.json'),
     assets: grunt.file.readJSON('assets.json'),
-    clean: ['dist'],
-    watch: {
-      jade: {
-        files: paths.jade,
-        options: {
-          livereload: true,
-        },
-      },
-      js: {
-        files: 'dist/css/app.min.js',
-        tasks: ['concat', 'jshint'],
-        options: {
-          livereload: true,
-        }
-      },
-      css: {
-        files: 'dist/css/app.min.css',
-        options: {
-          livereload: true
-        }
-      }
-    },
+    clean: ['dist', 'tmp'],
     less: {
       prod: {
         options: {
@@ -105,14 +84,14 @@ module.exports = function(grunt) {
         dest: 'tmp/js/app.concat.js'
       }
     },
-    jshint: {
-      all: {
-        src: 'tmp/js/app.concat.js',
-        options: {
-          jshintrc: true
-        }
-      }
-    },
+    // jshint: {
+    //   all: {
+    //     src: 'tmp/js/app.concat.js',
+    //     options: {
+    //       jshintrc: true
+    //     }
+    //   }
+    // },
     ngAnnotate: {
       options: {
         add: true,
@@ -154,6 +133,35 @@ module.exports = function(grunt) {
         }
       }
     },
+    watch: {
+      jade: {
+        files: ['views/*.jade', 'views/**/*.jade'],
+        tasks: ['html2js', 'concat:dev'],
+        options: {
+          livereload: true,
+        },
+      },
+      js: {
+        files: ['js/*.js', 'js/**/*.js', 'lib/**/*.js'],
+        tasks: ['concat:dev'],
+        options: {
+          livereload: true,
+        }
+      },
+      less: {
+        files: ['less/*.less, less/**/*.less'],
+        tasks: ['less:dev'],
+        options: {
+          livereload: true
+        }
+      },
+      assets: {
+        files: ['assets.json'],
+        options: {
+          livereload: true
+        }
+      }
+    },
     'node-inspector': {
       custom: {
         options: {
@@ -165,6 +173,13 @@ module.exports = function(grunt) {
           'stack-trace-limit': 50,
           'hidden': []
         }
+      }
+    },
+    concurrent: {
+      tasks: ['nodemon', 'watch', 'node-inspector'],
+      options: {
+        limit: 5,
+        logConcurrentOutput: true
       }
     },
     env: {
@@ -179,18 +194,16 @@ module.exports = function(grunt) {
   //Making grunt default to force in order not to break the project.
   grunt.option('force', true);
 
-  grunt.registerTask('server', ['express:dev', 'watch']);
-
   //Test task.
   // grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
   // grunt.registerTask('test', ['build', 'mocha_phantomjs']);
 
   // grunt.registerTask('build', ['clean', 'less', 'jade', 'useminPrepare', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
 
-  grunt.registerTask('build:prod', ['clean', 'less:prod', 'html2js', 'concat:dev']);
+  grunt.registerTask('build:prod', ['clean', 'less:prod', 'html2js', 'concat:prod', 'ngAnnotate', 'uglify']);
   grunt.registerTask('build:dev', ['clean', 'less:dev', 'html2js', 'concat:dev']);
 
 
-  grunt.registerTask('default', ['build:prod', 'nodemon:dev', 'watch']);
+  grunt.registerTask('default', ['build:dev', 'concurrent']);
 
 };

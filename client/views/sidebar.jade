@@ -1,62 +1,61 @@
-.hidden-xs.col-sm-5.col-md-4.col-lg-3
-  ul.nav.nav-sidebar
-    li
-      a(href='/today')
-        i.glyphicon.glyphicon-calendar
-        | Today
-    li
-      a(href='/weekend')
-        i.glyphicon.glyphicon-calendar
-        | Weekend
+ul.nav.nav-sidebar
+  li
+    a(href='/today')
+      i.glyphicon.glyphicon-calendar
+      | Today
+  li
+    a(href='/weekend')
+      i.glyphicon.glyphicon-calendar
+      | Weekend
 
-    li(ng-controller='DatepickerCtrl', ng-click='open($event)')
-      a(href='#!', datepicker-popup='dd-MMMM-yyyy', ng-change='changeDate(date)', ng-model='date', min='minDate', datepicker-options='dateOptions', is-open='opened')
-        i.fui-calendar-solid(ng-click='open($event)')
-        | {{date | date:'dd MMMM'}}
-        
-    li
-      a(href='/free')
-        i.glyphicon.glyphicon-usd
-        | Free
-    li
-      a(href='/popular')
-        i.glyphicon.glyphicon-heart
-        | Popular
-    li
-      a(href='/festival')
-        i.glyphicon.glyphicon-star
-        | Festival
-    li
-      a(href='/worldwide')
-        i.glyphicon.glyphicon-globe
-        | World
-    li
-      a(href='/promote')
-        i.glyphicon.glyphicon-user
-        | Promoting
-    li(ng-show='global.authenticated')
-      a(ng-click='newEvent()')
-        i.fui-plus
-        | Submit an event
+  li(ng-controller='DatepickerCtrl', ng-click='open($event)')
+    a(href='#!', datepicker-popup='dd-MMMM-yyyy', ng-change='changeDate(date)', ng-model='date', min='minDate', datepicker-options='dateOptions', is-open='opened')
+      i.fui-calendar-solid(ng-click='open($event)')
+      | {{date | date:'dd MMMM'}}
+      
+  li
+    a(href='/free')
+      i.glyphicon.glyphicon-usd
+      | Free
+  li
+    a(href='/popular')
+      i.glyphicon.glyphicon-heart
+      | Popular
+  li
+    a(href='/festival')
+      i.glyphicon.glyphicon-star
+      | Festival
+  li
+    a(href='/worldwide')
+      i.glyphicon.glyphicon-globe
+      | World
+  li
+    a(href='/promote')
+      i.glyphicon.glyphicon-user
+      | Promoting
+  li(ng-show='global.authenticated')
+    a(ng-click='newEvent()')
+      i.fui-plus
+      | Submit an event
 
-  ul.nav
-    li
-      a(href='/')
-        | About Us
+ul.nav
+  li
+    a(href='/')
+      | About Us
 
-    li
-      a(href='/privacy')
-        | Privacy policy
+  li
+    a(href='/privacy')
+      | Privacy policy
 
-    li
-      a(href='/terms')
-        | Terms
+  li
+    a(href='/terms')
+      | Terms
 
-    li
-      a(href='/support')
-        | Support
+  li
+    a(href='/support')
+      | Support
 
-    li
-      //-a(href='/contact')
-      a(href='mailto:info@wooepa.com', target='_top')
-        | Contact Us
+  li
+    //-a(href='/contact')
+    a(href='mailto:info@wooepa.com', target='_top')
+      | Contact Us
