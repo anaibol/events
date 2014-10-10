@@ -112,7 +112,7 @@ exports.get = function(req, res) {
       var params = url_parts.query;
 
       var limit = params.limit;
-      var skip = (params.page - 1) * params.limit;
+      var skip = params.skip;
 
       var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
       var sort = JSON.parse(sortStr);

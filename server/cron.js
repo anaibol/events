@@ -1,38 +1,23 @@
-var config = require('./config/config');
+global.rootDir = __dirname + '/';
+global.configDir = rootDir + 'config';
+global.config = require(configDir + '/env/' + process.env.NODE_ENV + '.js');
 
 var Ev = require('./ev');
 
 var db = require('monk')(config.db);
 
-var Pho = require('./app/services/photos.js');
+var Pho = require('./services/photos.js');
 
-var Upd = require('./app/services/update.js');
+var Upd = require('./services/update.js');
 
 var Events = db.get('events');
 var Users = db.get('users');
 var Creators = db.get('creators');
 var Locations = db.get('locations');
 
-var winston = require('winston');
-
-var async = require('async');
-
-winston.loggers.add('numEvents', {
-  console: {
-    level: 'info',
-    colorize: 'true',
-    label: 'num events'
-  },
-  file: {
-    filename: __dirname + '/public/logs/numEvents.json'
-  }
-});
-
-var numEvents = winston.loggers.get('numEvents');
-
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BAIu7rFCcSYYZBoo5apR7NRqId4ZCWTxedks7q6pFUceEZBZCGzTp5wuxJ89QSqB6WO93Pfv8phKTFjkA5s323Lgf3ll5esiXbznFGifhlRUQnkOIPCdCXpX7BQDAZCJCMR9F3TyutCxard4xGlt2r1J1wUsCTeBydIfwcgGbwcguJnkZBJ6kcAivh0aHabdAxGAT3eeDZC8';
+var accessToken = 'CAAGPsrwaxr4BADXDlCXM7uji5oQgz2bPKakEfvToZCZBRWVRjVA4CrWpNyTM2mz4Kq7GtfRroPgARoYZArNYqXRvmIDt3bT3Vb6pcVBZC5rZAxkUcqPgpb7ZBUOu0jDakAxZAag8x5twPsfJsDFBxheTHwvX0sWgxDXA2silqNihkcPp8RVwLTCvyLXXXIuRwnzZCEfHZAGnJiZAkZC8FpsUpQz';
 graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta', 'porto'
