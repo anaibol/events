@@ -20,6 +20,13 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
     skip: 0
   };
 
+
+  $scope.photos = [
+      {id: 'p1', 'title': 'A nice day!', src: "http://lorempixel.com/300/400/"},
+      {id: 'p2', 'title': 'Puh!', src: "http://lorempixel.com/300/400/sports"},
+      {id: 'p3', 'title': 'What a club!', src: "http://lorempixel.com/300/400/nightlife"}
+  ];
+
   var str = $location.$$path.replace('/', '');
 
   if ($stateParams.date) {

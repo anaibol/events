@@ -6372,14 +6372,11 @@ body {
 }*/
 .event {
   text-align: left;
-  position: relative;
   float: left;
-  margin: 1%;
+  margin: 10px 0.5%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0px 0px 5px #666666;
   cursor: pointer;
   background-color: white;
-  width: 100%;
-  max-width: 100%;
 }
 .event img {
   visibility: hidden;

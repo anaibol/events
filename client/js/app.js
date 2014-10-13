@@ -10,29 +10,17 @@ app.factory('Event', function(DS) {
 	});
 });
 
-app.directive('packery', function($rootScope) {
+app.directive('isotope', function($rootScope) {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
-			if ($rootScope.packery === undefined || $rootScope.packery === null) {
+			if ($rootScope.isotope === undefined || $rootScope.isotope === null) {
 				imagesLoaded(element[0].parentElement, function(instance) {
-					$rootScope.packery = new Packery(element[0].parentElement);
-
-
-					$rootScope.packery.bindResize();
-					$rootScope.packery.appended(element[0]);
-					$rootScope.packery.items.splice(1, 1); // hack to fix a bug where the first element was added twice in two different positions
+					var iso = new Isotope(element[0].parentElement, {
+						itemSelector: '.event'
+					});
 				});
 			}
-			// else {
-			// 	imagesLoaded(element[0].parentElement, function(instance) {
-			// 		$rootScope.packery.appended(element[0]);
-			// 	});
-			// }
-			// imagesLoaded(element[0].parentElement, function(instance) {
-			// 	$rootScope.packery.layout();
-			// });
-
 		}
 	};
 });

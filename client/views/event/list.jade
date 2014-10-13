@@ -1,6 +1,6 @@
 section(ng-controller='EventsCtrl', infinite-scroll='getMore()', infinite-scroll-distance='1', infinite-scroll-immediate-check='false')
   .events
-    a.event(ng-repeat='ev in events', packery, ui-sref='event({slug: ev.slug, eid: ev.eid})', href='/events/{{ev.slug}}/{{ev.eid}}')
+    a.event(ng-repeat='ev in events', isotope, ui-sref='event({slug: ev.slug, eid: ev.eid})', href='/events/{{ev.slug}}/{{ev.eid}}')
       .title
         span.truncate {{ev.name}}
         .attending(ng-show='ev.attending_count > 0', ev.attending_count='ev.attending_count') {{ev.attending_count}}
