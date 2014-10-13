@@ -12,22 +12,23 @@ section(ng-controller='EventsCtrl', infinite-scroll='getMore()', infinite-scroll
         .ribbon-wrapper-green(ng-show='ev.price.num == 0')
           .ribbon-green {{ev.price.full}}
         img(ng-src='{{ev.imageExt ? \'/uploads/\' + ev._id + \'.\' + ev.imageExt : ev.pic_cover.source}}', onerror='this.parentNode.style.display = "none"')
-      //- .info
-      //-   .datetime
-      //-     .date
-      //-       i.fui-calendar-solid
-      //-       div(ng-if='ev.start_time.toDateString() !== today.toDateString()')
-      //-         .day {{ev.start_time | date:'dd'}}
-      //-         .month {{ev.start_time | date:'MMM' | uppercase}}
-      //-       div(ng-if='ev.start_time.toDateString() === today.toDateString()')
-      //-         .today TODAY!
-      //-     .time
-      //-       i.fui-time
-      //-       div {{ev.start_time | amDateFormat:'LT'}}
-      //-   .place-info
-      //-     a.place(href='https://maps.google.com/maps?q={{ev.location}}', target='_blank', ng-show='ev.location')
-      //-       i.fui-location
-      //-       .location {{ev.location | characters:50}} {{ev.city | characters:50}}
-      //-       .street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}}{{ev.venue.country}}
+      
+      .info
+        .datetime
+          .date
+            i.fui-calendar-solid
+            div(ng-if='ev.start_time.toDateString() !== today.toDateString()')
+              .day {{ev.start_time | date:'dd'}}
+              .month {{ev.start_time | date:'MMM' | uppercase}}
+            div(ng-if='ev.start_time.toDateString() === today.toDateString()')
+              .today TODAY!
+          .time
+            i.fui-time
+            div {{ev.start_time | amDateFormat:'LT'}}
+        .place-info
+          a.place(href='https://maps.google.com/maps?q={{ev.location}}', target='_blank', ng-show='ev.location')
+            i.fui-location
+            .location {{ev.location | characters:50}} {{ev.city | characters:50}}
+            .street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}}{{ev.venue.country}}
 
 div(ui-view='ui-view')

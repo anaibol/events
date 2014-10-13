@@ -6419,6 +6419,10 @@ body {
   width: 100%;
   padding: 5px 0;
 }
+.event .info .time,
+.event .info .date i {
+  float: left;
+}
 .event .info .datetime {
   float: left;
   float: right;
@@ -6480,10 +6484,6 @@ body {
 }
 .event:hover .containing {
   opacity: 0.85;
-}
-.info .time,
-.info .date i {
-  float: left;
 }
 .event .info .date,
 .event .info .time,

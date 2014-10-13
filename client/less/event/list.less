@@ -56,6 +56,10 @@
     width: 100%;
     padding: 5px 0;
 
+    .time, .date i {
+      float: left;
+    }
+
     .datetime {
       float: left;
       float: right;
@@ -127,17 +131,12 @@
     }
   }
 }
+
 .event:hover {
   box-shadow: 0 0 10px rgba(0,0,0,0.1), 0px 0px 10px #666666;
 
   .containing {
     opacity: 0.85;
-  }
-}
-
-.info {
-  .time, .date i {
-    float: left;
   }
 }
 
@@ -215,28 +214,3 @@ and (min-width : 1824px) {
     max-width: 23%;
   }
 }
-
-// .deckgrid[deckgrid]::before {
-//     /* Specifies that the grid should have a maximum of 4 columns. Each column will have the classes 'column' and 'column-1-4' */
-//     content: '4 .column.column-1-4';
-//     font-size: 0; /* See https://github.com/akoenig/angular-deckgrid/issues/14#issuecomment-35728861 */
-//     visibility: hidden;
-// }
-
-// .deckgrid .column {
-//     float: left;
-// }
-
-// .deckgrid .column-1-4 {
-//     width: 25%;
-// }
-
-// @media screen and (max-width: 480px){
-//     .deckgrid[deckgrid]::before {
-//         content: '1 .column.column-1-1';
-//     }
-
-//     .deckgrid .column-1-1 {
-//         width: 100%;
-//     }
-// }
