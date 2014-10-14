@@ -20,13 +20,6 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
     skip: 0
   };
 
-
-  $scope.photos = [
-      {id: 'p1', 'title': 'A nice day!', src: "http://lorempixel.com/300/400/"},
-      {id: 'p2', 'title': 'Puh!', src: "http://lorempixel.com/300/400/sports"},
-      {id: 'p3', 'title': 'What a club!', src: "http://lorempixel.com/300/400/nightlife"}
-  ];
-
   var str = $location.$$path.replace('/', '');
 
   if ($stateParams.date) {
@@ -55,9 +48,6 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
     }
   }
 
-  var packery;
-  var eventsContainer = document.querySelector('.events');
-
   $scope.getEvents = function(cb) {
     Event.findAll($scope.filter).then(function(events) {
       $scope.events = events;
@@ -79,20 +69,14 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
         }
       });
 
-      // imagesLoaded(eventsContainer, function(instance) {
-      //   packery = new Packery(eventsContainer, {});
-      // });
-
       cb();
     });
   }
 
   $scope.getMore = function() {
-    console.log($scope.events);
     if (!$scope.events) return;
     $scope.filter.skip = $scope.filter.skip + $scope.filter.limit;
 
-    console.log($scope.events.length);
     Event.findAll($scope.filter).then(function(events) {
       angular.forEach(events, function(ev, key) {
         ev.start_time = $scope.convertToUTC(ev.start_time, ev.timezone);
@@ -112,14 +96,6 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
       });
 
       $scope.events.push.apply($scope.events, events);
-      // // console.log($scope.events.length);
-      // // eventsContainer.append(newElements);
-
-      // [1,2,3,4,5,6].diff( [3,4,5] );  
-
-      // imagesLoaded(eventsContainer, function(instance) {
-      //   packery('addItems', events);
-      // });
     });
   }
 
@@ -140,48 +116,10 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
     return $state.current.name + '.view(ev)';
   }
 
-  $scope.getTags = function(column) {
-    var arr = [],
-      tags = [];
-
-    angular.forEach($scope.events, function(ev) {
-      angular.forEach(ev.tags, function(tag) {
-        if (arr.indexOf(tag) === -1) {
-          arr.push(tag);
-          tags.push(tag);
-        }
-      });
-    });
-
-    return tags;
+  $scope.openMap = function($event, ev) {
+    window.open('https://maps.google.com/maps?q=' + ev.place);
+    $event.stopPropagation();
   };
 
-  $scope.remove = function(event) {
-    if (event) {
-      event.$remove();
-
-      for (var i in $scope.events) {
-        if ($scope.events[i] === event) {
-          $scope.events.splice(i, 1);
-        }
-      }
-    } else {
-      $scope.event.$remove();
-      $location.path('events');
-    }
-  };
-
-  $scope.update = function() {
-    var event = $scope.event;
-    if (!event.updated) {
-      event.updated = [];
-    }
-    event.updated.push(new Date().getTime());
-
-    event.$update(function() {
-      $location.path('events/' + event._id);
-    });
-  };
-
-  $scope.getEvents(function() {});
+  $scope.getEvents(function(cb) {});
 };

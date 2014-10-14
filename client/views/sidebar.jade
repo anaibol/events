@@ -1,61 +1,47 @@
 ul.nav.nav-sidebar
   li
-    a(href='/today')
+    a(href='/today') Today
       i.glyphicon.glyphicon-calendar
-      | Today
-  li
-    a(href='/weekend')
-      i.glyphicon.glyphicon-calendar
-      | Weekend
-
-  li(ng-controller='DatepickerCtrl', ng-click='open($event)')
-    a(href='#!', datepicker-popup='dd-MMMM-yyyy', ng-change='changeDate(date)', ng-model='date', min='minDate', datepicker-options='dateOptions', is-open='opened')
-      i.fui-calendar-solid(ng-click='open($event)')
-      | {{date | date:'dd MMMM'}}
       
   li
-    a(href='/free')
-      i.glyphicon.glyphicon-usd
-      | Free
-  li
-    a(href='/popular')
-      i.glyphicon.glyphicon-heart
-      | Popular
-  li
-    a(href='/festival')
-      i.glyphicon.glyphicon-star
-      | Festival
-  li
-    a(href='/worldwide')
-      i.glyphicon.glyphicon-globe
-      | World
-  li
-    a(href='/promote')
-      i.glyphicon.glyphicon-user
-      | Promoting
-  li(ng-show='global.authenticated')
-    a(ng-click='newEvent()')
-      i.fui-plus
-      | Submit an event
+    a(href='/weekend') Weekend
+      i.glyphicon.glyphicon-calendar
 
+  li(ng-controller='DatepickerCtrl', ng-click='open($event)')
+    a(href='#!', datepicker-popup='dd-MMMM-yyyy', ng-change='changeDate(date)', ng-model='date', min='minDate', datepicker-options='dateOptions', is-open='opened') {{date |  date:'dd MMMM'}}
+      i.glyphicon.glyphicon-calendar(ng-click='open($event)')
+      
+  li
+    a(href='/free') Free
+      i.glyphicon.glyphicon-usd
+  li
+    a(href='/popular') Popular
+      i.glyphicon.glyphicon-heart
+  li
+    a(href='/festival') Festival
+      i.glyphicon.glyphicon-star
+  li
+    a(href='/worldwide') World
+      i.glyphicon.glyphicon-globe
+  li
+    a(href='/promote') Promoting
+      i.glyphicon.glyphicon-user
+  li(ng-show='global.authenticated')
+    a(ng-click='newEvent()') Submit an event
+      i.glyphicon.glyphicon-plus
 ul.nav
   li
-    a(href='/')
-      | About Us
+    a(href='/') About Us
 
   li
-    a(href='/privacy')
-      | Privacy policy
+    a(href='/privacy') Privacy policy
 
   li
-    a(href='/terms')
-      | Terms
+    a(href='/terms') Terms
 
   li
-    a(href='/support')
-      | Support
+    a(href='/support') Support
 
   li
     //-a(href='/contact')
-    a(href='mailto:info@wooepa.com', target='_top')
-      | Contact Us
+    a(href='mailto:info@wooepa.com', target='_top') Contact Us
