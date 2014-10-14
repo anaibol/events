@@ -3,14 +3,14 @@ section(ng-controller="EventsCtrl", infinite-scroll="getMore()", infinite-scroll
     a.event(ng-repeat="ev in events", isotope, ui-sref="event({slug: ev.slug, eid: ev.eid})", href="/events/{{ev.slug}}/{{ev.eid}}")
       .top
         span.title.truncate {{ev.name}}
-        //- .attending(ng-show="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
-        //-   i.icon-group
-        //- div.price(ng-show="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
+        .attending(ng-show="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
+          i.glyphicon.glyphicon-user
+        div.price(ng-show="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", class="{{tag}}") {{tag}}
       .image(ng-show="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}")
-        //- .ribbon-wrapper-green(ng-show="ev.price.num == 0")
-        //-   .ribbon-green {{ev.price.full}}
+        .ribbon-wrapper-green(ng-show="ev.price.num == 0")
+          .ribbon-green {{ev.price.full}}
         img(ng-src="{{ev.pic_cover.source}}", onerror='this.parentNode.style.display = "none"')      
       .bottom
         .datetime
