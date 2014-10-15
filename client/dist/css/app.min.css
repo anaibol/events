@@ -6264,9 +6264,8 @@ button.close {
     More info at: http://lesselements.com
   ---------------------------------------------------*/
 .truncate {
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 .tag {
   border-radius: 3px;
@@ -6325,6 +6324,7 @@ body {
 }
 .container {
   width: auto;
+  max-width: 1600px;
 }
 .wrapper {
   margin-top: 50px;
@@ -6356,9 +6356,31 @@ a:hover {
   min-width: 200%;
   padding: 15px;
 }
-/*.dropdown-toggle {
-
-}*/
+.headroom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 200ms linear;
+  z-index: 999;
+}
+.headroom--unpinned {
+  transform: translateY(-100%);
+}
+.headroom--pinned {
+  transform: translateY(0%);
+}
+.scroll-to-fixed-fixed {
+  top: 52px !important;
+}
+.sidebar {
+  background-color: white;
+  border-radius: 3px;
+  border: 1px solid #dddddd;
+}
+.sidebar a {
+  color: #333333;
+}
 .event {
   display: block;
   margin: 10px 0.5%;
@@ -6366,10 +6388,14 @@ a:hover {
   cursor: pointer;
   background-color: white;
 }
+.event .image-container {
+  padding: 0 10px;
+}
 .event .image {
   display: block;
   background-size: cover;
   background-repeat: no-repeat;
+  position: relative;
 }
 .event .image img {
   visibility: hidden;
@@ -6379,21 +6405,21 @@ a:hover {
 .event .top,
 .event .bottom {
   display: block;
-  padding: 3px 5px;
+  padding: 10px;
   color: #575757;
   background: rgba(255, 255, 255, 0.8);
-  border: 1px solid #cccccc;
 }
 .event .top .title {
-  width: 100%;
   display: block;
   text-align: center;
   font-size: 15px;
-  line-height: 30px;
+  line-height: 25px;
+  max-height: 50px;
 }
-.event .top .tag-list {
-  width: 100%;
-  text-align: center;
+.event .bottom .date,
+.event .bottom .time {
+  display: inline-block;
+  margin-right: 5px;
 }
 .event .bottom .place:hover {
   color: #8a0808;
@@ -6494,14 +6520,9 @@ a:hover {
 .ribbon-green:after {
   right: 0;
 }
-.event-detail.modal-header {
-  width: 100%;
-  position: relative;
-  background-size: 995px, 202px;
-  background-repeat: no-repeat;
-  background-position-x: 0, 995px;
-  height: 205px;
-  padding: 0;
+.event-detail {
+  background-color: white;
+  padding: 25px;
 }
 .event-detail .map {
   width: 233px;

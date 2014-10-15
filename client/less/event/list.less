@@ -5,10 +5,15 @@
   cursor: pointer;
   background-color: white;
 
+  .image-container {
+    padding: 0 10px;
+  }
+
   .image {
     display: block;
     background-size: cover;
     background-repeat: no-repeat;
+    position: relative;
 
     img {
       visibility: hidden;
@@ -19,28 +24,28 @@
 
   .top, .bottom {
     display: block;
-    padding: 3px 5px;
+    padding: 10px;
     color: #575757;
     background: rgba(255,255,255,0.8);
-    border: 1px solid #cccccc;
+    // border: 1px solid #cccccc;
   }
 
   .top {
     .title {
-      width: 100%;
       display: block;
       text-align: center;
       font-size: 15px;
-      line-height: 30px;
-    }
-
-    .tag-list {
-      width: 100%;
-      text-align: center;
+      line-height: 25px;
+      max-height: 50px;
     }
   }
 
-.bottom {
+  .bottom {
+    .date, .time {
+      display: inline-block;
+      margin-right: 5px;
+    }
+
     .place:hover {
       color: #8a0808;
     }

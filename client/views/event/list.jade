@@ -3,31 +3,31 @@ section(ng-controller="EventsCtrl", infinite-scroll="getMore()", infinite-scroll
     a.event(ng-repeat="ev in events", isotope, ui-sref="event({slug: ev.slug, eid: ev.eid})", href="/events/{{ev.slug}}/{{ev.eid}}")
       .top
         span.title.truncate {{ev.name}}
-        .attending(ng-show="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
-          i.glyphicon.glyphicon-user
-        div.price(ng-show="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
         .tag-list
-          span.tag(ng-repeat="tag in ev.tags", class="{{tag}}") {{tag}}
-      .image(ng-show="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}")
-        .ribbon-wrapper-green(ng-show="ev.price.num == 0")
-          .ribbon-green {{ev.price.full}}
-        img(ng-src="{{ev.pic_cover.source}}", onerror='this.parentNode.style.display = "none"')      
+          span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
+      .image-container
+        .image(ng-show="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
+         .ribbon-wrapper-green(ng-show="ev.price.num == 0")
+            .ribbon-green {{ev.price.full}}
+          img(ng-src="{{ev.pic_cover.source}}", onerror='this.parentNode.style.display = "none"')      
       .bottom
-        .datetime
-          .date
+        span.datetime
+          span.date
             i.glyphicon.glyphicon-calendar
             span(ng-if="ev.start_time.toDateString() !== today.toDateString()")
-              span.day {{ev.start_time | date:'dd'}}
-              span.month {{ev.start_time | date:'MMM' | uppercase}}
-            span(ng-if="ev.start_time.toDateString() === today.toDateString()")
-              span.today TODAY!
-          .time
+              span {{ev.start_time | amDateFormat:'D MMM'}} 
+          span.time
             i.glyphicon.glyphicon-time
             span {{ev.start_time | amDateFormat:"LT"}}
+        //- span {{ev.start_time | amCalendar}}
+        //- .attending(ng-show="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
+        //-   i.glyphicon.glyphicon-user
+        span.price(ng-show="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
         .place-info
           .place(ng-click="openMap($event, ev)", ng-show="ev.location")
             i.glyphicon.glyphicon-map-marker
-            span.location {{ev.location | characters:50}} {{ev.city | characters:50}}
-            span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
+            span.location {{ev.location | characters:50}}, {{ev.venue.city}}
+            //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
+            //- span.street.truncate {{ev.venue.city}}
 
 div(ui-view="ui-view")

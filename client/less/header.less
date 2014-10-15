@@ -22,7 +22,18 @@
     padding: 15px;
 }
 
+.headroom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: transform 200ms linear;
+  z-index: 999;
+}
 
-/*.dropdown-toggle {
-
-}*/
+.headroom--unpinned {
+  transform: translateY(-100%);
+}
+.headroom--pinned {
+  transform: translateY(0%);
+}

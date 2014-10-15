@@ -1,17 +1,5 @@
 ul.nav.nav-sidebar
   li
-    a(href='/today') Today
-      i.glyphicon.glyphicon-calendar
-      
-  li
-    a(href='/weekend') Weekend
-      i.glyphicon.glyphicon-calendar
-
-  li(ng-controller='DatepickerCtrl', ng-click='open($event)')
-    a(href='#!', datepicker-popup='dd-MMMM-yyyy', ng-change='changeDate(date)', ng-model='date', min='minDate', datepicker-options='dateOptions', is-open='opened') {{date |  date:'dd MMMM'}}
-      i.glyphicon.glyphicon-calendar(ng-click='open($event)')
-      
-  li
     a(href='/free') Free
       i.glyphicon.glyphicon-usd
   li
@@ -26,9 +14,28 @@ ul.nav.nav-sidebar
   li
     a(href='/promote') Promoting
       i.glyphicon.glyphicon-user
+
+  li(ng-controller="DatepickerCtrl", ng-click="open($event)")
+    datepicker(ng-change="changeDate(date)", ng-model="date", show-weeks="false")
+
   li(ng-show='global.authenticated')
     a(ng-click='newEvent()') Submit an event
       i.glyphicon.glyphicon-plus
+
+ul.dropdown-menu(data-role='dropdown')
+  li
+      a(href='') Subitem 1
+    li
+      a(href='') Subitem 2
+    li
+      a(href='') Subitem 3
+    li.divider
+    li
+      a(href='') Subitem 4
+    li.disabled
+      a(href='') Subitem 4
+
+
 ul.nav
   li
     a(href='/') About Us

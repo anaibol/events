@@ -29,7 +29,14 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
     })
     .state('event', {
       url: '/events/:slug/:eid',
-      templateUrl: "event/view"
+      templateUrl: "event/view",
+      controller: 'EventCtrl',
+      resolve: {
+        event: function($stateParams, Event) {
+          return Event.find($stateParams.eid);
+          // return $http.get('boost');
+        }
+      }
     })
     .state('me', {
       parent: "",
