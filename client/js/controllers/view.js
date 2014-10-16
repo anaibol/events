@@ -1,5 +1,5 @@
 app.controller('ViewCtrl', function($scope, $state, Global, ezfb, Event, $http, event) {
-  alert(1);
+  // alert(1);
   $scope.today = new Date();
   // $scope.attending = '';
   // $scope.shared = false;
