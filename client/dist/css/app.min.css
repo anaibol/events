@@ -1636,7 +1636,7 @@ pre code {
   }
   .col-sm-pull-5 {
     right: 41.66666667%;
-  }
+  }image
   .col-sm-pull-4 {
     right: 33.33333333%;
   }
@@ -6268,13 +6268,13 @@ button.close {
   overflow: hidden;
 }
 .tag {
-  border-radius: 3px;
+  border-radius: 5px;
   background-color: #1abc9c;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
-  padding: 0 6px;
-  margin: 2px;
+  padding: 0 4px;
+  margin-left: 4px;
   display: inline-block;
 }
 .tag.salsa {
@@ -6385,11 +6385,11 @@ a:hover {
   display: block;
   margin: 10px 0.5%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0px 0px 5px #666666;
-  cursor: pointer;
+  cursor: pointer;  
   background-color: white;
 }
 .event .image-container {
-  padding: 0 10px;
+  padding: 0 0px;
 }
 .event .image {
   display: block;
