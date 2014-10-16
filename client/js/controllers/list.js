@@ -1,12 +1,7 @@
-Array.prototype.diff = function(a) {
-  return this.filter(function(i) {
-    return a.indexOf(i) < 0;
-  });
-};
-
-var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $rootScope, $state, Event) {
+app.controller('ListCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope, $state, Event) {
   $scope.today = new Date();
-
+  alert(1);
+  console.log(123);
   $scope.today.setSeconds(0);
   $scope.today.setMinutes(0);
   $scope.today.setHours(0);
@@ -16,7 +11,7 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
     sortOrder: '1',
     since: 0,
     until: 0,
-    limit: 20,
+    limit: 30,
     skip: 0
   };
 
@@ -122,4 +117,4 @@ var EventsCtrl = function($scope, $location, $modal, Global, $stateParams, $root
   };
 
   $scope.getEvents(function(cb) {});
-};
+});

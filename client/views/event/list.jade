@@ -1,13 +1,14 @@
-section(ng-controller="EventsCtrl", infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false")
+section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false")
   .events
-    a.event(ng-repeat="ev in events", isotope, ui-sref="event({slug: ev.slug, eid: ev.eid})", href="/events/{{ev.slug}}/{{ev.eid}}")
+    a.event(ng-repeat="ev in events", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})", href="/{{ev.slug}}/{{ev.eid}}")
       .top
         span.title.truncate {{ev.name}}
+        //- span.title.truncate {{ev.description}}
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
       .image-container
-        .image(ng-show="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
-         .ribbon-wrapper-green(ng-show="ev.price.num == 0")
+        .image(ng-if="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
+         .ribbon-wrapper-green(ng-if="ev.price.num == 0")
             .ribbon-green {{ev.price.full}}
           img(ng-src="{{ev.pic_cover.source}}", onerror='this.parentNode.style.display = "none"')      
       .bottom
@@ -20,14 +21,14 @@ section(ng-controller="EventsCtrl", infinite-scroll="getMore()", infinite-scroll
             i.glyphicon.glyphicon-time
             span {{ev.start_time | amDateFormat:"LT"}}
         //- span {{ev.start_time | amCalendar}}
-        //- .attending(ng-show="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
+        //- .attending(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
         //-   i.glyphicon.glyphicon-user
-        span.price(ng-show="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
+        span.price(ng-if="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
         .place-info
-          .place(ng-click="openMap($event, ev)", ng-show="ev.location")
+          .place(ng-click="openMap($event, ev)", ng-if="ev.location")
             i.glyphicon.glyphicon-map-marker
             span.location {{ev.location | characters:50}}, {{ev.venue.city}}
             //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
             //- span.street.truncate {{ev.venue.city}}
 
-div(ui-view="ui-view")
+//- div(ui-view)

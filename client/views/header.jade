@@ -2,7 +2,8 @@ header(headroom)
   nav.navbar.navbar-inverse(role="navigation", ng-controller='HeaderCtrl')
     .container
       .navbar-header        
-        a.navbar-brand(href='/') Wooepa
+        a.navbar-brand(href='/', ui-sref="list") Wooepa
+        a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
 
         ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')
           li

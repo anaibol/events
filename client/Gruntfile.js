@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function(grunt) {
   var paths = {
     jade: ['app/views/**/*.jade'],
@@ -9,7 +7,7 @@ module.exports = function(grunt) {
     distCss: ['dist/css/app.css']
   };
 
-  // Project Configuration
+  // Project grunt
   grunt.initConfig({
     pkg: grunt.file.readJSON('../server/package.json'),
     assets: grunt.file.readJSON('assets.json'),
@@ -21,7 +19,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          'dist/css/app.min.css': 'less/index.less'
+          'tmp/css/app.min.css': 'less/index.less'
         }
       },
       dev: {
@@ -30,17 +28,31 @@ module.exports = function(grunt) {
         }
       }
     },
-    // jade: {
-    //   compile: {
-    //     files: [{
-    //       cwd: "views",
-    //       src: "**/*.jade",
-    //       dest: "views",
-    //       expand: true,
-    //       ext: ".html"
-    //     }]
-    //   }
-    // },
+    uncss: {
+      dist: {
+        options: {
+          htmlroot: 'tmp'
+        },
+        files: {
+          'dist/css/app.min.css': ['tmp/views/*.html', 'tmp/views/**/*.html']
+        }
+      }
+    },
+    jade: {
+      compile: {
+        files: [{
+          cwd: 'views',
+          src: '**/*.jade',
+          dest: 'tmp/views',
+          expand: true,
+          ext: '.html',
+        }],
+      },
+      options: {
+        pretty: true,
+        doctype: 'html'
+      }
+    },
     html2js: {
       main: {
         src: ['views/*.jade', 'views/**/*.jade'],
@@ -63,14 +75,14 @@ module.exports = function(grunt) {
         },
         quoteChar: '\'',
         // htmlmin: {
-        // collapseBooleanAttributes: true,
-        // collapseWhitespace: true,
-        // removeAttributeQuotes: true,
-        // removeComments: true,
-        // removeEmptyAttributes: true,
-        // removeRedundantAttributes: true,
-        // removeScriptTypeAttributes: true,
-        // removeStyleLinkTypeAttributes: true
+        //   collapseBooleanAttributes: true,
+        //   collapseWhitespace: true,
+        //   removeAttributeQuotes: true,
+        //   removeComments: true,
+        //   removeEmptyAttributes: true,
+        //   removeRedundantAttributes: true,
+        //   removeScriptTypeAttributes: true,
+        //   removeStyleLinkTypeAttributes: true
         // }
       }
     },
@@ -98,16 +110,37 @@ module.exports = function(grunt) {
         singleQuotes: true
       },
       annotate: {
-        files: {
-          'tmp/js/app.annotated.js': 'tmp/js/app.concat.js'
-        },
+        files: [{
+          cwd: 'js',
+          src: '**/*.js',
+          dest: 'tmp/js/annotated',
+          expand: true
+        }]
       },
     },
     uglify: {
-      prod: {
+      all: {
         files: {
-          'dist/js/app.min.js': 'tmp/js/app.annotated.js'
+          'dist/js/app.min.js': 'tmp/js/app.concat.js'
         }
+        // ,
+        // compress: {
+        //   sequences: true,
+        //   properties: true,
+        //   dead_code: true,
+        //   drop_debugger: true,
+        //   unsafe: true,
+        //   conditionals: true,
+        //   comparisons: true,
+        //   evaluate: true,
+        //   booleans: true,
+        //   loops: true,
+        //   unused: true,
+        //   drop_console: true,
+        //   cascade: true,
+        //   join_vars: true,
+        //   if_return: true
+        // }
       }
     },
     lesslint: {
@@ -116,13 +149,6 @@ module.exports = function(grunt) {
       },
       src: paths.less
     },
-    // cssmin: {
-    //   combine: {
-    //     files: {
-    //       'tmp/css/app.min.css': '<%= assets.css %>'
-    //     }
-    //   }
-    // },
     nodemon: {
       dev: {
         script: '../server/server.js',
@@ -142,7 +168,7 @@ module.exports = function(grunt) {
         },
       },
       js: {
-        files: ['js/*.js', 'js/**/*.js', 'lib/**/*.js'],
+        // files: ['js/*.js', 'js/**/*.js', 'lib/**/*.js'],
         tasks: ['concat:dev'],
         options: {
           livereload: true,
@@ -200,10 +226,10 @@ module.exports = function(grunt) {
 
   // grunt.registerTask('build', ['clean', 'less', 'jade', 'useminPrepare', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
 
-  grunt.registerTask('build:prod', ['clean', 'less:prod', 'html2js', 'concat:prod', 'ngAnnotate', 'uglify']);
+  grunt.registerTask('build:prod', ['clean', 'less:prod', 'jade', 'ngAnnotate', 'uncss', 'html2js', 'concat:prod', 'uglify']);
   grunt.registerTask('build:dev', ['clean', 'less:dev', 'html2js', 'concat:dev']);
 
-
+  grunt.registerTask('prod', ['build:prod', 'concurrent']);
   grunt.registerTask('default', ['build:dev', 'concurrent']);
 
 };

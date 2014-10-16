@@ -1,4 +1,4 @@
-var DatepickerCtrl = function ($scope) {
+app.controller('DatepickerCtrl', function($scope) {
   $scope.open = function($event) {
     $event.preventDefault();
     $event.stopPropagation();
@@ -20,4 +20,4 @@ var DatepickerCtrl = function ($scope) {
   };
 
   $scope.format = 'dd - MMMM';
-};
+});

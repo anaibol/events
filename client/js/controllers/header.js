@@ -1,4 +1,4 @@
-var HeaderCtrl = function($scope, $rootScope, Global, $location, $modal) {
+app.controller('HeaderCtrl', function($scope, $rootScope, Global, $location, $modal) {
 	$scope.global = Global;
 
 	$scope.isCollapsed = true;
@@ -6,7 +6,7 @@ var HeaderCtrl = function($scope, $rootScope, Global, $location, $modal) {
 	$scope.changeDate = function(date) {
 		date = getStringDate(date);
 		$location.url('/date/' + date);
-	}
+	};
 
 	function getStringDate(aDate) {
 		var dd = aDate;
@@ -41,4 +41,4 @@ var HeaderCtrl = function($scope, $rootScope, Global, $location, $modal) {
 			$scope.ev = selected;
 		}, function() {});
 	};
-};
+});

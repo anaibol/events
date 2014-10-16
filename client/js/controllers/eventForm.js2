@@ -1,4 +1,4 @@
-var EventFormCtrl = function($scope, $modalInstance, $q, $filter, Restangular, $stateParams, Global) {
+app.controller('EventFormCtrl', function($scope, $modalInstance, $q, $filter, Restangular, $stateParams, Global) {
   $scope.ev = {};
 
   Events.one($stateParams.eid).then(function(ev) {
@@ -117,4 +117,4 @@ var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba
       });
   });
 
-};
+});

@@ -1,4 +1,4 @@
-var EventModalCtrl = function($scope, $modalInstance, $state, $stateParams, ev) {
+app.controller('EventFormCtrl', function($scope, $modalInstance, $state, $stateParams, ev) {
 	$scope.ev = ev;
 
     // $modalInstance.opened.then(function(){
@@ -20,4 +20,4 @@ var EventModalCtrl = function($scope, $modalInstance, $state, $stateParams, ev) 
 	$scope.cancel = function() {
 	$modalInstance.dismiss('cancel');
 	};	
-};
+});

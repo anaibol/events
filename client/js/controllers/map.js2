@@ -1,5 +1,3 @@
-'use strict';
-
 app.controller('MapCtrl', function($scope, $http, Restangular, $modal) {
   $scope.pos = {};
 

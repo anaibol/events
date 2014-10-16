@@ -1,43 +1,45 @@
-'use strict';
-
-//Setting up route
 app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
-
   $locationProvider.html5Mode(true);
 
   $locationProvider.hashPrefix('!');
 
-  // $routeProvider.when('/', {
-  //   templateUrl: 'event/list'
-  // });
   $stateProvider
-    .state('main', {
+    .state('list', {
       url: '/',
-      templateUrl: 'event/list'
-    })
-    .state('events', {
-      url: ':keyword',
-      templateUrl: 'event/list'
-    })
-    .state('eventsByDate', {
-      url: '/date/:date',
+      controller: 'ListCtrl',
       templateUrl: 'event/list',
+      // abstract: true
     })
-    .state('keyword', {
-      url: '/:keyword',
-      templateUrl: 'event/list'
-    })
-    .state('event', {
-      url: '/events/:slug/:eid',
-      templateUrl: "event/view",
-      controller: 'EventCtrl',
-      resolve: {
-        event: function($stateParams, Event) {
-          return Event.find($stateParams.eid);
-          // return $http.get('boost');
-        }
+  // .state('city', {
+  //   url: ':city',
+  //   templateUrl: 'event/list'
+  // })
+  // .state('tag', {
+  //   url: 'tag/:tag',
+  //   templateUrl: 'event/list'
+  // })
+  // .state('eventsByDate', {
+  //   url: '/date/:date',
+  //   templateUrl: 'event/list',
+  // })
+  // .state('keyword', {
+  //   url: '/:keyword',
+  //   templateUrl: 'event/list'
+  // })
+  .state('list.view', {
+    // url: ':slug/{eid:[0-9]}',
+    url: '^/:slug/:eid',
+    templateUrl: "event/view",
+    controller: 'ViewCtrl',
+    parent: 'list',
+    resolve: {
+      event: function($stateParams, Event) {
+        alert(2);
+        return Event.find($stateParams.eid);
+        // return $http.get('boost');
       }
-    })
+    }
+  })
     .state('me', {
       parent: "",
       url: '/me/events',
@@ -51,11 +53,12 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
     .state('me.logout', {
       parent: "me",
       url: '/me/logout'
-    })
-    .state('create', {
-      url: '/create',
-      templateUrl: 'event/create'
     });
+
+  // .state('create', {
+  //   url: '/create',
+  //   templateUrl: 'event/create'
+  // });
 
   // $routeSegmentProvider
   //   .when('/',                  'main')
@@ -76,7 +79,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
   //   .segment('create', { templateUrl: 'create' });
 
 
-  $urlRouterProvider.otherwise('');
+  $urlRouterProvider.otherwise('/');
 });
 
 app.config(function(datepickerPopupConfig) {

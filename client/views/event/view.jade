@@ -1,10 +1,10 @@
-section.event-detail
+section.event-view
   div(style='background-image: url({{ev.pic_cover.source}}); width: 100%; height: 204px;')
   h3.truncate {{ev.name}}
-  a.event(ui-sref='{{getPromoteLink()}}', ng-show='canEdit()') Promote event
+  a.event(ui-sref='{{getPromoteLink()}}', ng-if='canEdit()') Promote event
   a.facebook-link(target='_blank', href='https://facebook.com/{{ev.eid}}') Facebook event
   .tag-list
-    span.tag-item(ng-class='{{tag}}', ng-repeat='tag in ev.tags') {{tag}}
+    span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
   .title
     .attending
       | {{ev.attending_count}}
@@ -12,7 +12,7 @@ section.event-detail
     .price {{ev.price.full}}
   .info
     a(href='https://maps.google.com/maps?q={{ev.place}}', target='_blank')
-      .place(ng-show='ev.location')
+      .place(ng-if='ev.location')
         i.fui-location
         | {{ev.location}}{{ev.city}}
     | {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}} {{ev.venue.country}}
@@ -31,10 +31,10 @@ section.event-detail
     .col-md-8
       p.description(ng-bind-html='ev.description | linky')
     .col-md-4
-      .event-buttons.wdiv.padding-10(ng-show='isInPromotion()')
+      .event-buttons.wdiv.padding-10(ng-if='isInPromotion()')
         .event-rsvp-btns
-          a.btn.btn-success(href='#', ng-show='attending === \'\'', ng-click='setAttending(ev.eid)', ng-disabled='isBtnJoinDisabled') {{ btnJoinText }}
-          button.btn(ng-show='attending === \'attending\'', ng-click='setNotAttending(ev.eid)', ng-disabled='isBtnLeaveDisabled') {{ btnLeaveText }}
+          a.btn.btn-success(href='#', ng-if='attending === \'\'', ng-click='setAttending(ev.eid)', ng-disabled='isBtnJoinDisabled') {{ btnJoinText }}
+          button.btn(ng-if='attending === \'attending\'', ng-click='setNotAttending(ev.eid)', ng-disabled='isBtnLeaveDisabled') {{ btnLeaveText }}
         .event-rsvp-btns
           button.btn(ng-click='sendInvitations()') Invite your friends!
         .event-share-btns
@@ -42,7 +42,7 @@ section.event-detail
       .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if='ev.in_promotion')
         .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
 
-      .wdiv.padding-10(ng-show='ev.in_promotion && isInPromotion()')
+      .wdiv.padding-10(ng-if='ev.in_promotion && isInPromotion()')
         .panel.panel-success
           .panel-heading Game Active
           .panel-body
@@ -60,7 +60,7 @@ section.event-detail
           .panel-heading Players
           .panel-body
             p(ng-hide='ev.list_event_players') No players yet
-            ul.list-group(ng-show='ev.list_event_players')
+            ul.list-group(ng-if='ev.list_event_players')
               input.form-control.input-sm(typ='text', ng-model='search.name')
               hr
               li.list-group-item(ng-repeat='player in ev.list_event_players', ng-if='player.facebook.id == ev.player_id')
@@ -69,7 +69,7 @@ section.event-detail
               li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
                 img.img-circle(ng-src='{{ player.facebook.picture }}', ng-alt='{{player.name}}')
                 | {{ player.result }} pts
-                button.btn.btn-default.btn-xs(onclick='this.disabled=true;', type='button', ng-click='this.innerHtml=\'...\'; addBoost(player, ev.eid)', ng-show='ng-show', ev.player_result='ev.player_result')
+                button.btn.btn-default.btn-xs(onclick='this.disabled=true;', type='button', ng-click='this.innerHtml=\'...\'; addBoost(player, ev.eid)', ng-if='ng-if', ev.player_result='ev.player_result')
                   | ev.player_result || (player.result == 2 && ev.player_result == 2)) && (!boosted || boosted != player.facebook.id)"
                   | Boost
                   span.glyphicon.glyphicon-flash

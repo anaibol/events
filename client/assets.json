@@ -22,12 +22,12 @@
         "lib/headroom.js/dist/headroom.js",
         "lib/headroom.js/dist/angular.headroom.js",
         "tmp/js/templates.js",
-        "js/app.js",
-        "js/config.js",
-        "js/controllers/*.js",
-        "js/services/*.js",
-        "js/directives/*.js",
-        "js/filters/*.js",
-        "js/init.js"
+        "tmp/js/annotated/app.js",
+        "tmp/js/annotated/config.js",
+        "tmp/js/annotated/controllers/*.js",
+        "tmp/js/annotated/services/*.js",
+        "tmp/js/annotated/directives/*.js",
+        "tmp/js/annotated/filters/*.js",
+        "tmp/js/annotated/init.js"
     ]
 }
