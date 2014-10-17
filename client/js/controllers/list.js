@@ -1,6 +1,5 @@
-app.controller('ListCtrl', function($scope, $location, $modal, Global, $stateParams, $rootScope, $state, Event) {
+app.controller('ListCtrl', function($scope, $location, $modal, Global, $stateParams, $state, Event) {
   $scope.today = new Date();
-  // alert(1);
 
   $scope.today.setSeconds(0);
   $scope.today.setMinutes(0);

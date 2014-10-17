@@ -1,4 +1,4 @@
-section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false")
+section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-if="$state.current.name === 'list'")
   .events
     a.event(ng-repeat="ev in events", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})", href="/{{ev.slug}}/{{ev.eid}}")
       .top
@@ -31,4 +31,4 @@ section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scro
             //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
             //- span.street.truncate {{ev.venue.city}}
 
-div(ui-view)
+div(ui-view, autoscroll="false")

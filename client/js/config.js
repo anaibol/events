@@ -34,7 +34,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
     parent: 'list',
     resolve: {
       event: function($stateParams, Event) {
-        alert(2);
         return Event.find($stateParams.eid);
         // return $http.get('boost');
       }
@@ -94,8 +93,10 @@ app.config(function(datepickerPopupConfig) {
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
-app.run(function($rootScope, $state, amMoment) { //ezfb
+app.run(function($state, $rootScope, amMoment) { //ezfb
   // ezfb.init();
+
+  $rootScope.$state = $state;
 
   var userLang = navigator.language || navigator.userLanguage;
 
