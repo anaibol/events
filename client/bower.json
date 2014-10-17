@@ -23,7 +23,7 @@
     "angular-ui-router": "~0.2.11",
     "angular-ui": "~0.4.0",
     "moment-timezone": "~0.2.2",
-    "angular-easyfb": "~1.1.0",
+    "angular-easyfb": "~1.2.0",
     "angular-sanitize": "~1.2.26",
     "angular-moment": "~0.8.2",
     "angular-cache": "~3.1.1",
@@ -36,6 +36,7 @@
     "imagesloaded": "~3.1.8",
     "isotope": "~2.0.1",
     "headroom.js": "~0.7.0",
-    "fontawesome": "~4.2.0"
+    "fontawesome": "~4.2.0",
+    "ScrollToFixed": "~1.0.6"
   }
 }

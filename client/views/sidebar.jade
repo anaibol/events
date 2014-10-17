@@ -1,19 +1,24 @@
 ul.nav.nav-sidebar
   li
-    a(href='/free') Free
+    a(href='/free')
       i.fa.fa-usd
+      | Free
   li
-    a(href='/popular') Popular
+    a(href='/popular')
       i.fa.fa-heart
+      | Popular
   li
-    a(href='/festival') Festival
+    a(href='/festival')
       i.fa.fa-star
+      | Festival
   li
-    a(href='/worldwide') World
+    a(href='/worldwide')
       i.fa.fa-globe
+      | World
   li
-    a(href='/promote') Promoting
+    a(href='/promote')
       i.fa.fa-user
+      | Promoting
 
   li(ng-controller="DatepickerCtrl", ng-click="open($event)")
     datepicker(ng-change="changeDate(date)", ng-model="date", show-weeks="false")

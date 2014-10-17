@@ -93,8 +93,8 @@ app.config(function(datepickerPopupConfig) {
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
-app.run(function($state, $rootScope, amMoment) { //ezfb
-  // ezfb.init();
+app.run(function($state, $rootScope, amMoment, ezfb) {
+  ezfb.init();
 
   $rootScope.$state = $state;
 

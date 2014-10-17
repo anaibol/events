@@ -27,6 +27,7 @@ section.event-view
     .time
       i.fui-time
       div {{ev.start_time | amDateFormat:'LT'}}
+        button(friend-selector)      
   .row
     .col-md-8
       p.description(ng-bind-html='ev.description | linky')
