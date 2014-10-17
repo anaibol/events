@@ -88,11 +88,11 @@ module.exports = function(grunt) {
     },
     concat: {
       dev: {
-        src: '<%= assets.js %>',
+        src: '<%= assets.dev %>',
         dest: 'dist/js/app.min.js'
       },
       prod: {
-        src: '<%= assets.js %>',
+        src: '<%= assets.prod %>',
         dest: 'tmp/js/app.concat.js'
       }
     },
@@ -168,14 +168,14 @@ module.exports = function(grunt) {
         },
       },
       js: {
-        // files: ['js/*.js', 'js/**/*.js', 'lib/**/*.js'],
+        files: ['js/*.js', 'js/**/*.js', 'lib/**/*.js', 'lib/**/**/*.js'],
         tasks: ['concat:dev'],
         options: {
           livereload: true,
         }
       },
       less: {
-        files: ['less/*.less, less/**/*.less'],
+        files: ['less/*.less', 'less/**/*.less', 'lib/**/*.less', 'lib/**/**/.less'],
         tasks: ['less:dev'],
         options: {
           livereload: true
@@ -202,7 +202,7 @@ module.exports = function(grunt) {
       }
     },
     concurrent: {
-      tasks: ['nodemon', 'watch', 'node-inspector'],
+      tasks: ['nodemon', 'watch'], //, , 'node-inspector'
       options: {
         limit: 5,
         logConcurrentOutput: true
@@ -226,7 +226,7 @@ module.exports = function(grunt) {
 
   // grunt.registerTask('build', ['clean', 'less', 'jade', 'useminPrepare', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
 
-  grunt.registerTask('build:prod', ['clean', 'less:prod', 'jade', 'ngAnnotate', 'uncss', 'html2js', 'concat:prod', 'uglify']);
+  grunt.registerTask('build:prod', ['clean', 'less:prod', 'jade', 'uncss', 'html2js', 'ngAnnotate', 'concat:prod', 'uglify']);
   grunt.registerTask('build:dev', ['clean', 'less:dev', 'html2js', 'concat:dev']);
 
   grunt.registerTask('prod', ['build:prod', 'concurrent']);

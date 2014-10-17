@@ -1,26 +1,26 @@
 ul.nav.nav-sidebar
   li
     a(href='/free') Free
-      i.glyphicon.glyphicon-usd
+      i.fa.fa-usd
   li
     a(href='/popular') Popular
-      i.glyphicon.glyphicon-heart
+      i.fa.fa-heart
   li
     a(href='/festival') Festival
-      i.glyphicon.glyphicon-star
+      i.fa.fa-star
   li
     a(href='/worldwide') World
-      i.glyphicon.glyphicon-globe
+      i.fa.fa-globe
   li
     a(href='/promote') Promoting
-      i.glyphicon.glyphicon-user
+      i.fa.fa-user
 
   li(ng-controller="DatepickerCtrl", ng-click="open($event)")
     datepicker(ng-change="changeDate(date)", ng-model="date", show-weeks="false")
 
   li(ng-show='global.authenticated')
     a(ng-click='newEvent()') Submit an event
-      i.glyphicon.glyphicon-plus
+      i.fa.fa-plus
 
 ul.dropdown-menu(data-role='dropdown')
   li
