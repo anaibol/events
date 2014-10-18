@@ -27,8 +27,8 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
   //   templateUrl: 'event/list'
   // })
   .state('list.view', {
-    // url: ':slug/{eid:[0-9]}',
-    url: '^/:slug/:eid',
+    url: '{query}{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
+    // url: '^/:slug/:eid',
     templateUrl: "event/view",
     controller: 'ViewCtrl',
     parent: 'list',

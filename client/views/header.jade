@@ -6,8 +6,7 @@ header(headroom)
 
       ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')
         li
-          a.login(href='/auth/facebook', target='_self')
-            | Login
+          a.login(href='/auth/facebook', target='_self' translate) Login
 
       ul.nav.navbar-nav.navbar-right(ng-show='global.authenticated')
         li.dropdown
@@ -16,6 +15,6 @@ header(headroom)
             b.caret
           ul.dropdown-menu
             li
-              a(href='/me/events', target='_self') My events
+              a(href='/me/events', target='_self' translate) My events
             li
-              a(href='/auth/signout', target='_self') Logout
+              a(href='/auth/signout', target='_self' translate) Logout
