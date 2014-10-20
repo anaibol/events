@@ -4,7 +4,7 @@ section.event-view
   a.event(ui-sref='{{getPromoteLink()}}', ng-if='canEdit()') Promote event
   a.facebook-link(target='_blank', href='https://www.facebook.com/events/{{ev.eid}}/') Facebook event
   .tag-list
-    span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
+    span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", ng-class="{{tag}}") {{tag}}
   .title
     .attending
       | {{ev.attending_count}}

@@ -7,29 +7,10 @@ app.controller('ListCtrl', function($scope, Global, events) {
 
   Global.tags = _.uniq(tags);
 
-  console.log(tags);
-
   $scope.getMore = function() {
     if (!$scope.events) return;
-    $scope.filter.skip = $scope.filter.skip + $scope.filter.limit;
-
-    Event.findAll($scope.filter).then(function(events) {
-      angular.forEach(events, function(ev, key) {
-        if (ev.imageExt) {
-          ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
-        } else if (ev.pic_cover) {
-          if (ev.pic_cover.source) {
-            ev.image = ev.pic_cover.source;
-          } else {
-            ev.image = null;
-          }
-        } else {
-          ev.image = null;
-        }
-      });
-
-      $scope.events.push.apply($scope.events, events);
-    });
+    Global.filter.skip = Global.filter.skip + Global.filter.limit;
+    $scope.events.push.apply($scope.events, events);
   };
 
   $scope.openMap = function($event, ev) {

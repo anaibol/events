@@ -27,20 +27,9 @@ ul.nav.nav-sidebar
     a(ng-click='newEvent()') Submit an event
       i.fa.fa-plus
 
-$rootScope
-
 ul.nav
-  li
-    a(href='/') About Us
-
-  li
-    a(href='/privacy') Privacy policy
-
-  li
-    a(href='/terms') Terms
-
-  li
-    a(href='/support') Support
+  li.tag(ng-repeat="tag in Global.tags")
+    a(href='/', ng-class="{{tag}}") {{tag}})
 
 ul.nav
   li

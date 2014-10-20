@@ -116,14 +116,14 @@ app.run(function($state, $rootScope, amMoment, ezfb) {
   $rootScope.today.setMinutes(0);
   $rootScope.today.setHours(0);
 
-  // $scope.filter = {
-  //   sortBy: 'start_time',
-  //   sortOrder: '1',
-  //   since: 0,
-  //   until: 0,
-  //   limit: 30,
-  //   skip: 0
-  // };
+  $rootScope.filter = {
+    // sortBy: 'start_time',
+    // sortOrder: '1',
+    // since: 0,
+    // until: 0,
+    limit: 30,
+    skip: 0
+  };
 
   // var str = $location.$$path.replace('/', '');
 
