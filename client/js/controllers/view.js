@@ -1,5 +1,8 @@
 app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, event) {
   $scope.today = new Date();
+
+  $scope.ev = event;
+
   // $scope.attending = '';
   // $scope.shared = false;
 
@@ -17,18 +20,18 @@ app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, event) {
 
   // $scope.ev.player_result = 0;
 
-  $scope.convertToUTC = function(date, timezone) {
-    date = new Date(date);
+  // $scope.convertToUTC = function(date, timezone) {
+  //   date = new Date(date);
 
-    if (!timezone) {
-      return date;
-    }
+  //   if (!timezone) {
+  //     return date;
+  //   }
 
-    var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
-    transformed = new Date(transformed);
+  //   var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
+  //   transformed = new Date(transformed);
 
-    return transformed;
-  };
+  //   return transformed;
+  // };
 
   // $scope.getPromoteLink = function() {
   //   return $state.current.name.split('.')[0] + '.promote(ev)';
@@ -84,15 +87,10 @@ app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, event) {
   //       return (0);
   //   });
   // }
-  console.log(event);
-  $scope.ev = event;
 
   // if (!$scope.ev.list_event_players) {
   //   $scope.ev.list_event_players = [];
   // }
-
-  $scope.ev.start_time = $scope.convertToUTC($scope.ev.start_time, $scope.ev.timezone);
-  $scope.ev.end_time = $scope.convertToUTC($scope.ev.end_time, $scope.ev.timezone);
 
   //     Users.get('names').success(function(users) {
   // console.log (user);

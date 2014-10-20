@@ -5,14 +5,21 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
 
   $stateProvider
     .state('list', {
-      url: '/',
+      url: '/{city}{tag}',
       controller: 'ListCtrl',
       templateUrl: 'event/list',
+      resolve: {
+        events: function($stateParams, Event) {
+          $stateParams = _.compact($stateParams);
+          return Event.findAll($stateParams);
+          // return $http.get('boost');
+        }
+      }
       // abstract: true
     })
   // .state('city', {
   //   url: ':city',
-  //   templateUrl: 'event/list'
+  //   templateUrl: 'event/lisxt'
   // })
   // .state('tag', {
   //   url: 'tag/:tag',
@@ -101,4 +108,50 @@ app.run(function($state, $rootScope, amMoment, ezfb) {
   var userLang = navigator.language || navigator.userLanguage;
 
   amMoment.changeLocale(userLang);
+
+
+  $rootScope.today = new Date();
+
+  $rootScope.today.setSeconds(0);
+  $rootScope.today.setMinutes(0);
+  $rootScope.today.setHours(0);
+
+  // $scope.filter = {
+  //   sortBy: 'start_time',
+  //   sortOrder: '1',
+  //   since: 0,
+  //   until: 0,
+  //   limit: 30,
+  //   skip: 0
+  // };
+
+  // var str = $location.$$path.replace('/', '');
+
+  // if ($stateParams.date) {
+  //   $scope.filter.type = 'date';
+  //   $scope.filter.since = new Date($stateParams.date).getTime();
+  // } else {
+  //   $scope.filter.since = $scope.today.getTime();
+  // }
+
+  // if (str === 'me/events') {
+  //   $scope.filter.type = 'user';
+  // } else if ($stateParams.user) {
+  //   $scope.filter.type = 'user';
+  //   $scope.filter.user = $stateParams.user;
+  // } else {
+  //   if (str === 'popular') {
+  //     $scope.filter.sortBy = 'attending_count';
+  //     $scope.filter.sortOrder = '-1';
+  //   }
+  //   if (str === 'festival') {
+  //     $scope.filter.sortBy = 'attending_count';
+  //     $scope.filter.sortOrder = '-1';
+  //   }
+  //   if (str) {
+  //     $scope.filter.type = str;
+  //   }
+  // }
+
+
 });
