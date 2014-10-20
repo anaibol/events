@@ -116,6 +116,12 @@ app.run(function($state, $rootScope, amMoment, ezfb) {
   $rootScope.today.setMinutes(0);
   $rootScope.today.setHours(0);
 
+  var tags = _.pluck($scope.events, 'tags');
+
+  tags = [].concat.apply([], tags);
+
+  $rootScope.tags = _.uniq(tags);
+
   // $scope.filter = {
   //   sortBy: 'start_time',
   //   sortOrder: '1',

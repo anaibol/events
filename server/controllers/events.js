@@ -9,8 +9,6 @@ var moment = require('moment');
 
 var fs = require('fs');
 
-var slugify = require('slugify');
-
 var Creators = db.get('creators');
 var Locations = db.get('locations');
 var Events = global.db.get('events');
@@ -111,13 +109,17 @@ exports.get = function(req, res) {
       var url_parts = url.parse(req.url, true);
       var params = url_parts.query;
 
-      var limit = params.limit;
-      var skip = params.skip;
+      var limit = params.limit || 30;
+      var skip = params.skip || 0;
+      var sortBy = params.sortBy || 'start_time';
+      var sortOrder = params.sortOrder || 1;
+      var since = params.since || 0;
+      var until = params.until || 0;
 
-      var sortStr = '{"' + params.sortBy + '" :' + params.sortOrder + '}';
+      var sortStr = '{"' + sortBy + '" :' + sortOrder + '}';
       var sort = JSON.parse(sortStr);
 
-      var since = new Date(params.since);
+      var since = new Date(since);
 
       var query = {
         start_time: {
@@ -168,8 +170,8 @@ exports.get = function(req, res) {
           break;
 
         case 'date':
-          if (params.until) {
-            var until = new Date(params.until);
+          if (until) {
+            var until = new Date(until);
 
             query.start_time = {
               $gte: since,
@@ -573,8 +575,6 @@ exports.create = function(req, res) {
     ev.imageExt = parsed.ext;
   }
 
-  ev.slug = slugify(ev.name.toLowerCase());
-
   ev.creator = {
     id: req.user.facebook.id,
     name: req.user.username
@@ -651,8 +651,6 @@ exports.update = function(req, res) {
     var parsed = parseDataURL(image);
     ev.imageExt = parsed.ext;
   }
-
-  ev.slug = slugify(ev.name.toLowerCase());
 
   if (ev.price.full) {
     ev.price = Ev.getPriceFromFullPrice(ev.price.full);

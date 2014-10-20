@@ -1,4 +1,5 @@
-var request = require('request');
+// var request = require('request');
+var moment = require('moment-timezone');
 // var cheerio = require('cheerio');
 // var async = require('async');
 // var format = require('util').format;
@@ -17,7 +18,7 @@ var Locations = db.get('locations');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BADXDlCXM7uji5oQgz2bPKakEfvToZCZBRWVRjVA4CrWpNyTM2mz4Kq7GtfRroPgARoYZArNYqXRvmIDt3bT3Vb6pcVBZC5rZAxkUcqPgpb7ZBUOu0jDakAxZAag8x5twPsfJsDFBxheTHwvX0sWgxDXA2silqNihkcPp8RVwLTCvyLXXXIuRwnzZCEfHZAGnJiZAkZC8FpsUpQz';
+var accessToken = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGlDcQcEAzZAtmyDrOlrwDpOG7N64BTdloH0tDia3OPRb0fRLBXiLKATFMPzRoE0estUT8z6gz7Mb73yBLh3oXXFCt8UmI5fe3pLg0cUi1ZAamY02PZC25OxBYwMKYKMJKlzedF1CmIoh7Iekah5tJQ7';
 graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'zouk', 'regueton', 'reggaeton', 'kuduru', 'chachacha', 'zumba']; //'suelta'
@@ -39,17 +40,31 @@ function existsInDb(eid, cb) {
   });
 }
 
+
+function convertDateToTimeZone(date, timezone) {
+  date = new Date(date);
+
+  if (!timezone) {
+    return date;
+  }
+
+  var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
+  transformed = new Date(transformed);
+
+  return transformed;
+}
+
 function runQuery(query, cb) {
   graph.fql(query, function(err, res) {
     if (err) {
       console.log(err);
-      cb(false)
+      cb(false);
       return;
     }
 
     if (res.data) {
       if (res.data.length) {
-        result = res.data
+        result = res.data;
       } else {
         result = false;
       }
@@ -111,7 +126,7 @@ function fetchMultiple(eids, term, cb) {
           ev.attending = [];
           for (j = 0; j < attendings.length; j++) {
             ev.attending.push(parseInt(attendings[j].uid));
-          };
+          }
 
           ev.query = term;
 
@@ -120,7 +135,7 @@ function fetchMultiple(eids, term, cb) {
           Ev.save(ev, function(newEv) {
             console.log(newEv.query + ': ' + newEv.name);
           });
-        };
+        }
 
         cb(evs);
       } else {
@@ -186,7 +201,7 @@ function fetchMultiple(eids, term, cb) {
 
 function fetch(eid, term, cb) {
   eid = parseInt(eid);
-  console.log("l'eid est " + eid)
+  console.log("l'eid est " + eid);
   existsInDb(eid, function(exists) {
     if (!exists) {
       get(eid, term, function(ev) {
@@ -271,7 +286,7 @@ function get(eid, term, cb) {
 
         for (var i = attending.length - 1; i >= 0; i--) {
           ev.attending.push(parseInt(attending[i].uid));
-        };
+        }
 
         ev.creator = data[2].fql_result_set[0];
 
@@ -321,7 +336,7 @@ function updateMultiple(eids) {
         });
       });
     });
-    console.log('Updating ' + eids.length + ' events.')
+    console.log('Updating ' + eids.length + ' events.');
   });
 }
 
@@ -341,14 +356,14 @@ function slug(str) {
   .replace(/-+/g, '-'); // collapse dashes
 
   return str;
-};
+}
 
 function normalize(ev) {
   ev.eid = parseInt(ev.eid);
 
-  ev.start_time = new Date(Date.parse(ev.start_time));
-  ev.end_time = new Date(Date.parse(ev.end_time));
-  ev.update_time = new Date(Date.parse(ev.update_time));
+  ev.start_time = convertDateToTimeZone(ev.start_time, ev.timezone);
+  ev.end_time = convertDateToTimeZone(ev.end_time, ev.timezone);
+  ev.update_time = convertDateToTimeZone(ev.update_time, ev.timezone);
 
   ev.saved = new Date();
 
@@ -397,7 +412,7 @@ function getAttendings(eid, cb) {
 
       for (var i = att.length - 1; i >= 0; i--) {
         attendings.push(parseInt(att[i].id));
-      };
+      }
 
       cb(attendings);
     }
@@ -643,6 +658,8 @@ function getPrice(ev) {
 
   var match = desc.match(regex);
 
+  var price;
+
   if (match) {
     var numbers = match.join().removeAll("$").removeAll("£").removeAll("€").split(',');
     var min = numbers.min();
@@ -651,7 +668,7 @@ function getPrice(ev) {
       return {};
     }
 
-    var price = {
+    price = {
       full: match[numbers.indexOf(min.toString())],
       num: min
     };
@@ -663,7 +680,7 @@ function getPrice(ev) {
     var match2 = desc.match(regex2);
 
     if (match2) {
-      var price = {
+      price = {
         full: match2[0].toUpperCase(),
         num: 0
       };
@@ -732,3 +749,4 @@ module.exports.getAttendings = getAttendings;
 module.exports.fetchMultiple = fetchMultiple;
 module.exports.normalize = normalize;
 module.exports.existsInDb = existsInDb;
+module.exports.convertDateToTimeZone = convertDateToTimeZone;

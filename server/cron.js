@@ -17,7 +17,7 @@ var Locations = db.get('locations');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BADXDlCXM7uji5oQgz2bPKakEfvToZCZBRWVRjVA4CrWpNyTM2mz4Kq7GtfRroPgARoYZArNYqXRvmIDt3bT3Vb6pcVBZC5rZAxkUcqPgpb7ZBUOu0jDakAxZAag8x5twPsfJsDFBxheTHwvX0sWgxDXA2silqNihkcPp8RVwLTCvyLXXXIuRwnzZCEfHZAGnJiZAkZC8FpsUpQz';
+var accessToken = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGlDcQcEAzZAtmyDrOlrwDpOG7N64BTdloH0tDia3OPRb0fRLBXiLKATFMPzRoE0estUT8z6gz7Mb73yBLh3oXXFCt8UmI5fe3pLg0cUi1ZAamY02PZC25OxBYwMKYKMJKlzedF1CmIoh7Iekah5tJQ7';
 graph.setAccessToken(accessToken);
 
 var keywords = ['salsa', 'bachata', 'kizomba', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'kuduru']; //'suelta', 'porto'

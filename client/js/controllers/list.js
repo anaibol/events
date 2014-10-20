@@ -1,14 +1,6 @@
 app.controller('ListCtrl', function($scope, events) {
   $scope.events = events;
 
-  var tags = _.pluck($scope.events, 'tags');
-
-  tags = [].concat.apply([], tags);
-
-  tags = _.uniq(tags);
-
-  console.log(tags);
-
   $scope.getMore = function() {
     if (!$scope.events) return;
     $scope.filter.skip = $scope.filter.skip + $scope.filter.limit;

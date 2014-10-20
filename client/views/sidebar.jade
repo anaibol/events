@@ -23,23 +23,24 @@ ul.nav.nav-sidebar
   li(ng-controller="DatepickerCtrl", ng-click="open($event)")
     datepicker(ng-change="changeDate(date)", ng-model="date", show-weeks="false")
 
-  li(ng-show='global.authenticated')
+  li(ng-if='global.authenticated')
     a(ng-click='newEvent()') Submit an event
       i.fa.fa-plus
 
-ul.dropdown-menu(data-role='dropdown')
-  li
-      a(href='') Subitem 1
-    li
-      a(href='') Subitem 2
-    li
-      a(href='') Subitem 3
-    li.divider
-    li
-      a(href='') Subitem 4
-    li.disabled
-      a(href='') Subitem 4
+$rootScope
 
+ul.nav
+  li
+    a(href='/') About Us
+
+  li
+    a(href='/privacy') Privacy policy
+
+  li
+    a(href='/terms') Terms
+
+  li
+    a(href='/support') Support
 
 ul.nav
   li
