@@ -11,6 +11,13 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
       resolve: {
         events: function($stateParams, Event) {
           $stateParams = _.compact($stateParams);
+
+          var tags = _.pluck(events, 'tags');
+
+          tags = [].concat.apply([], tags);
+
+          $rootScope.tags = _.uniq(tags);
+
           return Event.findAll($stateParams);
           // return $http.get('boost');
         }
@@ -92,11 +99,11 @@ app.config(function(datepickerPopupConfig) {
   datepickerPopupConfig.appendToBody = true;
 });
 
-// app.config(function (ezfbProvider) {
-//   ezfbProvider.setInitParams({
-//     appId: window.fbAppId
-//   });
-// });
+app.config(function(ezfbProvider) {
+  ezfbProvider.setInitParams({
+    appId: window.fbAppId
+  });
+});
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
@@ -115,12 +122,6 @@ app.run(function($state, $rootScope, amMoment, ezfb) {
   $rootScope.today.setSeconds(0);
   $rootScope.today.setMinutes(0);
   $rootScope.today.setHours(0);
-
-  var tags = _.pluck($scope.events, 'tags');
-
-  tags = [].concat.apply([], tags);
-
-  $rootScope.tags = _.uniq(tags);
 
   // $scope.filter = {
   //   sortBy: 'start_time',
