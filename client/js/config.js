@@ -11,13 +11,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
       resolve: {
         events: function($stateParams, Event) {
           $stateParams = _.compact($stateParams);
-
-          var tags = _.pluck(events, 'tags');
-
-          tags = [].concat.apply([], tags);
-
-          $rootScope.tags = _.uniq(tags);
-
           return Event.findAll($stateParams);
           // return $http.get('boost');
         }
