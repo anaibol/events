@@ -4,7 +4,7 @@ var moment = require('moment-timezone');
 // var async = require('async');
 // var format = require('util').format;
 
-var Pho = require('./services/photos.js');
+// var Pho = require('./services/photos.js');
 
 var Pro = require('./services/promoter.js');
 
@@ -335,7 +335,7 @@ function updateMultiple(eids) {
 
       ev.updated = new Date();
 
-      Pho.searchPhotos(ev, db);
+      // Pho.searchPhotos(ev, db);
 
       getAttendings(ev.eid, function(attendings) {
         ev.attending = attendings;

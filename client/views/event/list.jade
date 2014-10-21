@@ -10,7 +10,7 @@ section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scro
         .image(ng-if="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
          .ribbon-wrapper-green(ng-if="ev.price.num == 0")
             .ribbon-green {{ev.price.full}}
-          img(ng-src="{{ev.pic_cover.source}}", onerror='this.parentNode.style.display = "none"')      
+          img(ng-src="{{ev.pic_cover.source}}", onerror='this.parentNode.style.display = "none"')
       .bottom
         span.datetime
           span.date

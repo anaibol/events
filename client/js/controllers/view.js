@@ -1,7 +1,30 @@
-app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, event) {
+app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, instagram, event) {
   $scope.today = new Date();
 
   $scope.ev = event;
+
+  instagram.getLocationId($scope.ev.venue.latitude, $scope.ev.venue.longitude).success(function(res) {
+    if (res.meta.code !== 200) {
+      // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
+      return;
+    }
+    if (res.data.length > 0) {
+      instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
+        if (res.meta.code !== 200) {
+          // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
+          return;
+        }
+        if (res.data.length > 0) {
+          $scope.instagramPhotos = res.data;
+          console.log($scope.instagramPhotos);
+          // } else {
+          //   scope.error = "This hashtag has returned no results";
+        }
+      });
+      // } else {
+      //   scope.error = "This hashtag has returned no results";
+    }
+  });
 
   // $scope.attending = '';
   // $scope.shared = false;

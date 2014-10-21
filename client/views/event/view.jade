@@ -74,4 +74,6 @@ section.event-view
        
     .row
       .col-xs-6.col-md-3(ng-repeat='image in ev.images', ng-if='ev.images')
-      .col-xs-6.col-md-3(ng-repeat='photo in ev.photos', ng-if='ev.photos')
+      .col-xs-6.col-md-3(ng-repeat='photo in instagramPhotos')
+        a.thumbnail(href='#')
+          img(ng-src='{{photo.images.low_resolution.url}}', onerror='this.parentNode.style.display = "none"')
