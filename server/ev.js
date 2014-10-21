@@ -105,7 +105,7 @@ function save(ev, cb) {
   }
 }
 
-function fetchMultiple(eids, term, cb) {
+function fetchMultiple(eids, term, save, cb) {
   eids = eids.join(',');
 
   var query = {
@@ -124,6 +124,7 @@ function fetchMultiple(eids, term, cb) {
           ev = evs[i];
 
           ev.attending = [];
+
           for (j = 0; j < attendings.length; j++) {
             ev.attending.push(parseInt(attendings[j].uid));
           }
@@ -132,9 +133,13 @@ function fetchMultiple(eids, term, cb) {
 
           ev = normalize(ev);
 
-          Ev.save(ev, function(newEv) {
-            console.log(newEv.query + ': ' + newEv.name);
-          });
+          if (save) {
+            ev.saved = new Date();
+
+            Ev.save(ev, function(newEv) {
+              console.log(newEv.query + ': ' + newEv.name);
+            });
+          }
         }
 
         cb(evs);
@@ -206,6 +211,8 @@ function fetch(eid, term, cb) {
     if (!exists) {
       get(eid, term, function(ev) {
         if (ev) {
+          ev.saved = new Date();
+
           save(ev, function(newEv) {
             cb(newEv);
           });
@@ -306,6 +313,8 @@ function get(eid, term, cb) {
 
 function update(eid, cb) {
   get(eid, null, function(ev) {
+    ev.updated = new Date();
+
     Events.update({
       eid: ev.eid
     }, {
@@ -316,17 +325,19 @@ function update(eid, cb) {
 }
 
 function updateMultiple(eids) {
-  Ev.fetchMultiple(eids, '', function(eves) {
+  fetchMultiple(eids, '', false, function(eves) {
     var eids = [];
 
     eves.forEach(function(ev) {
       eids.push(parseInt(ev.eid));
-      ev = Ev.normalize(ev);
+
+      ev = normalize(ev);
+
       ev.updated = new Date();
 
       Pho.searchPhotos(ev, db);
 
-      Ev.getAttendings(ev.eid, function(attendings) {
+      getAttendings(ev.eid, function(attendings) {
         ev.attending = attendings;
 
         Events.update({
@@ -364,8 +375,6 @@ function normalize(ev) {
   ev.start_time = convertDateToTimeZone(ev.start_time, ev.timezone);
   ev.end_time = convertDateToTimeZone(ev.end_time, ev.timezone);
   ev.update_time = convertDateToTimeZone(ev.update_time, ev.timezone);
-
-  ev.saved = new Date();
 
   ev.slug = slug(ev.name.toLowerCase());
 
