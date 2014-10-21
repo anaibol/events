@@ -313,6 +313,8 @@ function get(eid, term, cb) {
 
 function update(eid, cb) {
   get(eid, null, function(ev) {
+    ev.updated = new Date();
+
     Events.update({
       eid: ev.eid
     }, {
