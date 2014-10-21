@@ -8014,6 +8014,9 @@ body {
 .container {
   width: auto;
 }
+.container.one-col {
+  padding: 0;
+}
 .wrapper {
   margin-top: 50px;
 }
@@ -8219,7 +8222,6 @@ a:hover {
 }
 .event-view {
   background-color: white;
-  padding: 25px;
 }
 .event-view .bg-container {
   width: 100%;
