@@ -5,7 +5,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
 
   $stateProvider
     .state('list', {
-      url: '/{city}{tag}',
+      url: '/{city}{slash:[/]?}{tag}',
       controller: 'ListCtrl',
       templateUrl: 'event/list',
       resolve: {
@@ -100,10 +100,11 @@ app.config(function(ezfbProvider) {
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
-app.run(function($state, $rootScope, amMoment, ezfb) {
+app.run(function($rootScope, $state, $stateParams, amMoment, ezfb) {
   ezfb.init();
 
   $rootScope.$state = $state;
+  $rootScope.$stateParams = $stateParams;
 
   var userLang = navigator.language || navigator.userLanguage;
 

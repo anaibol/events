@@ -1,15 +1,15 @@
-app.controller('ListCtrl', function($scope, Global, events) {
+app.controller('ListCtrl', function($scope, $rootScope, events) {
   $scope.events = events;
 
   var tags = _.pluck(events, 'tags');
 
   tags = [].concat.apply([], tags);
 
-  Global.tags = _.uniq(tags);
+  $rootScope.tags = _.uniq(tags);
 
   $scope.getMore = function() {
     if (!$scope.events) return;
-    Global.filter.skip = Global.filter.skip + Global.filter.limit;
+    $rootScope.filter.skip = $rootScope.filter.skip + $rootScope.filter.limit;
     $scope.events.push.apply($scope.events, events);
   };
 

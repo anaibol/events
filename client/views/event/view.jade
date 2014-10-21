@@ -1,8 +1,9 @@
 section.event-view
-  div(style='background-image: url({{ev.pic_cover.source}}); width: 100%; height: 204px;')
-  h3.truncate {{ev.name}}
+  .bg-container
+    .bg-image(style='background-image: url({{ev.pic_cover.source}});')
+    h3.truncate {{ev.name}}
   a.event(ui-sref='{{getPromoteLink()}}', ng-if='canEdit()') Promote event
-  a.facebook-link(target='_blank', href='https://www.facebook.com/events/{{ev.eid}}/') Facebook event
+  a.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{ev.eid}}/') Facebook event
   .tag-list
     span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", ng-class="{{tag}}") {{tag}}
   .title

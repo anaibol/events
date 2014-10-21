@@ -23,13 +23,13 @@ ul.nav.nav-sidebar
   li(ng-controller="DatepickerCtrl", ng-click="open($event)")
     datepicker(ng-change="changeDate(date)", ng-model="date", show-weeks="false")
 
-  li(ng-if='global.authenticated')
+  li(ng-if='$root.authenticated')
     a(ng-click='newEvent()') Submit an event
       i.fa.fa-plus
 
 ul.nav
-  li.tag(ng-repeat="tag in Global.tags")
-    a(href='/', ng-class="{{tag}}") {{tag}})
+  li(ng-repeat="tag in $root.tags")
+    a.tag(class="{{tag}}", href='/{{$root.$stateParams.city}}/{{tag}}', ui-sref="list({city: $root.$stateParams.city, tag: tag})") {{tag}}
 
 ul.nav
   li
