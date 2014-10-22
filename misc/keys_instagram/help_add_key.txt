@@ -1,0 +1,60 @@
+
+
+Notes de travail :
+
+http://instagram.com/developer/authentication/#
+https://api.instagram.com/oauth/access_token
+
+Victor Reutenauer
+victor@wooepa.com
+raphastar
+
+Wooepa
+Client Info Client ID 	4fa115a092a74f8fa380bc7f172f02e3
+Client Secret 	448dc9899ef64a99b0c77e7bcdc817d0
+Website URL 	http://www.wooepa.com
+Redirect URI 	http://www.wooepa.com/authenticate
+
+
+
+https://api.instagram.com/oauth/authorize/?client_id=4fa115a092a74f8fa380bc7f172f02e3&redirect_uri=http://www.wooepa.com/authenticate&response_type=code
+
+http://www.wooepa.com/authenticate?code=9a8aad9bfdb64d3aadf9ed0fe1181ca7
+
+curl \-F 'client_id=4fa115a092a74f8fa380bc7f172f02e3' \
+    -F 'client_secret=448dc9899ef64a99b0c77e7bcdc817d0' \
+    -F 'grant_type=authorization_code' \
+    -F 'redirect_uri=http://www.wooepa.com/authenticate' \
+    -F 'code=9a8aad9bfdb64d3aadf9ed0fe1181ca7' \https://api.instagram.com/oauth/access_token
+
+
+{"access_token":"1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab","user":{"username":"wooepa","bio":"","website":"","profile_picture":"http:\/\/images.ak.instagram.com\/profiles\/anonymousUser.jpg","full_name":"Victor Reutenauer","id":"1491272863"}}Victors-MacBook-Air:Fotonower moilerat$ 
+
+
+Replication service vamos :
+
+http://www.getvamos.com/events/vernissage-profils-interface-photographique/7176691
+Searching for fernandohellmann
+user id : 30204145
+
+https://api.instagram.com/v1/tags/{tag-name}/media/recent?access_token=1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab
+
+access_token wooepa/apigee : 1491272863.1fb234f.d3759e8c18c54cca92ce4a1398cd7264
+
+
+https://api.instagram.com/v1/tags/{tag-name}/media/recent?access_token=1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab
+
+social club
+https://api.instagram.com/v1/locations/34465/media/recent?access_token=1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab
+https://api.instagram.com/v1/locations/231066771/media/recent?access_token=1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab
+
+
+
+https://api.instagram.com/v1/locations/search?lat=&lng=?access_token=1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab
+
+
+
+
+
+
+
