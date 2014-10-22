@@ -1,10 +1,10 @@
 doctype html
 html
   include head
-  body
+  body(id="{{$state.current.name.replace('.', '-')}}")
     include header
 
-    .wrapper(class="{{$state.current.name.replace('.', '-')}}")
+    .wrapper
       .container.two-col(ng-if="$state.current.name === 'list'")
         .col-lg-10.content-container
           block content

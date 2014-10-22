@@ -29,20 +29,20 @@ ul.nav.nav-sidebar
 
 ul.nav
   li(ng-repeat="tag in $root.tags")
-    a.tag(class="{{tag}}", href='/{{$root.$stateParams.city}}/{{tag}}', ui-sref="list({city: $root.$stateParams.city, tag: tag})") {{tag}}
+    a.tag(class="{{tag}}", ng-href='/{{$root.$stateParams.city}}/{{tag}}', ui-sref="list({city: $root.$stateParams.city, tag: tag})") {{tag}}
 
 ul.nav
   li
-    a(href='/') About Us
+    a(href='/about', ui-sref="about")) About Us
 
   li
-    a(href='/privacy') Privacy policy
+    a(href='/privacy', ui-sref="privacy") Privacy policy
 
   li
-    a(href='/terms') Terms
+    a(href='/terms', ui-sref="terms") Terms
 
   li
-    a(href='/support') Support
+    a(href='/support', ui-sref="support") Support
 
   li
     //-a(href='/contact')

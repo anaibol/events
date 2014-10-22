@@ -1,6 +1,6 @@
 section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-if="$state.current.name === 'list'")
   .events
-    a.event(ng-repeat="ev in events", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})", href="/{{ev.slug}}/{{ev.eid}}")
+    a.event(ng-repeat="ev in events", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})", ng-href="{{ev.slug}}/{{ev.eid}}")
       .top
         span.title.truncate {{ev.name}}
         //- span.title.truncate {{ev.description}}

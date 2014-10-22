@@ -1,30 +1,31 @@
-section.event-view
-  .bg-container
+section
+  .header
     .bg-image(style='background-image: url({{ev.pic_cover.source}});')
-    h3.title.truncate {{ev.name}}
-  a.event(ui-sref='{{getPromoteLink()}}', ng-if='canEdit()') Promote event
-  a.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{ev.eid}}/') Facebook event
-  .tag-list
-    span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", ng-class="{{tag}}") {{tag}}
-  .title
-    .attending
-      | {{ev.attending_count}}
-      i.icon-group
-    .price {{ev.price.full}}
-  .info
-    a(href="https://maps.google.com/maps?q={{ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank')
-      .place(ng-if='ev.location')
-        i.fa.fa-map-marker
-        | {{ev.location}}
-    | {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}} {{ev.venue.country}}
-  .datetime
-    span.date
-      i.fa.fa-calendar
-      span {{ev.start_time | amDateFormat:'D MMM'}} 
-    span.time
-      i.fa.fa-clock-o
-      span {{ev.start_time | amDateFormat:"LT"}}
-      span {{ev.start_time | amCalendar}}            
+    .content
+      h3.title.truncate {{ev.name}}
+      //- a.event(ui-sref='{{getPromoteLink()}}', ng-if='canEdit()') Promote event
+      a.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{ev.eid}}/') Facebook event
+      .tag-list
+        span.tag(class="{{tag}}", ng-repeat="tag in ev.tags", ng-if="$index < 3") {{tag}}
+      .title
+        .attending
+          | {{ev.attending_count}}
+          i.icon-group
+        .price {{ev.price.full}}
+      .info
+        a(href="https://maps.google.com/maps?q={{ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank')
+          .place(ng-if='ev.location')
+            i.fa.fa-map-marker
+            | {{ev.location}}
+        | {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}} {{ev.venue.country}}
+      .datetime
+        span.date
+          i.fa.fa-calendar
+          span {{ev.start_time | amDateFormat:'D MMM'}} 
+        span.time
+          i.fa.fa-clock-o
+          span {{ev.start_time | amDateFormat:"LT"}}
+          //- span {{ev.start_time | amCalendar}}            
   .row
     .col-md-8
       p.description(ng-bind-html='ev.description | linky')
@@ -74,6 +75,7 @@ section.event-view
        
     .row
       .col-xs-6.col-md-3(ng-repeat='image in ev.images', ng-if='ev.images')
+
       .col-xs-6.col-md-3(ng-repeat='photo in instagramPhotos')
         a.thumbnail(href='#')
           img(ng-src='{{photo.images.low_resolution.url}}', onerror='this.parentNode.style.display = "none"')

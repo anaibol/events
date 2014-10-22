@@ -6,46 +6,30 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
   $stateProvider
     .state('list', {
       url: '/{city}{slash:[/]?}{tag}',
+      // url: '/',
       controller: 'ListCtrl',
       templateUrl: 'event/list',
       resolve: {
         events: function($stateParams, Event) {
-          $stateParams = _.compact($stateParams);
+          console.log($stateParams);
+          // $stateParams = _.compact($stateParams);
+
           return Event.findAll($stateParams);
-          // return $http.get('boost');
         }
       }
-      // abstract: true
     })
-  // .state('city', {
-  //   url: ':city',
-  //   templateUrl: 'event/lisxt'
-  // })
-  // .state('tag', {
-  //   url: 'tag/:tag',
-  //   templateUrl: 'event/list'
-  // })
-  // .state('eventsByDate', {
-  //   url: '/date/:date',
-  //   templateUrl: 'event/list',
-  // })
-  // .state('keyword', {
-  //   url: '/:keyword',
-  //   templateUrl: 'event/list'
-  // })
-  .state('list.view', {
-    url: '{query}{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
-    // url: '^/:slug/:eid',
-    templateUrl: "event/view",
-    controller: 'ViewCtrl',
-    parent: 'list',
-    resolve: {
-      event: function($stateParams, Event) {
-        return Event.find($stateParams.eid);
-        // return $http.get('boost');
+    .state('list.view', {
+      url: '^/{city}{slash:[/]?}{tag:[^A-Za-z]?}{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
+      // url: '/:slug/:eid',
+      templateUrl: "event/view",
+      controller: 'ViewCtrl',
+      parent: 'list',
+      resolve: {
+        event: function($stateParams, Event) {
+          return Event.find($stateParams.eid);
+        }
       }
-    }
-  })
+    })
     .state('me', {
       parent: "",
       url: '/me/events',

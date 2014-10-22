@@ -8017,9 +8017,6 @@ body {
 .container.one-col {
   padding: 0;
 }
-.wrapper {
-  margin-top: 50px;
-}
 i.fa {
   margin-right: 5px;
 }
@@ -8034,6 +8031,10 @@ a:hover {
 }
 .navbar {
   border-radius: 0;
+  background-color: rgba(75, 75, 60, 0.95);
+}
+#list-view .navbar {
+  background: transparent;
 }
 .navbar .nav > li > a.brand {
   padding-left: 20px;
@@ -8046,9 +8047,6 @@ a:hover {
   width: 100px;
   text-indent: -9999px;
   margin-top: 4px;
-}
-.navbar-inverse {
-  background-color: rgba(75, 75, 60, 0.95);
 }
 .navbar-nav > li > .dropdown-menu {
   min-width: 200%;
@@ -8220,16 +8218,16 @@ a:hover {
 .ribbon-green:after {
   right: 0;
 }
-.event-view {
+#list-view {
   background-color: white;
 }
-.event-view .bg-container {
+#list-view .view-header {
   width: 100%;
   height: 200px;
   overflow: hidden;
   position: relative;
 }
-.event-view .bg-container .bg-image {
+#list-view .view-header .bg-image {
   width: 100%;
   height: 204px;
   -webkit-filter: blur(10px);
@@ -8246,25 +8244,17 @@ a:hover {
   background-size: cover;
   background-repeat: no-repeat;
 }
-.event-view .map {
+#list-view .map {
   width: 233px;
   height: 100%;
   position: absolute;
   right: 0;
   top: 0;
 }
-.event-view .title {
+#list-view .title {
   position: absolute;
   width: 100%;
   text-align: center;
-}
-.event-view .description {
-  -webkit-column-count: 2;
-  -moz-column-count: 2;
-  column-count: 2;
-  -webkit-column-gap: 16px;
-  -moz-column-gap: 16px;
-  column-gap: 16px;
 }
 #fs-dialog {
   color: #333333;
