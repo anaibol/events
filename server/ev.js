@@ -87,7 +87,7 @@ function save(ev, cb) {
             Locations.insert({
               location: ev.location,
               venue: ev.venue,
-              place: ev.place
+              loc: ev.loc
             });
           }
 
@@ -110,7 +110,7 @@ function fetchMultiple(eids, term, save, cb) {
 
   var query = {
     user_event: "SELECT description, feed_targeting, host, attending_count, eid, location, name, privacy, start_time, end_time, update_time, ticket_uri, venue, pic, pic_big, pic_small, pic_square, pic_cover, has_profile_pic, pic, creator, timezone FROM event WHERE eid IN (" + eids + ")",
-    event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
+    // event_attending: "SELECT uid FROM event_member WHERE eid IN (SELECT eid FROM #user_event) and rsvp_status = 'attending' LIMIT 50000",
   };
 
   runQuery(query, function(data) {
@@ -118,27 +118,33 @@ function fetchMultiple(eids, term, save, cb) {
       if (data[0].fql_result_set) {
         var evs = data[0].fql_result_set;
 
-        var attendings = data[1].fql_result_set;
+        // var attendings = data[1].fql_result_set;
 
         for (i = 0; i < evs.length; i++) {
           ev = evs[i];
 
-          ev.attending = [];
+          // ev.attending = [];
 
-          for (j = 0; j < attendings.length; j++) {
-            ev.attending.push(parseInt(attendings[j].uid));
-          }
+          // for (j = 0; j < attendings.length; j++) {
+          //   ev.attending.push(parseInt(attendings[j].uid));
+          // }
 
           ev.query = term;
 
-          ev = normalize(ev);
+          if (ev.venue) {
+            if (ev.venue.longitude) {
+              if (ev.venue.latitude) {
+                ev = normalize(ev);
 
-          if (save) {
-            ev.saved = new Date();
+                if (save) {
+                  ev.saved = new Date();
 
-            Ev.save(ev, function(newEv) {
-              console.log(newEv.query + ': ' + newEv.name);
-            });
+                  Ev.save(ev, function(newEv) {
+                    console.log(newEv.query + ': ' + newEv.name);
+                  });
+                }
+              }
+            }
           }
         }
 
@@ -383,6 +389,16 @@ function normalize(ev) {
   ev.festival = getFestival(ev);
 
   ev.price = getPrice(ev);
+
+  ev.loc = {
+    lat: ev.venue.latitude,
+    lng: ev.venue.longitude
+  };
+
+  console.log(ev.loc);
+
+  delete ev.venue.latitude;
+  delete ev.venue.longitude;
 
   // delete ev.pic_cover;
 

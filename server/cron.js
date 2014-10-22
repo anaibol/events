@@ -5,7 +5,7 @@ global.config = require(configDir + '/env/' + process.env.NODE_ENV + '.js');
 var Ev = require('./ev');
 
 var db = require('monk')(config.db);
-
+var Events = db.get('events');
 var Pho = require('./services/photos.js');
 
 var Upd = require('./services/update.js');
@@ -202,7 +202,7 @@ function paginate(page, term) {
           eids.push(parseInt(ev.id));
         });
 
-        Ev.fetchMultiple(eids, term, function(eves) {});
+        Ev.fetchMultiple(eids, term, true, function(eves) {});
       }
     }
   });
@@ -246,7 +246,7 @@ function fetchEventsFromKeyword(term) {
           eids.push(parseInt(ev.id));
         });
 
-        Ev.fetchMultiple(eids, term, function(eves) {});
+        Ev.fetchMultiple(eids, term, true, function(eves) {});
       }
     }
   });
