@@ -1,119 +1,21 @@
-app.controller('ListCtrl', function($scope, $location, $modal, Global, $stateParams, $state, Event) {
-  $scope.today = new Date();
+app.controller('ListCtrl', function($scope, $rootScope, events) {
+  $scope.events = events;
 
-  $scope.today.setSeconds(0);
-  $scope.today.setMinutes(0);
-  $scope.today.setHours(0);
+  var tags = _.pluck(events, 'tags');
 
-  $scope.filter = {
-    sortBy: 'start_time',
-    sortOrder: '1',
-    since: 0,
-    until: 0,
-    limit: 30,
-    skip: 0
-  };
+  tags = [].concat.apply([], tags);
 
-  var str = $location.$$path.replace('/', '');
-
-  if ($stateParams.date) {
-    $scope.filter.type = 'date';
-    $scope.filter.since = new Date($stateParams.date).getTime();
-  } else {
-    $scope.filter.since = $scope.today.getTime();
-  }
-
-  if (str === 'me/events') {
-    $scope.filter.type = 'user';
-  } else if ($stateParams.user) {
-    $scope.filter.type = 'user';
-    $scope.filter.user = $stateParams.user;
-  } else {
-    if (str === 'popular') {
-      $scope.filter.sortBy = 'attending_count';
-      $scope.filter.sortOrder = '-1';
-    }
-    if (str === 'festival') {
-      $scope.filter.sortBy = 'attending_count';
-      $scope.filter.sortOrder = '-1';
-    }
-    if (str) {
-      $scope.filter.type = str;
-    }
-  }
-
-  $scope.getEvents = function(cb) {
-    Event.findAll($scope.filter).then(function(events) {
-      $scope.events = events;
-
-      angular.forEach($scope.events, function(ev, key) {
-        ev.start_time = $scope.convertToUTC(ev.start_time, ev.timezone);
-        ev.end_time = $scope.convertToUTC(ev.end_time, ev.timezone);
-
-        if (ev.imageExt) {
-          ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
-        } else if (ev.pic_cover) {
-          if (ev.pic_cover.source) {
-            ev.image = ev.pic_cover.source;
-          } else {
-            ev.image = null;
-          }
-        } else {
-          ev.image = null;
-        }
-      });
-
-      cb();
-    });
-  }
+  $rootScope.tags = _.uniq(tags);
 
   $scope.getMore = function() {
     if (!$scope.events) return;
-    $scope.filter.skip = $scope.filter.skip + $scope.filter.limit;
-
-    Event.findAll($scope.filter).then(function(events) {
-      angular.forEach(events, function(ev, key) {
-        ev.start_time = $scope.convertToUTC(ev.start_time, ev.timezone);
-        ev.end_time = $scope.convertToUTC(ev.end_time, ev.timezone);
-
-        if (ev.imageExt) {
-          ev.image = '/uploads/' + ev._id + '.' + ev.imageExt;
-        } else if (ev.pic_cover) {
-          if (ev.pic_cover.source) {
-            ev.image = ev.pic_cover.source;
-          } else {
-            ev.image = null;
-          }
-        } else {
-          ev.image = null;
-        }
-      });
-
-      $scope.events.push.apply($scope.events, events);
-    });
-  }
-
-  $scope.convertToUTC = function(date, timezone) {
-    date = new Date(date);
-
-    if (!timezone) {
-      return date;
-    }
-
-    var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
-    transformed = new Date(transformed);
-
-    return transformed;
-  }
-
-  $scope.getLink = function(ev) {
-    return $state.current.name + '.view(ev)';
-  }
-
-  $scope.openMap = function($event, ev) {
-    window.open('https://maps.google.com/maps?q=' + ev.place);
-    $event.stopPropagation();
+    $rootScope.filter.skip = $rootScope.filter.skip + $rootScope.filter.limit;
+    $scope.events.push.apply($scope.events, events);
   };
 
-  $scope.getEvents(function(cb) {});
+  $scope.openMap = function($event, ev) {
+    var location = ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country;
+    window.open('https://maps.google.com/maps?q=' + location);
+    $event.stopPropagation();
+  };
 });

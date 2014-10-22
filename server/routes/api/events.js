@@ -22,7 +22,7 @@ module.exports = function(app) {
   app.get('/import/event/:eid', authorization.requiresLogin, hasAuthorization, events.import);
   app.get('/api/events', events.get);
   app.get('/api/events/:eid', events.getOne);
-  app.put('/api/events/:eid', authorization.requiresLogin, hasAuthorization, events.update);
-  app.post('/api/events/:eid', authorization.requiresLogin, hasAuthorization, events.create);
-  app.delete('/api/events', authorization.requiresLogin, hasAuthorization, events.destroy);
+  // app.put('/api/events/:eid', authorization.requiresLogin, hasAuthorization, events.update);
+  // app.post('/api/events/:eid', authorization.requiresLogin, hasAuthorization, events.create);
+  // app.delete('/api/events', authorization.requiresLogin, hasAuthorization, events.destroy);
 };

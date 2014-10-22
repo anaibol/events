@@ -7944,20 +7944,6 @@ button.close {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.truncate {
-  position: relative;
-  height: 3.6em;
-  /* exactly three lines */
-}
-.truncate:after {
-  content: "";
-  text-align: right;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff 90%);
-}
 .tag-list {
   padding: 3px 0;
   position: relative;
@@ -8028,8 +8014,8 @@ body {
 .container {
   width: auto;
 }
-.wrapper {
-  margin-top: 50px;
+.container.one-col {
+  padding: 0;
 }
 i.fa {
   margin-right: 5px;
@@ -8045,6 +8031,10 @@ a:hover {
 }
 .navbar {
   border-radius: 0;
+  background-color: rgba(75, 75, 60, 0.95);
+}
+#list-view .navbar {
+  background: transparent;
 }
 .navbar .nav > li > a.brand {
   padding-left: 20px;
@@ -8057,9 +8047,6 @@ a:hover {
   width: 100px;
   text-indent: -9999px;
   margin-top: 4px;
-}
-.navbar-inverse {
-  background-color: rgba(75, 75, 60, 0.95);
 }
 .navbar-nav > li > .dropdown-menu {
   min-width: 200%;
@@ -8231,20 +8218,43 @@ a:hover {
 .ribbon-green:after {
   right: 0;
 }
-.event-view {
+#list-view {
   background-color: white;
-  padding: 25px;
 }
-.event-view .map {
+#list-view .view-header {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+#list-view .view-header .bg-image {
+  width: 100%;
+  height: 204px;
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  display: block;
+  position: absolute;
+  left: -20%;
+  top: -20%;
+  width: 140%;
+  height: 140%;
+  background-size: 100% 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#list-view .map {
   width: 233px;
   height: 100%;
   position: absolute;
   right: 0;
   top: 0;
 }
-.event-view a.facebook-link {
-  float: left;
+#list-view .title {
+  position: absolute;
   width: 100%;
+  text-align: center;
 }
 #fs-dialog {
   color: #333333;

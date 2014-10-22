@@ -1,5 +1,31 @@
-app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, event) {
+app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, instagram, event) {
   $scope.today = new Date();
+
+  $scope.ev = event;
+
+  instagram.getLocationId($scope.ev.venue.latitude, $scope.ev.venue.longitude).success(function(res) {
+    if (res.meta.code !== 200) {
+      // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
+      return;
+    }
+    if (res.data.length > 0) {
+      instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
+        if (res.meta.code !== 200) {
+          // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
+          return;
+        }
+        if (res.data.length > 0) {
+          $scope.instagramPhotos = res.data;
+          console.log($scope.instagramPhotos);
+          // } else {
+          //   scope.error = "This hashtag has returned no results";
+        }
+      });
+      // } else {
+      //   scope.error = "This hashtag has returned no results";
+    }
+  });
+
   // $scope.attending = '';
   // $scope.shared = false;
 
@@ -17,18 +43,18 @@ app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, event) {
 
   // $scope.ev.player_result = 0;
 
-  $scope.convertToUTC = function(date, timezone) {
-    date = new Date(date);
+  // $scope.convertToUTC = function(date, timezone) {
+  //   date = new Date(date);
 
-    if (!timezone) {
-      return date;
-    }
+  //   if (!timezone) {
+  //     return date;
+  //   }
 
-    var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
-    transformed = new Date(transformed);
+  //   var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
+  //   transformed = new Date(transformed);
 
-    return transformed;
-  };
+  //   return transformed;
+  // };
 
   // $scope.getPromoteLink = function() {
   //   return $state.current.name.split('.')[0] + '.promote(ev)';
@@ -84,15 +110,10 @@ app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, event) {
   //       return (0);
   //   });
   // }
-  console.log(event);
-  $scope.ev = event;
 
   // if (!$scope.ev.list_event_players) {
   //   $scope.ev.list_event_players = [];
   // }
-
-  $scope.ev.start_time = $scope.convertToUTC($scope.ev.start_time, $scope.ev.timezone);
-  $scope.ev.end_time = $scope.convertToUTC($scope.ev.end_time, $scope.ev.timezone);
 
   //     Users.get('names').success(function(users) {
   // console.log (user);

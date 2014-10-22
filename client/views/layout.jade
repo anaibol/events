@@ -1,16 +1,23 @@
 doctype html
 html
   include head
-  body
+  body(id="{{$state.current.name.replace('.', '-')}}")
     include header
 
     .wrapper
-      .container
+      .container.two-col(ng-if="$state.current.name === 'list'")
         .col-lg-10.content-container
           block content
 
         .sidebar.col-lg-2.sidebar-container(scroll-to-fixed)
           include sidebar
+      .container.one-col(ng-if="$state.current.name !== 'list'")
+        .col-lg-12.content-container
+          block content
+
+    //- .global-navigation.back
+    //-   a(href='/', ui-sref="^", ng-if="$state.$current !== ''")
+    //-     i.fa-chevron-left
 
     script(type='text/javascript', src='/js/app.min.js')
     script(type='text/javascript', src='http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false')

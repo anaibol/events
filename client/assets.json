@@ -1,6 +1,7 @@
 {
     "dev": [
         "lib/jquery/dist/jquery.js",
+        "lib/lodash/dist/lodash.js",
         "lib/angular/angular.js",
         "lib/angular-ui-router/release/angular-ui-router.js",
         "lib/angular-bootstrap/ui-bootstrap.js",
@@ -32,6 +33,7 @@
     ],
     "prod": [
         "lib/jquery/dist/jquery.js",
+        "lib/lodash/dist/lodash.js",
         "lib/angular/angular.js",
         "lib/angular-ui-router/release/angular-ui-router.js",
         "lib/angular-bootstrap/ui-bootstrap.js",
