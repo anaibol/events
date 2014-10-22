@@ -86,9 +86,8 @@ if (env === 'production') {
     console.log(date.toString());
     updateWeek();
   }, null, true);
-}
 
-if (env === 'development') {
+} else {
   fetchEventsFromKeywords();
 }
 
