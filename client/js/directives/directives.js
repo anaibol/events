@@ -71,7 +71,7 @@ app.directive('friendSelector', function() {
                 }
             });
         }
-    }
+    };
 });
 
 app.directive('scrollToFixed', function() {

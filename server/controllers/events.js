@@ -125,9 +125,8 @@ exports.get = function(req, res) {
         $near: {
           $geometry: {
             type: "Point",
-            coordinates: [req.session.loc.lat, req.session.loc.lng]
-          },
-          $maxDistance: 50000
+            coordinates: [parseFloat(params.lat), parseFloat(params.lng)]
+          }
         }
       }
     };
@@ -141,7 +140,7 @@ exports.get = function(req, res) {
       }
     };
 
-    switch (params.type) {
+    switch (params.query) {
       case 'user':
         delete query.start_time;
         delete query.$near;
@@ -205,6 +204,8 @@ exports.get = function(req, res) {
         delete query.$near;
         sort.attending_count = -1;
 
+        break;
+
       case 'promote':
         query.in_promotion = true;
         delete query.$near;
@@ -227,6 +228,7 @@ exports.get = function(req, res) {
         };
 
         break;
+
       case 'weekend':
         var friday = moment().day(5).toDate();
         var sunday = moment().day(7).toDate();

@@ -1,36 +1,34 @@
-'use strict';
-
 module.exports = {
-  db: "mongodb://localhost/wooepa-test",
+  db: 'mongodb://localhost/wooepa-test',
   port: 3001,
   app: {
-    name: "Wooepa - Test",
-    accessToken: "439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y"
+    name: 'Wooepa - Test',
+    accessToken: '439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y'
   },
   facebook: {
-    clientID: "439472799532734",
-    clientSecret: "6e940b23fdbf539939dffbe479678623",
-    callbackURL: "http://wooepa.com:3001/auth/facebook/callback"
+    clientID: '439472799532734',
+    clientSecret: '6e940b23fdbf539939dffbe479678623',
+    callbackURL: 'http://wooepa.com:3001/auth/facebook/callback'
   }
   /*,
   twitter: {
-    clientID: "CONSUMER_KEY",
-    clientSecret: "CONSUMER_SECRET",
-    callbackURL: "http://localhost:3000/auth/twitter/callback"
+    clientID: 'CONSUMER_KEY',
+    clientSecret: 'CONSUMER_SECRET',
+    callbackURL: 'http://localhost:3000/auth/twitter/callback'
   },
   github: {
-    clientID: "APP_ID",
-    clientSecret: "APP_SECRET",
-    callbackURL: "http://localhost:3000/auth/github/callback"
+    clientID: 'APP_ID',
+    clientSecret: 'APP_SECRET',
+    callbackURL: 'http://localhost:3000/auth/github/callback'
   },
   google: {
-    clientID: "APP_ID",
-    clientSecret: "APP_SECRET",
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    clientID: 'APP_ID',
+    clientSecret: 'APP_SECRET',
+    callbackURL: 'http://localhost:3000/auth/google/callback'
   },
   linkedin: {
-    clientID: "API_KEY",
-    clientSecret: "SECRET_KEY",
-    callbackURL: "http://localhost:3000/auth/linkedin/callback"
+    clientID: 'API_KEY',
+    clientSecret: 'SECRET_KEY',
+    callbackURL: 'http://localhost:3000/auth/linkedin/callback'
   }*/
-}
+};

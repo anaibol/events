@@ -212,7 +212,7 @@ function fetchMultiple(eids, term, save, cb) {
 
 function fetch(eid, term, cb) {
   eid = parseInt(eid);
-  console.log("l'eid est " + eid);
+
   existsInDb(eid, function(exists) {
     if (!exists) {
       get(eid, term, function(ev) {
@@ -353,7 +353,7 @@ function updateMultiple(eids) {
         });
       });
     });
-    console.log('Updating ' + eids.length + ' events.');
+    console.log('Updating ' + eids.length + ' events');
   });
 }
 
@@ -394,8 +394,6 @@ function normalize(ev) {
     lat: ev.venue.latitude,
     lng: ev.venue.longitude
   };
-
-  console.log(ev.loc);
 
   delete ev.venue.latitude;
   delete ev.venue.longitude;
@@ -468,8 +466,6 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
       evs.forEach(function(ev) {
         var start_time = new Date(Date.parse(ev.start_time));
         var now = new Date();
-
-        console.log("----- RECUP ----");
 
         if (start_time > now || start_time.getFullYear() < 2016) {
           var term = 'user';
