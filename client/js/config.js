@@ -145,7 +145,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
       delete res.data.loc;
 
       $rootScope.address = res.data;
-      $rootScope.city = slug.slugify($rootScope.address.region);
+      $rootScope.city = $rootScope.address.region ? slug.slugify($rootScope.address.region) : null;
 
       $localStorage.loc = $rootScope.loc;
       $localStorage.address = $rootScope.address;
