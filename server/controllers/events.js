@@ -14,6 +14,7 @@ var Locations = db.get('locations');
 var Events = global.db.get('events');
 
 var Ev = require('../ev');
+var Resolve = require('../services/resolve.js')
 
 function clone(a) {
   return JSON.parse(JSON.stringify(a));
@@ -271,6 +272,42 @@ exports.get = function(req, res) {
   //     delete query.tags;
   //     delete query.$near;
   //     sort.attending_count = -1;
+
+exports.getOne = function(req, res) {
+
+  // console.log("req : ");
+  // console.log(req);
+  Events.findOne({
+    eid: parseInt(req.params.eid)
+  }, function(err, data) {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      //searchPhotos(data, res);
+      searchPlaceAndRequestRecentPhotos(data, res);
+
+      Events.findOne({
+        eid: parseInt(req.params.eid)
+      }, function(err, ev) {
+        if (err) {
+          res.render('error', {
+            status: 500
+          });
+        } else {
+          // searchPlaceAndRequestRecentPhotos(eid, function(photos){
+          // ev.photos = photos;
+          //res.json(ev);
+          // });
+          // 035b1de3978528e1c1f896a2319a8ffaf6a94433
+        }
+      });
+      Resolve.resolveGames(req.params.eid); 
+      Ev.update(req.params.eid, function(ev) {});
+    }
+  });
+};
 
   //     break;
 

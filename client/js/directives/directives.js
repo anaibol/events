@@ -55,7 +55,6 @@ app.directive('listEventPlayer', function($http){
             url :'/api/list_player/' + scope.ev.eid
           }).success(function(data) {
         scope.ev.list_event_players = data;
-
             }
         );
 }
@@ -76,33 +75,109 @@ return {
 });
 
 app.directive('isotope', function($rootScope) {
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs) {
-      imagesLoaded(element[0].parentElement, function(instance) {
-        var iso = new Isotope(element[0].parentElement, {
-          itemSelector: '.event'
-        });
-        console.timeEnd('render list');
-      });
-    }
-  };
-});
-
-
-app.directive('friendSelector', function() {
-  return {
-    restrict: 'A',
-    link: function(scope, elem) {
-      $(elem).fSelector({
-        onSubmit: function(response) {
-          // example response usage
-          alert(response);
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            if ($rootScope.isotope === undefined || $rootScope.isotope === null) {
+                imagesLoaded(element[0].parentElement, function(instance) {
+                    var iso = new Isotope(element[0].parentElement, {
+                        itemSelector: '.event'
+                    });
+                });
+            }
         }
-      });
-    }
-  };
+    };
 });
+
+app.directive('shareEvent', function($http) 
+{
+return {
+            restrict : 'A',
+            link : function (scope, element, req) {
+                element.on("click", function () {           
+                    $http({
+                            method : 'POST',
+                            data:{eid:scope.ev.eid},
+                            url :'/api/share/' + scope.ev.eid,
+                         });
+            });
+        }
+    }
+
+});
+
+app.directive('friendSelector', function($http) {
+    return {
+        restrict: 'A',
+        link: function(scope, elem, req) {
+            $(elem).fSelector({
+                onSubmit: function(uid) {
+                    // example response usage
+                    var event_intives = {
+                    method: 'events.invite',
+                    eid: scope.ev.eid,
+                    uids: uid,
+                    personal_message: 'custom request message'
+                };
+        $http({
+            method : 'POST',
+            data:{eid:scope.ev.eid,uids:uid},
+            url :'/api/invite/' + scope.ev.eid + '/' + uid,
+        }).success(function(data) {
+            
+        });    
+                }
+            });
+        }
+    }
+});
+
+app.directive('setAttendings', function($http) {
+    return {
+            restrict: 'A',
+            scope: true,
+            link: function(scope, elem) {
+                $(elem).on("click",function() {
+                    if (scope.attending == 'Join')
+                    {
+                        $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp');//.post({attendingStatus: 'attending'});
+                        scope.attending = 'Leave';
+                        //$(this).textContent = 'Leave';
+                    }
+                    else if (scope.attending == 'Leave')
+                    {
+                        $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn');//.post({attendingStatus: 'declined'});
+                        scope.attending = 'Join';         
+                    //    $(this).textContent = 'Join';
+                    }
+                    $('#event-rsvp-btns').html(scope.attending);
+                   //scope.$apply();
+                    //location.reload();
+                  });
+
+                }
+        }
+    }
+);
+
+app.directive('scrollToFixed', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, elem) {
+            $(elem).scrollToFixed({
+                preFixed: function() {
+                    //$('#navbar').removeClass('container').hide().fadeIn(300);
+                    $(this).css('opacity', '.95');
+                },
+                postFixed: function() {
+                    //$('#navbar').addClass('container').hide().fadeIn(300);
+                    $(this).css('opacity', '1');
+                }
+            });
+        }
+    }
+});
+
 
 // app.directive("scroll", function() {
 //  return function(scope, elm, attr) {
@@ -115,73 +190,4 @@ app.directive('friendSelector', function() {
 //          }
 //      });
 //  };
-// });
-
-// app.directive('mydatepicker', function(datepickerDirective) {
-//   return angular.extend({}, datepickerDirective, {
-//     templateUrl: 'datepicker' // custom datepicker template
-//   });
-// });
-
-
-// app.directive("sticky", function($window) {
-//   return {
-//     link: function(scope, elm, attrs) {
-
-//       var $win = angular.element($window);
-
-//       if (scope._stickyElements === undefined) {
-//         scope._stickyElements = [];
-
-//         $win.bind("scroll.sticky", function(e) {
-//           var pos = $win.scrollTop();
-//           for (var i = 0; i < scope._stickyElements.length; i++) {
-
-//             var item = scope._stickyElements[i];
-
-//             if (!item.isStuck && pos > item.start) {
-//               item.element.addClass("stuck");
-//               item.isStuck = true;
-//             } else if (item.isStuck && pos < item.start) {
-//               item.element.removeClass("stuck");
-//               item.isStuck = false;
-//             }
-//           }
-//         });
-
-//         var recheckPositions = function() {
-//           for (var i = 0; i < scope._stickyElements.length; i++) {
-//             var item = scope._stickyElements[i];
-//             if (!item.isStuck) {
-//               item.start = item.element.offset().top;
-//             }
-//           }
-//         };
-//         $win.bind("load", recheckPositions);
-//         $win.bind("resize", recheckPositions);
-//       }
-
-//       var item = {
-//         element: elm,
-//         isStuck: false,
-//         start: elm.offset().top
-//       };
-
-//       scope._stickyElements.push(item);
-
-//     }
-//   };
-// });
-
-// app.directive("datepicker", function() {
-//   return {
-//     restrict: "A",
-//     templateUrl: "datepicker",
-//     compile: function(a, b) {
-//       if (!b.$attr.sort) {
-//         var c = a[0].getElementsByClassName("sort")[0];
-//         c.parentNode.removeChild(c);
-//       }
-//     }
-//   };
 // });

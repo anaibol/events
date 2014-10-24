@@ -571,7 +571,7 @@
     enableEscapeButton: true,
     overlayOpacity: "0.3",
     overlayColor: '#000',
-    closeOnSubmit: false,
+    closeOnSubmit: true,
     showSelectedCount: true,
     showButtonSelectAll: true,
     addUserGroups: false,
