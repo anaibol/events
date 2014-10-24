@@ -1,7 +1,7 @@
 header(headroom)
   nav.navbar(role="navigation", ng-controller='HeaderCtrl')
     .navbar-header        
-      a.navbar-brand(href='/', ui-sref="list") Wooepa
+      a.navbar-brand(href='/', ui-sref="list({city: $root.city, tag: '', slash: ''})") Wooepa
       //- a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
 
       ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')

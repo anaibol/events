@@ -1,11 +1,7 @@
 app.controller('ListCtrl', function($scope, $rootScope, events) {
   $scope.events = events;
 
-  var tags = _.pluck(events, 'tags');
-
-  tags = [].concat.apply([], tags);
-
-  $rootScope.tags = _.uniq(tags);
+  $rootScope.tags = _.uniq([].concat.apply([], _.pluck(events, 'tags')));
 
   $scope.getMore = function() {
     if (!$scope.events) return;

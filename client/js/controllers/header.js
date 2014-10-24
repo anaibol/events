@@ -1,4 +1,4 @@
-app.controller('HeaderCtrl', function($scope, $rootScope, $location, $modal) {
+app.controller('HeaderCtrl', function($scope, $location, $modal) {
 	$scope.isCollapsed = true;
 
 	$scope.changeDate = function(date) {

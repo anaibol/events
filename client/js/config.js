@@ -4,39 +4,40 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
   $locationProvider.hashPrefix('!');
 
   $stateProvider
-    .state('home', {
-      url: '/',
-      // url: '/',
-      // controller: 'ListCtrl',
-      // templateUrl: 'event/list',
-      controller: function() {
-        //   events: function($stateParams, Event) {
-        //     console.log($stateParams);
-        //     // $stateParams = _.compact($stateParams);
+  // .state('home', {
+  //   url: '/',
+  //   // url: '/',
+  //   // controller: 'ListCtrl',
+  //   // templateUrl: 'event/list',
+  //   controller: function() {
+  //     //   events: function($stateParams, Event) {
+  //     //     console.log($stateParams);
+  //     //     // $stateParams = _.compact($stateParams);
 
-        //     return Event.findAll($stateParams);
+  //     //     return Event.findAll($stateParams);
+  //   }
+  //   // }
+  // })
+  .state('list', {
+    // url: '{city}{slash:[/]?}{tag:[^0-9]}',
+    url: '/{city:(?:/[^/]+)?}',
+    controller: 'ListCtrl',
+    templateUrl: 'event/list',
+    resolve: {
+      events: function($rootScope, Event) {
+        return Event.findAll($rootScope.loc);
       }
-      // }
-    })
-    .state('list', {
-      url: '/{city}{slash:[/]?}{tag}',
-      // url: '/',
-      controller: 'ListCtrl',
-      templateUrl: 'event/list',
-      resolve: {
-        events: function($rootScope, Event) {
-          return Event.findAll($rootScope.loc);
-        }
-      }
-    })
+    }
+  })
     .state('list.view', {
-      url: '^/{city}{slash:[/]?}{tag:[^A-Za-z]?}{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
-      // url: '/:slug/:eid',
+      // url: '{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
+      url: '/:slug/:eid',
       templateUrl: "event/view",
       controller: 'ViewCtrl',
       parent: 'list',
       resolve: {
         event: function($stateParams, Event) {
+          console.log($stateParams);
           return Event.find($stateParams.eid);
         }
       }
@@ -128,6 +129,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.today.setMinutes(0);
   $rootScope.today.setHours(0);
 
+  $rootScope.user = window.user;
 
   if (!$localStorage.city || !$localStorage.loc) {
     geoip.getLocation().then(function(res) {
@@ -161,9 +163,9 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     $rootScope.loc = $localStorage.loc;
 
     // if ($state.current.name === '') {
-    $state.transitionTo('list', {
-      city: $rootScope.city
-    });
+    // $state.transitionTo('list', {
+    //   city: $rootScope.city
+    // });
     // }
   }
 
