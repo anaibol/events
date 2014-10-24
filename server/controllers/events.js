@@ -252,9 +252,6 @@ exports.get = function(req, res) {
     //     query2
     // ]};
 
-
-    console.log(query);
-
     Events.find(query, options, function(err, data) {
       if (err) {
         console.log(err);
