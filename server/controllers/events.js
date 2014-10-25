@@ -139,8 +139,6 @@ exports.get = function(req, res) {
     };
   }
 
-  console.log(query);
-
   var options = {
     limit: limit,
     skip: skip,

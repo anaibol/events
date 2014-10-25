@@ -4,14 +4,14 @@ header(headroom)
       a.navbar-brand(href='/', ui-sref="list") Wooepa
       //- a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
 
-      ul.nav.navbar-nav.navbar-right(ng-show='!global.authenticated')
+      ul.nav.navbar-nav.navbar-right(ng-if='!$root.user')
         li
           a.login(href='/auth/facebook', target='_self' translate) Login
 
-      ul.nav.navbar-nav.navbar-right(ng-show='global.authenticated')
+      ul.nav.navbar-nav.navbar-right(ng-if='$root.user')
         li.dropdown
           a.dropdown-toggle(href='#', toggle='dropdown')
-            img.img-circle(src='{{ global.user.facebook.picture }}', alt='{{ global.user.facebook.name }}')
+            img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
             b.caret
           ul.dropdown-menu
             li
