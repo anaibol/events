@@ -2,7 +2,7 @@ app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $htt
   console.log(ev);
   $scope.ev = ev;
 
-  instagram.getLocationId($scope.ev.venue.latitude, $scope.ev.venue.longitude).success(function(res) {
+  instagram.getLocationId($scope.ev.loc.lat, $scope.ev.loc.lng).success(function(res) {
     if (res.meta.code !== 200) {
       // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
       return;
