@@ -1,5 +1,5 @@
 module.exports = {
-  db: 'mongodb://admin:blacksabbath@candidate.40.mongolayer.com:10363,candidate.43.mongolayer.com:10086/Wooepa',
+  db: 'mongodb://admin:blacksabbath@candidate.40.mongolayer.com:10363/Wooepa',
   port: 3001,
   app: {
     name: 'Wooepa - Test',
