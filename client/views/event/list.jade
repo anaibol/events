@@ -26,7 +26,7 @@ section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scro
         .place-info
           .place(ng-click="openMap($event, ev)", ng-if="ev.location")
             i.fa.fa-map-marker
-            span.location {{ev.location | characters:50}}, {{ev.venue.city}}
+            span.location {{ev.location | characters:50}}{{ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
             //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
             //- span.street.truncate {{ev.venue.city}}
 

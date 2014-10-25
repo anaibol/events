@@ -7953,11 +7953,11 @@ button.close {
   background-color: white;
   border: 1px solid white;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
-  padding: 0 6px;
   margin: 2px;
   display: inline-block;
+  line-height: 17px;
 }
 .tag::before,
 .tag::after {

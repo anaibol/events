@@ -1,4 +1,4 @@
-app.controller('ListCtrl', function($scope, $rootScope, $stateParams, $window, EventsService, events) {
+app.controller('ListCtrl', function($scope, $rootScope, $stateParams, $window, EventsService, $http, $querystring, events) {
   $scope.events = events.data;
 
   for (var i = $scope.events.length - 1; i >= 0; i--) {
@@ -9,11 +9,16 @@ app.controller('ListCtrl', function($scope, $rootScope, $stateParams, $window, E
 
   $scope.getMore = function() {
     if (!$scope.events) return;
-    $rootScope.query.skip = $rootScope.query.skip + 30;
 
-    // Event.findAll($rootScope.query).then(function(events) {
-    //   $scope.events.push.apply($scope.events, events);
-    // });
+    if (!$rootScope.query.skip) {
+      $rootScope.query.skip = 30;
+    } else {
+      $rootScope.query.skip += 30;
+    }
+
+    $http.get('/api/events?' + $querystring.toString($rootScope.query)).then(function(evs) {
+      $scope.events.push.apply($scope.events, evs.data);
+    });
   };
 
   $scope.openMap = function($event, ev) {

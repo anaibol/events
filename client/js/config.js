@@ -50,20 +50,9 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
     resolve: {
       events: function($rootScope, $http, $querystring) {
         return $http.get('/api/events?' + $querystring.toString($rootScope.query));
-        // return Event.findAll($rootScope.query);
       }
     }
   })
-    .state('worldwide', {
-      url: 'worldwide',
-      templateUrl: 'event/list',
-      controller: 'ListCtrl',
-      resolve: {
-        events: function($rootScope, $stateParams, Event) {
-          return Event.findAll();
-        }
-      }
-    })
     .state('list.view', {
       // url: '{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
       url: ':slug/:eid',
@@ -151,13 +140,11 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
   amMoment.changeLocale(userLang);
 
-  var today = new Date();
+  $rootScope.today = new Date();
 
-  today.setSeconds(0);
-  today.setMinutes(0);
-  today.setHours(0);
-
-  $rootScope.today = today.getTime();
+  $rootScope.today.setSeconds(0);
+  $rootScope.today.setMinutes(0);
+  $rootScope.today.setHours(0);
 
   $rootScope.user = window.user;
 
@@ -174,7 +161,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
       // delete res.data.loc;
 
-      // $rootScope.address = res.data;
+      // $.address = res.data;
       // $rootScope.city = slug.slugify($rootScope.address.region);
 
       $localStorage.loc = $rootScope.loc;
@@ -220,14 +207,21 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     console.log(toState);
     console.log(toParams);
+
+    console.log($rootScope.loc)
     if (!toState.parent) {
       $rootScope.query = {
         skip: 0,
-        since: toParams.date | $rootScope.today,
+        since: toParams.date ? toParams.date : $rootScope.today.getTime(),
         lat: $rootScope.loc.lat,
         lng: $rootScope.loc.lng,
         tag: toParams.tag
       };
+
+      if (toParams.city === 'worldwide') {
+        delete $rootScope.query.lat;
+        delete $rootScope.query.lng;
+      }
 
       $rootScope.query = _.compactObject($rootScope.query);
       console.log($rootScope.query);

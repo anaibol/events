@@ -127,7 +127,8 @@ exports.get = function(req, res) {
         $geometry: {
           type: "Point",
           coordinates: [parseFloat(params.lat), parseFloat(params.lng)]
-        }
+        },
+        $maxDistance: 30000
       }
     };
   }
@@ -149,60 +150,61 @@ exports.get = function(req, res) {
     }
   };
 
-  switch (params.query) {
-    case 'user':
-      delete query.start_time;
-      delete query.$near;
+  switch (params.tag) {
+    // case 'user':
+    //   delete query.start_time;
+    //   delete query.$near;
 
-      var query1 = clone(query);
-      var query2 = clone(query);
+    //   var query1 = clone(query);
+    //   var query2 = clone(query);
 
-      if (params.user) {
-        query1["creator.name"] = params.user;
+    //   if (params.user) {
+    //     query1["creator.name"] = params.user;
 
-        graph.get(params.user, function(err, res) {
-          var usr = res.data;
+    //     graph.get(params.user, function(err, res) {
+    //       var usr = res.data;
 
-          // if (usr) {
-          //   console.log(urs);
-          // }
-        });
-      } else {
-        query1["creator.id"] = req.user.facebook.id;
-      }
+    //       // if (usr) {
+    //       //   console.log(urs);
+    //       // }
+    //     });
+    //   } else {
+    //     query1["creator.id"] = req.user.facebook.id;
+    //   }
 
-      query2.attending = {
-        $all: [parseInt(req.user.facebook.id)]
-      };
+    //   query2.attending = {
+    //     $all: [parseInt(req.user.facebook.id)]
+    //   };
 
-      // query = {
-      //   $or: [query1, query2]
-      // };
+    //   // query = {
+    //   //   $or: [query1, query2]
+    //   // };
 
-      break;
+    //   break;
 
-    case 'date':
-      if (until) {
-        until = new Date(until);
+    // case 'date':
+    //   if (until) {
+    //     until = new Date(until);
 
-        query.start_time = {
-          $gte: since,
-          $lt: until
-        };
-      } else {
-        query.start_time = {
-          $gte: since
-        };
-      }
+    //     query.start_time = {
+    //       $gte: since,
+    //       $lt: until
+    //     };
+    //   } else {
+    //     query.start_time = {
+    //       $gte: since
+    //     };
+    //   }
 
-      break;
+    //   break;
 
-    case 'worldwide':
-      delete query.$near;
+    // case 'worldwide':
+    //   delete query.$near;
 
-      break;
+    //   break;
 
     case 'popular':
+      delete query.tags;
       delete query.$near;
       sort.attending_count = -1;
 
@@ -210,44 +212,39 @@ exports.get = function(req, res) {
 
     case 'festival':
       query.festival = true;
+
+      delete query.tags;
       delete query.$near;
       sort.attending_count = -1;
 
       break;
 
-    case 'promote':
+    case 'promoted':
       query.in_promotion = true;
+
+      delete query.tags;
       delete query.$near;
 
       break;
 
     case 'free':
       query["price.num"] = 0;
+
+      delete query.tags;
       delete query.$near;
 
       break;
-    case 'today':
-      var dateIncreased = new Date(from.getTime() + (24 * 60 * 60 * 1000));
 
-      query = {
-        start_time: {
-          $gte: from,
-          $lt: dateIncreased
-        }
-      };
+      // case 'weekend':
+      //   var friday = moment().day(5).toDate();
+      //   var sunday = moment().day(7).toDate();
 
-      break;
+      //   query.start_time = {
+      //     $gte: friday,
+      //     $lt: sunday
+      //   };
 
-    case 'weekend':
-      var friday = moment().day(5).toDate();
-      var sunday = moment().day(7).toDate();
-
-      query.start_time = {
-        $gte: friday,
-        $lt: sunday
-      };
-
-      break;
+      //   break;
   }
 
   // var query2 = _.clone(query);
