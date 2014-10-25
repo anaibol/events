@@ -8060,6 +8060,9 @@ body {
 .container.one-col {
   padding: 0;
 }
+#list .wrapper {
+  margin-top: 50px;
+}
 i.fa {
   margin-right: 5px;
 }

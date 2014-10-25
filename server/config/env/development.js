@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   db: "mongodb://localhost/wooepa-dev",
   port: 3000,

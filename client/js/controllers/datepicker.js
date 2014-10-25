@@ -1,12 +1,5 @@
-app.controller('DatepickerCtrl', function($scope) {
-  $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.opened = true;
-  };
-
-  $scope.minDate = new Date();
+app.controller('DatepickerCtrl', function($rootScope, $scope) {
+  $scope.minDate = $rootScope.today;
 
   $scope.date = $scope.minDate;
 

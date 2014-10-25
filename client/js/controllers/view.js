@@ -1,7 +1,6 @@
-app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, instagram, event) {
-  $scope.today = new Date();
-
-  $scope.ev = event;
+app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $http, instagram, ev) {
+  console.log(ev);
+  $scope.ev = ev;
 
   instagram.getLocationId($scope.ev.venue.latitude, $scope.ev.venue.longitude).success(function(res) {
     if (res.meta.code !== 200) {
@@ -64,7 +63,7 @@ app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, instagra
   //   var currentDate = new Date();
 
   //   if ($scope.ev) {
-  //     if ($scope.ev.in_promotion) {
+  //     if ($scope.ev.in_promotion) {f
 
   //       var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, "UTC");
 
@@ -174,7 +173,7 @@ app.controller('ViewCtrl', function($scope, Global, ezfb, Event, $http, instagra
   //   });
   // }
 
-  if (Global.authenticated) {
+  if ($rootScope.user) {
     $http.get('events/' + $scope.ev.eid + '/attendings').success(function(result) {
       $scope.ev.attending = result;
 

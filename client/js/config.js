@@ -1,7 +1,9 @@
-app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
+app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider) {
   $locationProvider.html5Mode(true);
 
   $locationProvider.hashPrefix('!');
+
+  $httpProvider.defaults.cache = true;
 
   $stateProvider
   // .state('home', {
@@ -18,27 +20,60 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
   //   }
   //   // }
   // })
+  // .state('list', {
+  //   // url: '{city}{slash:[/]?}{tag:[^0-9]}',
+  //   // url: '/{city}',
+  //   // url: '/{city}{slash:[/]?}{tag}',
+  //   url: '/',
+  //   templateUrl: 'event/list',
+  //   controller: 'ListCtrl',
+  //   resolve: {
+  //     events: function($rootScope, $stateParams, Event) {
+  //       $rootScope.query = {
+  //         skip: 0,
+  //         limit: 30,
+  //         since: today,
+  //         loc: $rootScope.loc
+  //       };
+
+  //       return Event.findAll($rootScope.loc);
+  //     }
+  //   }
+  // })
   .state('list', {
     // url: '{city}{slash:[/]?}{tag:[^0-9]}',
-    url: '/{city:(?:/[^/]+)?}',
-    controller: 'ListCtrl',
+    // url: '/{city}',
+    // url: '/{city}{slash:[/]?}{tag}',
+    url: '/?tag?city?date',
     templateUrl: 'event/list',
+    controller: 'ListCtrl',
     resolve: {
-      events: function($rootScope, Event) {
-        return Event.findAll($rootScope.loc);
+      events: function($rootScope, $http, $querystring) {
+        return $http.get('/api/events?' + $querystring.toString($rootScope.query));
+        // return Event.findAll($rootScope.query);
       }
     }
   })
+    .state('worldwide', {
+      url: 'worldwide',
+      templateUrl: 'event/list',
+      controller: 'ListCtrl',
+      resolve: {
+        events: function($rootScope, $stateParams, Event) {
+          return Event.findAll();
+        }
+      }
+    })
     .state('list.view', {
       // url: '{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
-      url: '/:slug/:eid',
+      url: ':slug/:eid',
+      // url: '{query}{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
       templateUrl: "event/view",
       controller: 'ViewCtrl',
       parent: 'list',
       resolve: {
-        event: function($stateParams, Event) {
-          console.log($stateParams);
-          return Event.find($stateParams.eid);
+        ev: function($stateParams, EventsService) {
+          return EventsService.get($stateParams.eid);
         }
       }
     })
@@ -84,9 +119,9 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider) {
   $urlRouterProvider.otherwise('/');
 });
 
-app.config(function(datepickerPopupConfig) {
-  datepickerPopupConfig.appendToBody = true;
-});
+// app.config(function(datepickerPopupConfig) {
+//   datepickerPopupConfig.appendToBody = true;
+// });
 
 app.config(function(ezfbProvider) {
   ezfbProvider.setInitParams({
@@ -96,13 +131,7 @@ app.config(function(ezfbProvider) {
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
-app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb, geoip, slug) { //geolocation, reverseGeocode
-  // var off = $rootScope.$on('$stateChangeStart', function(evt, toState, toParams, fromState, fromParams) {
-  //   // evt.preventDefault();
-  //   $state.params = toParams;
-  //   angular.copy($state.params, $stateParams);
-  //   off();
-  // });
+app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb, geoip) { //geolocation, reverseGeocode
   // geolocation.getLocation().then(function(data) {
   //   $rootScope.loc = {
   //     lat: data.coords.latitude,
@@ -122,16 +151,17 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
   amMoment.changeLocale(userLang);
 
+  var today = new Date();
 
-  $rootScope.today = new Date();
+  today.setSeconds(0);
+  today.setMinutes(0);
+  today.setHours(0);
 
-  $rootScope.today.setSeconds(0);
-  $rootScope.today.setMinutes(0);
-  $rootScope.today.setHours(0);
+  $rootScope.today = today.getTime();
 
   $rootScope.user = window.user;
 
-  if (!$localStorage.city || !$localStorage.loc) {
+  if (!$localStorage.loc) {
     geoip.getLocation().then(function(res) {
       var loc = res.data.loc;
       console.log(res.data);
@@ -142,24 +172,23 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
         lng: loc[1]
       };
 
-      delete res.data.loc;
+      // delete res.data.loc;
 
-      $rootScope.address = res.data;
-      $rootScope.city = slug.slugify($rootScope.address.region);
+      // $rootScope.address = res.data;
+      // $rootScope.city = slug.slugify($rootScope.address.region);
 
       $localStorage.loc = $rootScope.loc;
-      $localStorage.address = $rootScope.address;
-      $localStorage.city = $rootScope.city;
-
-      if ($state.current.name === 'home') {
-        $state.transitionTo('list', {
-          city: $rootScope.city
-        });
-      }
+      // $localStorage.address = $rootScope.address;
+      // $localStorage.city = $rootScope.city;
+      // if ($state.current.name === 'home') {
+      //   $state.transitionTo('list', {
+      //     city: $rootScope.city
+      //   });
+      // }
     });
   } else {
-    $rootScope.address = $localStorage.address;
-    $rootScope.city = $localStorage.city;
+    // $rootScope.address = $localStorage.address;
+    // $rootScope.city = $localStorage.city;
     $rootScope.loc = $localStorage.loc;
 
     // if ($state.current.name === '') {
@@ -168,15 +197,6 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     // });
     // }
   }
-
-  // var str = $location.$$path.replace('/', '');
-
-  // if ($stateParams.date) {
-  //   $scope.filter.type = 'date';
-  //   $scope.filter.since = new Date($stateParams.date).getTime();
-  // } else {
-  //   $scope.filter.since = $scope.today.getTime();
-  // }
 
   // if (str === 'me/events') {
   //   $scope.filter.type = 'user';
@@ -196,6 +216,23 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   //     $scope.filter.type = str;
   //   }
   // }
+
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    console.log(toState);
+    console.log(toParams);
+    if (!toState.parent) {
+      $rootScope.query = {
+        skip: 0,
+        since: toParams.date | $rootScope.today,
+        lat: $rootScope.loc.lat,
+        lng: $rootScope.loc.lng,
+        tag: toParams.tag
+      };
+
+      $rootScope.query = _.compactObject($rootScope.query);
+      console.log($rootScope.query);
+    }
+  });
 
   ezfb.init();
 });

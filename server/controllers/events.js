@@ -99,170 +99,179 @@ exports.import = function(req, res) {
 };
 
 exports.get = function(req, res) {
-  getLocation(req, function() {
-    var url_parts = url.parse(req.url, true);
-    var params = url_parts.query;
+  // getLocation(req, function() {
+  var url_parts = url.parse(req.url, true);
+  var params = url_parts.query;
 
-    var limit = params.limit || 30;
-    var skip = params.skip || 0;
-    var sortBy = params.sortBy || 'start_time';
-    var sortOrder = params.sortOrder || 1;
-    var since = params.since || 0;
-    var until = params.until || 0;
+  var limit = 30;
+  var skip = params.skip || 0;
+  var sortBy = params.sortBy || 'start_time';
+  var sortOrder = params.sortOrder || 1;
+  var since = params.since || 0;
+  var until = params.until || 0;
 
-    var sortStr = '{"' + sortBy + '" :' + sortOrder + '}';
-    var sort = JSON.parse(sortStr);
+  var sortStr = '{"' + sortBy + '" :' + sortOrder + '}';
+  var sort = JSON.parse(sortStr);
 
-    since = new Date(since);
+  since = new Date(parseInt(since));
 
-    var query = {
-      start_time: {
-        $gte: since
-      },
-      loc: {
-        // $near: [req.session.loc.lat, req.session.loc.lng],
-        // $maxDistance: 5000
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [parseFloat(params.lat), parseFloat(params.lng)]
-          }
-        }
-      }
-    };
-
-    var options = {
-      limit: limit,
-      skip: skip,
-      sort: sort,
-      fields: {
-        attending: 0
-      }
-    };
-
-    switch (params.query) {
-      case 'user':
-        delete query.start_time;
-        delete query.$near;
-
-        var query1 = clone(query);
-        var query2 = clone(query);
-
-        if (params.user) {
-          query1["creator.name"] = params.user;
-
-          graph.get(params.user, function(err, res) {
-            var usr = res.data;
-
-            // if (usr) {
-            //   console.log(urs);
-            // }
-          });
-        } else {
-          query1["creator.id"] = req.user.facebook.id;
-        }
-
-        query2.attending = {
-          $all: [parseInt(req.user.facebook.id)]
-        };
-
-        // query = {
-        //   $or: [query1, query2]
-        // };
-
-        break;
-
-      case 'date':
-        if (until) {
-          until = new Date(until);
-
-          query.start_time = {
-            $gte: since,
-            $lt: until
-          };
-        } else {
-          query.start_time = {
-            $gte: since
-          };
-        }
-
-        break;
-
-      case 'worldwide':
-        delete query.$near;
-
-        break;
-
-      case 'popular':
-        delete query.$near;
-        sort.attending_count = -1;
-
-        break;
-
-      case 'festival':
-        query.festival = true;
-        delete query.$near;
-        sort.attending_count = -1;
-
-        break;
-
-      case 'promote':
-        query.in_promotion = true;
-        delete query.$near;
-
-        break;
-
-      case 'free':
-        query["price.num"] = 0;
-        delete query.$near;
-
-        break;
-      case 'today':
-        var dateIncreased = new Date(from.getTime() + (24 * 60 * 60 * 1000));
-
-        query = {
-          start_time: {
-            $gte: from,
-            $lt: dateIncreased
-          }
-        };
-
-        break;
-
-      case 'weekend':
-        var friday = moment().day(5).toDate();
-        var sunday = moment().day(7).toDate();
-
-        query.start_time = {
-          $gte: friday,
-          $lt: sunday
-        };
-
-        break;
+  var query = {
+    start_time: {
+      $gte: since
     }
+  };
 
-    // var query2 = _.clone(query);
+  if (params.lat && params.lng) {
+    query.loc = {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: [parseFloat(params.lat), parseFloat(params.lng)]
+        }
+      }
+    };
+  }
 
-    // delete query2.start_time;
+  if (params.tag) {
+    query.tags = {
+      $all: [params.tag]
+    };
+  }
 
-    // query2.repeat = moment().format('dddd');
+  console.log(query);
 
-    // query = {$or:[
-    //     query,
-    //     query2
-    // ]};
+  var options = {
+    limit: limit,
+    skip: skip,
+    sort: sort,
+    fields: {
+      attending: 0
+    }
+  };
 
-    Events.find(query, options, function(err, data) {
-      if (err) {
-        console.log(err);
-        res.render('error', {
-          status: 500
+  switch (params.query) {
+    case 'user':
+      delete query.start_time;
+      delete query.$near;
+
+      var query1 = clone(query);
+      var query2 = clone(query);
+
+      if (params.user) {
+        query1["creator.name"] = params.user;
+
+        graph.get(params.user, function(err, res) {
+          var usr = res.data;
+
+          // if (usr) {
+          //   console.log(urs);
+          // }
         });
       } else {
-        res.json(data);
+        query1["creator.id"] = req.user.facebook.id;
       }
-    });
+
+      query2.attending = {
+        $all: [parseInt(req.user.facebook.id)]
+      };
+
+      // query = {
+      //   $or: [query1, query2]
+      // };
+
+      break;
+
+    case 'date':
+      if (until) {
+        until = new Date(until);
+
+        query.start_time = {
+          $gte: since,
+          $lt: until
+        };
+      } else {
+        query.start_time = {
+          $gte: since
+        };
+      }
+
+      break;
+
+    case 'worldwide':
+      delete query.$near;
+
+      break;
+
+    case 'popular':
+      delete query.$near;
+      sort.attending_count = -1;
+
+      break;
+
+    case 'festival':
+      query.festival = true;
+      delete query.$near;
+      sort.attending_count = -1;
+
+      break;
+
+    case 'promote':
+      query.in_promotion = true;
+      delete query.$near;
+
+      break;
+
+    case 'free':
+      query["price.num"] = 0;
+      delete query.$near;
+
+      break;
+    case 'today':
+      var dateIncreased = new Date(from.getTime() + (24 * 60 * 60 * 1000));
+
+      query = {
+        start_time: {
+          $gte: from,
+          $lt: dateIncreased
+        }
+      };
+
+      break;
+
+    case 'weekend':
+      var friday = moment().day(5).toDate();
+      var sunday = moment().day(7).toDate();
+
+      query.start_time = {
+        $gte: friday,
+        $lt: sunday
+      };
+
+      break;
+  }
+
+  // var query2 = _.clone(query);
+
+  // delete query2.start_time;
+
+  // query2.repeat = moment().format('dddd');
+
+  // query = {$or:[
+  //     query,
+  //     query2
+  // ]};
+
+  Events.find(query, options, function(err, data) {
+    if (err) {
+      console.log(err);
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.json(data);
+    }
   });
+  //});
 };
 
 exports.getOne = function(req, res) {
