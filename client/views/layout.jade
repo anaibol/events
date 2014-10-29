@@ -3,16 +3,18 @@ html
   include head
   body(id="{{$state.current.name.replace('.', '-')}}")
     include header
+    .banner.col-lg-12
 
-    .wrapper
-      .container.two-col(ng-if="$state.current.name === 'list'")
-        .col-lg-10.content-container
+    #wrapper
+      .container.two-col
+        .col-lg-10
           block content
 
-        .sidebar.col-lg-2.sidebar-container(scroll-to-fixed)
+        .sidebar.col-lg-2(scroll-to-fixed)
           include sidebar
-      .container.one-col(ng-if="$state.current.name !== 'list'")
-        .col-lg-12.content-container
+
+      .container.one-col
+        .col-lg-12
           block content
 
     //- .global-navigation.back

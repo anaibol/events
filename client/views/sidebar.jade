@@ -1,36 +1,24 @@
 ul.nav.nav-sidebar
-  li
-    a(ui-sref="list({tag: 'free'})")
-      i.fa.fa-usd
-      | Free
-  li
-    a(ui-sref="list({tag: 'popular'})")
-      i.fa.fa-heart
-      | Popular
-  li
-    a(ui-sref="list({tag: 'festival'})")
-      i.fa.fa-star
-      | Festival
-  li
-    a(ui-sref="list({city: 'worldwide'})")
-      i.fa.fa-globe
-      | World
-  li
-    a(ui-sref="list({tag: 'promoted'})")
-      i.fa.fa-user
-      | Promoted
+  form.navbar-form(role='search', ng-controller="LocationpickerCtrl", ng-submit="open($event)")
+    .input-group
+      input.form-control(type="text", placeholder="Type a city or location", typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations", typeahead-on-select="$root.changeLocation($scope.locationSelected)", ng-model="$rootScope.location")
+      .input-group-btn
+        button.btn.btn-default(type='submit')
+          i.fa.fa-map-marker
 
   li(ng-controller="DatepickerCtrl", ng-click="open($event)")
     //- datepicker(ng-change="$state.go('list', {date: date, tag: $root.tag})", ng-model="date", show-weeks="false")
-    datepicker(ng-change="$state.go('list', {tag: $root.tag, city: $root.city, date: date.getTime()})", ng-model="date", show-weeks="false")
+    datepicker.datepicker(ng-change="$state.go('list', {tag: $root.tag, city: $root.city, date: date.getTime()})", ng-model="date", show-weeks="false")
+    div(style='display: inline-block; min-height: 290px;')
+        datepicker.well.well-sm(ng-model='dt', min-date='minDate', show-weeks='true')
 
   //- li(ng-if='$root.user')
   //-   a(ng-click='newEvent()') Submit an event
   //-     i.fa.fa-plus
 
-ul.nav
-  li(ng-repeat="tag in $root.tags")
-    a.tag(class="{{tag}}", ui-sref="list({tag: tag})") {{tag}}
+  h4 Explore by category
+    .tag-list
+      a.tag(ng-repeat="tag in $root.tags" class="{{tag}}", ui-sref="list({tag: tag})") {{tag}}
 
 ul.nav
   li

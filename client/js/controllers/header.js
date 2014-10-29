@@ -1,4 +1,4 @@
-app.controller('HeaderCtrl', function($scope, $location, $modal) {
+app.controller('HeaderCtrl', function($scope, $location) {
 	$scope.isCollapsed = true;
 
 	$scope.changeDate = function(date) {
@@ -23,20 +23,4 @@ app.controller('HeaderCtrl', function($scope, $location, $modal) {
 		var rs = yy + "-" + mm + "-" + dd;
 		return rs;
 	}
-
-	$scope.newEvent = function(ev) {
-		var modalInstance = $modal.open({
-			templateUrl: '/views/events/form.html',
-			controller: 'EventFormCtrl',
-			resolve: {
-				ev: function() {
-					return ev;
-				}
-			}
-		});
-
-		modalInstance.result.then(function(selected) {
-			$scope.ev = selected;
-		}, function() {});
-	};
 });

@@ -45,53 +45,52 @@
 // });
 
 app.directive('isotope', function($rootScope) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            if ($rootScope.isotope === undefined || $rootScope.isotope === null) {
-                imagesLoaded(element[0].parentElement, function(instance) {
-                    var iso = new Isotope(element[0].parentElement, {
-                        itemSelector: '.event'
-                    });
-                });
-            }
-        }
-    };
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      if ($rootScope.isotope === undefined || $rootScope.isotope === null) {
+        imagesLoaded(element[0].parentElement, function(instance) {
+          var iso = new Isotope(element[0].parentElement, {
+            itemSelector: '.event'
+          });
+        });
+      }
+    }
+  };
 });
 
 
 app.directive('friendSelector', function() {
-    return {
-        restrict: 'A',
-        link: function(scope, elem) {
-            $(elem).fSelector({
-                onSubmit: function(response) {
-                    // example response usage
-                    alert(response);
-                }
-            });
+  return {
+    restrict: 'A',
+    link: function(scope, elem) {
+      $(elem).fSelector({
+        onSubmit: function(response) {
+          // example response usage
+          alert(response);
         }
-    };
+      });
+    }
+  };
 });
 
 app.directive('scrollToFixed', function() {
-    return {
-        restrict: 'A',
-        link: function(scope, elem) {
-            $(elem).scrollToFixed({
-                preFixed: function() {
-                    //$('#navbar').removeClass('container').hide().fadeIn(300);
-                    $(this).css('opacity', '.95');
-                },
-                postFixed: function() {
-                    //$('#navbar').addClass('container').hide().fadeIn(300);
-                    $(this).css('opacity', '1');
-                }
-            });
+  return {
+    restrict: 'A',
+    link: function(scope, elem) {
+      $(elem).scrollToFixed({
+        preFixed: function() {
+          //$('#navbar').removeClass('container').hide().fadeIn(300);
+          $(this).css('opacity', '.95');
+        },
+        postFixed: function() {
+          //$('#navbar').addClass('container').hide().fadeIn(300);
+          $(this).css('opacity', '1');
         }
+      });
     }
+  };
 });
-
 
 // app.directive("scroll", function() {
 //  return function(scope, elm, attr) {

@@ -1,0 +1,20 @@
+table(role='grid', aria-labelledby='{{uniqueId}}-title', aria-activedescendant='{{activeDateId}}')
+  thead
+    tr
+      th
+        button.btn.btn-default.btn-sm.pull-left(type='button', ng-click='move(-1)', tabindex='-1')
+          i.glyphicon.glyphicon-chevron-left
+      th(colspan='{{5 + showWeeks}}')
+        button.btn.btn-default.btn-sm(id="{{uniqueId}}-title", role='heading', aria-live='assertive', aria-atomic='true', type='button', ng-click='toggleMode()', tabindex='-1', style='width:100%;')
+          strong My custom - {{title}}
+      th
+        button.btn.btn-default.btn-sm.pull-right(type='button', ng-click='move(1)', tabindex='-1')
+          i.glyphicon.glyphicon-chevron-right
+    tr
+      th.text-center(ng-repeat='label in labels track by $index')
+        small(aria-label='{{label.full}}') {{label.abbr}}
+  tbody
+    tr(ng-repeat='row in rows track by $index')
+      td.text-center(id="{{dt.uid}}", ng-repeat='dt in row track by dt.date', role='gridcell', aria-disabled='{{!!dt.disabled}}')
+        button.btn.btn-default.btn-sm(type='button', style='width:100%;', ng-click='select(dt.date); openCustomDialog(dt.date)', ng-disabled='dt.disabled', tabindex='-1')
+          span {{dt.label}}

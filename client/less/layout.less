@@ -1,7 +1,12 @@
-html, body, .wrapper, .container, .content-container, .content, .event-list, .event-view {
+html,
+body,
+.wrapper,
+.container,
+.content,
+.event-list,
+.event-view {
   height: 100%;
 }
-
 body {
   background-image: url('/img/background.jpg');
   background-repeat: no-repeat;
@@ -10,36 +15,46 @@ body {
   background-attachment: fixed;
   font-family: Ubuntu;
 }
-
-.container {
-	width: auto;
+#wrapper .container {
+  width: auto;
   // background: -webkit-radial-gradient(closest-corner, rgba(16,47,70,0) 60%, rgba(16,47,70,0.26)),
   //   -webkit-linear-gradient(108deg, rgba(14, 21, 53, 0.28), rgba(214, 177, 129, 0.2) 90%);
-
   // background: -webkit-radial-gradient(closest-corner, rgba(16, 47, 70, 0) 60%, rgba(16, 47, 70, 0.2)), -webkit-linear-gradient(108deg, rgba(229, 233, 191, 0.28) 10%, rgba(0, 57, 111, 0.39) 90%);
 }
-
 .container.one-col {
   padding: 0;
 }
-
-#list .wrapper {
-	margin-top: 50px;
+#list #wrapper {
+  margin-top: 50px;
 }
-
+#list .one-col {
+  display: none;
+}
+#view .two-col {
+  display: none;
+}
 i.fa {
   // float: left;
-	margin-right: 5px;
+  margin-right: 5px;
 }
-
 a:hover {
   text-decoration: none;
 }
-
-.content-container {
-  padding: 0;
+@red: #DC3522;
+@white: #D9CB9E;
+@blue: #374140;
+@grey: #2A2C2B;
+@black: #1E1E20;
+a {
+  color: @white;
+  -o-transition: .5s;
+  -ms-transition: .5s;
+  -moz-transition: .5s;
+  -webkit-transition: .5s;
+  /* ...and now for the proper property */
+  
+  transition: .5s;
 }
-
-.sidebar-container {
-  padding: 0;
+a:hover {
+  color: lighten(@white, 10%);
 }

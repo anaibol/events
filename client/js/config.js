@@ -1,4 +1,4 @@
-app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider) {
+app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, $provide, ezfbProvider) {
   $locationProvider.html5Mode(true);
 
   $locationProvider.hashPrefix('!');
@@ -40,24 +40,24 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
   //     }
   //   }
   // })
-  .state('list', {
-    // url: '{city}{slash:[/]?}{tag:[^0-9]}',
-    // url: '/{city}',
-    // url: '/{city}{slash:[/]?}{tag}',
-    url: '/?tag?city?date',
-    templateUrl: 'event/list',
-    controller: 'ListCtrl',
-    resolve: {
-      events: function($rootScope, $http, $querystring) {
-        return $http.get('/api/events?' + $querystring.toString($rootScope.query));
+    .state('list', {
+      // url: '{city}{slash:[/]?}{tag:[^0-9]}',
+      // url: '/{city}',
+      // url: '/{city}{slash:[/]?}{tag}',
+      url: '/?tag?city?date',
+      templateUrl: 'event/list',
+      controller: 'ListCtrl',
+      resolve: {
+        events: function($rootScope, $http, $querystring) {
+          return $http.get('/api/events?' + $querystring.toString($rootScope.query));
+        }
       }
-    }
-  })
+    })
     .state('list.view', {
       // url: '{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
       url: ':slug/:eid',
       // url: '{query}{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
-      templateUrl: "event/view",
+      templateUrl: 'event/view',
       controller: 'ViewCtrl',
       parent: 'list',
       resolve: {
@@ -67,17 +67,17 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
       }
     })
     .state('me', {
-      parent: "",
+      parent: '',
       url: '/me/events',
       templateUrl: 'user/user'
     })
     .state('me.events', {
-      parent: "me",
+      parent: 'me',
       url: '/me/events',
       templateUrl: 'event/user'
     })
     .state('me.logout', {
-      parent: "me",
+      parent: 'me',
       url: '/me/logout'
     });
 
@@ -106,17 +106,23 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
 
 
   $urlRouterProvider.otherwise('/');
+
+  $provide.decorator('datepickerDirective', function($delegate) {
+    //we now get an array of all the datepickerDirectives, 
+    //and use the first one
+    $delegate[0].templateUrl = 'datepicker';
+    return $delegate;
+  });
+
+  ezfbProvider.setInitParams({
+    appId: window.fbAppId
+  });
 });
 
 // app.config(function(datepickerPopupConfig) {
 //   datepickerPopupConfig.appendToBody = true;
 // });
 
-app.config(function(ezfbProvider) {
-  ezfbProvider.setInitParams({
-    appId: window.fbAppId
-  });
-});
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
@@ -136,9 +142,9 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
 
-  var userLang = navigator.language || navigator.userLanguage;
+  $rootScope.userLang = navigator.language || navigator.userLanguage;
 
-  amMoment.changeLocale(userLang);
+  amMoment.changeLocale($rootScope.userLang);
 
   $rootScope.today = new Date();
 
@@ -185,6 +191,12 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     // }
   }
 
+  $rootScope.changeLocation = function($item, $model, $label) {
+    console.log($item);
+    console.log($model);
+    console.log($label);
+  };
+
   // if (str === 'me/events') {
   //   $scope.filter.type = 'user';
   // } else if ($stateParams.user) {
@@ -208,7 +220,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     console.log(toState);
     console.log(toParams);
 
-    console.log($rootScope.loc)
+    console.log($rootScope.loc);
     if (!toState.parent) {
       $rootScope.query = {
         skip: 0,

@@ -1,20 +1,21 @@
-header(headroom)
+headroom.col-lg-12(tolerance='0' offset='0' scroller=".app-view" classes="{pinned:'pinned',unpinned:'unpinned',initial:'headroom'}")
   nav.navbar(role="navigation", ng-controller='HeaderCtrl')
-    .navbar-header        
-      a.navbar-brand(href='/', ui-sref="list") Wooepa
-      //- a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
+    .container
+      .navbar-header        
+        a.navbar-brand(href='/', ui-sref="list") Wooepa
+        //- a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
 
-      ul.nav.navbar-nav.navbar-right(ng-if='!$root.user')
-        li
-          a.login(href='/auth/facebook', target='_self' translate) Login
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav.navbar-right
+          li(ng-if='!$root.user')
+            a.login(href='/auth/facebook', target='_self' translate) Login
 
-      ul.nav.navbar-nav.navbar-right(ng-if='$root.user')
-        li.dropdown
-          a.dropdown-toggle(href='#', toggle='dropdown')
-            img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
-            b.caret
-          ul.dropdown-menu
-            li
-              a(href='/me/events', target='_self' translate) My events
-            li
-              a(href='/auth/signout', target='_self' translate) Logout
+          li.dropdown(ng-if='$root.user')
+            a.dropdown-toggle(href='#', toggle='dropdown')
+              img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
+              b.caret
+            ul.dropdown-menu
+              li
+                a(href='/me/events', target='_self' translate) My events
+              li
+                a(href='/auth/signout', target='_self' translate) Logout

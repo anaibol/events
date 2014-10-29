@@ -37,11 +37,11 @@
     "isotope": "~2.0.1",
     "headroom.js": "~0.7.0",
     "fontawesome": "~4.2.0",
-    "ScrollToFixed": "~1.0.6",
     "angular-gettext": "~1.1.3",
     "lodash": "~2.4.1",
     "angularjs-geolocation": "~0.1.1",
     "ngstorage": "~0.3.0",
-    "angular-querystring": "*"
+    "angular-querystring": "*",
+    "ScrollToFixed": "~1.0.6"
   }
 }
