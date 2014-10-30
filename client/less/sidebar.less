@@ -1,15 +1,27 @@
-.scroll-to-fixed-fixed {
-	top: 50px !important;
-	padding: 0;
-}
-
 .sidebar {
-	background: rgba(255,255,255, 0.5);
-	box-shadow: 0 0 5px rgba(0,0,0,0.1), 0px 0px 5px #666666;
-	border-radius: 3px;
-	border: 1px solid #dddddd;
-
-	a {
-		color: #333333;
-	}
+  background-color: @red;
+  border-radius: 0;
+  border: none;
+  margin-top: 50px;
+  padding: 0;
+  .datepicker {
+    text-align: center;
+    table {
+      display: inline-table;
+      .glyphicon {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
+        font-size: inherit; // can't have font-size inherit on line above, so need to override
+        text-rendering: auto; // optimizelegibility throws things off #1094
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .glyphicon-chevron-left:before {
+        content: @fa-var-chevron-left;
+      }
+      .glyphicon-chevron-right:before {
+        content: @fa-var-chevron-right;
+      }
+    }
+  }
 }

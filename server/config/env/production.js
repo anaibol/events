@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   db: "mongodb://admin:0303456@localhost/wooepa",
   port: 80,
@@ -33,4 +31,4 @@ module.exports = {
     clientSecret: "SECRET_KEY",
     callbackURL: "http://localhost:3000/auth/linkedin/callback"
   }*/
-}
+};

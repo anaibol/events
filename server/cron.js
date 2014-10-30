@@ -48,22 +48,6 @@ var cronJob = require('cron').CronJob;
 var env = process.env.NODE_ENV || 'development';
 
 if (env === 'production') {
-  var job = new cronJob('0 */1 * * *', function() {
-    Pho.searchPhotoEvents(db, function(err) {
-      if (err)
-        console.log(err);
-      console.log("---- UPDATE Pictures of week DONE ----")
-    });
-  }, null, true);
-
-  var job = new cronJob('*/1 * * * *', function() {
-    Upd.updateLastMonthEvents(function(err) {
-      if (err)
-        console.log(err);
-      console.log("---- UPDATE Event of last month DONE ----")
-    });
-  });
-
   var job = new cronJob('*/30 * * * *', function() {
     var date = new Date();
     console.log(date.toString());
@@ -162,7 +146,7 @@ function updatePrioritaires() {
     users.forEach(function(user) {
       uids.push(parseInt(user.facebook.id));
     });
-    console.log(uids);
+
     Events.find({
       end_time: {
         $gte: date
@@ -171,7 +155,6 @@ function updatePrioritaires() {
         $in: uids
       }
     }).success(function(evs) {
-      console.log(evs);
       var eids = [];
 
       evs.forEach(function(ev) {

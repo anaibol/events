@@ -3,16 +3,18 @@ html
   include head
   body(id="{{$state.current.name.replace('.', '-')}}")
     include header
+    .banner.col-lg-12
 
-    .wrapper
-      .container.two-col(ng-if="$state.current.name === 'list'")
-        .col-lg-10.content-container
+    #wrapper
+      .container.two-col
+        .col-lg-10
           block content
 
-        .sidebar.col-lg-2.sidebar-container(scroll-to-fixed)
+        .sidebar.col-lg-2(sticky).pull-right
           include sidebar
-      .container.one-col(ng-if="$state.current.name !== 'list'")
-        .col-lg-12.content-container
+
+      .container.one-col
+        .col-lg-12
           block content
 
     //- .global-navigation.back
@@ -24,3 +26,25 @@ html
 
     block inline-scripts
     script(src='//localhost:35729/livereload.js')
+
+  //- script(id="template/datepicker/day.html", type='text/ng-template')
+  //-   table(role='grid', aria-labelledby='{{uniqueId}}-title', aria-activedescendant='{{activeDateId}}')
+  //-     thead
+  //-       tr
+  //-         th
+  //-           button.btn.btn-default.btn-sm.pull-left(type='button', ng-click='move(-1)', tabindex='-1')
+  //-             i.glyphicon.glyphicon-chevron-left
+  //-         th(colspan='5')
+  //-           button.btn.btn-default.btn-sm(id="{{uniqueId}}"-title, role='heading', aria-live='assertive', aria-atomic='true', type='button', ng-click='toggleMode()', tabindex='-1', style='width:100%;')
+  //-             strong {{title}}
+  //-         th
+  //-           button.btn.btn-default.btn-sm.pull-right(type='button', ng-click='move(1)', tabindex='-1')
+  //-             i.glyphicon.glyphicon-chevron-right
+  //-       tr
+  //-         th.text-center(ng-repeat='label in labels track by $index')
+  //-           small(aria-label='{{label.full}}') {{label.abbr}}
+  //-     tbody
+  //-       tr(ng-repeat='row in rows track by $index')
+  //-         td.text-center(id="{{dt.uid}}", ng-repeat='dt in row track by dt.date', role='gridcell', aria-disabled='{{!!dt.disabled}}')
+  //-           button.btn.btn-default.btn-sm(type='button', style='width:100%;', ng-class='{"btn-info": dt.selected, active: isActive(dt)}', ng-click='select(dt.date)', ng-disabled='dt.disabled', tabindex='-1')
+  //-             span(ng-class='{"text-muted": dt.secondary, "text-info": dt.current}') {{dt.label}}

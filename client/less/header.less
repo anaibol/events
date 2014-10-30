@@ -1,17 +1,23 @@
+headroom {
+  margin: 0 !important;
+  padding: 0 !important;
+}
 .navbar {
   border-radius: 0;
-  background-color: rgba(75, 75, 60, 0.95);
+  border: none;
+  background-color: @red;
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0px 0px 5px #666666;
+  // border: 1px solid fade(@grey, 90%);
+  padding: 0 !important;
+  margin: 0 !important;
 }
-
 #list-view .navbar {
   background: transparent;
 }
-
 .navbar .nav >li > a.brand {
   padding-left: 20px;
   margin-left: 0;
 }
-
 .navbar .nav >li > a.login {
   background-image: url('/img/facebook.png');
   margin: 0;
@@ -20,24 +26,31 @@
   text-indent: -9999px;
   margin-top: 4px;
 }
-
 .navbar-nav > li > .dropdown-menu {
-    min-width: 200%;
-    padding: 15px;
+  min-width: 200%;
+  padding: 15px;
 }
-
 .headroom {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   transition: transform 200ms linear;
-  z-index: 999;
+  padding: 0;
+  z-index: 998;
 }
-
-.headroom--unpinned {
+.unpinned {
   transform: translateY(-100%);
 }
-.headroom--pinned {
+.pinned {
   transform: translateY(0%);
+}
+.banner {
+  background: blue;
+  width: 100%;
+  z-index: 10000;
+  height: 300px;
+}
+.navbar-brand {
+  background-color: darken(@red, 5%);
 }

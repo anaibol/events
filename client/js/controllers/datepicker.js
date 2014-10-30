@@ -1,16 +1,14 @@
 app.controller('DatepickerCtrl', function($rootScope, $scope) {
-  $scope.minDate = $rootScope.today;
+  $scope.date = $rootScope.today;
 
-  $scope.date = $scope.minDate;
+  // $scope.minDate = $rootScope.today;
 
-  $scope.dateOptions = {
-    'year-format': "'yy'",
-    'starting-day': 1,
-    'show-weeks': false,
-    'show-button-bar': false,
-    'day-title-format': 'MMMM',
-    'month-title-format': ''
-  };
-
-  $scope.format = 'dd - MMMM';
+  // $scope.dateOptions = {
+  //   'year-format': "'yy'",
+  //   'starting-day': 1,
+  //   'show-weeks': false,
+  //   'show-button-bar': false,
+  //   'day-title-format': 'MMMM',
+  //   'month-title-format': ''
+  // };
 });
