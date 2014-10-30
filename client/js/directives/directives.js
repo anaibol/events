@@ -53,7 +53,12 @@ app.directive('isotope', function($rootScope) {
           var iso = new Isotope(element[0].parentElement, {
             itemSelector: '.event'
           });
+          console.timeEnd('render list');
         });
+      } else {
+        // imagesLoaded(element[0].parentElement, function(instance) {
+        //   $rootScope.iso.appended(element[0]);
+        // });
       }
     }
   };
@@ -74,24 +79,6 @@ app.directive('friendSelector', function() {
   };
 });
 
-app.directive('scrollToFixed', function() {
-  return {
-    restrict: 'A',
-    link: function(scope, elem) {
-      $(elem).scrollToFixed({
-        preFixed: function() {
-          //$('#navbar').removeClass('container').hide().fadeIn(300);
-          $(this).css('opacity', '.95');
-        },
-        postFixed: function() {
-          //$('#navbar').addClass('container').hide().fadeIn(300);
-          $(this).css('opacity', '1');
-        }
-      });
-    }
-  };
-});
-
 // app.directive("scroll", function() {
 //  return function(scope, elm, attr) {
 //      var raw = elm[0];
@@ -104,3 +91,59 @@ app.directive('scrollToFixed', function() {
 //      });
 //  };
 // });
+
+app.directive('mydatepicker', function(datepickerDirective) {
+  return angular.extend({}, datepickerDirective, {
+    templateUrl: 'datepicker' // custom datepicker template
+  });
+});
+
+
+app.directive("sticky", function($window) {
+  return {
+    link: function(scope, element, attrs) {
+
+      var $win = angular.element($window);
+
+      if (scope._stickyElements === undefined) {
+        scope._stickyElements = [];
+
+        $win.bind("scroll.sticky", function(e) {
+          var pos = $win.scrollTop();
+          for (var i = 0; i < scope._stickyElements.length; i++) {
+
+            var item = scope._stickyElements[i];
+
+            if (!item.isStuck && pos > item.start) {
+              item.element.addClass("stuck");
+              item.isStuck = true;
+            } else if (item.isStuck && pos < item.start) {
+              item.element.removeClass("stuck");
+              item.isStuck = false;
+            }
+          }
+        });
+
+        var recheckPositions = function() {
+          for (var i = 0; i < scope._stickyElements.length; i++) {
+            var item = scope._stickyElements[i];
+            if (!item.isStuck) {
+              item.start = item.element.offset().top;
+            }
+          }
+        };
+        $win.bind("load", recheckPositions);
+        $win.bind("resize", recheckPositions);
+      }
+
+      var item = {
+        element: element,
+        isStuck: false,
+        start: element.offset().top
+      };
+
+      scope._stickyElements.push(item);
+
+    }
+  };
+});

@@ -44,11 +44,12 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
       // url: '{city}{slash:[/]?}{tag:[^0-9]}',
       // url: '/{city}',
       // url: '/{city}{slash:[/]?}{tag}',
-      url: '/?tag?city?date',
+      url: '/',
       templateUrl: 'event/list',
       controller: 'ListCtrl',
       resolve: {
         events: function($rootScope, $http, $querystring) {
+          console.time('get events');
           return $http.get('/api/events?' + $querystring.toString($rootScope.query));
         }
       }
@@ -107,12 +108,13 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
 
   $urlRouterProvider.otherwise('/');
 
-  $provide.decorator('datepickerDirective', function($delegate) {
-    //we now get an array of all the datepickerDirectives, 
-    //and use the first one
-    $delegate[0].templateUrl = 'datepicker';
-    return $delegate;
-  });
+  // $provide.decorator('datepickerDirective', function($delegate) {
+  //   //we now get an array of all the datepickerDirectives, 
+  //   //and use the first one
+  //   console.log($delegate);
+  //   $delegate[0].templateUrl = 'datepicker';
+  //   return $delegate;
+  // });
 
   ezfbProvider.setInitParams({
     appId: window.fbAppId
@@ -124,7 +126,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
 // });
 
 
-// angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
 app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb, geoip) { //geolocation, reverseGeocode
   // geolocation.getLocation().then(function(data) {
@@ -142,15 +144,19 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
 
-  $rootScope.userLang = navigator.language || navigator.userLanguage;
+  $rootScope.lang = navigator.language || navigator.userLanguage;
 
-  amMoment.changeLocale($rootScope.userLang);
+  amMoment.changeLocale($rootScope.lang);
 
   $rootScope.today = new Date();
 
   $rootScope.today.setSeconds(0);
   $rootScope.today.setMinutes(0);
   $rootScope.today.setHours(0);
+
+  $rootScope.query = {
+    since: $rootScope.today.getTime()
+  };
 
   $rootScope.user = window.user;
 
@@ -160,9 +166,9 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
       console.log(res.data);
       loc = loc.split(',');
 
-      $rootScope.loc = {
+      $rootScope.query.loc = {
+        lng: loc[1],
         lat: loc[0],
-        lng: loc[1]
       };
 
       // delete res.data.loc;
@@ -191,11 +197,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     // }
   }
 
-  $rootScope.changeLocation = function($item, $model, $label) {
-    console.log($item);
-    console.log($model);
-    console.log($label);
-  };
+
 
   // if (str === 'me/events') {
   //   $scope.filter.type = 'user';
@@ -216,29 +218,38 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   //   }
   // }
 
-  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-    console.log(toState);
-    console.log(toParams);
+  // $rootScope.$watch('query', function() {
+  //   // delete $rootScope.query.skip;
+  //   $rootScope.query = _.compactObject($rootScope.query);
+  //   $http.get('/api/events?' + $querystring.toString($rootScope.query)).then(function(res) {
+  //     $rootScope.events = res.data;
+  //   });
+  // });
 
-    console.log($rootScope.loc);
-    if (!toState.parent) {
-      $rootScope.query = {
-        skip: 0,
-        since: toParams.date ? toParams.date : $rootScope.today.getTime(),
-        lat: $rootScope.loc.lat,
-        lng: $rootScope.loc.lng,
-        tag: toParams.tag
-      };
 
-      if (toParams.city === 'worldwide') {
-        delete $rootScope.query.lat;
-        delete $rootScope.query.lng;
-      }
+  // $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+  //   console.log(toState);
+  //   console.log(toParams);
 
-      $rootScope.query = _.compactObject($rootScope.query);
-      console.log($rootScope.query);
-    }
-  });
+  //   if (!toState.parent) {
+  //     $rootScope.query = {
+  //       skip: 0,
+  //       since: toParams.date ? toParams.date : $rootScope.today.getTime(),
+  //       lat: $rootScope.loc.lat,
+  //       lng: $rootScope.loc.lng,
+  //       tags: $rootScope.tags,
+  //       country: $rootScope.country
+  //     };
+
+  //     if (toParams.city === 'worldwide') {
+  //       delete $rootScope.query.lat;
+  //       delete $rootScope.query.lng;
+  //     }
+
+  //     $rootScope.query = _.compactObject($rootScope.query);
+  //     console.log($rootScope.query);
+  //   }
+  // });
 
   ezfb.init();
 });

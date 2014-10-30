@@ -86,8 +86,7 @@ function save(ev, cb) {
           if (ev.location && ev.venue) {
             Locations.insert({
               location: ev.location,
-              venue: ev.venue,
-              loc: ev.loc
+              venue: ev.venue
             });
           }
 
@@ -120,33 +119,37 @@ function fetchMultiple(eids, term, save, cb) {
 
         // var attendings = data[1].fql_result_set;
 
-        for (i = 0; i < evs.length; i++) {
-          ev = evs[i];
+        evs.forEach(function(ev) {
+          var eid = parseInt(ev.eid);
 
-          // ev.attending = [];
+          existsInDb(eid, function(exists) {
+            if (!exists || !save) {
+              // ev.attending = [];
 
-          // for (j = 0; j < attendings.length; j++) {
-          //   ev.attending.push(parseInt(attendings[j].uid));
-          // }
+              // for (j = 0; j < attendings.length; j++) {
+              //   ev.attending.push(parseInt(attendings[j].uid));
+              // }
 
-          ev.query = term;
+              ev.query = term;
 
-          if (ev.venue) {
-            if (ev.venue.longitude) {
-              if (ev.venue.latitude) {
-                ev = normalize(ev);
+              if (ev.venue) {
+                if (ev.venue.longitude) {
+                  if (ev.venue.latitude) {
+                    ev = normalize(ev);
 
-                if (save) {
-                  ev.saved = new Date();
+                    if (save) {
+                      ev.saved = new Date();
 
-                  Ev.save(ev, function(newEv) {
-                    console.log(newEv.query + ': ' + newEv.name);
-                  });
+                      Ev.save(ev, function(newEv) {
+                        console.log(newEv.query + ': ' + newEv.name);
+                      });
+                    }
+                  }
                 }
               }
             }
-          }
-        }
+          });
+        });
 
         cb(evs);
       } else {
@@ -222,13 +225,11 @@ function fetch(eid, term, cb) {
           save(ev, function(newEv) {
             cb(newEv);
           });
-        } else {
-          cb("Le Get eid term function(ev) part à la casse --------- ");
         }
       });
     } else {
       Ev.update(eid, function(ev) {
-        cb(ev, "Existe déjà dans la base de donnée Wooepa ------------------- Raphastar updates a Panther for the future ");
+        cb(ev);
       });
     }
   });
@@ -369,8 +370,8 @@ function slug(str) {
   }
 
   str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-  .replace(/\s+/g, '-') // collapse whitespace and replace by -
-  .replace(/-+/g, '-'); // collapse dashes
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
 
   return str;
 }
@@ -390,9 +391,9 @@ function normalize(ev) {
 
   ev.price = getPrice(ev);
 
-  ev.loc = {
-    lat: ev.venue.latitude,
-    lng: ev.venue.longitude
+  ev.venue.coord = {
+    lng: ev.venue.longitude,
+    lat: ev.venue.latitude
   };
 
   delete ev.venue.latitude;

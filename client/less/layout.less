@@ -11,9 +11,12 @@ body {
   background-image: url('/img/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background-position-y: 15%;
+  // background-position-y: 15%;
   background-attachment: fixed;
   font-family: Ubuntu;
+}
+#wrapper {
+  background: linear-gradient(180deg, fade(@blue, 20%) 0%, fade(@black, 100%) 100%);
 }
 #wrapper .container {
   width: auto;
@@ -40,21 +43,15 @@ i.fa {
 a:hover {
   text-decoration: none;
 }
-@red: #DC3522;
-@white: #D9CB9E;
-@blue: #374140;
-@grey: #2A2C2B;
-@black: #1E1E20;
 a {
   color: @white;
-  -o-transition: .5s;
-  -ms-transition: .5s;
-  -moz-transition: .5s;
-  -webkit-transition: .5s;
-  /* ...and now for the proper property */
-  
   transition: .5s;
 }
 a:hover {
   color: lighten(@white, 10%);
+}
+.stuck {
+  position: fixed;
+  top: 0;
+  right: 15px;
 }

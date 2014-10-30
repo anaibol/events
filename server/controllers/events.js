@@ -121,23 +121,38 @@ exports.get = function(req, res) {
     }
   };
 
-  if (params.lat && params.lng) {
-    query.loc = {
-      $near: {
-        $geometry: {
-          type: "Point",
-          coordinates: [parseFloat(params.lat), parseFloat(params.lng)]
-        },
-        $maxDistance: 30000
-      }
+  // if (params.lat && params.lng) {
+  //   query['venue.coord'] = {
+  //     $near: {
+  //       $geometry: {
+  //         type: "Point",
+  //         coordinates: [parseFloat(params.lng), parseFloat(params.lat)]
+  //       }
+  //     }
+  //   };
+  // }
+
+  if (params.country) {
+    query['venue.country'] = {
+      $regex: new RegExp(params.country, "i")
     };
   }
 
-  if (params.tag) {
-    query.tags = {
-      $all: [params.tag]
-    };
-  }
+  // var query1 = clone(query);
+  // var query2 = clone(query);
+
+  // delete query1['venue.country'];
+  // delete query1['venue.coord'];
+
+  // query = {
+    //   $or: [query1, query2]
+    // };
+
+  // if(params.city) {
+    //   query['venue.country'] = {
+    //     $regex: new RegExp(params.country, "i")
+    //   };
+    // }
 
   var options = {
     limit: limit,
@@ -148,102 +163,148 @@ exports.get = function(req, res) {
     }
   };
 
-  switch (params.tag) {
-    // case 'user':
-    //   delete query.start_time;
-    //   delete query.$near;
+  var tags = params.tags;
+  var realTags = [];
 
-    //   var query1 = clone(query);
-    //   var query2 = clone(query);
+  if (tags) {
+    tags = tags.split(',');
 
-    //   if (params.user) {
-    //     query1["creator.name"] = params.user;
+    tags.forEach(function(tag) {
+      switch (tag) {
+        case 'popular':
+          query.attending_count = {
+            $gt: 50
+          };
 
-    //     graph.get(params.user, function(err, res) {
-    //       var usr = res.data;
+          break;
 
-    //       // if (usr) {
-    //       //   console.log(urs);
-    //       // }
-    //     });
-    //   } else {
-    //     query1["creator.id"] = req.user.facebook.id;
-    //   }
+        case 'festival':
+          query.festival = true;
 
-    //   query2.attending = {
-    //     $all: [parseInt(req.user.facebook.id)]
-    //   };
+          break;
 
-    //   // query = {
-    //   //   $or: [query1, query2]
-    //   // };
+        case 'promoted':
+          query.in_promotion = true;
 
-    //   break;
+          break;
 
-    // case 'date':
-    //   if (until) {
-    //     until = new Date(until);
+        case 'free':
+          query["price.num"] = 0;
 
-    //     query.start_time = {
-    //       $gte: since,
-    //       $lt: until
-    //     };
-    //   } else {
-    //     query.start_time = {
-    //       $gte: since
-    //     };
-    //   }
+          break;
 
-    //   break;
+        default:
+          realTags.push(tag);
 
-    // case 'worldwide':
-    //   delete query.$near;
+          break;
+      }
+    });
 
-    //   break;
-
-    case 'popular':
-      delete query.tags;
-      delete query.$near;
-      sort.attending_count = -1;
-
-      break;
-
-    case 'festival':
-      query.festival = true;
-
-      delete query.tags;
-      delete query.$near;
-      sort.attending_count = -1;
-
-      break;
-
-    case 'promoted':
-      query.in_promotion = true;
-
-      delete query.tags;
-      delete query.$near;
-
-      break;
-
-    case 'free':
-      query["price.num"] = 0;
-
-      delete query.tags;
-      delete query.$near;
-
-      break;
-
-      // case 'weekend':
-      //   var friday = moment().day(5).toDate();
-      //   var sunday = moment().day(7).toDate();
-
-      //   query.start_time = {
-      //     $gte: friday,
-      //     $lt: sunday
-      //   };
-
-      //   break;
+    if (realTags.length) {
+      query.tags = {
+        $all: realTags
+      };
+    }
   }
+
+  console.log(query);
+
+  // switch (params.tag) {
+  //   case 'user':
+  //     delete query.start_time;
+  //     delete query.$near;
+
+  //     var query1 = clone(query);
+  //     var query2 = clone(query);
+
+  //     if (params.user) {
+  //       query1["creator.name"] = params.user;
+
+  //       graph.get(params.user, function(err, res) {
+  //         var usr = res.data;
+
+  //         // if (usr) {
+  //         //   console.log(urs);
+  //         // }
+  //       });
+  //     } else {
+  //       query1["creator.id"] = req.user.facebook.id;
+  //     }
+
+  //     query2.attending = {
+  //       $all: [parseInt(req.user.facebook.id)]
+  //     };
+
+  //     // query = {
+  //     //   $or: [query1, query2]
+  //     // };
+
+  //     break;
+
+  //   case 'date':
+  //     if (until) {
+  //       until = new Date(until);
+
+  //       query.start_time = {
+  //         $gte: since,
+  //         $lt: until
+  //       };
+  //     } else {
+  //       query.start_time = {
+  //         $gte: since
+  //       };
+  //     }
+
+  //     break;
+
+  //   case 'worldwide':
+  //     delete query.$near;
+
+  //     break;
+
+  //   case 'popular':
+  //     delete query.tags;
+  //     delete query.$near;
+  //     sort.attending_count = -1;
+
+  //     break;
+
+  //   case 'festival':
+  //     query.festival = true;
+
+  //     delete query.tags;
+  //     delete query.$near;
+  //     sort.attending_count = -1;
+
+  //     break;
+
+  //   case 'promoted':
+  //     query.in_promotion = true;
+
+  //     delete query.tags;
+  //     delete query.$near;
+
+  //     break;
+
+  //   case 'free':
+  //     query["price.num"] = 0;
+
+  //     delete query.tags;
+  //     delete query.$near;
+
+  //     break;
+
+  //     // case 'weekend':
+  //     //   var friday = moment().day(5).toDate();
+  //     //   var sunday = moment().day(7).toDate();
+
+  //     //   query.start_time = {
+  //     //     $gte: friday,
+  //     //     $lt: sunday
+  //     //   };
+
+  //     //   break;
+  // }
 
   // var query2 = _.clone(query);
 

@@ -8049,9 +8049,11 @@ body {
   background-image: url('/img/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background-position-y: 15%;
   background-attachment: fixed;
   font-family: Ubuntu;
+}
+#wrapper {
+  background: linear-gradient(180deg, rgba(55, 65, 64, 0.2) 0%, #1e1e20 100%);
 }
 #wrapper .container {
   width: auto;
@@ -8076,15 +8078,15 @@ a:hover {
 }
 a {
   color: #d9cb9e;
-  -o-transition: .5s;
-  -ms-transition: .5s;
-  -moz-transition: .5s;
-  -webkit-transition: .5s;
-  /* ...and now for the proper property */
   transition: .5s;
 }
 a:hover {
   color: #e7dfc3;
+}
+.stuck {
+  position: fixed;
+  top: 0;
+  right: 15px;
 }
 headroom {
   margin: 0 !important;
@@ -8136,6 +8138,9 @@ headroom {
   width: 100%;
   z-index: 10000;
   height: 300px;
+}
+.navbar-brand {
+  background-color: #c6301f;
 }
 .sidebar {
   background-color: #dc3522;
@@ -8209,6 +8214,7 @@ headroom {
 }
 .event:hover {
   border: 1px solid #d9cb9e;
+  transition: .3s;
 }
 .event:hover .image {
   opacity: 0.85;

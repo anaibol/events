@@ -4,7 +4,7 @@ app.controller('LocationpickerCtrl', function($scope, $http, $rootScope) {
       params: {
         address: val,
         sensor: false,
-        language: $rootScope.userLang
+        language: $rootScope.lang
       }
     }).then(function(response) {
       return response.data.results.map(function(location) {
