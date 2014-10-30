@@ -5,6 +5,7 @@ global.config = require(configDir + '/env/' + process.env.NODE_ENV + '.js');
 //console.log(global.config);
 
 var db = require('monk')(config.db);
+
 var Events = db.get('events');
 
 var Dateminuit = new Date();
@@ -23,6 +24,8 @@ Events.count({ saved: { $gt: Dateminuit }},function(e, count){
 Events.count({$or: [{ start_time: { $gt: Dateminuit }}, {end_time: { $gt: Dateminuit }}]},function(e, count){
 	console.log("nombre d'event live EN VIE " + count)
 });
+
+
 
 //var pays = new Array();
 var Quoi = {
