@@ -5,6 +5,7 @@ global.config = require(configDir + '/env/' + process.env.NODE_ENV + '.js');
 //console.log(global.config);
 
 var db = require('monk')(config.db);
+
 var Events = db.get('events');
 
 var Dateminuit = new Date();
@@ -23,6 +24,41 @@ Events.count({ saved: { $gt: Dateminuit }},function(e, count){
 Events.count({$or: [{ start_time: { $gt: Dateminuit }}, {end_time: { $gt: Dateminuit }}]},function(e, count){
 	console.log("nombre d'event live EN VIE " + count)
 });
+
+
+
+//var pays = new Array();
+var Quoi = {
+	pays: ["France", "Germany", "The United States"], 
+combien: [0,0,0]
+};
+
+Events.find({ saved: { $gt: Dateminuit }}, function(err, tousEvents) {
+          if (err) {
+            res.render('error', {
+              status: 500
+            });
+          } else if (tousEvents)
+          {console.log("okey");
+           for (var i = 0; i<tousEvents.length; i++) {
+           		for (var j =0; j<Quoi.pays.length; j++){
+           			if ( tousEvents[i].venue.country == Quoi.pays[j]){
+           				Quoi.combien[j]+=1;
+           				//console.log(Quoi.combien[j]);
+           			}
+
+           	}
+           }
+           	   
+
+           	for (i=0; i<3; i++){
+			 console.log(Quoi.pays[i] + " haha yen a -> " + Quoi.combien[i] + "\n");
+}
+}
+       }
+       ); 
+
+
 
 Events.count({ updated: { $gt: Dateminuit }},function(e, count){
 	console.log("nombre d'event updaté aujourd'hui après minuit: " + count)
