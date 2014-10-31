@@ -48,18 +48,12 @@ app.directive('isotope', function($rootScope) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
-      if ($rootScope.isotope === undefined || $rootScope.isotope === null) {
-        imagesLoaded(element[0].parentElement, function(instance) {
-          var iso = new Isotope(element[0].parentElement, {
-            itemSelector: '.event'
-          });
-          console.timeEnd('render list');
+      imagesLoaded(element[0].parentElement, function(instance) {
+        var iso = new Isotope(element[0].parentElement, {
+          itemSelector: '.event'
         });
-      } else {
-        // imagesLoaded(element[0].parentElement, function(instance) {
-        //   $rootScope.iso.appended(element[0]);
-        // });
-      }
+        console.timeEnd('render list');
+      });
     }
   };
 });
@@ -92,16 +86,16 @@ app.directive('friendSelector', function() {
 //  };
 // });
 
-app.directive('mydatepicker', function(datepickerDirective) {
-  return angular.extend({}, datepickerDirective, {
-    templateUrl: 'datepicker' // custom datepicker template
-  });
-});
+// app.directive('mydatepicker', function(datepickerDirective) {
+//   return angular.extend({}, datepickerDirective, {
+//     templateUrl: 'datepicker' // custom datepicker template
+//   });
+// });
 
 
 app.directive("sticky", function($window) {
   return {
-    link: function(scope, element, attrs) {
+    link: function(scope, elm, attrs) {
 
       var $win = angular.element($window);
 
@@ -137,9 +131,9 @@ app.directive("sticky", function($window) {
       }
 
       var item = {
-        element: element,
+        element: elm,
         isStuck: false,
-        start: element.offset().top
+        start: elm.offset().top
       };
 
       scope._stickyElements.push(item);
@@ -147,3 +141,16 @@ app.directive("sticky", function($window) {
     }
   };
 });
+
+// app.directive("datepicker", function() {
+//   return {
+//     restrict: "A",
+//     templateUrl: "datepicker",
+//     compile: function(a, b) {
+//       if (!b.$attr.sort) {
+//         var c = a[0].getElementsByClassName("sort")[0];
+//         c.parentNode.removeChild(c);
+//       }
+//     }
+//   };
+// });

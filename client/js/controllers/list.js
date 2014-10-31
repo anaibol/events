@@ -1,11 +1,26 @@
-app.controller('ListCtrl', function($scope, $rootScope, $window, EventsService, $http, $querystring, events) {
-  console.timeEnd('get events');
-  console.time('render list');
-  $rootScope.events = events.data;
+app.controller('ListCtrl', function($scope, $stateParams, $rootScope, $window, EventsService, $http, $querystring) {
+  $scope.query = {
+    since: $stateParams.since || $rootScope.today.getTime(),
+    country: $stateParams.country,
+    lng: ($stateParams.lng ? $stateParams.lng : $rootScope.loc.lng),
+    lat: ($stateParams.lat ? $stateParams.lat : $rootScope.loc.lat)
+  };
 
-  $scope.normalizeEvents = function() {
-    for (var i = $scope.events.length - 1; i >= 0; i--) {
-      var ev = $scope.events[i];
+  $scope.query = _.compactObject($scope.query);
+
+  console.log($scope.query);
+
+  console.time('get events');
+  $http.get('/api/events?' + $querystring.toString($scope.query)).then(function(res) {
+    console.timeEnd('get events');
+    console.time('render list');
+    $scope.events = normalizeEvents(res.data);
+    console.log($scope.events.length);
+  });
+
+  function normalizeEvents(evs) {
+    for (var i = evs.length - 1; i >= 0; i--) {
+      var ev = evs[i];
 
       if (ev.attending_count >= 50) {
         ev.tags.push('popular');
@@ -21,29 +36,35 @@ app.controller('ListCtrl', function($scope, $rootScope, $window, EventsService, 
 
       ev.tags = _.uniq(ev.tags);
 
-      EventsService.set($scope.events[i]);
+      // EventsService.set(evs[i]);
     }
-  };
+
+    return evs;
+  }
 
   $scope.refreshTags = function() {
-    $rootScope.tags = _.uniq([].concat.apply([], _.pluck($scope.events, 'tags'))).sort();
+    $scope.tags = _.uniq([].concat.apply([], _.pluck($scope.events, 'tags'))).sort();
   };
 
   $scope.getMore = function() {
     if (!$scope.events || $scope.noMoreEvents) return;
 
-    if (!$rootScope.query.skip) {
-      $rootScope.query.skip = 30;
+    if (!$scope.query.skip) {
+      $scope.query.skip = 30;
     } else {
-      $rootScope.query.skip += 30;
+      $scope.query.skip += 30;
     }
 
     console.time('get more events');
-    $http.get('/api/events?' + $querystring.toString($rootScope.query)).then(function(evs) {
+    $http.get('/api/events?' + $querystring.toString($scope.query)).then(function(res) {
       console.timeEnd('get more events');
 
-      if (evs.data.length) {
-        $scope.events.push.apply($scope.events, evs.data);
+      var evs = res.data;
+
+      if (evs.length) {
+        evs = normalizeEvents(evs);
+
+        $scope.events.push.apply($scope.events, evs);
       } else {
         $scope.noMoreEvents = true;
       }
@@ -61,30 +82,46 @@ app.controller('ListCtrl', function($scope, $rootScope, $window, EventsService, 
     $event.stopPropagation();
   };
 
-  $rootScope.changeLocation = function(location) {
+  $scope.changeLocation = function(location) {
+    alert(2);
     if (location.address_components[0].types[0] === 'country') {
-      $rootScope.query.country = location.address_components[0].long_name;
-      console.log($rootScope.query);
+      $scope.query.country = location.address_components[0].long_name.toLowerCase();
+      console.log($scope.query);
       $scope.reloadEvents();
+      console.log('changeLocation');
     }
   };
 
-  $rootScope.changeDate = function(date) {
-    $rootScope.query.since = date.getTime();
-    console.log($rootScope.query.since);
+  $scope.changeDate = function(date) {
+    alert(1);
+    $scope.query.since = date.getTime();
+    console.log($scope.query.since);
     $scope.reloadEvents();
+    console.log('changeDate');
   };
 
   $scope.reloadEvents = function() {
-    // delete $rootScope.query.skip;
-    $rootScope.query = _.compactObject($rootScope.query);
-    $http.get('/api/events?' + $querystring.toString($rootScope.query)).then(function(res) {
-      console.log(res.data.length);
-      $scope.events = res.data;
-      $scope.normalizeEvents();
-      console.log($scope.events[0]);
-      $scope.refreshTags();
-    });
+    // console.log('reloadEvents');
+    // // delete $rootScope.query.skip;
+    // $scope.query = _.compactObject($scope.query);
+    // $http.get('/api/events?' + $querystring.toString($scope.query)).then(function(res) {
+    //   console.log(res.data.length);
+    //   $scope.events = res.data;
+    //   normalizeEvents();
+    //   console.log($scope.events[0]);
+    //   $scope.refreshTags();
+    // });
   };
+
+  // $scope.$watch('query', function() {
+  //   // $scope.events = [];
+  //   console.log($scope.query);
+  //   // delete $rootScope.query.skip;
+  //   $scope.query = _.compactObject($scope.query);
+  //   // $http.get('/api/events ? ' + $querystring.toString($scope.query)).then(function(res) {
+  //   //   $scope.events = res.data;
+  //   // });
+  // });
+
 
 });

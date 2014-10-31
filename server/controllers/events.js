@@ -121,21 +121,24 @@ exports.get = function(req, res) {
     }
   };
 
-  // if (params.lat && params.lng) {
-  //   query['venue.coord'] = {
-  //     $near: {
-  //       $geometry: {
-  //         type: "Point",
-  //         coordinates: [parseFloat(params.lng), parseFloat(params.lat)]
-  //       }
-  //     }
-  //   };
-  // }
+  if (params.lat && params.lng) {
+    query['venue.coord'] = {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: [parseFloat(params.lng), parseFloat(params.lat)]
+        },
+        $maxDistance: 50000
+      }
+    };
+  }
 
   if (params.country) {
     query['venue.country'] = {
       $regex: new RegExp(params.country, "i")
     };
+
+    delete query['venue.coord'];
   }
 
   // var query1 = clone(query);
@@ -145,15 +148,14 @@ exports.get = function(req, res) {
   // delete query1['venue.coord'];
 
   // query = {
-    //   $or: [query1, query2]
-    // };
+  //   $or: [query1, query2]
+  // };
 
   // if(params.city) {
-    //   query['venue.country'] = {
-    //     $regex: new RegExp(params.country, "i")
-    //   };
-    // }
-
+  //   query['venue.country'] = {
+  //     $regex: new RegExp(params.country, "i")
+  //   };
+  // }
   var options = {
     limit: limit,
     skip: skip,
@@ -162,7 +164,7 @@ exports.get = function(req, res) {
       attending: 0
     }
   };
-
+  console.log(query);
   var tags = params.tags;
   var realTags = [];
 
@@ -206,8 +208,6 @@ exports.get = function(req, res) {
       };
     }
   }
-
-  console.log(query);
 
   // switch (params.tag) {
   //   case 'user':

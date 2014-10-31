@@ -44,15 +44,14 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $http
       // url: '{city}{slash:[/]?}{tag:[^0-9]}',
       // url: '/{city}',
       // url: '/{city}{slash:[/]?}{tag}',
-      url: '/',
+      url: '/?since?lng?lat?country',
       templateUrl: 'event/list',
       controller: 'ListCtrl',
-      resolve: {
-        events: function($rootScope, $http, $querystring) {
-          console.time('get events');
-          return $http.get('/api/events?' + $querystring.toString($rootScope.query));
-        }
-      }
+      // resolve: {
+      //   events: function($stateParams) {
+      //     console.log($stateParams);
+      //   }
+      // }
     })
     .state('list.view', {
       // url: '{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
@@ -154,21 +153,14 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.today.setMinutes(0);
   $rootScope.today.setHours(0);
 
-  $rootScope.query = {
-    since: $rootScope.today.getTime()
-  };
-
   $rootScope.user = window.user;
 
   if (!$localStorage.loc) {
     geoip.getLocation().then(function(res) {
-      var loc = res.data.loc;
-      console.log(res.data);
-      loc = loc.split(',');
-
-      $rootScope.query.loc = {
+      var loc = res.data.loc.split(',');
+      $rootScope.loc = {
         lng: loc[1],
-        lat: loc[0],
+        lat: loc[0]
       };
 
       // delete res.data.loc;

@@ -8173,9 +8173,8 @@ headroom {
   display: inline-block;
   margin: 10px 0.5%;
   cursor: pointer;
-  background-color: rgba(55, 65, 64, 0.75);
   border-radius: 2px;
-  border: 1px solid rgba(42, 44, 43, 0.75);
+  border-bottom: 2px solid #2a2c2b;
   color: #d9cb9e;
 }
 .event .image-container {
@@ -8199,8 +8198,8 @@ headroom {
 }
 .event .top .title {
   text-align: center;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 18px;
+  line-height: 25px;
   width: 100%;
   max-height: 3.6em;
 }
