@@ -164,7 +164,7 @@ exports.get = function(req, res) {
       attending: 0
     }
   };
-  console.log(query);
+
   var tags = params.tags;
   var realTags = [];
 

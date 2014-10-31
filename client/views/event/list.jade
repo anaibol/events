@@ -5,7 +5,7 @@ section.col-lg-10(infinite-scroll="getMore()", infinite-scroll-distance="1", inf
         span.title.truncate {{ev.name}}
         //- span.title.truncate {{ev.description}}
         .tag-list
-          span.tag(ng-repeat="tag in tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
+          span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
       .image-container
         .image(ng-if="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
          .ribbon-wrapper-green(ng-if="ev.price.num === 0")
