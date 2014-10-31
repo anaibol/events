@@ -3,19 +3,11 @@ html
   include head
   body(id="{{$state.current.name.replace('.', '-')}}")
     include header
-    .banner.col-lg-12
+    .banner
 
     #wrapper
-      .container.two-col(ng-if="!$state.current.parent")
-        .col-lg-10
-          block content
-
-        .sidebar.col-lg-2(sticky).pull-right
-          include sidebar
-
-      .container.one-col(ng-if="$state.current.parent")
-        .col-lg-12
-          block content
+      .container
+        block content
 
     //- .global-navigation.back
     //-   a(href='/', ui-sref="^", ng-if="$state.$current !== ''")

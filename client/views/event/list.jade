@@ -1,11 +1,11 @@
-section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-if="$state.current.name === 'list'")
+section.col-lg-10(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-if="$state.current.name === 'list'")
   .events
     a.event(ng-repeat="ev in events", id="{{$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
       .top
         span.title.truncate {{ev.name}}
         //- span.title.truncate {{ev.description}}
         .tag-list
-          span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
+          span.tag(ng-repeat="tag in tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
       .image-container
         .image(ng-if="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
          .ribbon-wrapper-green(ng-if="ev.price.num === 0")
@@ -29,5 +29,8 @@ section(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scro
             span.location {{ev.location | characters:50}}{{ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
             //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
             //- span.street.truncate {{ev.venue.city}}
+
+.sidebar.col-lg-2(sticky).pull-right
+  include sidebar
 
 .content(ui-view, autoscroll="false")

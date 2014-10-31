@@ -15,7 +15,7 @@ app.controller('ListCtrl', function($scope, $stateParams, $rootScope, $window, E
     console.timeEnd('get events');
     console.time('render list');
     $scope.events = normalizeEvents(res.data);
-    console.log($scope.events.length);
+    $scope.getTags();
   });
 
   function normalizeEvents(evs) {
@@ -44,9 +44,8 @@ app.controller('ListCtrl', function($scope, $stateParams, $rootScope, $window, E
 
   $scope.getTags = function() {
     $scope.tags = _.uniq([].concat.apply([], _.pluck($scope.events, 'tags'))).sort();
+    console.log($scope.tags);
   };
-
-  $scope.getTags();
 
   $scope.getMore = function() {
     if (!$scope.events || $scope.noMoreEvents) return;
@@ -67,6 +66,7 @@ app.controller('ListCtrl', function($scope, $stateParams, $rootScope, $window, E
         evs = normalizeEvents(evs);
 
         $scope.events.push.apply($scope.events, evs);
+        $scope.getTags();
       } else {
         $scope.noMoreEvents = true;
       }
