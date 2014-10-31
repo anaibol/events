@@ -1,0 +1,27 @@
+form.event-form.form-horizontal
+    .modal-header Event Promotion
+      .modal-body
+        .control-group
+          label.control-label Reward
+          input#reward.form-control(required='required', type='text', ng-model='ev.promotion.reward', placeholder='Reward for the game')
+        .control-group.date
+          label.control-label Date of end of the game
+        .input-group(ng-controller='DatepickerCtrl')
+          input#datepick(size='50', type = 'text')
+          script(type='text/javascript').
+            new datepickr('datepick');
+          label.control-label End Time
+            input.timetest(type='text', name='time3',ng-model='ev.promotion.end_time')
+            script(type='text/javascript').
+              $("input.timetest").timepicki()
+        .control-group
+          label.control-label Commentary
+          textarea#description.form-control(required='required', ng-model='ev.promotion.commentary', cols='30', rows='5', placeholder='Content')
+          input(type='hidden', name='in_promotion', ng-model='ev.in_promotion', value='value')
+      .modal-footer
+        button.btn.btn-primary(ng-click'submit()')
+          i.fui-check
+          | OK
+        button.btn.btn-warning(ng-click='cancel()')
+          i.fui-cross
+          | Cancel

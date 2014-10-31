@@ -35,9 +35,6 @@ app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $htt
   // $scope.isBtnJoinDisabled = false;
   // $scope.btnJoinText = "Join";
 
-  // $scope.isBtnLeaveDisabled = false;
-  // $scope.btnLeaveText = "Leave";
-
   // $scope.boosted = 0;
 
   // $scope.ev.player_result = 0;
@@ -55,24 +52,26 @@ app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $htt
   //   return transformed;
   // };
 
-  // $scope.getPromoteLink = function() {
-  //   return $state.current.name.split('.')[0] + '.promote(ev)';
+   //$scope.getPromoteLink = function() {
+   //  return $state.current.name.split('.')[0] + '.promote(ev)';
   // }
 
-  // $scope.isInPromotion = function() {
-  //   var currentDate = new Date();
+ // $scope.isInPromotion = function() {
+   //  var currentDate = new Date();
 
   //   if ($scope.ev) {
   //     if ($scope.ev.in_promotion) {f
+//     if ($scope.ev) {
+  //     if ($scope.ev.in_promotion) {
 
-  //       var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, "UTC");
+    //     var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, "UTC");
 
-  //       if (end_date >= currentDate) {
-  //         return (true);
-  //       }
-  //     }
-  //   }
-  //   return (false);
+      //   if (end_date >= currentDate) {
+        //  return (true);
+        // }
+     // }
+    // }
+    // return (false);
   // }
 
   // $scope.addBoost = function(player, event_id, btn) {

@@ -23,11 +23,12 @@ if (rest)
 				result:0,
 				facebook: {}
 				};
+				picture:'0'
 			obj.uid = parseInt(rest[i].user_id);
 			obj.result = parseInt(rest[i].result_boosted);
 			list.push(obj);
 			}
-		++i;
+			++i;
 		}
 	res.json(list);
 	}
