@@ -3,7 +3,8 @@ app.controller('ListCtrl', function($scope, $stateParams, $rootScope, $window, E
     since: $stateParams.since || $rootScope.today.getTime(),
     country: $stateParams.country,
     lng: ($stateParams.lng ? $stateParams.lng : $rootScope.loc.lng),
-    lat: ($stateParams.lat ? $stateParams.lat : $rootScope.loc.lat)
+    lat: ($stateParams.lat ? $stateParams.lat : $rootScope.loc.lat),
+    tags: $stateParams.tags
   };
 
   $scope.query = _.compactObject($scope.query);

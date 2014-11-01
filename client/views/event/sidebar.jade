@@ -1,10 +1,49 @@
-ul.nav.nav-sidebar
-  form.navbar-form(role='search', ng-controller="LocationpickerCtrl", ng-submit="alert(1)")
+ul.nav.nav-sidebar(ng-controller="SidebarCtrl")
+  form.navbar-form(role='search', ng-controller="LocationpickerCtrl")
     .input-group
-      input.form-control(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected")
+      input.search.form-control(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected")
       .input-group-btn
         button.btn.btn-default(type='submit')
-          i.fa.fa-map-marker
+          i.fa.fa-search
+
+  //- li
+  //-   .navbar-header Sort by
+
+  //- li
+  //-   .navbar-header Today
+
+  //- li(ng-if="today.getTime() === Date.sun().getTime()")
+  //-   .navbar-header This weekend
+
+  //- li(ng-if="today.getTime() !== Date.sun().getTime()")
+  //-   .navbar-header Next weekend
+
+  //- li
+  //-   .navbar-header Sort by
+
+  //- button.navbar-toggle(type='button', ng-click='isCollapsed = !isCollapsed')
+  //-   i.pull-right.fa(ng-class="{'fa-chevron-down': isCollapsed, 'fa-chevron-right': !isCollapsed}")
+
+  //- .nav-collapse(collapse='isCollapsed')
+  //-   ul.nav
+  //-     li
+  //-       a(href='#')
+  //-         i.icon-home.icon-white
+  //-         | Home
+  //-     li
+  //-       a(href='#') Lessons
+  //-     li
+  //-       a(href='#') Grades
+  //-   ul.nav.pull-right
+  //-     li
+  //-       a(href='#/class')
+  //-         i.icon-upload.icon-white
+  //-         | Upload/Save
+  //-     li
+  //-       a(href='#/class')
+  //-         i.icon-off.icon-white
+  //-         | Save/Logout
+
 
   li
     //- datepicker(ng-change="$state.go('list', {date: date, tag: $root.tag})", ng-model="date", show-weeks="false")
@@ -18,7 +57,7 @@ ul.nav.nav-sidebar
 .nav
   .navbar-header Explore by category
     .tag-list
-      a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tag: tag})") {{tag}}
+      a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
 
 //- ul.nav
 //-   li
