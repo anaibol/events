@@ -98,7 +98,7 @@ module.exports = function(app, passport, db) {
   };
   walk(routesDir);
 
-  app.get('*', function(req, res) {
+  app.get('/', function(req, res) {
     res.render('index', {
       title: 'Wooepa',
       user: req.user ? JSON.stringify(req.user) : 'null',
@@ -108,25 +108,25 @@ module.exports = function(app, passport, db) {
     });
   });
 
-  app.use(function(err, req, res, next) {
-    // Treat as 404
-    if (~err.message.indexOf('not found')) return next();
+  // app.use(function(err, req, res, next) {
+  //   // Treat as 404
+  //   if (~err.message.indexOf('not found')) return next();
 
-    // Log it
-    console.error(err.stack);
+  //   // Log it
+  //   console.error(err.stack);
 
-    // Error page
-    res.status(500).render('500', {
-      error: err.stack
-    });
-  });
+  //   // Error page
+  //   res.status(500).render('500', {
+  //     error: err.stack
+  //   });
+  // });
 
-  app.use(function(req, res, next) {
-    res.status(404).render('404', {
-      url: req.originalUrl,
-      error: 'Not found'
-    });
-  });
+  // app.use(function(req, res, next) {
+  //   res.status(404).render('404', {
+  //     url: req.originalUrl,
+  //     error: 'Not found'
+  //   });
+  // });
 
   app.use(require('prerender-node').set('prerenderToken', 'tlgCZ16mK7RTP1i5BQGK'));
 };
