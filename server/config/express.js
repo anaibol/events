@@ -80,8 +80,6 @@ module.exports = function(app, passport, db) {
   app.use(serveStatic(publicDir));
   app.use(serveStatic(distDir));
 
-  app.use(require('prerender-node').set('prerenderToken', 'tlgCZ16mK7RTP1i5BQGK'));
-
   var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {
       var newPath = path + '/' + file;
@@ -129,4 +127,6 @@ module.exports = function(app, passport, db) {
       error: 'Not found'
     });
   });
+
+  app.use(require('prerender-node').set('prerenderToken', 'tlgCZ16mK7RTP1i5BQGK'));
 };

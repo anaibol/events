@@ -1,7 +1,5 @@
 app.config(function($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, $provide, ezfbProvider) {
-  $locationProvider.html5Mode(true);
-
-  $locationProvider.hashPrefix('!');
+  $locationProvider.html5Mode(true).hashPrefix('!');
 
   $httpProvider.defaults.cache = true;
 
