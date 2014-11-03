@@ -1,34 +1,35 @@
-section#list.col-lg-10(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-if="$state.current.name === 'list'")
-  a.event(ng-repeat="ev in events", id="{{$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
-    .top
-      span.title.truncate {{ev.name}}
-      //- span.title.truncate {{ev.description}}
-      .tag-list
-        span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
-    .image-container
-      .image(ng-if="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
-       .ribbon-wrapper-green(ng-if="ev.price.num === 0")
-          .ribbon-green {{ev.price.full}}
-        img(ng-src="{{ev.pic_cover.source}}")
-    .bottom
-      span.datetime
-        span.date
-          i.fa.fa-calendar
-          span {{ev.start_time | amDateFormat:'D MMM'}} 
-        span.time
-          i.fa.fa-clock-o
-          span {{ev.start_time | amDateFormat:"LT"}}
-          //- span {{ev.start_time | amCalendar}}
-      //- .attending(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
-      //-   i.glyphicon.glyphicon-span
-      user.price(ng-if="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
-      .place-info
-        .place(ng-click="openMap($event, ev)", ng-if="ev.location")
-          i.fa.fa-map-marker
-          span.location {{ev.location | characters:50}}{{ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
-          //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
-          //- span.street.truncate {{ev.venue.city}}
+section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-if="$state.current.name === 'list'")
+  include sidebar
 
-include sidebar
+  .events.col-lg-10
+    a.event(ng-repeat="ev in events", id="{{$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
+      .top
+        span.title.truncate {{ev.name}}
+        //- span.title.truncate {{ev.description}}
+        .tag-list
+          span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
+      .image-container
+        .image(ng-if="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}") 
+         .ribbon-wrapper-green(ng-if="ev.price.num === 0")
+            .ribbon-green {{ev.price.full}}
+          img(ng-src="{{ev.pic_cover.source}}")
+      .bottom
+        span.datetime
+          span.date
+            i.fa.fa-calendar
+            span {{ev.start_time | amDateFormat:'D MMM'}} 
+          span.time
+            i.fa.fa-clock-o
+            span {{ev.start_time | amDateFormat:"LT"}}
+            //- span {{ev.start_time | amCalendar}}
+        //- .attending(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count") {{ev.attending_count}}
+        //-   i.glyphicon.glyphicon-span
+        user.price(ng-if="ev.price", ev.price.num="ev.price.num") {{ev.price.full}}
+        .place-info
+          .place(ng-click="openMap($event, ev)", ng-if="ev.location")
+            i.fa.fa-map-marker
+            span.location {{ev.location | characters:50}}{{ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
+            //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
+            //- span.street.truncate {{ev.venue.city}}
 
 .content(ui-view, autoscroll="false")

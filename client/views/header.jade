@@ -5,11 +5,11 @@ header.col-lg-12(headroom, tolerance='0' offset='0' scroller=".app-view" classes
         a.navbar-brand(href='/', ui-sref="list") Wooepa
         //- a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
 
-      .collapse.navbar-collapse
+      .collapse.navbar-collapse(ng-if='$root.user', ng-cloak)
         ul.nav.navbar-nav.navbar-right
           li.dropdown
             a.dropdown-toggle(href='', aria-haspopup='true', aria-expanded='true')
-              i.icon-bell.fa-fw
+              i.fa.fa-bell
               span.visible-xs-inline Notifications
               span.badge.badge-sm.up.bg-danger.pull-right-xs 2
             .dropdown-menu.w-xl.animated.fadeInUp
@@ -37,7 +37,7 @@ header.col-lg-12(headroom, tolerance='0' offset='0' scroller=".app-view" classes
                     i.fa.fa-cog
                   a(href='#notes', data-toggle='class:show animated fadeInRight') See all the notifications
 
-          li.dropdown(ng-if='$root.user')
+          li.dropdown(ng-if='$root.user', ng-cloak)
             a.dropdown-toggle.clear(href='', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               span.thumb-sm.avatar.pull-right
                 img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
@@ -51,5 +51,5 @@ header.col-lg-12(headroom, tolerance='0' offset='0' scroller=".app-view" classes
                 a(ui-sref='app.page.profile', href='#/auth/signout') Logout
                   i.fa.fa-sign-out
 
-          li(ng-if='!$root.user')
+          li(ng-if='!$root.user', ng-cloak)
             a.login(href='/auth/facebook', target='_self' translate) Login

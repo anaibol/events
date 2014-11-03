@@ -1,10 +1,11 @@
 #sidebar {
   z-index: 999;
-  margin: 0;
-  padding: 0;
-  border: none;
-
+  position: fixed;
+  top: 0;
+  right: 15px;
+  
   .navbar-nav {
+    margin: 0;
     font-size: 13px;
     background-color: #dc3522;
 
@@ -14,14 +15,14 @@
       float: none;
     }
     > li {
-      > a, > a:focus, > a:hover, > a:active {
+      > a {
         text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
         outline: none;
         color: @white;
         background-color: darken(@red, 3%);
       }
-      > a.active {
-        background-color: darken(@red, 5%);
+      a:focus, a:hover, a:active, a.active {
+        background-color: darken(@red, 10%);
       }
     }
   }
@@ -76,6 +77,7 @@
     }
 
     button:hover {
+      transition: .3s ;
       background-color: darken(@red, 20%);
 
       span {

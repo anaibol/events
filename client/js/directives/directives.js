@@ -93,54 +93,54 @@ app.directive('friendSelector', function() {
 // });
 
 
-app.directive("sticky", function($window) {
-  return {
-    link: function(scope, elm, attrs) {
+// app.directive("sticky", function($window) {
+//   return {
+//     link: function(scope, elm, attrs) {
 
-      var $win = angular.element($window);
+//       var $win = angular.element($window);
 
-      if (scope._stickyElements === undefined) {
-        scope._stickyElements = [];
+//       if (scope._stickyElements === undefined) {
+//         scope._stickyElements = [];
 
-        $win.bind("scroll.sticky", function(e) {
-          var pos = $win.scrollTop();
-          for (var i = 0; i < scope._stickyElements.length; i++) {
+//         $win.bind("scroll.sticky", function(e) {
+//           var pos = $win.scrollTop();
+//           for (var i = 0; i < scope._stickyElements.length; i++) {
 
-            var item = scope._stickyElements[i];
+//             var item = scope._stickyElements[i];
 
-            if (!item.isStuck && pos > item.start) {
-              item.element.addClass("stuck");
-              item.isStuck = true;
-            } else if (item.isStuck && pos < item.start) {
-              item.element.removeClass("stuck");
-              item.isStuck = false;
-            }
-          }
-        });
+//             if (!item.isStuck && pos > item.start) {
+//               item.element.addClass("stuck");
+//               item.isStuck = true;
+//             } else if (item.isStuck && pos < item.start) {
+//               item.element.removeClass("stuck");
+//               item.isStuck = false;
+//             }
+//           }
+//         });
 
-        var recheckPositions = function() {
-          for (var i = 0; i < scope._stickyElements.length; i++) {
-            var item = scope._stickyElements[i];
-            if (!item.isStuck) {
-              item.start = item.element.offset().top;
-            }
-          }
-        };
-        $win.bind("load", recheckPositions);
-        $win.bind("resize", recheckPositions);
-      }
+//         var recheckPositions = function() {
+//           for (var i = 0; i < scope._stickyElements.length; i++) {
+//             var item = scope._stickyElements[i];
+//             if (!item.isStuck) {
+//               item.start = item.element.offset().top;
+//             }
+//           }
+//         };
+//         $win.bind("load", recheckPositions);
+//         $win.bind("resize", recheckPositions);
+//       }
 
-      var item = {
-        element: elm,
-        isStuck: false,
-        start: elm.offset().top
-      };
+//       var item = {
+//         element: elm,
+//         isStuck: false,
+//         start: elm.offset().top
+//       };
 
-      scope._stickyElements.push(item);
+//       scope._stickyElements.push(item);
 
-    }
-  };
-});
+//     }
+//   };
+// });
 
 // app.directive("datepicker", function() {
 //   return {
