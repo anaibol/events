@@ -55,6 +55,7 @@ app.directive('listEventPlayer', function($http){
             url :'/api/list_player/' + scope.ev.eid
           }).success(function(data) {
         scope.ev.list_event_players = data;
+
             }
         );
 }

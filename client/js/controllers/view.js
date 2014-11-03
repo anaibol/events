@@ -110,9 +110,9 @@ app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $htt
   //   });
   // }
 
-  // if (!$scope.ev.list_event_players) {
-  //   $scope.ev.list_event_players = [];
-  // }
+   if (!$scope.ev.list_event_players) {
+     $scope.ev.list_event_players = [];
+   }
 
   //     Users.get('names').success(function(users) {
   // console.log (user);
