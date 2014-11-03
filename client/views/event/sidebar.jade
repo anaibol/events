@@ -45,9 +45,11 @@ section#sidebar.col-lg-2.pull-right(ng-controller="SidebarCtrl")
           //- mydatepicker.datepicker(ng-change="$state.go('list', {tag: $root.tag, city: $root.city, date: date.getTime()})", ng-model="date", show-weeks="false")
 
 
-    li.tags Explore by category
-      .tag-list
-        a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
+    li
+      a(href='#') Explore by category
+        .tags
+          .tag-list
+            a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
 
 
     //- li(ng-if='$root.user')
