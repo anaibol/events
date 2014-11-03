@@ -1,4 +1,4 @@
-headroom.col-lg-12(tolerance='0' offset='0' scroller=".app-view" classes="{pinned:'pinned',unpinned:'unpinned',initial:'headroom'}")
+header.col-lg-12(headroom, tolerance='0' offset='0' scroller=".app-view" classes="{pinned:'pinned',unpinned:'unpinned',initial:'headroom'}")
   nav.navbar(role="navigation", ng-controller='HeaderCtrl')
     .container
       .navbar-header        
@@ -7,15 +7,49 @@ headroom.col-lg-12(tolerance='0' offset='0' scroller=".app-view" classes="{pinne
 
       .collapse.navbar-collapse
         ul.nav.navbar-nav.navbar-right
-          li(ng-if='!$root.user')
-            a.login(href='/auth/facebook', target='_self' translate) Login
+          li.dropdown
+            a.dropdown-toggle(href='', aria-haspopup='true', aria-expanded='true')
+              i.icon-bell.fa-fw
+              span.visible-xs-inline Notifications
+              span.badge.badge-sm.up.bg-danger.pull-right-xs 2
+            .dropdown-menu.w-xl.animated.fadeInUp
+              .panel.bg-white
+                .panel-heading.b-light.bg-light
+                  strong
+                    | You have
+                    span 2
+                    | notifications
+                .list-group
+                  a.media.list-group-item(href='')
+                    span.pull-left.thumb-sm
+                      img.img-circle(src='img/a0.jpg', alt='...')
+                    span.media-body.block.m-b-none
+                      | Use awesome animate.css
+                      br
+                      small.text-muted 10 minutes ago
+                  a.media.list-group-item(href='')
+                    span.media-body.block.m-b-none
+                      | 1.0 initial released
+                      br
+                      small.text-muted 1 hour ago
+                .panel-footer.text-sm
+                  a.pull-right(href='')
+                    i.fa.fa-cog
+                  a(href='#notes', data-toggle='class:show animated fadeInRight') See all the notifications
 
           li.dropdown(ng-if='$root.user')
-            a.dropdown-toggle(href='#', toggle='dropdown')
-              img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
+            a.dropdown-toggle.clear(href='', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              span.thumb-sm.avatar.pull-right
+                img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
+              span.hidden-sm.hidden-md {{$root.user.facebook.name}}
               b.caret
-            ul.dropdown-menu
+            ul.dropdown-menu.animated.fadeInRight.w
               li
-                a(href='/me/events', target='_self' translate) My events
+                a(ui-sref='app.page.profile', href='#/me/events') My events
+              li.divider
               li
-                a(href='/auth/signout', target='_self' translate) Logout
+                a(ui-sref='app.page.profile', href='#/auth/signout') Logout
+                  i.fa.fa-sign-out
+
+          li(ng-if='!$root.user')
+            a.login(href='/auth/facebook', target='_self' translate) Login

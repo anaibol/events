@@ -1,77 +1,72 @@
-ul.nav.nav-sidebar(ng-controller="SidebarCtrl")
-  form.navbar-form(role='search', ng-controller="LocationpickerCtrl")
-    .input-group
-      input.search.form-control(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected")
-      .input-group-btn
-        button.btn.btn-default(type='submit')
-          i.fa.fa-search
+section#sidebar.col-lg-2(sticky).pull-right(ng-controller="SidebarCtrl")
+  ul.nav.navbar-nav
+    li
+      //- form(role='form')
+      //-   input.form-control(type='search', placeholder='Search...')
+      //-   button.btn
+      //-     i.fa.fa-search
+      form.navbar-form(role='search', ng-controller="LocationpickerCtrl")
+        .input-group
+          input.search.form-control(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected")
+          .input-group-btn
+            button.btn.btn-default(type='submit')
+              i.fa.fa-search
+    li
+      a.accordion-toggle(ng-click='isCollapsed = !isCollapsed')
+        i.fa.fa-bar-chart-o
+        | Sort by
+        i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
+      ul.nav.nav-collapse(collapse='isCollapsed')
+        li
+          a(href='#')
+            | Popularity
+        li
+          a(href='#')
+            | Date
 
-  //- li
-  //-   .navbar-header Sort by
+    li
+      a(href='#') Today
 
-  //- li
-  //-   .navbar-header Today
+    li(ng-if="today.getTime() === Date.sun().getTime()")
+      a(href='#') This weekend
 
-  //- li(ng-if="today.getTime() === Date.sun().getTime()")
-  //-   .navbar-header This weekend
+    li(ng-if="today.getTime() !== Date.sun().getTime()")
+      a(href='#') Next weekend
 
-  //- li(ng-if="today.getTime() !== Date.sun().getTime()")
-  //-   .navbar-header Next weekend
+    li
+      a.accordion-toggle(ng-click='isCollapsed = !isCollapsed')
+        i.fa.fa-calendar
+        | Specific date
 
-  //- li
-  //-   .navbar-header Sort by
-
-  //- button.navbar-toggle(type='button', ng-click='isCollapsed = !isCollapsed')
-  //-   i.pull-right.fa(ng-class="{'fa-chevron-down': isCollapsed, 'fa-chevron-right': !isCollapsed}")
-
-  //- .nav-collapse(collapse='isCollapsed')
-  //-   ul.nav
-  //-     li
-  //-       a(href='#')
-  //-         i.icon-home.icon-white
-  //-         | Home
-  //-     li
-  //-       a(href='#') Lessons
-  //-     li
-  //-       a(href='#') Grades
-  //-   ul.nav.pull-right
-  //-     li
-  //-       a(href='#/class')
-  //-         i.icon-upload.icon-white
-  //-         | Upload/Save
-  //-     li
-  //-       a(href='#/class')
-  //-         i.icon-off.icon-white
-  //-         | Save/Logout
+      ul.nav.nav-collapse(collapse='isCollapsed')
+        li.date
+          //- datepicker(ng-change="$state.go('list', {date: date, tag: $root.tag})", ng-model="date", show-weeks="false")
+          datepicker(ng-change="$state.go('list', {since: date.getTime()})", ng-model="date", show-weeks="false")
+          //- mydatepicker.datepicker(ng-change="$state.go('list', {tag: $root.tag, city: $root.city, date: date.getTime()})", ng-model="date", show-weeks="false")
 
 
-  li
-    //- datepicker(ng-change="$state.go('list', {date: date, tag: $root.tag})", ng-model="date", show-weeks="false")
-    datepicker.datepicker(ng-change="$state.go('list', {since: date.getTime()})", ng-model="date", show-weeks="false")
-    //- mydatepicker.datepicker(ng-change="$state.go('list', {tag: $root.tag, city: $root.city, date: date.getTime()})", ng-model="date", show-weeks="false")
+    li.tags Explore by category
+      .tag-list
+        a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
 
-  //- li(ng-if='$root.user')
-  //-   a(ng-click='newEvent()') Submit an event
-  //-     i.fa.fa-plus
 
-.nav
-  .navbar-header Explore by category
-    .tag-list
-      a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
+    //- li(ng-if='$root.user')
+    //-   a(ng-click='newEvent()') Submit an event
+    //-     i.fa.fa-plus
 
-//- ul.nav
-//-   li
-//-     a(href='/about', ui-sref="about") About Us
+  //- ul.nav
+  //-   li
+  //-     a(href='/about', ui-sref="about") About Us
 
-//-   li
-//-     a(href='/privacy', ui-sref="privacy") Privacy policy
+  //-   li
+  //-     a(href='/privacy', ui-sref="privacy") Privacy policy
 
-//-   li
-//-     a(href='/terms', ui-sref="terms") Terms
+  //-   li
+  //-     a(href='/terms', ui-sref="terms") Terms
 
-//-   li
-//-     a(href='/support', ui-sref="support") Support
+  //-   li
+  //-     a(href='/support', ui-sref="support") Support
 
-//-   li
-//-     //-a(href='/contact')
-//-     a(href='mailto:info@wooepa.com', target='_top') Contact Us
+  //-   li
+  //-     //-a(href='/contact')
+  //-     a(href='mailto:info@wooepa.com', target='_top') Contact Us

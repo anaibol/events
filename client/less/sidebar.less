@@ -1,11 +1,33 @@
-.sidebar {
-  background-color: @red;
-  border-radius: 0;
-  border: none;
-  margin-top: 50px;
+#sidebar {
+  z-index: 999;
+  margin: 0;
   padding: 0;
-  .datepicker {
-    text-align: center;
+  border: none;
+
+  .navbar-nav {
+    font-size: 13px;
+    background-color: #dc3522;
+
+    li:not(:last-of-type) {
+      // border-bottom: 1px solid @red;
+      border-bottom: 1px solid lighten(@red, 5%);
+      float: none;
+    }
+    > li {
+      > a, > a:focus, > a:hover, > a:active {
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        outline: none;
+        color: @white;
+        background-color: darken(@red, 3%);
+      }
+      > a.active {
+        background-color: darken(@red, 5%);
+      }
+    }
+  }
+
+
+  .date {
     table {
       display: inline-table;
       .glyphicon {
@@ -21,6 +43,43 @@
       }
       .glyphicon-chevron-right:before {
         content: @fa-var-chevron-right;
+      }
+    }
+  }
+
+  .date, .tags {
+    padding: 15px;
+  }
+
+  .date {
+    text-align: center;
+    padding: 25px;
+    background-color: darken(@red, 3%);
+
+    table {
+      background-color: @red;
+    }
+
+    button {
+      background: none;
+      border: none;
+      width: 30px;
+      height: 30px;
+      // box-shadow: none;
+      span {
+        color: darken(@red, 20%);
+      }
+    }
+
+    button.active {
+      border-radius: 500px;
+    }
+
+    button:hover {
+      background-color: darken(@red, 20%);
+
+      span {
+        color: @red;
       }
     }
   }
