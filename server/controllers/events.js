@@ -110,10 +110,15 @@ exports.get = function(req, res) {
   var since = params.since || 0;
   var until = params.until || 0;
 
+  if (params.sortBy === 'popularity') {
+    sortBy = 'attending_count';
+    sortOrder = -1;
+  }
+
   var sortStr = '{"' + sortBy + '" :' + sortOrder + '}';
   var sort = JSON.parse(sortStr);
 
-  since = new Date(parseInt(since));
+  since = new Date(since);
 
   var query = {
     start_time: {
