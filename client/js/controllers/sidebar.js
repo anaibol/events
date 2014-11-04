@@ -1,13 +1,14 @@
-app.controller('SidebarCtrl', function($scope, $location) {
+app.controller('SidebarCtrl', function($scope, Events) {
   $scope.isCollapsed = true;
 
-  $scope.changeDate = function(date) {
-    date = getStringDate(date);
-    $location.url('/date/' + date);
-  };
+  // $scope.setQueryParam = function(date) {
+  //   Events
+  //   date = getStringDate(date);
+  //   $location.url('/date/' + date);
+  // };
 
-  function getStringDate(aDate) {
-    var dd = aDate;
+  $scope.getStringDate = function(date) {
+    var dd = date;
     var yy = dd.getYear();
     var mm = dd.getMonth() + 1;
     dd = dd.getDate();
@@ -22,5 +23,5 @@ app.controller('SidebarCtrl', function($scope, $location) {
     }
     var rs = yy + "-" + mm + "-" + dd;
     return rs;
-  }
+  };
 });

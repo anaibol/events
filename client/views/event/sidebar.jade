@@ -18,10 +18,10 @@ section#sidebar.col-lg-2.pull-right(ng-controller="SidebarCtrl")
         i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
       ul.nav.nav-collapse(collapse='isCollapsed')
         li
-          a(href='#')
+          a(href='#', ui-sref="list({sortBy: 'popularity'})")
             | Popularity
         li
-          a(href='#')
+          a(href='#', ui-sref="list({sortBy: ''})")
             | Date
 
     li
@@ -41,15 +41,14 @@ section#sidebar.col-lg-2.pull-right(ng-controller="SidebarCtrl")
       ul.nav.nav-collapse(collapse='isCollapsed')
         li.date
           //- datepicker(ng-change="$state.go('list', {date: date, tag: $root.tag})", ng-model="date", show-weeks="false")
-          datepicker(ng-change="$state.go('list', {since: date.getTime()})", ng-model="date", show-weeks="false")
+          datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
           //- mydatepicker.datepicker(ng-change="$state.go('list', {tag: $root.tag, city: $root.city, date: date.getTime()})", ng-model="date", show-weeks="false")
-
 
     li
       a(href='#') Explore by category
-        .tags
-          .tag-list
-            a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
+      .tags
+        .tag-list
+          a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
 
 
     //- li(ng-if='$root.user')

@@ -1,4 +1,4 @@
-var app = angular.module('wooepa', ['wooepa-templates', 'geolocation', 'ngStorage', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DS', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom']); //'imageupload', , 'seo' 'leaflet-directive'
+var app = angular.module('wooepa', ['wooepa-templates', 'geolocation', 'angular-data.DSCacheFactory', 'ngStorage', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DS', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom']); //'imageupload', , 'seo' 'leaflet-directive'
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 500);
 
@@ -97,27 +97,95 @@ app.service('geoip', function($http) {
 //   };
 // });
 
-app.factory('CacheService', function($cacheFactory) {
-  return $cacheFactory('CacheService');
-});
+// });
 
+var getStringDate = function(date) {
+  var dd = date;
+  var yy = dd.getYear();
+  var mm = dd.getMonth() + 1;
+  dd = dd.getDate();
+  if (yy < 2000) {
+    yy += 1900;
+  }
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+  var rs = yy + "-" + mm + "-" + dd;
+  return rs;
+};
 
-app.factory('EventsService', function(CacheService) {
+app.factory('Events', function($q, $http, DSCacheFactory, $rootScope, $querystring) {
+  var cache = DSCacheFactory('eventCache');
+
+  var query = {};
+
   return {
-    get: function(eid) {
-      var ev = CacheService.get(eid);
+    query: query,
+    getOne: function(eid) {
+      return cache.get(eid);
+    },
+    get: function(params) {
+      // console.log(query.since));
+      query = {
+        since: params.since || getStringDate($rootScope.today),
+        country: query.country || params.country,
+        lng: query.lng || params.lng,
+        lat: query.lat || params.lat,
+        tags: query.tags || params.tags,
+        sortBy: query.sortBy || params.sortBy
+      };
 
-      if (ev) {
-        return ev;
+      console.log(query);
+
+      return this.runQuery();
+    },
+    getMore: function() {
+      if (!query.skip) {
+        query.skip = 30;
+      } else {
+        query.skip += 30;
       }
 
-      return null;
+      return this.runQuery();
     },
-    set: function(ev) {
-      CacheService.put(ev.eid, ev);
+    normalize: function(ev) {
+      if (ev.attending_count >= 99) {
+        ev.tags.push('popular');
+      }
+
+      if (ev.price.num === 0) {
+        ev.tags.push('free');
+      }
+
+      if (ev.festival) {
+        ev.tags.push('festival');
+      }
+
+      ev.tags = _.uniq(ev.tags);
+
+      return ev;
     },
-    clear: function(eid) {
-      CacheService.removeAll();
+    runQuery: function() {
+      var that = this;
+      var deferred = $q.defer();
+
+      $http.get('/api/events?' + $querystring.toString(_.compactObject(query))).success(function(evs) {
+        var ev = {};
+
+        for (var i = evs.length - 1; i >= 0; i--) {
+          ev = evs[i];
+          ev = that.normalize(ev);
+
+          cache.put(ev.eid, ev);
+        }
+
+        deferred.resolve(evs);
+      });
+
+      return deferred.promise;
     }
   };
 });
