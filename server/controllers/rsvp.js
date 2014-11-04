@@ -1,6 +1,6 @@
 var Events = global.db.get('events');
 var Ev = require('../ev');
-
+var Game = require('../services/game.js');
 var graph = require('fbgraph');
 
 exports.getAttendings = function(req, res) {

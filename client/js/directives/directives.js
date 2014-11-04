@@ -44,6 +44,36 @@
 //     };
 // });
 
+app.directive('listEventPlayer', function($http){
+    return{
+        restrict : 'A',
+        link: function(scope, element, attrs)
+        {
+        $http({
+            method : 'GET',
+            data:{eid:scope.ev.eid},
+            url :'/api/list_player/' + scope.ev.eid
+          }).success(function(data) {
+        scope.ev.list_event_players = data;
+            }
+        );
+}
+}
+});
+
+app.directive('boostPlayer', function($http){
+return {
+            restrict: 'A',
+            link: function(scope, elem, req) {
+                $(elem).on("click",function() {
+                    $http.post('/api/boost/' + scope.ev.eid + '/'+ scope.player.uid);
+                    $http.post('/api/boost/update/' +scope.ev.eid + '/'+ scope.player.uid);
+                  });
+                //$(elem).html(retour);
+                }
+        }
+});
+
 app.directive('isotope', function($rootScope) {
   return {
     restrict: 'A',

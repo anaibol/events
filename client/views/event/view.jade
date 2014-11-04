@@ -65,6 +65,8 @@ section
               li.list-group-item(ng-repeat='player in ev.list_event_players', ng-if='player.facebook.id == ev.player_id')
                 img.img-circle(ng-src='{{ player.facebook.picture }}', ng-alt='{{player.name}}')
                 | {{ player.result }} pts
+                button.btn(boost-player) Boost
+                  i-fa-fa-flash
               li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
                 img.img-circle(ng-src='{{ player.facebook.picture }}', ng-alt='{{player.name}}')
                 | {{ player.result }} pts
