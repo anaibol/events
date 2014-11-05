@@ -1,4 +1,4 @@
-var app = angular.module('wooepa', ['wooepa-templates', 'geolocation', 'angular-data.DSCacheFactory', 'ngStorage', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DS', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom']); //'imageupload', , 'seo' 'leaflet-directive'
+var app = angular.module('wooepa', ['wooepa-templates', 'geolocation', 'ngStorage', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom', 'mb-adaptive-backgrounds']); //'imageupload', , 'seo' 'leaflet-directive'
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 500);
 
@@ -125,7 +125,15 @@ app.factory('Events', function($q, $http, DSCacheFactory, $rootScope, $querystri
   return {
     query: query,
     getOne: function(eid) {
-      return cache.get(eid);
+      // return cache.get(eid);
+
+      var deferred = $q.defer();
+
+      $http.get('http://localhost:3000/api/events/' + eid).success(function(ev) {
+        deferred.resolve(ev);
+      });
+
+      return deferred.promise;
     },
     get: function(params) {
       // console.log(query.since));

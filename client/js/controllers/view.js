@@ -1,8 +1,9 @@
 app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $http, instagram, ev) {
   console.log(ev);
+  console.log(123);
   $scope.ev = ev;
 
-  instagram.getLocationId($scope.ev.venue.loc.lat, $scope.ev.venue.loc.lng).success(function(res) {
+  instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
     if (res.meta.code !== 200) {
       // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
       return;

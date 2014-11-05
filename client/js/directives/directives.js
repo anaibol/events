@@ -49,10 +49,9 @@ app.directive('isotope', function($rootScope) {
     restrict: 'A',
     link: function(scope, element, attrs) {
       imagesLoaded(element[0].parentElement, function(instance) {
-        var iso = new Isotope(element[0].parentElement, {
+        $rootScope.iso = new Isotope(element[0].parentElement, {
           itemSelector: '.event'
         });
-        console.timeEnd('render list');
       });
     }
   };

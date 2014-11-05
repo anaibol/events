@@ -15,6 +15,8 @@ var MongoStore = require('connect-mongo')({
 });
 var flash = require('connect-flash');
 
+var mobile = require('detectmobilebrowsers');
+
 var db = require('monk')(global.config.db);
 
 var Events = db.get('events');
@@ -55,7 +57,6 @@ module.exports = function(app, passport, db) {
 
   app.use(methodOverride());
 
-
   // Express/Mongo session storage
   app.use(session({
     secret: 'aguantepantera',
@@ -80,6 +81,8 @@ module.exports = function(app, passport, db) {
   app.use(serveStatic(publicDir));
   app.use(serveStatic(distDir));
 
+  app.use(mobile.is_mobile());
+
   var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {
       var newPath = path + '/' + file;
@@ -97,16 +100,6 @@ module.exports = function(app, passport, db) {
     });
   };
   walk(routesDir);
-
-  app.get('/', function(req, res) {
-    res.render('index', {
-      title: 'Wooepa',
-      user: req.user ? JSON.stringify(req.user) : 'null',
-      fbAppId: global.fbAppId,
-      //events: events,
-      //pos: pos
-    });
-  });
 
   // app.use(function(err, req, res, next) {
   //   // Treat as 404

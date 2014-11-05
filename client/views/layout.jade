@@ -7,13 +7,17 @@ html
 
     #wrapper
       .container
-        block content
+        .content(ui-view)
 
     //- .global-navigation.back
     //-   a(href='/', ui-sref="^", ng-if="$state.$current !== ''")
     //-     i.fa-chevron-left
-
-    script(type='text/javascript', src='/js/app.min.js')
+    
+    if (!is_mobile)
+      script(type='text/javascript', src='/js/app.min.js')
+    else
+      script(type='text/javascript', src='/js/app.min.js')
+    
     script(type='text/javascript', src='http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false')
 
     block inline-scripts

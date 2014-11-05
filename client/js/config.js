@@ -16,26 +16,6 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
   //   }
   //   // }
   // })
-  // .state('list', {
-  //   // url: '{city}{slash:[/]?}{tag:[^0-9]}',
-  //   // url: '/{city}',
-  //   // url: '/{city}{slash:[/]?}{tag}',
-  //   url: '/',
-  //   templateUrl: 'event/list',
-  //   controller: 'ListCtrl',
-  //   resolve: {
-  //     events: function($rootScope, $stateParams, Event) {
-  //       $rootScope.query = {
-  //         skip: 0,
-  //         limit: 30,
-  //         since: today,
-  //         loc: $rootScope.loc
-  //       };
-
-  //       return Event.findAll($rootScope.loc);
-  //     }
-  //   }
-  // })
     .state('list', {
       // url: '{city}{slash:[/]?}{tag:[^0-9]}',
       // url: '/{city}',
@@ -153,6 +133,24 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     // });
     // }
   }
+
+  $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    // console.log(toState);
+    // if (!toState.parent) {
+    //   $rootScope.listRendered = true;
+    // } else if (!$rootScope.listRendered) {
+    //   // $rootScope.iso.layout();
+    //   console.log($state.current);
+    // // }
+    // console.log(fromState);
+    // console.log(toState);
+    if (fromState.name === '' && toState.name === 'list') {
+      $rootScope.renderList = true;
+    } else if (fromState.parent === 'list' && toState.name === 'list') {
+      $rootScope.renderList = true;
+    }
+
+  });
 
   ezfb.init();
 });

@@ -27,7 +27,6 @@
     "angular-sanitize": "~1.2.26",
     "angular-moment": "~0.8.2",
     "angular-cache": "~3.1.1",
-    "angular-data": "~1.0.0",
     "angular-truncate": "*",
     "angular-bootstrap": "~0.11.2",
     "angular-ui-utils": "~0.1.1",
