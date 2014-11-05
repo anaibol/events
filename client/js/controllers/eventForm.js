@@ -1,0 +1,120 @@
+app.controller('EventFormCtrl', function($scope, $modalInstance, $q, $filter, Restangular, $stateParams, Global) {
+  $scope.ev = {};
+
+  Events.one($stateParams.eid).then(function(ev) {
+    console.log($stateParams.eid);
+    $scope.ev = ev;
+    if (Global.user && $scope.ev.creator.id == Global.user.facebook.id)
+      Restangular.all('promote/' + $scope.ev.eid).post();
+    else
+      console.log(Global.user);
+  });
+
+
+  $scope.previewImage = function(element) {
+     $scope.$apply(function(scope) {
+        var reader = new FileReader();
+
+        reader.onload = function() {scope
+            $scope.imageSrc = this.result;
+        };
+
+        if (element.files[0]) {
+          $scope.imageFile = element.files[0].name;
+          reader.readAsDataURL(element.files[0]);
+        }
+     });
+  };
+
+  $scope.result = '';
+
+  $scope.days =[
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ];
+
+  $scope.games = ['Promotion by the Facebook user', 'Promotion by a promoter'];
+
+  $scope.options = {
+    types: '(establishment)'
+  };
+
+  // if (ev) {
+  //   $scope.ev = ev;
+  // }
+  // else {
+  //   $scope.ev = {
+  //     start_time: new Date(),
+  //     venue: {
+  //       country: "Argentina"
+  //     }
+  //   };
+  // }
+
+var words = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'regueton', 'reggaeton', 'suelta', 'kuduru'];
+
+  $scope.words = function(query) {
+    var deferred = $q.defer();
+    deferred.resolve($filter('filter')(words, query));
+    return deferred.promise;
+  };
+
+  $scope.submit = function() {
+    if ($scope.ev._id) {
+      if ($scope.imageFile) {
+
+        var formData = new FormData();
+
+        formData.append('image', $scope.imageSrc);
+        formData.append('model', angular.toJson($scope.ev));
+
+        Restangular.all('events/' + $scope.ev._id).withHttpConfig({transformRequest: angular.identity}).customPUT(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
+          $modalInstance.close($scope.ev);
+        });
+      } else {
+        if ($scope.ev.promotion)
+          $scope.ev.in_promotion = true;
+
+        Events.put($scope.ev).then(function(res) {
+          $modalInstance.close($scope.ev);
+        });
+      }
+    } else {
+      if ($scope.imageFile) {
+
+        var formData = new FormData();
+
+        formData.append('image', $scope.imageSrc);
+        formData.append('model', angular.toJson($scope.ev));
+
+        Restangular.all('events').withHttpConfig({transformRequest: angular.identity}).customPOST(formData, undefined, undefined, {'Content-Type': undefined, enctype:'multipart/form-data'}).then(function(res){
+          $modalInstance.close($scope.ev);
+        });
+      } else {
+        Events.post($scope.ev).then(function(res) {
+          $modalInstance.close($scope.ev);
+        });
+      }
+    }
+  };
+
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+  $scope.files = [];
+
+  //listen for the file selected event
+  $scope.$on("fileSelected", function (event, args) {
+      $scope.$apply(function () {            
+          //add the file object to the scope's files collection
+          $scope.files.push(args.file);
+      });
+  });
+
+});

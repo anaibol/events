@@ -419,16 +419,16 @@ function updateAttendings(eid, cb) {
         attending: attendings
       }
     });
+    cb(attendings);
   });
 
 }
 
 function getAttendings(eid, cb) {
-  graph.get(eid + '/attending?limit=50000', function(err, res) {
+  graph.get("/" + eid + '/attending', function(err, res) {
     if (err) {
       console.log(err);
     }
-
     var att = res.data;
 
     if (att) {
@@ -437,8 +437,7 @@ function getAttendings(eid, cb) {
       for (var i = att.length - 1; i >= 0; i--) {
         attendings.push(parseInt(att[i].id));
       }
-
-      cb(attendings);
+      cb(attendings); 
     }
   });
 

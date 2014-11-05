@@ -2,6 +2,8 @@ var Boosts = global.db.get('boosts');
 
 var Results = global.db.get('results');
 
+var Game = require('../services/game.js');
+
 exports.supBoost = function(req, res) {
 
   var boost = {
@@ -34,7 +36,7 @@ exports.addBoost = function(req, res) {
 
   Results.findOne({
     user_id: req.user.facebook.id,
-    event_id: parseInt(req.params.eid)
+    event_id: req.params.eid
   }, function (err, result) {
     if (err)
       console.log('err');
@@ -46,10 +48,10 @@ exports.addBoost = function(req, res) {
         event_id: req.params.eid,
         father_id: req.user.facebook.id,
         son_id: req.params.uid,
-        score: result.result
+        score: result.result,
+        old:0,
       }
-
-      Boosts.insert(boost, function(err, boost) {
+      Boosts.insert(boost,function(err, boost) {
           if (err)
             console.log(err);
           res.json(boost);
@@ -90,7 +92,7 @@ exports.updateBoosts = function (req, res) {
     } else if (player_result)
     {
         Boosts.find(
-          {'son_id': req.user.facebook.id,
+          {'son_id': req.params.uid,
            'event_id': req.params.eid
           }, function(err, father_boosts) {
           if (err) {
@@ -118,14 +120,18 @@ exports.updateBoosts = function (req, res) {
                     console.log(err)
                   else if (boost) {
                     console.log("Update");
-
+                    if (boost.old > 0)
+                    {
+                      Game.AddPoints(boost.son_id, req.params.eid, boost.old * -1);
+                    }
                     Boosts.update({_id: boost._id},
-                      {$set: {score: Math.max(boost.score, score)}},
+                      {$set: {old: Math.max(boost.score, score), score: Math.max(boost.score, score)}},
                       function(err, result) {
                       if (err) {
                         console.log(err);
                       }
-                      res.json(result);
+                      Game.AddPoints(boost.son_id, req.params.eid, Math.max(boost.score, score));
+                      //res.json(result);
                     });
                   }
                   else
@@ -138,7 +144,6 @@ exports.updateBoosts = function (req, res) {
                       son_id: req.params.uid,
                       score: score
                     }
-
                     Boosts.insert(new_boost, function (err) {
                       if (err)
                         console.log(err);

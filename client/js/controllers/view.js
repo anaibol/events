@@ -1,43 +1,36 @@
-app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $http, instagram, ev) {
+app.controller('ViewCtrl', function($scope, ezfb, $http, instagram, ev) {
   console.log(ev);
-  console.log(123);
   $scope.ev = ev;
 
   instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
-    if (res.meta.code !== 200) {
-      // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
-      return;
-    }
     if (res.data.length > 0) {
       instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
-        if (res.meta.code !== 200) {
-          // scope.error = res.meta.error_type + ' | ' + res.meta.error_message;
-          return;
-        }
         if (res.data.length > 0) {
           $scope.instagramPhotos = res.data;
-          console.log($scope.instagramPhotos);
-          // } else {
-          //   scope.error = "This hashtag has returned no results";
         }
       });
-      // } else {
-      //   scope.error = "This hashtag has returned no results";
     }
   });
 
   // $scope.attending = '';
-  // $scope.shared = false;
+  // $scope.today = new Date();
 
-  // $scope.isDisabled = false;
-  // $scope.btnShareText = "Share with your friends?";
-  // $scope.btnShareClass = "btn btn-success";
+  // $scope.ev = event;
 
-  // $scope.isBtnJoinDisabled = false;
-  // $scope.btnJoinText = "Join";
+  //  $scope.attending = 'Join';
+  // // $scope.shared = false;
 
-  // $scope.isBtnLeaveDisabled = false;
-  // $scope.btnLeaveText = "Leave";
+  //  $scope.isDisabled = false;
+  // // $scope.btnShareText = "Share with your friends?";
+  // // $scope.btnShareClass = "btn btn-success";
+
+  //  $scope.isBtnJoinDisabled = false;
+  // // $scope.btnJoinText = "Join";
+
+  //  $scope.isBtnLeaveDisabled = false;
+  //  $scope.ev.promotion = {};
+  //  $scope.ev.in_promotion = false;
+  //$scope.btnLeaveText = "Leave";
 
   // $scope.boosted = 0;
 
@@ -56,25 +49,25 @@ app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $htt
   //   return transformed;
   // };
 
-  // $scope.getPromoteLink = function() {
-  //   return $state.current.name.split('.')[0] + '.promote(ev)';
+  //$scope.getPromoteLink = function() {
+  //  return $state.current.name.split('.')[0] + '.promote(ev)';
   // }
 
   // $scope.isInPromotion = function() {
-  //   var currentDate = new Date();
+  //    var currentDate = new Date();
 
-  //   if ($scope.ev) {
-  //     if ($scope.ev.in_promotion) {f
+  //    if ($scope.ev) {
+  //      if ($scope.ev.in_promotion) {
 
-  //       var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, "UTC");
+  //        var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, "UTC");
 
-  //       if (end_date >= currentDate) {
+  //        if (end_date >= currentDate) {
   //         return (true);
-  //       }
+  //        }
   //     }
-  //   }
-  //   return (false);
-  // }
+  //    }
+  //    return (false);
+  //  }
 
   // $scope.addBoost = function(player, event_id, btn) {
   //   $http.get('boost/' + event_id + '/' + player.facebook.id).post().success(function(res) {
@@ -110,7 +103,6 @@ app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $htt
   //       return (0);
   //   });
   // }
-
   // if (!$scope.ev.list_event_players) {
   //   $scope.ev.list_event_players = [];
   // }
@@ -173,19 +165,17 @@ app.controller('ViewCtrl', function($scope, $stateParams, $rootScope, ezfb, $htt
 
   //   });
   // }
+  // if (Global.authenticated) {
+  //   $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
+  //     $scope.ev.attending = result;
 
-  if ($rootScope.user) {
-    $http.get('events/' + $scope.ev.eid + '/attendings').success(function(result) {
-      $scope.ev.attending = result;
-
-      if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) > 0) {
-        $scope.attending = 'attending';
-      } else {
-        $scope.attending = '';
-      }
-    });
-  }
-
+  //     if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) >= 0) {
+  //       $scope.attending = 'Leave';
+  //     } else {
+  //       $scope.attending = 'Join';
+  //     }
+  //   });
+  // }
   // var rsvp = Events.one(ev.eid);
 
   // Restangular.one('events', ev.eid)

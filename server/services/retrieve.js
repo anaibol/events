@@ -13,11 +13,13 @@ var Users = db.get('users');
 function unique(array) {
 	var result = [];
 
+	if (array)
+	{
 	for (i = 0; i < array.length; i++) {
 		if (!(array[i] in result))
 			result.push(array[i]);
 	}
-
+}
 	return (result);
 }
 
@@ -80,7 +82,7 @@ function searchPost(request, date_end, cb) {
 							data: data[i]
 						}
 
-						Actions.insert(action, function(err) {
+						Actions.update({post_id: action.post_id},{$set:{data:action.data}},function(err) {
 							if (err)
 								console.log(err);
 						});
@@ -120,11 +122,13 @@ function searchPostForEvent(request, date_end, eid, cb) {
 	var less_than_2_months = 1;
 
 	graph.get(request, function(err, result) {
-
-		if (result.data == null) {
-			console.log("Invalid");
-			cb();
-		} else if (err) {
+		if (result)
+		{
+			if (!result.data) {
+				console.log("Invalid");
+				cb();
+			}
+		 else if (err) {
 			console.log(err);
 			cb(err);
 		} else {
@@ -168,7 +172,7 @@ function searchPostForEvent(request, date_end, eid, cb) {
 								data: data[i]
 							}
 
-							Actions.insert(action, function(err) {
+							Actions.update({post_id: action.post_id},{$set:{data:action.data}}, function(err) {
 								if (err)
 									console.log(err);
 							});
@@ -189,7 +193,7 @@ function searchPostForEvent(request, date_end, eid, cb) {
 					cb();
 			}
 
-		}
+		}}
 	});
 
 }
