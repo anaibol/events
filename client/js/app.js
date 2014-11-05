@@ -125,11 +125,16 @@ app.factory('Events', function($q, $http, DSCacheFactory, $rootScope, $querystri
   return {
     query: query,
     getOne: function(eid) {
-      // return cache.get(eid);
+      var that = this;
+
+      if (cache.get(eid)) {
+        return cache.get(eid);
+      }
 
       var deferred = $q.defer();
 
-      $http.get('http://localhost:3000/api/events/' + eid).success(function(ev) {
+      $http.get('/api/events/' + eid).success(function(ev) {
+        ev = that.normalize(ev);
         deferred.resolve(ev);
       });
 

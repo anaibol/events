@@ -11,7 +11,6 @@ app.controller('ListCtrl', function($scope, $window, Events, evs) {
     if (!$scope.events || $scope.noMoreEvents) return;
 
     Events.getMore().then(function(evs) {
-      console.log(evs);
       if (evs.length) {
         $scope.events.push.apply($scope.events, evs);
         $scope.getTags();

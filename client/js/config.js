@@ -143,7 +143,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     //   console.log($state.current);
     // // }
     // console.log(fromState);
-    // console.log(toState);
+// console.log(toState);
     if (fromState.name === '' && toState.name === 'list') {
       $rootScope.renderList = true;
     } else if (fromState.parent === 'list' && toState.name === 'list') {

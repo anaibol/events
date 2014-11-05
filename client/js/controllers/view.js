@@ -15,7 +15,7 @@ app.controller('ViewCtrl', function($scope, ezfb, $http, instagram, ev) {
   // $scope.attending = '';
   // $scope.today = new Date();
 
-  // $scope.ev = event;
+  // $scope.ev = event,
 
   //  $scope.attending = 'Join';
   // // $scope.shared = false;
