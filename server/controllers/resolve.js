@@ -21,14 +21,6 @@ exports.getResults = function(req, res) {
       if (err)
         console.log(err)
       console.log("RESOLVE DONE");
-
-      Rsu.refreshResultsBoosted(req.params.eid, function(results, err) {
-        if (err)
-          console.log(err);
-        console.log("REFRESH DONE");
-        console.log(results);
-        res.json(results);
-      });
     });
   });
 

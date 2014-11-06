@@ -44,7 +44,7 @@ function getAllActionsResult(actions, cb) {
 
     var nb_done = 0;
 
-    var resultat_user = 2;
+    var resultat_user = 0;
 
     console.log("There is " + actions.length + " actions")
 

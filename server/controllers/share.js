@@ -9,7 +9,7 @@ var actions = global.db.get('actions');
 var Pro = require('../services/promoter.js');
 
 var moment = require('moment-timezone');
-
+var Game = require("../services/game.js")
 function convertToUTC(date, timezone) {
   date = new Date(date);
 
@@ -34,7 +34,12 @@ exports.saveShare = function(post_id, event_id, user_id, data) {
     active: true,
     data: data
   }
-
+  actions.find({user_id:user_id, event_id:event_id}, function(err, act){
+    if (act.length <= 1)
+    {
+      Game.AddPoints(user_id, event_id, 2);
+    }
+  });
   actions.insert(action, function(err) {
     if (err)
       console.log(err);
@@ -43,7 +48,6 @@ exports.saveShare = function(post_id, event_id, user_id, data) {
       console.log(action);
     }
   });
-
 }
 
 exports.share = function(req, res) {

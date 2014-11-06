@@ -1,7 +1,13 @@
 app.controller('ViewCtrl', function($scope, ezfb, $http, instagram, ev) {
   console.log(ev);
   $scope.ev = ev;
-
+$http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
+  $scope.ev.attending = result;
+ if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) >= 0)
+        $scope.attending = 'Leave';
+      else
+        $scope.attending = 'Join';
+    });
   instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
     if (res.data.length > 0) {
       instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
@@ -11,7 +17,7 @@ app.controller('ViewCtrl', function($scope, ezfb, $http, instagram, ev) {
       });
     }
   });
-
+  $http.get('/api/resolve/' + $scope.ev.eid + '/results');
   // $scope.attending = '';
   // $scope.today = new Date();
 

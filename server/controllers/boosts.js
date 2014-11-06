@@ -26,14 +26,9 @@ exports.supBoost = function(req, res) {
 }
 
 exports.addBoost = function(req, res) {
-
-  score = 2;
-
   console.log("Add");
-
   console.log(req.user.facebook.id);
   console.log(req.params.eid);
-
   Results.findOne({
     user_id: req.user.facebook.id,
     event_id: req.params.eid
@@ -49,18 +44,31 @@ exports.addBoost = function(req, res) {
         father_id: req.user.facebook.id,
         son_id: req.params.uid,
         score: result.result,
-        old:0,
       }
-      Boosts.insert(boost,function(err, boost) {
+    Boosts.findOne({event_id : req.params.eid, father_id: req.user.facebook.id, son_id: req.params.uid}, function(err, first_boost){
+      if (first_boost)
+      {
+        Game.AddPointsBoost(req.params.uid, req.params.eid, Math.max(first_boost.score, boost.score) - first_boost.score);
+        Boosts.update(boost, function(err, boost) {
           if (err)
             console.log(err);
-          res.json(boost);
       });
+      }
+      else
+      {
+        Game.AddPointsBoost(req.params.uid, req.params.eid, boost.score);
+        Boosts.insert(boost, function(err, boost) {
+          if (err)
+            console.log(err);
+        
+        });
+      }
+});
     }
     else
       res.json(null);
 
-  })
+  });
 
 };
 
@@ -80,19 +88,8 @@ exports.getBoost = function(req, res) {
 exports.updateBoosts = function (req, res) {
 
   console.log("Update boosts / Resolution");
-
-  Results.findOne(
-    {'user_id': req.params.uid,
-     'event_id': req.params.eid
-    }, function(err, player_result) {
-    if (err) {
-      res.render('error', {
-        status: 500
-      });
-    } else if (player_result)
-    {
-        Boosts.find(
-          {'son_id': req.params.uid,
+ Boosts.find(
+          {'son_id': req.user.facebook.id,
            'event_id': req.params.eid
           }, function(err, father_boosts) {
           if (err) {
@@ -120,17 +117,13 @@ exports.updateBoosts = function (req, res) {
                     console.log(err)
                   else if (boost) {
                     console.log("Update");
-                    if (boost.old > 0)
-                    {
-                      Game.AddPoints(boost.son_id, req.params.eid, boost.old * -1);
-                    }
                     Boosts.update({_id: boost._id},
-                      {$set: {old: Math.max(boost.score, score), score: Math.max(boost.score, score)}},
+                      {$set: {score: Math.max(boost.score, score)}},
                       function(err, result) {
                       if (err) {
                         console.log(err);
                       }
-                      Game.AddPoints(boost.son_id, req.params.eid, Math.max(boost.score, score));
+                      Game.AddPointsBoost(boost.son_id, req.params.eid, Math.max(boost.score, score) - boost.score);
                       //res.json(result);
                     });
                   }
@@ -159,9 +152,5 @@ exports.updateBoosts = function (req, res) {
           else
             res.json(father_boosts);
         });
-    }
-    else
-      res.json(player_result);
-  });
 
 };

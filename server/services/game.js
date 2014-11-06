@@ -1,13 +1,29 @@
 var Results = db.get('results');
 var Invitations = db.get('invitations');
+var Res = require('./resolve.js')
+
+function AddPointsBoost(uid, eid, point)
+{
+	Results.findOne({user_id:uid,event_id:eid},function(err,results){
+		if (results && results.result + point >= 0)
+		{
+			Results.update({user_id:uid,event_id:eid},{$inc:{result_boosted:point}});
+			console.log("Result value is '" + point + "' points");
+		}
+	});
+}
 
 function AddPoints(uid, eid, point)
 {
 	Results.findOne({user_id:uid,event_id:eid},function(err,results){
-		if (results)
+		if (results && results.result + point >= 0)
 		{
 			Results.update({user_id:uid,event_id:eid},{$inc:{result:point,result_boosted:point}});
 			console.log("Result value is '" + point + "' points");
+		}
+		else if (!results && point >= 0)
+		{
+			Results.insert({user_id:uid,event_id:eid, result: point, result_boosted: point, score: point});
 		}
 	});
 }
@@ -72,3 +88,4 @@ function getAttendingBonus2(event, uid) {
 
 module.exports.giveInvitePoints= giveInvitePoints;
 module.exports.AddPoints=AddPoints;
+module.exports.AddPointsBoost=AddPointsBoost;
