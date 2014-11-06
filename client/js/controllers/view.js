@@ -26,6 +26,8 @@ $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result)
   //  $scope.attending = 'Join';
   // // $scope.shared = false;
 
+
+
   //  $scope.isDisabled = false;
   // // $scope.btnShareText = "Share with your friends?";
   // // $scope.btnShareClass = "btn btn-success";
