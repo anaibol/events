@@ -6,7 +6,6 @@
     "connect-mongo": "^0.4.1",
     "cookie-parser": "^1.3.3",
     "cron": "^1.0.5",
-    "detectmobilebrowsers": "^0.1.1",
     "express": "^4.9.5",
     "express-session": "^1.8.2",
     "fbgraph": "^0.2.13",
