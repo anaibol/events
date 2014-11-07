@@ -1,4 +1,4 @@
-var app = angular.module('wooepa', ['wooepa-templates', 'geolocation', 'ngStorage', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom', 'mb-adaptive-backgrounds']); //'imageupload', , 'seo' 'leaflet-directive'
+var app = angular.module('wooepa', ['wooepa-templates', 'geolocation', 'ngStorage', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom', 'ngAnimate', 'mb-adaptive-backgrounds']); //'imageupload', , 'seo' 'leaflet-directive'
 
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 500);
 

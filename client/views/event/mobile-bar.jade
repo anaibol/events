@@ -1,0 +1,11 @@
+#mobile-bar.visible-xs
+  a(href="#", ng-click='mobileSortList = !mobileSortList')
+    | Sorting: Suggested
+    i.fa.fa-chevron-down
+  ul(ng-show='mobileSortList', ng-click='mobileSortList = !mobileSortList')
+    li
+      a(href='#', ui-sref="list({sortBy: 'popularity'})")
+        | Popularity
+    li
+      a(href='#', ui-sref="list({sortBy: ''})")
+        | Date

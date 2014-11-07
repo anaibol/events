@@ -1,10 +1,13 @@
 section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-show="$state.current.name === 'list'", ng-if="$root.renderList")
+
+  include mobile-bar
+
   include sidebar
 
-  .events.col-lg-10
-    a.event(ng-repeat="ev in events", id="{{$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})", adaptive-background)
+  .events.col-xs-12.col-sm-10.col-md-10.col-lg-10
+    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events", id="{{$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})", adaptive-background)
       .top
-        span.title.truncate {{ev.name}}
+        a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{ev.name}}
         //- span.title.truncate {{ev.description}}
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
@@ -34,4 +37,4 @@ section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite
             //- span.street.truncate {{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ", " : ""}}{{ev.venue.country}}
             //- span.street.truncate {{ev.venue.city}}
 
-.content(ui-view, autoscroll="false")
+ui-view

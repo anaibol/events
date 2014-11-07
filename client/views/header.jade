@@ -1,46 +1,45 @@
-header.col-lg-12(headroom, tolerance='0' offset='0' scroller=".app-view" classes="{pinned:'pinned',unpinned:'unpinned',initial:'headroom'}")
-  nav.navbar(role="navigation", ng-controller='HeaderCtrl')
+header(headroom, tolerance='0' offset='0' scroller=".app-view" classes="{pinned:'pinned',unpinned:'unpinned',initial:'headroom'}")
+  nav.navbar.navbar-inverse(role="navigation", ng-controller='HeaderCtrl')
     .container
-      .navbar-header        
-        button.pull-right.visible-xs.dk(ui-toggle-class='show', data-target='.navbar-collapse')
-          i.glyphicon.glyphicon-cog
-        button.pull-right.visible-xs(ui-toggle-class='off-screen', data-target='.app-aside', ui-scroll='app')
-          i.glyphicon.glyphicon-align-justify
-      
+      .navbar-header
+        button.navbar-toggle(type='button', ng-init="navCollapsed = true", ng-click="navCollapsed = !navCollapsed")
+          span.sr-only
+            | Toggle navigation
+          i.fa.fa-bars
         a.navbar-brand(href='/', ui-sref="list") Wooepa
         //- a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
 
-      .navbar-collapse.collapse(ng-if='$root.user', ng-cloak)
+      .collapse.navbar-collapse.hidden-xs(ng-if='$root.user', ng-cloak, ng-class="{'in':!navCollapsed}", ng-click="navCollapsed=true")
         ul.nav.navbar-nav.navbar-right
-          li.dropdown
-            a.dropdown-toggle(href='', aria-haspopup='true', aria-expanded='true')
-              i.fa.fa-bell
-              span.visible-xs-inline Notifications
-              span.badge.badge-sm.up.bg-danger.pull-right-xs 2
-            .dropdown-menu.w-xl.animated.fadeInUp
-              .panel.bg-white
-                .panel-heading.b-light.bg-light
-                  strong
-                    | You have
-                    span 2
-                    | notifications
-                .list-group
-                  a.media.list-group-item(href='')
-                    span.pull-left.thumb-sm
-                      img.img-circle(src='img/a0.jpg', alt='...')
-                    span.media-body.block.m-b-none
-                      | Use awesome animate.css
-                      br
-                      small.text-muted 10 minutes ago
-                  a.media.list-group-item(href='')
-                    span.media-body.block.m-b-none
-                      | 1.0 initial released
-                      br
-                      small.text-muted 1 hour ago
-                .panel-footer.text-sm
-                  a.pull-right(href='')
-                    i.fa.fa-cog
-                  a(href='#notes', data-toggle='class:show animated fadeInRight') See all the notifications
+          //- li.dropdown
+          //-   a.dropdown-toggle(href='', aria-haspopup='true', aria-expanded='true')
+          //-     i.fa.fa-bell
+          //-     span.visible-xs-inline Notifications
+          //-     span.badge.badge-sm.up.bg-danger.pull-right-xs 2
+          //-   .dropdown-menu.w-xl.animated.fadeInUp
+          //-     .panel.bg-white
+          //-       .panel-heading.b-light.bg-light
+          //-         strong
+          //-           | You have
+          //-           span 2
+          //-           | notifications
+          //-       .list-group
+          //-         a.media.list-group-item(href='')
+          //-           span.pull-left.thumb-sm
+          //-             img.img-circle(src='img/a0.jpg', alt='...')
+          //-           span.media-body.block.m-b-none
+          //-             | Use awesome animate.css
+          //-             br
+          //-             small.text-muted 10 minutes ago
+          //-         a.media.list-group-item(href='')
+          //-           span.media-body.block.m-b-none
+          //-             | 1.0 initial released
+          //-             br
+          //-             small.text-muted 1 hour ago
+          //-       .panel-footer.text-sm
+          //-         a.pull-right(href='')
+          //-           i.fa.fa-cog
+          //-         a(href='#notes', data-toggle='class:show animated fadeInRight') See all the notifications
 
           li.dropdown(ng-if='$root.user', ng-cloak)
             a.dropdown-toggle.clear(href='', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')

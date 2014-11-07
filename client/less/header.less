@@ -1,36 +1,4 @@
 header {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.navbar {
-  border-radius: 0;
-  border: none;
-  background-color: @red;
-  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0px 0px 5px #666666;
-  // border: 1px solid fade(@grey, 90%);
-  padding: 0 !important;
-  margin: 0 !important;
-}
-#list-view .navbar {
-  background: transparent;
-}
-.navbar .nav >li > a.brand {
-  padding-left: 20px;
-  margin-left: 0;
-}
-.navbar .nav >li > a.login {
-  background-image: url('/img/facebook.png');
-  margin: 0;
-  height: 46px;
-  width: 100px;
-  text-indent: -9999px;
-  margin-top: 4px;
-}
-.navbar-nav > li > .dropdown-menu {
-  min-width: 200%;
-  padding: 15px;
-}
-.headroom {
   position: fixed;
   top: 0;
   left: 0;
@@ -38,33 +6,71 @@ header {
   transition: transform 200ms linear;
   padding: 0;
   z-index: 998;
+
+  .navbar {
+    border-radius: 0;
+    border: none;
+    background-color: @red;
+    // box-shadow: 0 0 5px rgba(0, 0, 0, 0.1), 0px 0px 5px #666666;
+    // border: 1px solid fade(@grey, 90%);
+
+    .navbar-toggle {
+      //   background-color: darken(@red, 5%);
+      //   color: @white;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      transition: .3s;
+
+      i.fa {
+        margin-right: 0;
+        font-size: 24px;
+        line-height: 20px;
+        vertical-align: middle;
+      }
+    }
+
+    .navbar-toggle:hover {
+      // background-color: @white;
+      color: darken(@red, 5%);
+    }
+  }
+
+  .navbar .nav >li > a.login {
+    background-image: url('/img/facebook.png');
+    margin: 0;
+    height: px;
+    width: 100px;
+    text-indent: -9999px;
+    margin-top: 4px;
+  }
+  .navbar-nav > li > .dropdown-menu {
+    min-width: 200%;
+    padding: 15px;
+  }
+  .banner {
+    display: none;
+    background-color: darken(@red, 5%);
+    width: 100%;
+    z-index: 10000;
+    height: 300px;
+  }
+  .navbar-brand {
+    background-color: darken(@red, 5%);
+  }
+  .avatar {
+    width: 40px;
+    margin-bottom: -10px;
+    margin-top: -10px;
+    margin-left: 10px;
+  }
+  .avatar img {
+    width: 100%;
+    border-radius: 500px;
+  }
 }
 .unpinned {
   transform: translateY(-100%);
 }
 .pinned {
   transform: translateY(0%);
-}
-.banner {
-  display: none;
-  background-color: darken(@red, 5%);
-  width: 100%;
-  z-index: 10000;
-  height: 300px;
-}
-.navbar-brand {
-  background-color: darken(@red, 5%);
-}
-
-
-.avatar {
-  width: 40px;
-  margin-bottom: -10px;
-  margin-top: -10px;
-  margin-left: 10px;
-}
-
-.avatar img {
-    width: 100%;
-    border-radius: 500px;
 }

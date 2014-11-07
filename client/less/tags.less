@@ -1,78 +1,19 @@
 .tag-list {
   padding: 3px 0;
-  position: relative;
 }
 
 .tag {
   border-radius: 3px;
-  background-color: white;
   border: 1px solid white;
   color: #ffffff;
-  font-size: 13px;
+  font-size: 11px;
   cursor: pointer;
   margin: 2px;
+  padding: 1px 4px;
   display: inline-block;
-  line-height: 17px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
-
-.tag::before,
-.tag::after {
-  display: inline-block;
-  opacity: 0;
-  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
-  -moz-transition: -moz-transform 0.3s, opacity 0.2s;
-  transition: transform 0.3s, opacity 0.2s;
-}
-
-.tag::before {
-  margin-right: 10px;
-  content: '[';
-  -webkit-transform: translateX(20px);
-  -moz-transform: translateX(20px);
-  transform: translateX(20px);
-}
-
-.tag::after {
-  margin-left: 10px;
-  content: ']';
-  -webkit-transform: translateX(-20px);
-  -moz-transform: translateX(-20px);
-  transform: translateX(-20px);
-}
-
-.tag:hover::before,
-.tag:hover::after,
-.tag:focus::before,
-.tag:focus::after {
-  opacity: 1;
-  -webkit-transform: translateX(0px);
-  -moz-transform: translateX(0px);
-  transform: translateX(0px);
-}
-
-// .tag {
-//   color: rgba(0,0,0,0.2);
-//   font-weight: 700;
-//   text-shadow: none;
-// }
-
-// .tag::before {
-//   color: #fff;
-//   content: attr(data-hover);
-//   position: absolute;
-//   -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-//   -moz-transition: -moz-transform 0.3s, opacity 0.3s;
-//   transition: transform 0.3s, opacity 0.3s;
-// }
-
-// .tag:hover::before,
-// .tag:focus::before {
-//   -webkit-transform: scale(0.9);
-//   -moz-transform: scale(0.9);
-//   transform: scale(0.9);
-//   opacity: 0;
-// }
-
 
 .tag.salsa {
   background-color: #3eb9b9;
@@ -89,7 +30,7 @@
   border: 1px solid #c9a95d;
 }
 
-.tag.reggaeton {
+.tag.reggaeton, .tag.regueton {
   background-color: #692673;
   border: 1px solid #692673;
 }
