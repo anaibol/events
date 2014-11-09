@@ -1,4 +1,4 @@
-section#sidebar.col-lg-2.pull-right(ng-controller="SidebarCtrl")
+section#sidebar.hidden-xs.col-sm-2.col-md-2.col-lg-2(ng-controller="SidebarCtrl")
   ul.nav.navbar-nav
     li
       //- form(role='form')
@@ -9,10 +9,10 @@ section#sidebar.col-lg-2.pull-right(ng-controller="SidebarCtrl")
         .input-group
           input.search.form-control(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected")
           .input-group-btn
-            button.btn.btn-default(type='submit')
+            button.btn.btn-inverse(type='submit')
               i.fa.fa-search
     li
-      a.accordion-toggle(ng-click='isCollapsed = !isCollapsed')
+      a(href='#').accordion-toggle(ng-click='isCollapsed = !isCollapsed')
         i.fa.fa-bar-chart-o
         | Sort by
         i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
@@ -33,16 +33,15 @@ section#sidebar.col-lg-2.pull-right(ng-controller="SidebarCtrl")
     li(ng-if="today.getTime() !== Date.sun().getTime()")
       a(href='#') Next weekend
 
-    li
-      a.accordion-toggle(ng-click='isCollapsed = !isCollapsed')
+    li.hidden-xs.hidden-sm.hidden-md.hidden-lg
+      a(href='#').accordion-toggle(ng-click='isCollapsed = !isCollapsed')
         i.fa.fa-calendar
         | Specific date
 
       ul.nav.nav-collapse(collapse='isCollapsed')
-        li.date
-          //- datepicker(ng-change="$state.go('list', {date: date, tag: $root.tag})", ng-model="date", show-weeks="false")
-          datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
-          //- mydatepicker.datepicker(ng-change="$state.go('list', {tag: $root.tag, city: $root.city, date: date.getTime()})", ng-model="date", show-weeks="false")
+        li
+          .date
+            datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
 
     li
       a(href='#') Explore by category

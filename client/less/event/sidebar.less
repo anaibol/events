@@ -2,10 +2,10 @@
   z-index: 999;
   position: fixed;
   top: 0;
-  right: 15px;
-  
+  right: 0;
+  // padding: 0;
+
   .navbar-nav {
-    margin: 0;
     font-size: 13px;
     background-color: #dc3522;
 
@@ -25,26 +25,32 @@
         background-color: darken(@red, 10%);
       }
     }
+
+    & {
+      .mobile;
+      .content() {
+        background-color: orange;
+      }
+    }
+  }
+
+  & {
+    .mobile;
+    .content() {
+      background-color: orange;
+    }
   }
 
 
   .date {
-    table {
-      display: inline-table;
-      .glyphicon {
-        display: inline-block;
-        font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
-        font-size: inherit; // can't have font-size inherit on line above, so need to override
-        text-rendering: auto; // optimizelegibility throws things off #1094
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      .glyphicon-chevron-left:before {
-        content: @fa-var-chevron-left;
-      }
-      .glyphicon-chevron-right:before {
-        content: @fa-var-chevron-right;
-      }
+    .glyphicon {
+      .fa();
+    }
+    .glyphicon-chevron-left:before {
+      content: @fa-var-chevron-left;
+    }
+    .glyphicon-chevron-right:before {
+      content: @fa-var-chevron-right;
     }
   }
 
@@ -53,7 +59,6 @@
   }
 
   .date {
-    text-align: center;
     padding: 25px;
     background-color: darken(@red, 3%);
 
