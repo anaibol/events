@@ -1,9 +1,14 @@
 global.rootDir = __dirname + '/../';
 global.configDir = rootDir + 'config';
-global.config = require(configDir + '/env/' + process.env.NODE_ENV + '.js');
+global.config = require(configDir + '/env/production.js');// + process.env.NODE_ENV + '.js');
+console.log(global.config.db);
+//global.config.db = global.config.db.replace("localhost", "wooepa.com") //passer en prod BD
+console.log(global.config.db);
+//export NODE_ENV=test pour être sur la base de donnée de tests.
+
 
 var mongojs = require('mongojs');
-var db = mongojs(global.config.db, ['events','LiveParPays_results']);
+var db = mongojs('admin:0303456@wooepa.com/wooepa', ['events','LiveParVilles_results']);
 
 // minuit ce matin
 var Dateminuit = new Date();
@@ -24,21 +29,21 @@ db.events.find({$or: [{ start_time: {$gt: Dateminuit }}, {end_time: {$gt: Datemi
 
 
 
-//===================== Map reduce: Nombre d'events LIVE par pays
-var LiveParPays = {};
+//===================== Map reduce: Nombre d'events LIVE par Villes
+var LiveParVilles = {};
 
-LiveParPays.execute = function () {
+LiveParVilles.execute = function () {
 // Minuit est compris par la fonction
 //console.log("Minuit est compris par la fonction : " + Dateminuit);
     
 //Le plan
     var mapper = function () {
 
-        emit(this.venue.country, 1);
-        //countries est un tabeau avec tous les pays trouvés
+        emit(this.venue.city, 1);
+        //countries est un tabeau avec tous les Villes trouvés
        // var countries = this.venue.country.split(',');
         //for (i in countries) {
-            // on émet par elements du tableau {pays, 1}
+            // on émet par elements du tableau {Villes, 1}
          //   emit(countries[i], 1);
         //}
         
@@ -47,7 +52,7 @@ LiveParPays.execute = function () {
 //Le reducer
     var reducer = function (key, values) {
         var count = 0;
-        //là il ne va rester qu'une seule key pays et on somme les 1
+        //là il ne va rester qu'une seule key Villes et on somme les 1
         for (index in values) {
             count += values[index];
         }
@@ -65,20 +70,20 @@ LiveParPays.execute = function () {
         //query: {start_time: 
          //   {$gt:new Date('10/10/2012')}
         //},
-        out: "LiveParPays_results"
+        out: "LiveParVilles_results"
     }
     );
 
-    db.LiveParPays_results.find(function (err, docs) {
+    db.LiveParVilles_results.find(function (err, docs) {
         if (err) console.log(err);
-        console.log("nombre events Live par pays \n", docs);
+        console.log("nombre events Live par Villes \n", docs);
     });
 
 };
 //===================== 
 
-LiveParPays.execute();
+LiveParVilles.execute();
 console.log("raphastar est là ? Fuerza viejo");
-module.exports = LiveParPays;
+module.exports = LiveParVilles;
 
 
