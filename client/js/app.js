@@ -10,6 +10,44 @@ app.factory('Event', function(DS) {
   });
 });
 
+var fbtok = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGlDcQcEAzZAtmyDrOlrwDpOG7N64BTdloH0tDia3OPRb0fRLBXiLKATFMPzRoE0estUT8z6gz7Mb73yBLh3oXXFCt8UmI5fe3pLg0cUi1ZAamY02PZC25OxBYwMKYKMJKlzedF1CmIoh7Iekah5tJQ7';
+
+ app.factory('fbvideos', function($http) {
+   var base = 'https://graph.facebook.com'
+     return {
+    getFbVideo: function(eid) {
+       var request = '/' + eid + '/feed';
+       var url = base + request;
+       var config = {
+         'params': {
+           'event_id': eid,
+           'access_token': fbtok,
+           'callback': 'JSON_CALLBACK'
+         }
+       };
+       return $http.jsonp(url, config);
+     }
+   }
+ });
+ 
+ app.factory('fbphoto', function($http) {
+   var base = 'https://graph.facebook.com'
+     return {
+     getFbPics: function(eid) {
+       var request = '/' + eid + '/photos?acces_token=' + fbtok;
+       var url = base + request;
+       var config = {
+         'params': {
+           'event_id': eid,
+           'access_token': fbtok,
+           'callback': 'JSON_CALLBACK'
+         }
+       };
+       return $http.jsonp(url, config);
+     }
+   }
+ });
+
 var tokenInstagram = '1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab';
 
 app.factory('instagram', function($http) {

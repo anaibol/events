@@ -21,9 +21,7 @@ if (rest)
 			var obj = {
 				uid:0,
 				result:0,
-				facebook: {}
 				};
-				picture:'0'
 			obj.uid = parseInt(rest[i].user_id);
 			obj.result = parseInt(rest[i].result_boosted);
 			list.push(obj);
@@ -34,3 +32,5 @@ if (rest)
 	}
 });
 }
+
+//exports.findPlayers = findPlayers;

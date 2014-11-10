@@ -23,22 +23,16 @@ function AddPoints(uid, eid, point)
 		}
 		else if (!results && point >= 0)
 		{
-			Results.insert({user_id:uid,event_id:eid, result: point, result_boosted: point, score: point});
+			Results.insert({user_id:uid,event_id:eid, result: point, result_boosted: point, score: 0});
 		}
 	});
 }
 
-function calcPoints(eid, uid, uids)
+function calcPoints(eid, uid, uids, inv)
 {
-	Invitations.findOne({user_id:uid,event_id:eid},function(err,inv){
-		if (err)
-			console.log(err);
 		var total = inv.invited.length * 3;
-		inv.score *= -1;
-		AddPoints(uid, eid, inv.score)
 		Invitations.update({user_id:uid,event_id:eid},{user_id:uid, event_id:eid, invited: inv.invited, score:total});
-		AddPoints(uid, eid,total);
-	});
+		AddPoints(uid, eid, total - inv.score);
 }
 
 function giveInvitePoints(eid, uid, uids)
@@ -59,7 +53,7 @@ function giveInvitePoints(eid, uid, uids)
 			Invitations.findOne({user_id: uid, event_id: eid}, function(err, inv){
 				if (inv)
 				{	
-					calcPoints(eid, uid, uids);
+					calcPoints(eid, uid, uids, inv);
 				}
 			});
 		});

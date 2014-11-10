@@ -6,10 +6,9 @@ var Ev = require('../ev.js');
 
 var actions = global.db.get('actions');
 
-var Pro = require('../services/promoter.js');
-
 var moment = require('moment-timezone');
 var Game = require("../services/game.js")
+
 function convertToUTC(date, timezone) {
   date = new Date(date);
 
@@ -43,10 +42,6 @@ exports.saveShare = function(post_id, event_id, user_id, data) {
   actions.insert(action, function(err) {
     if (err)
       console.log(err);
-    else {
-      Pro.associatePlayer(user_id, event_id);
-      console.log(action);
-    }
   });
 }
 
@@ -63,25 +58,10 @@ exports.share = function(req, res) {
   var days = ["Lundi", "Mardi", "Mecredi", "Jeudi", "Vendredi", "Samedi",
     "Dimanche"
   ];
-  /*var months = [ "january", "february", "march", "april", "may", "june",
-    "july", "august", "september", "october", "november", "december" ];
-  var days = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-    "Sunday" ];*/
 
-  console.log("Facebook publishing...");
-  console.log("Event id: " + req.params.eid);
   Ev.findById(req.params.eid, function(ev) {
-    if (ev)
-      console.log("Mongodb found something");
-    else {
-      console.log("Mongodb found nothing");
-      console.log("EXIT");
-      res.json({
-        error: "Bad event ID"
-      });
+    if (!ev)
       return (0);
-    }
-
     if (ev.name.length > 56)
       var name = ev.name.substring(0, 56) + "..."
     else
@@ -93,7 +73,6 @@ exports.share = function(req, res) {
       var pic = "";
 
     var wallPost = {
-      //name: "UN BISOU A GAGNER WOOEPA ! ",
       name: name,
       link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
       picture: pic,
@@ -101,7 +80,6 @@ exports.share = function(req, res) {
       message: ""
     };
 
-    //wallPost.description += name + ' \n'
     if (ev.location) {
       wallPost.description += "@ " + ev.location
       if (ev.venue) {
@@ -153,11 +131,6 @@ exports.share = function(req, res) {
       if (i < 2 && ev.tags[i + 1])
         wallPost.description += " "
     }
-
-    wallPost.message += name + ' \n'
-    wallPost.message += wallPost.description
-    wallPost.message += ' \n' + "E: https://www.facebook.com/events/" + ev.eid + "/"
-
     graph.post('/' + req.user.facebook.id + '/feed' + '?access_token=' + req.user.accessToken, wallPost, function(err, result) {
       if (err) {
         console.log(err);

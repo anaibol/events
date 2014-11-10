@@ -1,7 +1,5 @@
 var Events = global.db.get('events');
 
-var Rsu = require('../services/results.js');
-
 var Upd = require('../services/update.js');
 
 var Rso = require('../services/resolve.js')
