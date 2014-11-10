@@ -140,17 +140,13 @@ app.directive('setAttendings', function($http) {
     link: function(scope, elem) {
       $(elem).on("click", function() {
         if (scope.attending == 'Join') {
-          $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp'); //.post({attendingStatus: 'attending'});
+          $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp');
           scope.attending = 'Leave';
-          //$(this).textContent = 'Leave';
         } else if (scope.attending == 'Leave') {
-          $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn'); //.post({attendingStatus: 'declined'});
+          $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn');
           scope.attending = 'Join';
-          //    $(this).textContent = 'Join';
         }
         $('#event-rsvp-btns').html(scope.attending);
-        //scope.$apply();
-        //location.reload();
       });
 
     }

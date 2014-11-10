@@ -11,9 +11,7 @@ form.event-form.form-horizontal
           script(type='text/javascript').
             new datepickr('datepick');
           label.control-label End Time
-            input.timetest(type='text', name='time3',ng-model='ev.promotion.end_time')
-            script(type='text/javascript').
-              $("input.timetest").timepicki()
+            input(type='text')
         .control-group
           label.control-label Commentary
           textarea#description.form-control(required='required', ng-model='ev.promotion.commentary', cols='30', rows='5', placeholder='Content')

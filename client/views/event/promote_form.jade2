@@ -6,8 +6,7 @@ form.event-form.form-horizontal
           input#reward.form-control(required='required', type='text', ng-model='ev.promotion.reward', placeholder='Reward for the game')
         .control-group.date
           label.control-label Date of end of the game
-          .input-group(ng-controller='DatepickerCtrl', ng-click='open($event)')
-            input.form-control(required='required', type='text', ng-model='ev.promotion.end_time', min='minDate', datepicker-options='dateOptions', datepicker-popup='dd - MMMM', is-open='opened')
+          input(ng-click:'datepicker', type = 'text')
             span.input-group-btn
               button.btn.btn-default
                 i.fui-calendar-solid(ng-click='open($event)')

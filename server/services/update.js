@@ -93,77 +93,77 @@ function updateActions(event_id, cb) {
 
 }
 
-function updateEvent(event, cb) {
+// function updateEvent(event, cb) {
 
-  var Events = db.get('events');
+//   var Events = db.get('events');
 
-  graph.get('/' + event.eid + '?access_token=' + config.app.id, function(err, result) {
-    if (err) {
-      console.log(err);
-      cb(event, err);
-    } else if (result) {
-      console.log(result);
-      Events.update({
-        'eid': event.eid
-      }, {
-        $set: result
-      }, function(ev, err) {
-        if (err)
-          cb(ev, err);
-        else
-          cb(ev);
-        console.log("update done")
-      });
-    } else
-      cb(event);
-  });
-}
+//   graph.get('/' + event.eid + '?access_token=' + config.app.id, function(err, result) {
+//     if (err) {
+//       console.log(err);
+//       cb(event, err);
+//     } else if (result) {
+//       console.log(result);
+//       Events.update({
+//         'eid': event.eid
+//       }, {
+//         $set: result
+//       }, function(ev, err) {
+//         if (err)
+//           cb(ev, err);
+//         else
+//           cb(ev);
+//         console.log("update done")
+//       });
+//     } else
+//       cb(event);
+//   });
+// }
 
-function updateLastMonthEvents(cb) {
+// function updateLastMonthEvents(cb) {
 
-  var Events = db.get('events');
+//   var Events = db.get('events');
 
-  var date = new Date();
+//   var date = new Date();
 
-  date.setSeconds(0);
-  date.setMinutes(0);
-  date.setHours(0);
+//   date.setSeconds(0);
+//   date.setMinutes(0);
+//   date.setHours(0);
 
-  var dateLessMonth = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
+//   var dateLessMonth = new Date(date.getFullYear(), date.getMonth() - 1, date.getDate());
 
-  console.log(dateLessMonth)
+//   console.log(dateLessMonth)
 
-  Events.find({
-    'start_time': {
-      $gte: dateLessMonth,
-      $lt: date
-    }
-  }).success(function(evs) {
+//   Events.find({
+//     'start_time': {
+//       $gte: dateLessMonth,
+//       $lt: date
+//     }
+//   }).success(function(evs) {
 
-    var nb_done = 0;
+//     var nb_done = 0;
 
-    if (evs && evs.length > 0) {
-      for (i = 0; i < evs.length; i++) {
+//     if (evs && evs.length > 0) {
+//       for (i = 0; i < evs.length; i++) {
 
-        updateEvent(evs[i], function(ev, err) {
-          if (err)
-            console.log(err);
-          else if (ev) {
-            console.log("UPDATE done for event with id: " + ev.eid);
-          }
-          nb_done++;
-          if (nb_done == (evs.length))
-            cb();
-        });
-      }
-    } else
-      cb();
+//         updateEvent(evs[i], function(ev, err) {
+//           if (err)
+//             console.log(err);
+//           else if (ev) {
+//             console.log("UPDATE done for event with id: " + ev.eid);
+//           }
+//           nb_done++;
+//           if (nb_done == (evs.length))
+//             cb();
+//         });
+//       }
+//     } else
+//       cb();
 
-  }).error(function(err) {
-    cb(err);
-  });
-}
+//   }).error(function(err) {
+//     cb(err);
+//   });
+// }
 
-module.exports.updateLastMonthEvents = updateLastMonthEvents;
+//module.exports.updateLastMonthEvents = updateLastMonthEvents;
 module.exports.updateActions = updateActions;
 module.exports.updatePost = updatePost;

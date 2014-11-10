@@ -4,10 +4,9 @@ var graph = require('fbgraph');
 
 var Ev = require('../ev.js');
 
-var Res = require('./results.js');
-
 var Pro = require('./promoter.js');
 
+var Game = require('./game.js')
 var Users = db.get('users');
 
 function unique(array) {
@@ -70,7 +69,7 @@ function searchPost(request, date_end, cb) {
 
 						var event_id = link_splited[link_splited.length - 1];
 
-						Pro.associatePlayer(id[0], event_id);
+						//Pro.associatePlayer(id[0], event_id);
 
 						var action = {
 							user_id: id[0],
@@ -219,7 +218,6 @@ function retrieveActions(user_id, cb) {
 			searchPost(request, date_end, function(err) {
 				if (err)
 					console.log(err);
-				console.log("End for: " + user_id);
 				cb();
 			});
 
@@ -230,7 +228,6 @@ function retrieveActions(user_id, cb) {
 
 function retrieveEventActions(db, user_id, event_id, cb) {
 	if (!db) {
-		console.log("Database is null");
 		cb();
 	}
 
@@ -252,7 +249,6 @@ function retrieveEventActions(db, user_id, event_id, cb) {
 			searchPostForEvent(request, date_end, event_id, function(err) {
 				if (err)
 					console.log(err);
-				console.log("End for: " + user_id);
 				cb();
 			});
 
@@ -277,8 +273,6 @@ function retrieveForEvent(event_id, cb) {
 			console.log(err);
 			cb(err);
 		} else if (event) {
-			console.log("Retrieve for event: " + event.name);
-
 			var list_players = exports.unique(event.list_event_players);
 
 			var nb_done = 0;
@@ -320,13 +314,7 @@ function retrieveEventAttendingUser(user_id, cb) {
 					cb();
 
 				for (i = 0; i < result.data.length; i++) {
-					Res.addResult(result.data[i].id, user_id, function(err) {
-						if (err)
-							cb(err);
-						nb_done++;
-						if (nb_done == result.data.length)
-							cb();
-					});
+					Game.AddPoints(user_id, result.data[i].id, 6);
 				}
 			});
 		}

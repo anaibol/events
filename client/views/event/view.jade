@@ -4,7 +4,7 @@ section.event-view
     .bg-container
       .bg-image(style='background-image: url({{ev.pic_cover.source}});')
       h3.title.truncate {{ev.name}}
-    a.event(ui-sref='{{getPromoteLink()}}', ng-if='canEdit()') Promote event
+    a.event(ui-sref="promote({eid: ev.eid})") Promote event
     a.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{ev.eid}}/') Facebook event
     .tag-list
       span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
@@ -35,7 +35,7 @@ section.event-view
           .event-rsvp-btns
             button.btn(set-attendings) {{attending}}
           .event-rsvp-btns
-            button.btn(friend-selector) Invite your friends!
+            button.btn(friend-selector) Invite your friends !
           .event-rsvp-btns
             button.btn(share-event) Share with your friends?
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if='ev.in_promotion')
@@ -72,6 +72,13 @@ section.event-view
                   | {{ player.result }} pts
                   button.btn Boost
                     i-fa-fa-flash       
-      .row
-        .col-xs-6.col-md-3(ng-repeat='image in ev.images', ng-if='ev.images')
-        .col-xs-6.col-md-3(ng-repeat='photo in ev.photos', ng-if='ev.photos')
+    .row
+      br
+      .span(ng-repeat='vidz in videos', style='float:left')
+        object(type="text/html" data="{{vidz}}" style="width:320px;height:240px;")
+      .span(ng-repeat='pics in fbpics',style='margin-top:5px;margin-left:50px;display:inline;')
+        a(href='{{pics.source}}')
+          img(ng-src='{{pics.source}}', style ='width:13%;')
+      .span(style='width:20%;float:left;display:inline;', ng-repeat='image in instagramPhotos')
+        a(href='{{image.images.standard_resolution.url}}')
+          img(ng-src='{{image.images.low_resolution.url}}')

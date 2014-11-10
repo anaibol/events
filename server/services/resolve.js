@@ -1,10 +1,11 @@
 var db = require('monk')(global.config.db);
 var Game = require('./game.js');
+var Player = require('../controllers/list_player.js')
 var Up = require('./retrieve.js');
+
 function getActionResult(action, cb) {
 
     if (!db) {
-        console.log("Database is null");
         cb();
     }
 
@@ -67,31 +68,12 @@ function getAllActionsResult(actions, cb) {
 
 }
 
-function getAttendingBonus(event, user_id, cb) {
-
-    var nb_done = 0;
-
-    var bonus = 0;
-
-    for (j = 0; j < event.attending.length; j++) {
-        nb_done++;
-        if (event.attending[j] == user_id) {
-            console.log("Attending BONUS");
-            bonus = 6;
-        }
-        if (nb_done == event.attending.length)
-            cb(bonus);
-    }
-
-}
-
 function getActionsResult(event, event_id, user_id, cb) {
 
     var Actions = db.get('actions');
 
     var Results = db.get('results');
 
-    console.log("----- EID -----");
     console.log(event.eid);
 Results.findOne({user_id:user_id,event_id:event_id},function(err,results){
         if (!results)
@@ -106,22 +88,18 @@ Results.findOne({user_id:user_id,event_id:event_id},function(err,results){
             console.log(err);
             cb(err);
         } else if (actions) {
-
-            console.log("GETTING");
             console.log(actions.length);
             getAllActionsResult(actions, function(resultat_user, err) {
                 if (err)
                     console.log(err);
-                console.log("GET ALL ENDED");
                 console.log(resultat_user);
                 Results.findOne({user_id:user_id, event_id:event_id}, function(err, result){
                     if (result)
                     {
-                        result.score *= -1;
-                        Game.AddPoints(user_id, event_id, result.score)
+                        Game.AddPoints(user_id, event_id, result.score * -1)
                     }
-                    Results.update({user_id:user_id,event_id:event_id},{$set:{score:resultat_user}});
                     Game.AddPoints(user_id, event_id, resultat_user);
+                    Results.update({user_id:user_id,event_id:event_id},{$set:{score:resultat_user}});
                 });
             });
         }
@@ -147,24 +125,30 @@ Up.retrieveForEvent(event_id, function(cb){
         if (err) {
             console.log(err);
         } else if (event) {
-            var list_players = event.list_event_players;
+            var req  = {
+                params : {
+                    eid: event_id
+                }
+            };
+            Results.find({event_id:event_id}, function (err, list_players) {
 
             var nb_done = 0;
 
-            console.log("Game resolution for the event with id: " + event_id);
             for (i = 0; list_players && i < list_players.length; i++) {
 
-                exports.getActionsResult(event, event_id, list_players[i], function(err) {
+                exports.getActionsResult(event, event_id, list_players[i].user_id, function(err) {
                     nb_done++;
                     if (err)
                         console.log(err)
                 });
 
             }
-        } else {
+        });
+        }
+         else {
             console.log("Event not found");
         }
-    });
+});
 }
 
 module.exports.resolveGames = resolveGames;

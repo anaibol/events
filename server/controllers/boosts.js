@@ -4,41 +4,21 @@ var Results = global.db.get('results');
 
 var Game = require('../services/game.js');
 
-exports.supBoost = function(req, res) {
-
-  var boost = {
-    event_id: req.params.eid,
-    father_id: req.user.facebook.id,
-    son_id: req.params.uid
-  }
-
-  console.log("Remove");
-              Boosts.remove({
-                          'event_id': boost.event_id,
-                          'father_id': boost.father_id,
-                          'son_id': boost.son_id
-              }, function (err) {
-                if (err)
-                  console.log(err);
-                res.json(boost);
-              });
-
-}
 
 exports.addBoost = function(req, res) {
-  console.log("Add");
-  console.log(req.user.facebook.id);
-  console.log(req.params.eid);
+  if (parseInt(req.user.facebook.id) == parseInt(req.params.uid))
+  {
+      res.json(null);
+      return (-1);
+  }
   Results.findOne({
     user_id: req.user.facebook.id,
     event_id: req.params.eid
   }, function (err, result) {
     if (err)
-      console.log('err');
+      console.log(err);
 
     if (result) {
-    console.log(result);
-
       var boost = {
         event_id: req.params.eid,
         father_id: req.user.facebook.id,
@@ -72,22 +52,8 @@ exports.addBoost = function(req, res) {
 
 };
 
-exports.getBoost = function(req, res) {
-
-  Boosts.findOne({
-      event_id: req.params.eid,
-      father_id: req.user.facebook.id
-    }, function(err, boost) {
-                if (err)
-                  console.log(err);
-                else if (boost)
-                  res.json(boost);
-    });
-};
-
 exports.updateBoosts = function (req, res) {
 
-  console.log("Update boosts / Resolution");
  Boosts.find(
           {'son_id': req.user.facebook.id,
            'event_id': req.params.eid
@@ -98,11 +64,7 @@ exports.updateBoosts = function (req, res) {
             });
           } else if (father_boosts)
           {
-            console.log("There is boosts here");
-
             for (i = 0; i < father_boosts.length; i++) {
-              console.log("Boost n°" + i);
-              console.log(father_boosts[i]);
 
               var father_id = father_boosts[i].father_id;
 
@@ -116,7 +78,6 @@ exports.updateBoosts = function (req, res) {
                   if (err)
                     console.log(err)
                   else if (boost) {
-                    console.log("Update");
                     Boosts.update({_id: boost._id},
                       {$set: {score: Math.max(boost.score, score)}},
                       function(err, result) {
@@ -124,13 +85,10 @@ exports.updateBoosts = function (req, res) {
                         console.log(err);
                       }
                       Game.AddPointsBoost(boost.son_id, req.params.eid, Math.max(boost.score, score) - boost.score);
-                      //res.json(result);
                     });
                   }
                   else
                   {
-                    console.log('Insert new boosts');
-
                     var new_boost = {
                       event_id: req.params.eid,
                       father_id: father_id,

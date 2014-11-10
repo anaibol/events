@@ -40,6 +40,11 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
         }
       }
     })
+    .state('promote', {
+        url: ':eid/promote',
+        templateUrl: 'event/promote_form',
+        controller: 'EventFormCtrl',
+    })
     .state('me', {
       parent: '',
       url: '/me/events',

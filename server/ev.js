@@ -6,8 +6,6 @@ var moment = require('moment-timezone');
 
 // var Pho = require('./services/photos.js');
 
-var Pro = require('./services/promoter.js');
-
 var Ev = require('./ev');
 
 var db = require('monk')(config.db);
@@ -78,6 +76,20 @@ function runQuery(query, cb) {
 
 function save(ev, cb) {
   if (ev) {
+    if (!ev.venue || !ev.venue.coord || !ev.venue.coord.lng || !ev.venue.coord.lat)
+    {
+      var venue = {
+        city : "Paris",
+        country: "France",
+        street: "",
+        zip: "75013",
+        coord : {
+          lng: 2.3522219,
+          lat: 48.856614
+        }
+      };
+      ev.venue = venue;
+    }
     Events.insert(ev, function(err, newEv) {
       if (err) {
         console.log(err);

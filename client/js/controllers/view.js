@@ -1,13 +1,89 @@
-app.controller('ViewCtrl', function($scope, ezfb, $http, instagram, ev) {
+app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, fbphoto, fbvideos) {
   console.log(ev);
   $scope.ev = ev;
-$http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
+    $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
   $scope.ev.attending = result;
  if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) >= 0)
         $scope.attending = 'Leave';
       else
         $scope.attending = 'Join';
     });
+  fbvideos.getFbVideo($scope.ev.eid).success(function(feed){
+    if (feed && feed.data)
+    {
+      var i = 0;
+      $scope.videos = new Array();
+      while (feed.data[i])
+      {
+        if (feed.data[i].type == "video")
+        {
+          var j = 0;
+          var n = feed.data[i].source.indexOf("youtube");
+          if (n != -1)
+          {
+            var test = 0;
+            while (test != -1)
+            {
+            ++j;
+            if (!feed.data[i].source[j] || (feed.data[i].source[j] == '/' && feed.data[i].source[j + 1] == 'v' && feed.data[i].source[j + 2] == '/'))
+              test = -1;
+            }
+            j = j + 3;
+            var videoId = "";
+            var k = 0;
+            while (feed.data[i].source[j] && feed.data[i].source[j] != '?')
+            {
+              videoId += feed.data[i].source[j];
+              ++j;
+              ++k;
+            }
+            var new_url = "http://www.youtube.com/embed/" + videoId;
+            j = 0;
+            k = 0;
+            $scope.videos.push(new_url)
+          }
+        }
+        ++i;
+      }
+      $scope.videos = $scope.videos;
+    }
+  });
+  fbphoto.getFbPics($scope.ev.eid).success(function(res){
+    if (res.data.length > 0)
+    {
+      var i = 0;
+      while (res.data[i])
+      {
+        var tmp = {};
+        var j = 0;
+        while (res.data[i].images[j])
+        {
+          if (res.data[i].images[j + 1])
+          {
+           if ((res.data[i].images[j].width + res.data[i].images[j].height) < (res.data[i].images[j + 1].width + res.data[i].images[j + 1].height))
+            {
+              tmp = res.data[i].images[j + 1];
+              res.data[i].images[j + 1] = res.data[i].images[j];
+              res.data[i].images[j] = tmp;
+              j = 0;
+            }
+            else
+            {
+              ++j;
+            }
+          }
+          else
+          {
+            ++j;
+          }
+        }
+        res.data[i].source = res.data[i].images[0].source;
+        ++i;
+        j = 0;
+      }
+      $scope.fbpics = res.data;
+    }
+  });
   instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
     if (res.data.length > 0) {
       instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
@@ -25,8 +101,6 @@ $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result)
 
   //  $scope.attending = 'Join';
   // // $scope.shared = false;
-
-
 
   //  $scope.isDisabled = false;
   // // $scope.btnShareText = "Share with your friends?";
@@ -57,9 +131,9 @@ $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result)
   //   return transformed;
   // };
 
-  //$scope.getPromoteLink = function() {
-  //  return $state.current.name.split('.')[0] + '.promote(ev)';
-  // }
+  $scope.getPromoteLink = function() {
+    return $state.current.name.split('.')[0] + '.promote(ev)';
+   }
 
   // $scope.isInPromotion = function() {
   //    var currentDate = new Date();
