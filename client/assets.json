@@ -66,5 +66,6 @@
     "tmp/js/annotated/directives/*.js",
     "tmp/js/annotated/filters/*.js",
     "tmp/js/annotated/init.js"
+    
   ]
 }
