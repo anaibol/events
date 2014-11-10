@@ -120,6 +120,5 @@ module.exports = function(app, passport, db) {
   //     error: 'Not found'
   //   });
   // });
-
   app.use(require('prerender-node').set('prerenderToken', 'tlgCZ16mK7RTP1i5BQGK'));
 };

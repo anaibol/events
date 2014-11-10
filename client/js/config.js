@@ -30,9 +30,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       }
     })
     .state('list.view', {
-      // url: '{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
       url: ':slug/:eid',
-      // url: '{query}{slug:(?:/[^/]+)?}/{eid:[^/d]*}',
       templateUrl: 'event/view',
       controller: 'ViewCtrl',
       parent: 'list',

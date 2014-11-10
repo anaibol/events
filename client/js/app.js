@@ -144,11 +144,11 @@ app.factory('Events', function($q, $http, DSCacheFactory, $rootScope, $querystri
       // console.log(query.since));
       query = {
         since: params.since || getStringDate($rootScope.today),
-        country: query.country || params.country,
-        lng: query.lng || params.lng,
-        lat: query.lat || params.lat,
-        tags: query.tags || params.tags,
-        sortBy: query.sortBy || params.sortBy
+        country: params.country || query.country,
+        lng: params.lng || query.lng,
+        lat: params.lat || query.lat,
+        tags: params.tags || query.tags,
+        sortBy: params.sortBy || query.sortBy
       };
 
       console.log(query);

@@ -1,6 +1,6 @@
 module.exports = {
   db: 'mongodb://admin:blacksabbath@candidate.40.mongolayer.com:10363/Wooepa',
-  port: 3001,
+  port: 3000,
   app: {
     name: 'Wooepa - Test',
     accessToken: '439472799532734|q2yZ3bxPv8magGScTA672Ab-x7Y'
