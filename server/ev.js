@@ -46,7 +46,7 @@ function convertDateToTimeZone(date, timezone) {
     return date;
   }
 
-  var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
+  var transformed = moment(date.getTime() - 3600000).tz(timezone).format("YYYY/MM/DD hh:mm A");
   transformed = new Date(transformed);
 
   return transformed;
@@ -79,13 +79,13 @@ function save(ev, cb) {
     if (!ev.venue || !ev.venue.coord || !ev.venue.coord.lng || !ev.venue.coord.lat)
     {
       var venue = {
-        city : "Paris",
-        country: "France",
-        street: "",
-        zip: "75013",
+        city : "City",
+        country: "Antarctique",
+        street: "Street",
+        zip: "99999",
         coord : {
-          lng: 2.3522219,
-          lat: 48.856614
+          lng: -135,
+          lat: -82.862751
         }
       };
       ev.venue = venue;
