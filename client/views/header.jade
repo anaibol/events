@@ -9,7 +9,7 @@ header(headroom, tolerance='0' offset='0' scroller=".app-view" classes="{pinned:
         a.navbar-brand(href='/', ui-sref="list") Wooepa
         //- a.navbar-brand(href='/', ui-sref="^", ng-if="$state.$current !== ''") Wooepa2
 
-      .collapse.navbar-collapse.hidden-xs(ng-if='$root.user', ng-cloak, ng-class="{'in':!navCollapsed}", ng-click="navCollapsed=true")
+      .collapse.navbar-collapse.hidden-xs(ng-class="{'in':!navCollapsed}", ng-click="navCollapsed=true")
         ul.nav.navbar-nav.navbar-right
           //- li.dropdown
           //-   a.dropdown-toggle(href='', aria-haspopup='true', aria-expanded='true')
@@ -49,11 +49,10 @@ header(headroom, tolerance='0' offset='0' scroller=".app-view" classes="{pinned:
               b.caret
             ul.dropdown-menu.animated.fadeInRight.w
               li
-                a(ui-sref='app.page.profile', href='#/me/events') My events
+                a(ui-sref='app.page.profile', href='/me/events') My events
               li.divider
               li
-                a(ui-sref='app.page.profile', href='#/auth/signout') Logout
+                a(href="/auth/signout", target='_self' translate) Logout
                   i.fa.fa-sign-out
-
           li(ng-if='!$root.user', ng-cloak)
             a.login(href='/auth/facebook', target='_self' translate) Login
