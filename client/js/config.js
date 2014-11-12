@@ -91,7 +91,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
   amMoment.changeLocale($rootScope.lang);
   angular.module('angularMoment').value('angularMomentConfig', {
-    timezone: 'Europe/Paris'
+    timezone: 'Europe/Dublin'
   });
   $rootScope.today = new Date();
 
