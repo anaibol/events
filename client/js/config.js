@@ -96,7 +96,6 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.lang = navigator.language || navigator.userLanguage;
 
   amMoment.changeLocale($rootScope.lang);
-
   $rootScope.today = new Date();
 
   $rootScope.today.setSeconds(0);
