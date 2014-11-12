@@ -391,9 +391,9 @@ function slug(str) {
 function normalize(ev) {
   ev.eid = parseInt(ev.eid);
 
-  ev.start_time = convertDateToTimeZone(ev.start_time, ev.timezone);
-  ev.end_time = convertDateToTimeZone(ev.end_time, ev.timezone);
-  ev.update_time = convertDateToTimeZone(ev.update_time, ev.timezone);
+  // ev.start_time = convertDateToTimeZone(ev.start_time, ev.timezone);
+  // ev.end_time = convertDateToTimeZone(ev.end_time, ev.timezone);
+  // ev.update_time = convertDateToTimeZone(ev.update_time, ev.timezone);
 
   ev.slug = slug(ev.name.toLowerCase());
 
