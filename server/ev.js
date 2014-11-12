@@ -46,7 +46,7 @@ function convertDateToTimeZone(date, timezone) {
     return date;
   }
 
-  var transformed = moment(date.getTime() - 3600000).tz(timezone).format("YYYY/MM/DD hh:mm A");
+  var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
   transformed = new Date(transformed);
 
   return transformed;
