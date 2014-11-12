@@ -1,5 +1,5 @@
 module.exports = {
-  db: "mongodb://localhost/wooepa-dev",
+  db: 'mongodb://admin:blacksabbath@candidate.40.mongolayer.com:10363/Wooepa',
   port: 3000,
   app: {
     name: "Wooepa - Development",

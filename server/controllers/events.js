@@ -339,6 +339,10 @@ exports.get = function(req, res) {
 exports.getOne = function(req, res) {
   Events.findOne({
     eid: parseInt(req.params.eid)
+  }, {
+    fields: {
+      attending: 0
+    }
   }, function(err, ev) {
     if (err) {
       res.render('error', {

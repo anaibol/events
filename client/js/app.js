@@ -217,9 +217,9 @@ app.factory('Events', function($q, $http, DSCacheFactory, $rootScope, $querystri
 
       ev.tags = _.uniq(ev.tags);
 
-      ev.start_time = this.parseDate(ev.start_time, ev.timezone);
-      ev.end_time = this.parseDate(ev.end_time, ev.timezone);
-      ev.update_time = this.parseDate(ev.update_time, ev.timezone);
+      // ev.start_time = this.parseDate(ev.start_time, ev.timezone);
+      // ev.end_time = this.parseDate(ev.end_time, ev.timezone);
+      // ev.update_time = this.parseDate(ev.update_time, ev.timezone);
 
       return ev;
     },
