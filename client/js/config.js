@@ -90,9 +90,6 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.lang = navigator.language || navigator.userLanguage;
 
   amMoment.changeLocale($rootScope.lang);
-  angular.module('angularMoment').value('angularMomentConfig', {
-    timezone: 'Europe/Dublin'
-  });
   $rootScope.today = new Date();
 
   $rootScope.today.setSeconds(0);
