@@ -22,7 +22,11 @@ section.event-view
     .datetime
       span.date
         i.fa.fa-calendar
-        {{ev.start_time.getTime()}}         
+        span {{ev.start_time | amDateFormat:'D MMM'}} 
+      span.time
+        i.fa.fa-clock-o
+        span {{ev.start_time | amDateFormat:"LT"}}
+        span {{ev.start_time | amCalendar}}            
     .row
       .col-md-8
         p.description(ng-bind-html='ev.description | linky')

@@ -217,7 +217,18 @@ app.factory('Events', function($q, $http, DSCacheFactory, $rootScope, $querystri
 
       ev.tags = _.uniq(ev.tags);
 
+      ev.start_time = this.parseDate(ev.start_time, ev.timezone);
+      ev.end_time = this.parseDate(ev.end_time, ev.timezone);
+      ev.update_time = this.parseDate(ev.update_time, ev.timezone);
+
       return ev;
+    },
+    parseDate: function(date, tz) {
+      if (!tz) {
+        return date;
+      }
+      var parsed = moment(date).tz(tz).format("YYYY/MM/DD hh:mm A");
+      return new Date(parsed);
     },
     runQuery: function() {
       var that = this;
