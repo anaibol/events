@@ -1,12 +1,6 @@
 app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
 
-app.constant('angularMomentConfig', {
-    // preprocess: 'unix', // optional
-    timezone: 'Europe/Paris' // optional
-});
-
-
   $stateProvider
   // .state('home', {
   //   url: '/',
@@ -36,7 +30,7 @@ app.constant('angularMomentConfig', {
       }
     })
     .state('list.view', {
-      url: ':eid',
+      url: ':slug/:eid',
       templateUrl: 'event/view',
       controller: 'ViewCtrl',
       parent: 'list',
@@ -96,6 +90,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.lang = navigator.language || navigator.userLanguage;
 
   amMoment.changeLocale($rootScope.lang);
+
   $rootScope.today = new Date();
 
   $rootScope.today.setSeconds(0);
