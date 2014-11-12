@@ -426,50 +426,33 @@ exports.getOne = function(req, res) {
 //   });
 // };
 
-// exports.update = function(req, res) {
-//   var ev;
-//   var image;
+exports.updateAll = function(req, res) {
+  var date = new Date();
 
-//   if (typeof req.body.model === 'string') {
-//     ev = JSON.parse(req.body.model);
-//     image = req.body.image;
-//   } else {
-//     ev = req.body;
-//   }
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
 
-//   if (!req.user.admin) {
-//     if (ev.creator.id !== req.user.facebook.id) {
-//       return res.send('Not allowed');
-//     }
-//   }
+  Events.find({
+    end_time: {
+      $gte: date
+    }
+  }, {
+    sort: {
+      'attending_count': -1
+    }
+  }).success(function(evs) {
+    var eids = [];
 
-//   ev.start_time = new Date(ev.start_time);
-//   ev.end_time = new Date(ev.end_time);
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
+    });
 
-//   if (image) {
-//     var parsed = parseDataURL(image);
-//     ev.imageExt = parsed.ext;
-//   }
-
-//   if (ev.price.full) {
-//     ev.price = Ev.getPriceFromFullPrice(ev.price.full);
-//   }
-
-//   Events.updateById(ev._id, ev, function(err) {
-//     if (err) {
-//       return res.send('users/signup', {
-//         errors: err.errors
-//       });
-//     } else {
-//       if (image) {
-//         var newImageLocation = __dirname + '/../../public/uploads/' + ev._id + '.' + ev.imageExt;
-//         fs.writeFileSync(newImageLocation, parsed.data);
-//       }
-
-//       res.jsonp(ev);
-//     }
-//   });
-// };
+    Ev.updateMultiple(eids);
+  }).error(function(err) {
+    console.log(err);
+  });
+};
 
 // exports.destroy = function(req, res) {
 //   var ev = req.ev;

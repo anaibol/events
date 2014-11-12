@@ -344,6 +344,7 @@ function update(eid, cb) {
 }
 
 function updateMultiple(eids) {
+  console.log(eids);
   fetchMultiple(eids, '', false, function(eves) {
     var eids = [];
 

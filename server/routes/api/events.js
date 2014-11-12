@@ -15,6 +15,7 @@ var hasAuthorization = function(req, res, next) {
 };
 
 module.exports = function(app) {
+  app.get('/update', authorization.requiresLogin, hasAuthorization, events.updateAll);
   app.get('/import/user/:name', authorization.requiresLogin, hasAuthorization, events.importFromUser);
   app.get('/import/user/timeline/:name', authorization.requiresLogin, hasAuthorization, events.importFromUserTimeline);
   app.get('/import/page/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPage);

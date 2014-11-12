@@ -8702,9 +8702,11 @@ header .avatar img {
 #list .events {
   padding: 15px 0;
 }
+#list .wrapper {
+  margin: 0;
+  padding: 10px 0.5%;
+}
 #list .event {
-  padding: 0;
-  margin: 10px 0.5%;
   cursor: pointer;
   border-radius: 2px;
   border-bottom: 2px solid #2a2c2b;
