@@ -27,11 +27,11 @@ var fbtok = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGl
        };
        return $http.jsonp(url, config);
      }
-   }
+   };
  });
  
  app.factory('fbphoto', function($http) {
-   var base = 'https://graph.facebook.com'
+   var base = 'https://graph.facebook.com';
      return {
      getFbPics: function(eid) {
        var request = '/' + eid + '/photos?acces_token=' + fbtok;
@@ -45,7 +45,7 @@ var fbtok = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGl
        };
        return $http.jsonp(url, config);
      }
-   }
+   };
  });
 
 var tokenInstagram = '1491272863.4fa115a.678e407407db496fa1db455f5d2f5eab';

@@ -1,5 +1,13 @@
 app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, fbphoto, fbvideos) {
-  console.log(ev);
+  console.log(ev.start_time);
+
+console.log(ev.timezone);
+
+app.constant('angularMomentConfig', {
+    // preprocess: 'unix', // optional
+    timezone:  ev.timezone // optional
+});
+
   $scope.ev = ev;
     $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
   $scope.ev.attending = result;

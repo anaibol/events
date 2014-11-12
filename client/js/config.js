@@ -1,6 +1,12 @@
 app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
 
+app.constant('angularMomentConfig', {
+    // preprocess: 'unix', // optional
+    timezone: 'Europe/Paris' // optional
+});
+
+
   $stateProvider
   // .state('home', {
   //   url: '/',
@@ -30,7 +36,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       }
     })
     .state('list.view', {
-      url: ':slug/:eid',
+      url: ':eid',
       templateUrl: 'event/view',
       controller: 'ViewCtrl',
       parent: 'list',
