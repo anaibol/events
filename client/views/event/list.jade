@@ -1,20 +1,19 @@
 section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite-scroll-immediate-check="false", ng-show="$state.current.name === 'list'", ng-if="$root.renderList")
 
   include mobile-bar
-
   include sidebar
 
   .events.col-xs-12.col-sm-10.col-md-10.col-lg-10
     .wrapper.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events", id="{{$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
       .event(adaptive-background)
         .top
-          //a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{ev.name}}
-          //- span.title.truncate {{ev.description}}
-         // .tag-list
-         //  span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
+          .background
+          a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{ev.name}}
+            span.title.truncate {{ev.description}}
+          .tag-list
+            span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
         .image-container
-          img.hidden(ng-src="{{ev.pic_cover.source}}")
-          .image(ng-if="ev.pic_cover.source", ng-style="{'background-image': 'url({{ev.pic_cover.source}})'}")
+          .image
             .ribbon-wrapper-green(ng-if="ev.price.num === 0")
               .ribbon-green {{ev.price.full}}
             img(ng-src="{{ev.pic_cover.source}}")
@@ -24,7 +23,7 @@ section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite
               i.fa.fa-clock-o
               span {{ev.start_time | amCalendar}}
           .attending.pull-right(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count")
-            i.fa.fa-group
+            i.fa.fa-grou
             span {{ev.attending_count}}
           .place-info
             .user.price.pull-right(ng-if="ev.price"){{ev.price.full}}

@@ -7,25 +7,21 @@
   position: fixed;
   top: 0;
   right: 0;
-  // padding: 0;
+  padding-left: 0;
+  z-index: 999;
 
   li, a, i, input, button, span {
     color: @white;
   }
 
-  .nav-collapse {
-    transition: height 0.5s;
-  }
-
   .navbar-nav {
     font-size: 13px;
-    background-color: #dc3522;
     width: 100%;
 
-    li {
+    > li {
       width: 100%;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-      background-color: darken(@red, 3%);
+      background-color: @red;
 
       ::-moz-placeholder {
         color: @white;
@@ -36,7 +32,7 @@
       }
 
       a:focus, a:hover, a:active, a.active {
-        background-color: darken(@red, 10%);
+        background-color: darken(@red, 5%);
       }
 
       &:not(:last-of-type) {
@@ -48,6 +44,14 @@
         padding-left: 25px;
       }
     }
+  }
+
+  .nav-collapse {
+    transition: height 0.5s;
+  }
+
+  .sort, .date {
+    margin-bottom: 7px;
   }
 
   .search {
@@ -64,6 +68,7 @@
     }
 
     .dropdown-menu {
+      background-color: darken(@red, 3%);
       padding: 0;
     }
   }

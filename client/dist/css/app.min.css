@@ -7586,9 +7586,6 @@ body {
   background: linear-gradient(180deg, rgba(55, 65, 64, 0.2) 0%, rgba(69, 29, 55, 0.6) 100%);
   padding-top: 50px;
 }
-#wrapper .container {
-  width: auto;
-}
 i.fa {
   margin-right: 5px;
 }
@@ -7678,6 +7675,8 @@ header .avatar img {
   position: fixed;
   top: 0;
   right: 0;
+  padding-left: 0;
+  z-index: 999;
 }
 #sidebar * {
   -webkit-user-select: none;
@@ -7690,37 +7689,40 @@ header .avatar img {
 #sidebar span {
   color: #d9cb9e;
 }
-#sidebar .nav-collapse {
-  transition: height 0.5s;
-}
 #sidebar .navbar-nav {
   font-size: 13px;
-  background-color: #dc3522;
   width: 100%;
 }
-#sidebar .navbar-nav li {
+#sidebar .navbar-nav > li {
   width: 100%;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-  background-color: #cf3220;
+  background-color: #dc3522;
 }
-#sidebar .navbar-nav li ::-moz-placeholder {
+#sidebar .navbar-nav > li ::-moz-placeholder {
   color: #d9cb9e;
 }
-#sidebar .navbar-nav li ::-webkit-input-placeholder {
+#sidebar .navbar-nav > li ::-webkit-input-placeholder {
   color: #d9cb9e;
 }
-#sidebar .navbar-nav li a:focus,
-#sidebar .navbar-nav li a:hover,
-#sidebar .navbar-nav li a:active,
-#sidebar .navbar-nav li a.active {
-  background-color: #b02a1b;
+#sidebar .navbar-nav > li a:focus,
+#sidebar .navbar-nav > li a:hover,
+#sidebar .navbar-nav > li a:active,
+#sidebar .navbar-nav > li a.active {
+  background-color: #c6301f;
 }
-#sidebar .navbar-nav li:not(:last-of-type) {
+#sidebar .navbar-nav > li:not(:last-of-type) {
   border-bottom: 1px solid #e04937;
   float: none;
 }
-#sidebar .navbar-nav li li a {
+#sidebar .navbar-nav > li li a {
   padding-left: 25px;
+}
+#sidebar .nav-collapse {
+  transition: height 0.5s;
+}
+#sidebar .sort,
+#sidebar .date {
+  margin-bottom: 7px;
 }
 #sidebar .search {
   padding: 15px;
@@ -7734,6 +7736,7 @@ header .avatar img {
   outline: none;
 }
 #sidebar .search .dropdown-menu {
+  background-color: #cf3220;
   padding: 0;
 }
 #sidebar .date {
@@ -7829,8 +7832,14 @@ header .avatar img {
   color: #d9cb9e;
   position: relative;
 }
+#list .event.ab-dark-background {
+  color: #d9cb9e;
+}
+#list .event.ab-light-background {
+  color: #1e1e20;
+}
 #list .event .image-container {
-  padding: 0 10px;
+  padding: 10px 10px 0 10px;
 }
 #list .event .image {
   display: block;
@@ -7839,20 +7848,39 @@ header .avatar img {
   position: relative;
 }
 #list .event .image img {
-  visibility: hidden;
   height: auto;
   width: 100%;
 }
 #list .event .top,
 #list .event .bottom {
-  padding: 10px 10px 4px;
+  padding: 5px 10px;
+}
+#list .event .top {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+#list .event .top .background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  -webkit-filter: blur(30px);
+  -moz-filter: blur(30px);
+  z-index: -1;
 }
 #list .event .top .title {
   text-align: center;
-  font-size: 18px;
-  line-height: 25px;
+  font-size: 14px;
+  line-height: 16px;
   width: 100%;
-  max-height: 3.6em;
+  max-height: 3em;
+  padding: 5px;
 }
 #list .event .bottom .date,
 #list .event .bottom .time {
@@ -7864,6 +7892,10 @@ header .avatar img {
 }
 #list .event:hover .image {
   opacity: 0.85;
+  transition: .3s;
+}
+#list .event:hover .top {
+  opacity: 1;
   transition: .3s;
 }
 #list .ribbon-wrapper-green {
@@ -7945,43 +7977,26 @@ header .avatar img {
 .ribbon-green:after {
   right: 0;
 }
-#list-view {
-  background-color: white;
+#view section {
+  background: white;
+  padding: 25px;
+  margin: 10px 0;
 }
-#list-view .view-header {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
+#view .header img {
+  max-width: 100%;
 }
-#list-view .view-header .bg-image {
-  width: 100%;
-  height: 204px;
-  -webkit-filter: blur(10px);
-  -moz-filter: blur(10px);
-  -ms-filter: blur(10px);
-  filter: blur(10px);
-  display: block;
-  position: absolute;
-  left: -20%;
-  top: -20%;
-  width: 140%;
-  height: 140%;
-  background-size: 100% 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
+#view .media .youtube-videos object {
+  width: 320px;
+  height: 240px;
+  float: left;
 }
-#list-view .map {
-  width: 233px;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
+#view .media .facebook-pictures,
+#view .media .instagram-photos {
+  display: inline-block;
 }
-#list-view .title {
-  position: absolute;
-  width: 100%;
-  text-align: center;
+#view .media .facebook-pictures img,
+#view .media .instagram-photos img {
+  max-width: 100%;
 }
 #fs-dialog {
   color: #333333;

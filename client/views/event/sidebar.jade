@@ -7,7 +7,7 @@ section#sidebar.hidden-xs.col-sm-2.col-md-2.col-lg-2(style='margin-top:66px', ng
       //-     i.fa.fa-search
       i.fa.fa-search
       input(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected", ng-controller="LocationpickerCtrl")
-    li
+    li.sort
       a(href='#', ng-click='isCollapsed = !isCollapsed')
         i.fa.fa-bar-chart-o
         | Sort by

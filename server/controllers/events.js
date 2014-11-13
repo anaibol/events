@@ -440,7 +440,8 @@ exports.updateAll = function(req, res) {
   }, {
     sort: {
       'attending_count': -1
-    }
+    },
+    limit: 50
   }).success(function(evs) {
     var eids = [];
 

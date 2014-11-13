@@ -1,55 +1,88 @@
-#list-view {
-  background-color: white;
-  // padding: 25px;
-
-  .view-header {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    position: relative;
-
-    .bg-image {
-      width: 100%;
-      height: 204px;
-      background-repeat: no-repeat;
-      -webkit-filter: blur(10px);
-      -moz-filter: blur(10px);
-      -ms-filter: blur(10px);
-      filter: blur(10px);
-
-      display: block;
-      position: absolute;
-      left: -20%;
-      top: -20%;
-      width: 140%;
-      height: 140%;
-      background-size: 100% 100%;
-      background-size: cover;
-      background-repeat: no-repeat;
+#view {
+  section {
+    background: white;
+    padding: 25px;
+    margin: 10px 0;
+  }
+  .header {
+    img {
+      max-width: 100%;
     }
   }
 
-  .map {
-    width: 233px;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
+  // .body {
+
+  // }
+
+  .media {
+    .youtube-videos {
+      object {
+        width: 320px;
+        height: 240px;
+        float: left;
+      }
+    }
+
+    .facebook-pictures, .instagram-photos {
+      display: inline-block;
+
+      img {
+        max-width: 100%;
+      }
+    }
   }
 
+  // background-color: white;
+  // // padding: 25px;
 
-  .title {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-  }
+  // .view-header {
+  //   width: 100%;
+  //   height: 200px;
+  //   overflow: hidden;
+  //   position: relative;
 
-  .description {
-    // -webkit-column-count: 2;
-    // -moz-column-count: 2;
-    // column-count: 2;
-    // -webkit-column-gap: 16px;
-    // -moz-column-gap: 16px;
-    // column-gap: 16px;
-  }
+  //   .bg-image {
+  //     width: 100%;
+  //     height: 204px;
+  //     background-repeat: no-repeat;
+  //     -webkit-filter: blur(10px);
+  //     -moz-filter: blur(10px);
+  //     -ms-filter: blur(10px);
+  //     filter: blur(10px);
+
+  //     display: block;
+  //     position: absolute;
+  //     left: -20%;
+  //     top: -20%;
+  //     width: 140%;
+  //     height: 140%;
+  //     background-size: 100% 100%;
+  //     background-size: cover;
+  //     background-repeat: no-repeat;
+  //   }
+  // }
+
+  // .map {
+  //   width: 233px;
+  //   height: 100%;
+  //   position: absolute;
+  //   right: 0;
+  //   top: 0;
+  // }
+
+
+  // .title {
+  //   position: absolute;
+  //   width: 100%;
+  //   text-align: center;
+  // }
+
+  // .description {
+  //   // -webkit-column-count: 2;
+  //   // -moz-column-count: 2;
+  //   // column-count: 2;
+  //   // -webkit-column-gap: 16px;
+  //   // -moz-column-gap: 16px;
+  //   // column-gap: 16px;
+  // }
 }
