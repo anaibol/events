@@ -1,53 +1,49 @@
-section#sidebar.hidden-xs.col-sm-2.col-md-2.col-lg-2(style='margin-top:66px',ng-controller="SidebarCtrl")
-  ul.nav.navbar-nav
-    li
+section#sidebar.hidden-xs.col-sm-2.col-md-2.col-lg-2(style='margin-top:66px', ng-controller="SidebarCtrl")
+  ul.nav.navbar-nav.row
+    li.search
       //- form(role='form')
       //-   input.form-control(type='search', placeholder='Search...')
       //-   button.btn
       //-     i.fa.fa-search
-      form.navbar-form(role='search', ng-controller="LocationpickerCtrl")
-        .input-group
-          input.search.form-control(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected")
-          .input-group-btn
-            button.btn.btn-inverse(type='submit')
-              i.fa.fa-search
+      i.fa.fa-search
+      input(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected", ng-controller="LocationpickerCtrl")
     li
-      a(href='#').accordion-toggle(ng-click='isCollapsed = !isCollapsed')
+      a(href='#', ng-click='isCollapsed = !isCollapsed')
         i.fa.fa-bar-chart-o
         | Sort by
         i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
       ul.nav.nav-collapse(collapse='isCollapsed')
         li
           a(href='#', ui-sref="list({sortBy: 'popularity'})")
+            i.fa.fa-group 
             | Popularity
         li
           a(href='#', ui-sref="list({sortBy: ''})")
+            i.fa.fa-calendar
             | Date
 
     li
-      a(href='#') Today
+      a(href='#')
+        i.fa.fa-calendar
+        | Today
 
     li(ng-if="today.getTime() === Date.sun().getTime()")
-      a(href='#') This weekend
+      a(href='#')
+        i.fa.fa-calendar
+        | This weekend
 
     li(ng-if="today.getTime() !== Date.sun().getTime()")
-      a(href='#') Next weekend
-
-    li.hidden-xs.hidden-sm.hidden-md.hidden-lg
-      a(href='#').accordion-toggle(ng-click='isCollapsed = !isCollapsed')
+      a(href='#')
         i.fa.fa-calendar
-        | Specific date
+        | Next weekend
 
-      ul.nav.nav-collapse(collapse='isCollapsed')
-        li
-          .date
-            datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
+    li.date
+      datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
 
-    li
-      a(href='#') Explore by category
-      .tags
-        .tag-list
-          a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
+    li.tags
+      | Explore by category
+      .tag-list
+        a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
 
 
     //- li(ng-if='$root.user')

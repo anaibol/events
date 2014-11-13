@@ -46,7 +46,7 @@ header(headroom, tolerance='0' offset='0' scroller=".app-view" classes="{pinned:
               span.thumb-sm.avatar.pull-right
                 img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
               span.hidden-sm.hidden-md {{$root.user.facebook.name}}
-              b.caret
+              i.fa.fa-chevron-down
             ul.dropdown-menu.animated.fadeInRight.w
               li
                 a(ui-sref='app.page.profile', href='/me/events') My events

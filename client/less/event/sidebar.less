@@ -1,49 +1,107 @@
-
 #sidebar {
-  z-index: 999;
+  * {
+    -webkit-user-select: none;
+  }
+
+  // z-index: 999;
   position: fixed;
   top: 0;
   right: 0;
   // padding: 0;
 
+  li, a, i, input, button, span {
+    color: @white;
+  }
+
+  .nav-collapse {
+    transition: height 0.5s;
+  }
+
   .navbar-nav {
     font-size: 13px;
     background-color: #dc3522;
+    width: 100%;
 
-    li:not(:last-of-type) {
-      // border-bottom: 1px solid @red;
-      border-bottom: 1px solid lighten(@red, 5%);
-      float: none;
-    }
-    > li {
-      > a {
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-        outline: none;
+    li {
+      width: 100%;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+      background-color: darken(@red, 3%);
+
+      ::-moz-placeholder {
         color: @white;
-        background-color: darken(@red, 3%);
       }
+
+      ::-webkit-input-placeholder {
+        color: @white;
+      }
+
       a:focus, a:hover, a:active, a.active {
         background-color: darken(@red, 10%);
       }
-    }
 
-    & {
-      .mobile;
-      .content() {
-        background-color: orange;
+      &:not(:last-of-type) {
+        border-bottom: 1px solid lighten(@red, 5%);
+        float: none;
+      }
+
+      li a {
+        padding-left: 25px;
       }
     }
   }
 
-  & {
-    .mobile;
-    .content() {
-      background-color: orange;
+  .search {
+    padding: 15px;
+
+    input {
+      background-color: transparent;
+      border: none;
+      line-height: 24px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .dropdown-menu {
+      padding: 0;
     }
   }
 
-
   .date {
+    padding: 15px 25px;
+
+    table {
+      width: 100%;
+      background-color: darken(@red, 3%);
+    }
+
+    button {
+      background: none;
+      border: none;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+
+      &.active {
+        border-radius: 500px;
+
+        span {
+          color: darken(@red, 20%);
+        }
+      }
+
+      &:hover {
+        transition: .3s ;
+        background-color: darken(@red, 20%);
+        border-radius: 500px;
+
+        span {
+          color: @red;
+        }
+      }
+    }
+
     .glyphicon {
       .fa();
     }
@@ -55,40 +113,11 @@
     }
   }
 
-  .date, .tags {
+  .tags {
     padding: 15px;
-  }
 
-  .date {
-    padding: 25px;
-    background-color: darken(@red, 3%);
-
-    table {
-      background-color: @red;
-    }
-
-    button {
-      background: none;
-      border: none;
-      width: 30px;
-      height: 30px;
-      // box-shadow: none;
-      span {
-        color: darken(@red, 20%);
-      }
-    }
-
-    button.active {
-      border-radius: 500px;
-    }
-
-    button:hover {
-      transition: .3s ;
-      background-color: darken(@red, 20%);
-
-      span {
-        color: @red;
-      }
+    .tag-list {
+      margin-top: 10px;
     }
   }
 }
