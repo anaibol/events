@@ -132,10 +132,6 @@ app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, 
   //   return transformed;
   // };
 
-  $scope.getPromoteLink = function() {
-    return $state.current.name.split('.')[0] + '.promote(ev)';
-   }
-
   // $scope.isInPromotion = function() {
   //    var currentDate = new Date();
 
