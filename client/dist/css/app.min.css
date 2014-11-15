@@ -7983,7 +7983,7 @@ header .avatar img {
 }
 #view .location .map {
   height: 200px;
-  max-width: 100%;
+  margin-top: 20px;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -7996,6 +7996,7 @@ header .avatar img {
 #view .media .instagram-photos {
   display: inline-block;
   width: 100%;
+  padding: 20px 0;
 }
 #fs-dialog {
   color: #333333;

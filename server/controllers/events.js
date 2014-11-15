@@ -162,14 +162,18 @@ exports.get = function(req, res) {
   //     $regex: new RegExp(params.country, "i")
   //   };
   // }
+
   var options = {
     limit: limit,
     skip: skip,
-    sort: sort,
     fields: {
       attending: 0
     }
   };
+
+  if (params.sortBy !== 'proximity') {
+    options.sort = sort;
+  }
 
   var tags = params.tags;
   var realTags = [];

@@ -14,6 +14,10 @@ section#sidebar.hidden-xs.col-sm-2.col-md-2.col-lg-2(style='margin-top:66px', ng
         i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
       ul.nav.nav-collapse(collapse='isCollapsed')
         li
+          a(href='#', ui-sref="list({sortBy: 'proximity'})")
+            i.fa.fa-map-marker 
+            | Proximity
+        li
           a(href='#', ui-sref="list({sortBy: 'popularity'})")
             i.fa.fa-group 
             | Popularity

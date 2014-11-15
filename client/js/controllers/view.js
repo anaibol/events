@@ -1,41 +1,33 @@
 app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, fbphoto, fbvideos) {
   console.log(ev);
 
-  $scope.mapImageWidth = $('.location').width();
-
   $scope.ev = ev;
-    $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
-  $scope.ev.attending = result;
- if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) >= 0)
-        $scope.attending = 'Leave';
-      else
-        $scope.attending = 'Join';
-    });
-  fbvideos.getFbVideo($scope.ev.eid).success(function(feed){
-    if (feed && feed.data)
-    {
+  $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
+    $scope.ev.attending = result;
+    if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) >= 0)
+      $scope.attending = 'Leave';
+    else
+      $scope.attending = 'Join';
+  });
+  fbvideos.getFbVideo($scope.ev.eid).success(function(feed) {
+    if (feed && feed.data) {
       var i = 0;
       $scope.videos = new Array();
-      while (feed.data[i])
-      {
-        if (feed.data[i].type == "video")
-        {
+      while (feed.data[i]) {
+        if (feed.data[i].type == "video") {
           var j = 0;
           var n = feed.data[i].source.indexOf("youtube");
-          if (n != -1)
-          {
+          if (n != -1) {
             var test = 0;
-            while (test != -1)
-            {
-            ++j;
-            if (!feed.data[i].source[j] || (feed.data[i].source[j] == '/' && feed.data[i].source[j + 1] == 'v' && feed.data[i].source[j + 2] == '/'))
-              test = -1;
+            while (test != -1) {
+              ++j;
+              if (!feed.data[i].source[j] || (feed.data[i].source[j] == '/' && feed.data[i].source[j + 1] == 'v' && feed.data[i].source[j + 2] == '/'))
+                test = -1;
             }
             j = j + 3;
             var videoId = "";
             var k = 0;
-            while (feed.data[i].source[j] && feed.data[i].source[j] != '?')
-            {
+            while (feed.data[i].source[j] && feed.data[i].source[j] != '?') {
               videoId += feed.data[i].source[j];
               ++j;
               ++k;
@@ -51,32 +43,23 @@ app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, 
       $scope.videos = $scope.videos;
     }
   });
-  fbphoto.getFbPics($scope.ev.eid).success(function(res){
-    if (res.data.length > 0)
-    {
+  fbphoto.getFbPics($scope.ev.eid).success(function(res) {
+    if (res.data.length > 0) {
       var i = 0;
-      while (res.data[i])
-      {
+      while (res.data[i]) {
         var tmp = {};
         var j = 0;
-        while (res.data[i].images[j])
-        {
-          if (res.data[i].images[j + 1])
-          {
-           if ((res.data[i].images[j].width + res.data[i].images[j].height) < (res.data[i].images[j + 1].width + res.data[i].images[j + 1].height))
-            {
+        while (res.data[i].images[j]) {
+          if (res.data[i].images[j + 1]) {
+            if ((res.data[i].images[j].width + res.data[i].images[j].height) < (res.data[i].images[j + 1].width + res.data[i].images[j + 1].height)) {
               tmp = res.data[i].images[j + 1];
               res.data[i].images[j + 1] = res.data[i].images[j];
               res.data[i].images[j] = tmp;
               j = 0;
-            }
-            else
-            {
+            } else {
               ++j;
             }
-          }
-          else
-          {
+          } else {
             ++j;
           }
         }
