@@ -4,7 +4,7 @@
 // var async = require('async');
 // var format = require('util').format;
 
-// var Mul = require('./services/multi_date.js');
+var Mul = require('./services/multi_date.js');
 
 var db = require('monk')(config.db);
 
@@ -402,7 +402,7 @@ function normalize(ev) {
 
   ev.price = getPrice(ev);
 
-  // ev.multi_date = Mul.getMultiDates(ev);
+  ev.multi_date = Mul.getMultiDates(ev);
 
   ev.venue.coord = {
     lng: ev.venue.longitude,

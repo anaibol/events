@@ -24,7 +24,7 @@ section#view
           span.time
             i.fa.fa-clock-o
             span {{::ev.start_time | amDateFormat:"LT"}}
-            span {{::ev.start_time | amCalendar}}
+            //- span {{::ev.start_time | amCalendar}}
 
     section.description.row
       p.description(ng-bind-html='ev.description | linky')
