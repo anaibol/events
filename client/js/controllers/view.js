@@ -1,6 +1,8 @@
 app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, fbphoto, fbvideos) {
   console.log(ev);
 
+  $scope.mapImageWidth = $('.location').width();
+
   $scope.ev = ev;
     $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
   $scope.ev.attending = result;

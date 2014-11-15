@@ -4,9 +4,7 @@ var moment = require('moment-timezone');
 // var async = require('async');
 // var format = require('util').format;
 
-// var Pho = require('./services/photos.js');
-
-var Ev = require('./ev');
+var Mul = require('./services/multi_date.js');
 
 var db = require('monk')(config.db);
 
@@ -76,14 +74,13 @@ function runQuery(query, cb) {
 
 function save(ev, cb) {
   if (ev) {
-    if (!ev.venue || !ev.venue.coord || !ev.venue.coord.lng || !ev.venue.coord.lat)
-    {
+    if (!ev.venue || !ev.venue.coord || !ev.venue.coord.lng || !ev.venue.coord.lat) {
       var venue = {
-        city : "City",
+        city: "City",
         country: "Antarctique",
         street: "Street",
         zip: "99999",
-        coord : {
+        coord: {
           lng: -135,
           lat: -82.862751
         }
@@ -152,7 +149,7 @@ function fetchMultiple(eids, term, save, cb) {
                     if (save) {
                       ev.saved = new Date();
 
-                      Ev.save(ev, function(newEv) {
+                      save(ev, function(newEv) {
                         console.log(newEv.query + ': ' + newEv.name);
                       });
                     }
@@ -392,9 +389,9 @@ function slug(str) {
 function normalize(ev) {
   ev.eid = parseInt(ev.eid);
 
-  // ev.start_time = convertDateToTimeZone(ev.start_time, ev.timezone);
-  // ev.end_time = convertDateToTimeZone(ev.end_time, ev.timezone);
-  // ev.update_time = convertDateToTimeZone(ev.update_time, ev.timezone);
+  ev.start_time2 = new Date(ev.start_time);
+  ev.end_time2 = new Date(ev.end_time);
+  ev.update_time2 = new Date(ev.update_time);
 
   ev.slug = slug(ev.name.toLowerCase());
 
@@ -403,6 +400,8 @@ function normalize(ev) {
   ev.festival = getFestival(ev);
 
   ev.price = getPrice(ev);
+
+  ev.multi_date = Mul.getMultiDates(ev);
 
   ev.venue.coord = {
     lng: ev.venue.longitude,
@@ -450,7 +449,7 @@ function getAttendings(eid, cb) {
       for (var i = att.length - 1; i >= 0; i--) {
         attendings.push(parseInt(att[i].id));
       }
-      cb(attendings); 
+      cb(attendings);
     }
   });
 
@@ -493,7 +492,7 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
             cb(true);
 
             if (!result) {
-              Ev.updateAttendings(ev.id, function(attendings) {});
+              updateAttendings(ev.id, function(attendings) {});
             }
           });
         }

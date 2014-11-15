@@ -87,6 +87,37 @@ app.directive('isotope', function($rootScope) {
   };
 });
 
+// app.directive('background', function($timeout) {
+//   return {
+//     restrict: 'A',
+//     compile: function compile(tElement, tAttrs, transclude) {
+//       return {
+//         post: function postLink(scope, elm, iAttrs, controller) {
+//             // console.log('child post')
+
+//           $timeout(function(){
+//             var image = $(elm).find('img:first')[0];
+
+//             RGBaster.colors(image, {
+//               success: function(payload) {
+//                 // You now have the payload.
+//                 console.log(payload.dominant);
+//                 console.log(payload.secondary);
+//                 console.log(payload.palette);
+
+//                 elm.css('backgroundColor', payload.dominant);
+//               }
+//             });
+//           }); 
+//         },
+//         pre:  function preLink(scope, iElement, iAttrs, controller) {
+//           console.log('child pre');
+//         }
+//       };
+//     }
+//   };
+// });
+
 app.directive('shareEvent', function($http) {
   return {
     restrict: 'A',
@@ -152,6 +183,9 @@ app.directive('setAttendings', function($http) {
     }
   };
 });
+
+
+
 
 // app.directive("scroll", function() {
 //  return function(scope, elm, attr) {

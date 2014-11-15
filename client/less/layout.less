@@ -59,50 +59,36 @@ a:hover {
   text-decoration: none;
   color: lighten(@white, 10%);
 }
-input.search {
-  // width: 75px;
-  // -webkit-transition: all .5s ease;
-  // -moz-transition: all .5s ease;
-  // transition: all .5s ease;
+
+* {
+  -webkit-user-select: none;
 }
-input.search:focus {
-  width: 200px;
-  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-  padding: 3px 0px 3px 3px;
-  margin: 5px 1px 3px 0px;
-  border: 1px solid rgba(81, 203, 238, 1);
-}
-// @tn: ~'(max-width: @{screen-tn-max})';
-// @xs: ~'(min-width: @{screen-xs-max}) and (max-width: @{screen-xs-max})';
-// @sm: ~'(min-width: @{screen-sm-min}) and (max-width: @{screen-sm-max})';
-// @md: ~'(min-width: @{screen-md-min}) and (max-width: @{screen-md-max})';
-// @lg: ~'(min-width: @{screen-lg-min})';
-// @media @xs { 
-//   #sidebar .navbar-nav {
-//     background-color: blue;
-//   }
-// }
-// @media @lg { 
-//   #sidebar .navbar-nav {
-//     background-color: blue;
-//   }
-// }
-@mobile: ~"(max-width: 480px), (max-device-width: 480px)";
-@desktop: ~"(min-device-width: 481px) and (min-width: 481px)";
-// has desktop styles applying also
-@netbook: ~"(min-device-width: 481px) and (min-width: 481px) and (max-height: 602px)";
-.mobile() {
-  @media @mobile {
-    .content;
+
+@xs: ~'(min-width: @{screen-xs-max}) and (max-width: @{screen-xs-max})';
+@sm: ~'(min-width: @{screen-sm-min}) and (max-width: @{screen-sm-max})';
+@md: ~'(min-width: @{screen-md-min}) and (max-width: @{screen-md-max})';
+@lg: ~'(min-width: @{screen-lg-min})';
+
+.xs(@rules) {
+  @media @xs {
+    @rules();
   }
 }
-// .desktop() {
-//   @media @desktop {
-//     .content;
-//   }
-// }
-// .netbook() {
-//   @media @netbook {
-//     .content;
-//   }
-// }
+
+.sm(@rules) {
+  @media @sm {
+    @rules();
+  }
+}
+
+.md(@rules) {
+  @media @md {
+    @rules();
+  }
+}
+
+.lg(@rules) {
+  @media @lg {
+    @rules();
+  }
+}

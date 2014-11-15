@@ -122,7 +122,7 @@ exports.get = function(req, res) {
   since = new Date(since);
 
   var query = {
-    start_time: {
+    start_time2: {
       $gte: since
     }
   };
@@ -163,7 +163,7 @@ exports.get = function(req, res) {
   //   };
   // }
   var options = {
-    limit: limit,
+    // limit: limit,
     skip: skip,
     sort: sort,
     fields: {
@@ -322,6 +322,8 @@ exports.get = function(req, res) {
   //     query,
   //     query2
   // ]};
+
+  console.log(query);
 
   Events.find(query, options, function(err, data) {
     if (err) {

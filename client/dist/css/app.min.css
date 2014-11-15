@@ -7597,12 +7597,8 @@ a:hover {
   text-decoration: none;
   color: #e7dfc3;
 }
-input.search:focus {
-  width: 200px;
-  box-shadow: 0 0 5px #51cbee;
-  padding: 3px 0px 3px 3px;
-  margin: 5px 1px 3px 0px;
-  border: 1px solid #51cbee;
+* {
+  -webkit-user-select: none;
 }
 header {
   position: fixed;
@@ -7618,19 +7614,8 @@ header .navbar {
   border: none;
   background-color: #dc3522;
 }
-header .navbar .navbar-toggle {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  transition: .3s;
-}
-header .navbar .navbar-toggle i.fa {
-  margiright: 0;
-  font-size: 24px;
-  line-height: 20px;
-  vertical-align: middle;
-}
-header .navbar .navbar-toggle:hover {
-  color: #c6301f;
+header .navbar i.fa {
+  margin-left: 5px;
 }
 header .navbar .nav > li > a.login {
   background-image: url('/img/facebook.png');
@@ -7663,7 +7648,6 @@ header .avatar {
 }
 header .avatar img {
   width: 100%;
-  border-radius: 500px;
 }
 .unpinned {
   transform: translateY(-100%);
@@ -7677,9 +7661,6 @@ header .avatar img {
   right: 0;
   padding-left: 0;
   z-index: 999;
-}
-#sidebar * {
-  -webkit-user-select: none;
 }
 #sidebar li,
 #sidebar a,
@@ -7725,10 +7706,20 @@ header .avatar img {
   margin-bottom: 7px;
 }
 #sidebar .search {
+  padding: 15px ;
+  position: relative;
+}
+#sidebar .search i {
+  position: absolute;
+  top: 0;
+  left: 5px;
   padding: 15px;
+  line-height: 24px;
 }
 #sidebar .search input {
-  background-color: transparent;
+  padding-left: 20px;
+  background-color: #cf3220;
+  width: 100%;
   border: none;
   line-height: 24px;
 }
@@ -7739,18 +7730,23 @@ header .avatar img {
   background-color: #cf3220;
   padding: 0;
 }
-#sidebar .date {
-  padding: 15px 25px;
+@media (min-width: 1200px) {
+  #sidebar .date {
+    padding: 15px;
+  }
 }
 #sidebar .date table {
-  width: 100%;
+  display: block;
   background-color: #cf3220;
+}
+#sidebar .date table thead,
+#sidebar .date table tbody {
+  width: 100%;
+  display: inline-table;
 }
 #sidebar .date button {
   background: none;
   border: none;
-  width: 30px;
-  height: 30px;
   cursor: pointer;
 }
 #sidebar .date button.active {
@@ -7985,6 +7981,12 @@ header .avatar img {
 #view .header img {
   max-width: 100%;
 }
+#view .location .map {
+  height: 200px;
+  max-width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 #view .media .youtube-videos object {
   width: 320px;
   height: 240px;
@@ -7993,10 +7995,7 @@ header .avatar img {
 #view .media .facebook-pictures,
 #view .media .instagram-photos {
   display: inline-block;
-}
-#view .media .facebook-pictures img,
-#view .media .instagram-photos img {
-  max-width: 100%;
+  width: 100%;
 }
 #fs-dialog {
   color: #333333;
