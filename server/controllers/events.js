@@ -106,7 +106,7 @@ exports.get = function(req, res) {
 
   var limit = 30;
   var skip = params.skip || 0;
-  var sortBy = params.sortBy || 'start_time';
+  var sortBy = params.sortBy || 'start_time2';
   var sortOrder = params.sortOrder || 1;
   var since = params.since || 0;
   var until = params.until || 0;
@@ -163,7 +163,7 @@ exports.get = function(req, res) {
   //   };
   // }
   var options = {
-    // limit: limit,
+    limit: limit,
     skip: skip,
     sort: sort,
     fields: {
@@ -322,8 +322,6 @@ exports.get = function(req, res) {
   //     query,
   //     query2
   // ]};
-
-  console.log(query);
 
   Events.find(query, options, function(err, data) {
     if (err) {

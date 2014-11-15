@@ -1,10 +1,10 @@
 // var request = require('request');
-var moment = require('moment-timezone');
+// var moment = require('moment-timezone');
 // var cheerio = require('cheerio');
 // var async = require('async');
 // var format = require('util').format;
 
-var Mul = require('./services/multi_date.js');
+// var Mul = require('./services/multi_date.js');
 
 var db = require('monk')(config.db);
 
@@ -37,18 +37,18 @@ function existsInDb(eid, cb) {
 }
 
 
-function convertDateToTimeZone(date, timezone) {
-  date = new Date(date);
+// function convertDateToTimeZone(date, timezone) {
+//   date = new Date(date);
 
-  if (!timezone) {
-    return date;
-  }
+//   if (!timezone) {
+//     return date;
+//   }
 
-  var transformed = moment(date.getTime() - 3600000).tz(timezone).format("YYYY/MM/DD hh:mm A");
-  transformed = new Date(transformed);
+//   var transformed = moment(date.getTime() - 3600000).tz(timezone).format("YYYY/MM/DD hh:mm A");
+//   transformed = new Date(transformed);
 
-  return transformed;
-}
+//   return transformed;
+// }
 
 function runQuery(query, cb) {
   graph.fql(query, function(err, res) {
@@ -87,6 +87,7 @@ function save(ev, cb) {
       };
       ev.venue = venue;
     }
+
     Events.insert(ev, function(err, newEv) {
       if (err) {
         console.log(err);
@@ -113,7 +114,7 @@ function save(ev, cb) {
   }
 }
 
-function fetchMultiple(eids, term, save, cb) {
+function fetchMultiple(eids, term, saving, cb) {
   eids = eids.join(',');
 
   var query = {
@@ -132,7 +133,7 @@ function fetchMultiple(eids, term, save, cb) {
           var eid = parseInt(ev.eid);
 
           existsInDb(eid, function(exists) {
-            if (!exists || !save) {
+            if (!exists || !saving) {
               // ev.attending = [];
 
               // for (j = 0; j < attendings.length; j++) {
@@ -146,7 +147,7 @@ function fetchMultiple(eids, term, save, cb) {
                   if (ev.venue.latitude) {
                     ev = normalize(ev);
 
-                    if (save) {
+                    if (saving) {
                       ev.saved = new Date();
 
                       save(ev, function(newEv) {
@@ -390,7 +391,7 @@ function normalize(ev) {
   ev.eid = parseInt(ev.eid);
 
   ev.start_time2 = new Date(ev.start_time);
-  ev.end_time2 = new Date(ev.end_time);
+  ev.end_time2 = new Date(ev.end_time2);
   ev.update_time2 = new Date(ev.update_time);
 
   ev.slug = slug(ev.name.toLowerCase());
@@ -401,7 +402,7 @@ function normalize(ev) {
 
   ev.price = getPrice(ev);
 
-  ev.multi_date = Mul.getMultiDates(ev);
+  // ev.multi_date = Mul.getMultiDates(ev);
 
   ev.venue.coord = {
     lng: ev.venue.longitude,
@@ -782,4 +783,4 @@ module.exports.getAttendings = getAttendings;
 module.exports.fetchMultiple = fetchMultiple;
 module.exports.normalize = normalize;
 module.exports.existsInDb = existsInDb;
-module.exports.convertDateToTimeZone = convertDateToTimeZone;
+// module.exports.convertDateToTimeZone = convertDateToTimeZone;
