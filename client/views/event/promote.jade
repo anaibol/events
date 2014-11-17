@@ -3,23 +3,26 @@ form.event-form.form-horizontal
       .modal-body
         .control-group
           label.control-label Reward
-          input#reward.form-control(required='required', type='text', ng-model='ev.promotion.reward', placeholder='Reward for the game')
+          input.reward.form-control(required='required', type='text', ng-model='ev.promotion.reward', placeholder='Reward for the game')
         .control-group.date
-          label.control-label Date of end of the game
-        .input-group(ng-controller='DatepickerCtrl')
-          input#datepick(size='50', type = 'text')
-          script(type='text/javascript').
-            new datepickr('datepick');
+          div.form-group(ng-controller='DatepickerCtrl')
+            label.col-md-2.control-label(for='title') Date of end of the game
+            div.col-md-10
+              p.input-group
+                input.form-control(type='text', ng-click='open($event)', datepicker-popup='{{format}}', ng-model='ev.start_time', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+                span.input-group-btn
+                  button.btn.btn-default(ng-click='open($event)')
+                    i.fa.fa-calendar
           label.control-label End Time
-            input(type='text')
+            input(type="text")
         .control-group
           label.control-label Commentary
-          textarea#description.form-control(required='required', ng-model='ev.promotion.commentary', cols='30', rows='5', placeholder='Content')
-          input(type='hidden', name='in_promotion', ng-model='ev.in_promotion', value='value')
+          textarea#description.form-control(required="required", ng-model="ev.promotion.commentary", cols="30", rows="5", placeholder="Content")
+          input(type='hidden', name='in_promotion', ng-model="ev.in_promotion", value="value")
       .modal-footer
-        button.btn.btn-primary(ng-click'submit()')
+        button.btn.btn-primary(ng-click="submit()")
           i.fui-check
           | OK
-        button.btn.btn-warning(ng-click='cancel()')
+        button.btn.btn-warning(ng-click="cancel()")
           i.fui-cross
           | Cancel

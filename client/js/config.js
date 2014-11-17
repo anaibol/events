@@ -62,9 +62,11 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
   });
 });
 
-// app.config(function(datepickerPopupConfig) {
-//   datepickerPopupConfig.appendToBody = true;
-// });angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
+app.config(function(datepickerPopupConfig) {
+  datepickerPopupConfig.appendToBody = true;
+});
+
+// angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
 
 app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb, geoip, Events) { //geolocation, reverseGeocode
   // geolocation.getLocation().then(function(data) {
