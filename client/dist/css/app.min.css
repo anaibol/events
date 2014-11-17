@@ -11150,8 +11150,7 @@ header .avatar img {
 #sidebar a,
 #sidebar i,
 #sidebar input,
-#sidebar button,
-#sidebar span {
+#sidebar button {
   color: #d9cb9e;
 }
 #sidebar .navbar-nav {
@@ -11213,65 +11212,6 @@ header .avatar img {
 #sidebar .search .dropdown-menu {
   background-color: #cf3220;
   padding: 0;
-}
-@media (min-width: 1200px) {
-  #sidebar .date {
-    padding: 15px;
-  }
-}
-#sidebar .date table {
-  display: block;
-  background-color: #cf3220;
-}
-#sidebar .date table thead,
-#sidebar .date table tbody {
-  width: 100%;
-  display: inline-table;
-}
-#sidebar .date button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-#sidebar .date button.active {
-  border-radius: 500px;
-}
-#sidebar .date button.active span {
-  color: #842014;
-}
-#sidebar .date button:hover {
-  transition: .3s ;
-  background-color: #842014;
-  border-radius: 500px;
-}
-#sidebar .date button:hover span {
-  color: #dc3522;
-}
-#sidebar .date .glyphicon {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-#sidebar .date .glyphicon.pull-left {
-  margin-right: .3em;
-}
-#sidebar .date .glyphicon.pull-right {
-  margin-left: .3em;
-}
-#sidebar .date .glyphicon-chevron-left:before {
-  content: "\f053";
-}
-#sidebar .date .glyphicon-chevron-right:before {
-  content: "\f054";
-}
-#sidebar .tags {
-  padding: 15px;
-}
-#sidebar .tags .tag-list {
-  margin-top: 10px;
 }
 #mobile-bar {
   position: absolute;
@@ -11484,9 +11424,6 @@ header .avatar img {
   display: inline-block;
   width: 100%;
   padding: 20px 0;
-}
-.dropdown-menu {
-  z-index: 9999;
 }
 #fs-dialog {
   color: #333333;
@@ -11976,4 +11913,64 @@ li.checked .fs-anchor {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+@media (min-width: 1200px) {
+  .datepicker {
+    padding: 15px;
+  }
+}
+.datepicker table {
+  display: block;
+  background-color: #cf3220;
+}
+.datepicker table thead,
+.datepicker table tbody {
+  width: 100%;
+  display: inline-table;
+}
+.datepicker button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.datepicker button.active {
+  background-color: transparent;
+  border-radius: 500px;
+}
+.datepicker button.active span {
+  color: #842014;
+}
+.datepicker button:hover {
+  transition: .3s ;
+  background-color: #842014;
+  border-radius: 500px;
+}
+.datepicker button:hover span {
+  color: #dc3522;
+}
+.datepicker .glyphicon {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.datepicker .glyphicon.pull-left {
+  margin-right: .3em;
+}
+.datepicker .glyphicon.pull-right {
+  margin-left: .3em;
+}
+.datepicker .glyphicon-chevron-left:before {
+  content: "\f053";
+}
+.datepicker .glyphicon-chevron-right:before {
+  content: "\f054";
+}
+.tags {
+  padding: 15px;
+}
+.tags .tag-list {
+  margin-top: 10px;
 }

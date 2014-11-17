@@ -63,7 +63,8 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
 });
 
 app.config(function(datepickerPopupConfig) {
-  datepickerPopupConfig.appendToBody = true;
+  // datepickerPopupConfig.appendToBody = true;
+  datepickerPopupConfig.showButtonBar = false;
 });
 
 // angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);

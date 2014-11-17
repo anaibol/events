@@ -6,7 +6,7 @@
   padding-left: 0;
   z-index: 999;
 
-  li, a, i, input, button, span {
+  li, a, i, input, button {
     color: @white;
   }
 
@@ -77,66 +77,6 @@
     .dropdown-menu {
       background-color: darken(@red, 3%);
       padding: 0;
-    }
-  }
-
-  .date {
-    & {
-      .lg({
-        padding: 15px;
-      });
-    }
-
-    table {
-      display: block;
-      background-color: darken(@red, 3%);
-
-      thead, tbody {
-        width: 100%;
-        display: inline-table;
-      }
-    }
-
-    button {
-      background: none;
-      border: none;
-      cursor: pointer;
-
-      &.active {
-        border-radius: 500px;
-
-        span {
-          color: darken(@red, 20%);
-        }
-      }
-
-      &:hover {
-        transition: .3s ;
-        background-color: darken(@red, 20%);
-        border-radius: 500px;
-
-        span {
-          color: @red;
-        }
-      }
-    }
-
-    .glyphicon {
-      .fa();
-    }
-    .glyphicon-chevron-left:before {
-      content: @fa-var-chevron-left;
-    }
-    .glyphicon-chevron-right:before {
-      content: @fa-var-chevron-right;
-    }
-  }
-
-  .tags {
-    padding: 15px;
-
-    .tag-list {
-      margin-top: 10px;
     }
   }
 }
