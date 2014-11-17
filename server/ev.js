@@ -387,12 +387,34 @@ function slug(str) {
   return str;
 }
 
+function parseISO8601String(dateString) {
+    var timebits = /^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})(?::([0-9]*)(\.[0-9]*)?)?(?:([+-])([0-9]{2})([0-9]{2}))?/;
+    var m = timebits.exec(dateString);
+    var resultDate;
+    if (m) {
+        var utcdate = Date.UTC(parseInt(m[1]),
+                               parseInt(m[2])-1, // months are zero-offset (!)
+                               parseInt(m[3]),
+                               parseInt(m[4]), parseInt(m[5]), // hh:mm
+                               (m[6] && parseInt(m[6]) || 0),  // optional seconds
+                               (m[7] && parseFloat(m[7])*1000) || 0); // optional fraction
+        // utcdate is milliseconds since the epoch
+        if (m[9] && m[10]) {
+            var offsetMinutes = parseInt(m[9]) * 60 + parseInt(m[10]);
+            utcdate += (m[8] === '+' ? -1 : +1) * offsetMinutes * 60000;
+        }
+        resultDate = new Date(utcdate);
+    } else {
+        resultDate = null;
+    }
+    return resultDate;
+}
+
 function normalize(ev) {
   ev.eid = parseInt(ev.eid);
 
-  ev.start_time2 = new Date(ev.start_time);
-  ev.end_time2 = new Date(ev.end_time2);
-  ev.update_time2 = new Date(ev.update_time);
+  ev.start_time = parseISO8601String(ev.start_time);
+  console.log(ev.start_time);
 
   ev.slug = slug(ev.name.toLowerCase());
 

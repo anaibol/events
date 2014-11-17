@@ -1,4 +1,4 @@
-app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, fbphoto, fbvideos) {
+app.controller('ViewCtrl', function($scope, $state, ezfb, $modal, $http, instagram, ev, fbphoto, fbvideos) {
   console.log(ev);
 
   $scope.ev = ev;
@@ -80,6 +80,24 @@ app.controller('ViewCtrl', function($scope, $state, ezfb, $http, instagram, ev, 
     }
   });
   $http.get('/api/resolve/' + $scope.ev.eid + '/results');
+
+  $scope.promote = function(ev) {
+    var modalInstance = $modal.open({
+      templateUrl: 'event/promote',
+      controller: 'EventPromoteCtrl',
+      resolve: {
+        ev: function() {
+          return ev;
+        }
+      }
+    });
+
+    modalInstance.result.then(function(selected) {
+      $scope.ev = selected;
+    }, function() {});
+  };
+
+
   // $scope.attending = '';
   // $scope.today = new Date();
 

@@ -9,7 +9,6 @@ section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite
         .top
           .background
           a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{::ev.name}}
-            span.title.truncate {{::ev.description}}
           .tag-list
             span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}", ng-click="openTag($event, ev)") {{::tag}}
         .image-container
