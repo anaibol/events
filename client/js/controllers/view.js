@@ -1,14 +1,18 @@
-app.controller('ViewCtrl', function($scope, $state, ezfb, $modal, $http, instagram, ev, fbphoto, fbvideos) {
+app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, Lightbox) {
   console.log(ev);
 
   $scope.ev = ev;
-  $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
-    $scope.ev.attending = result;
-    if ($scope.ev.attending.indexOf(parseInt(window.user.facebook.id)) >= 0)
-      $scope.attending = 'Leave';
-    else
-      $scope.attending = 'Join';
-  });
+
+  if ($rootScope.user) {
+    $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
+      $scope.ev.attending = result;
+      if ($scope.ev.attending.indexOf(parseInt($rootScope.user.facebook.id)) >= 0)
+        $scope.attending = 'Leave';
+      else
+        $scope.attending = 'Join';
+    });
+  }
+
   fbvideos.getFbVideo($scope.ev.eid).success(function(feed) {
     if (feed && feed.data) {
       var i = 0;
@@ -44,42 +48,42 @@ app.controller('ViewCtrl', function($scope, $state, ezfb, $modal, $http, instagr
     }
   });
   fbphoto.getFbPics($scope.ev.eid).success(function(res) {
-    if (res.data.length > 0) {
-      var i = 0;
-      while (res.data[i]) {
-        var tmp = {};
-        var j = 0;
-        while (res.data[i].images[j]) {
-          if (res.data[i].images[j + 1]) {
-            if ((res.data[i].images[j].width + res.data[i].images[j].height) < (res.data[i].images[j + 1].width + res.data[i].images[j + 1].height)) {
-              tmp = res.data[i].images[j + 1];
-              res.data[i].images[j + 1] = res.data[i].images[j];
-              res.data[i].images[j] = tmp;
-              j = 0;
-            } else {
-              ++j;
-            }
-          } else {
-            ++j;
-          }
-        }
-        res.data[i].source = res.data[i].images[0].source;
-        ++i;
-        j = 0;
-      }
-      $scope.fbpics = res.data;
+    var pics = res.data;
+    $scope.fbpics = [];
+    for (var i = pics.length - 1; i >= 0; i--) {
+      var pic = pics[i];
+
+
+      var image = {
+        url: 'https://graph.facebook.com/' + pic.id + '/picture?width=9999&height=9999',
+        thumbUrl: 'https://graph.facebook.com/' + pic.id + '/picture?width=9999&height=9999'
+      };
+
+      $scope.fbpics.push(image);
     }
   });
-  instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
+
+  Instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
     if (res.data.length > 0) {
-      instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
+      Instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
         if (res.data.length > 0) {
-          $scope.instagramPhotos = res.data;
+          $scope.instagramPhotos = [];
+          for (var i = res.data.length - 1; i >= 0; i--) {
+            $scope.instagramPhotos[i] = {
+              url: res.data[i].images.standard_resolution.url,
+              thumbUrl: res.data[i].images.low_resolution.url
+            };
+          }
         }
       });
     }
   });
   $http.get('/api/resolve/' + $scope.ev.eid + '/results');
+
+  $scope.openLightboxModal = function(pics, index) {
+    console.log(pics, index)
+    Lightbox.openModal(pics, index);
+  };
 
   $scope.promote = function(ev) {
     var modalInstance = $modal.open({

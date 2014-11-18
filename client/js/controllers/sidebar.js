@@ -1,4 +1,4 @@
-app.controller('SidebarCtrl', function($scope, Events) {
+app.controller('SidebarCtrl', function($scope, Event) {
   $scope.isCollapsed = true;
 
   // $scope.setQueryParam = function(date) {

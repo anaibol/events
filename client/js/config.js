@@ -24,8 +24,8 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       templateUrl: 'event/list',
       controller: 'ListCtrl',
       resolve: {
-        evs: function(Events, $stateParams) {
-          return Events.get($stateParams);
+        evs: function(Event, $stateParams) {
+          return Event.get($stateParams);
         }
       }
     })
@@ -35,8 +35,8 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       controller: 'ViewCtrl',
       parent: 'list',
       resolve: {
-        ev: function(Events, $stateParams) {
-          return Events.getOne($stateParams.eid);
+        ev: function(Event, $stateParams) {
+          return Event.getOne($stateParams.eid);
         }
       }
     })
@@ -58,17 +58,17 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
   $urlRouterProvider.otherwise('/');
 
   ezfbProvider.setInitParams({
-    appId: window.fbAppId
+    appId: window.fbAppId,
+    version: 'v2.2'
   });
 });
 
 app.config(function(datepickerPopupConfig) {
-  datepickerPopupConfig.appendToBody = true;
+  // datepickerPopupConfig.appendToBody = true;
+  datepickerPopupConfig.showButtonBar = false;
 });
 
-// angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
-
-app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb, geoip, Events) { //geolocation, reverseGeocode
+app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb, Geoip, Event) { //geolocation, reverseGeocode
   // geolocation.getLocation().then(function(data) {
   //   $rootScope.loc = {
   //     lat: data.coords.latitude,
@@ -104,8 +104,8 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
         lat: loc[0]
       };
 
-      Events.query.lng = loc.lng;
-      Events.query.lat = loc.lat;
+      Event.query.lng = loc.lng;
+      Event.query.lat = loc.lat;
       // delete res.data.loc;
 
       // $.address = res.data;
@@ -120,12 +120,16 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
       //     city: $rootScope.city
       //   });
       // }
+    }).error(function(data) {
+      console.log(data);
+      Event.query.lng =  2.294694;
+      Event.query.lat = 48.858093;
     });
   } else {
     // $rootScope.address = $localStorage.address;
     // $rootScope.city = $localStorage.city;
-    Events.query.lng = $localStorage.lng;
-    Events.query.lat = $localStorage.lat;
+    Event.query.lng = $localStorage.lng;
+    Event.query.lat = $localStorage.lat;
 
     // if ($state.current.name === '') {
     // $state.transitionTo('list', {
@@ -143,7 +147,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     //   console.log($state.current);
     // // }
     // console.log(fromState);
-// console.log(toState);
+    // console.log(toState);
     if (fromState.name === '' && toState.name === 'list') {
       $rootScope.renderList = true;
     } else if (fromState.parent === 'list' && toState.name === 'list') {

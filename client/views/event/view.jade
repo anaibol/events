@@ -82,11 +82,19 @@ section#view
       .map(style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center={{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}}&zoom=14&size=640x200&markers=color:blue|{{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}})")
 
     section.media.row
-      .youtube-videos
-        .col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="video in videos", ng-if="$index < 3")
-          object(type="text/html" data="{{::video}}")
+      ul.youtube-videos(ng-if="videos.length")
+        li.col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="video in videos", ng-if="$index < 3")
+          object.img-thumbnail(type="text/html" data="{{::video}}")
 
-      .facebook-pictures
-        img.col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="pics in fbpics", ng-if="$index < 3", ng-src='{{::pics.source}}')
-      .instagram-photos
-        img.col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos", ng-if="$index < 3", ng-src="{{::photo.images.low_resolution.url}}")
+      ul.facebook-pictures(ng-if="fbpics.length")
+        li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="pic in fbpics")
+          a(ng-click="openLightboxModal(fbpics, $index)")
+            img.img-thumbnail(ng-src="{{pic.thumbUrl}}", alt="")
+
+      ul.instagram-photos(ng-if="instagramPhotos.length")
+        li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos")
+          a(ng-click="openLightboxModal(instagramPhotos, $index)")
+            img.img-thumbnail(ng-src="{{::photo.thumbUrl}}", alt="")
+
+      //- .instagram-photos
+      //-   img.col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos", ng-if="$index < 3", ng-src="{{::photo.images.low_resolution.url}}")
