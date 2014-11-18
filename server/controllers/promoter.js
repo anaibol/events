@@ -3,6 +3,29 @@ var Users = global.db.get('users');
 
 var Events = global.db.get('events');
 
+exports.promoteEvent = function(req, res)
+{
+    Events.findOne({'eid': parseInt(req.params.eid)},function(err, ev){
+        if (err)
+        {
+            console.log(err);
+        }
+        else if (ev)
+        {
+            var promotion = {
+                reward: req.body.reward,
+                end_date: new Date(parseInt(req.body.end_date)),
+                commentary: req.body.commentary
+            };
+            ev.promotion = promotion;
+            Events.update({'eid': parseInt(req.params.eid)}, ev, function(err, ev){
+                if (err)
+                    console.log(err);
+            })
+        }
+    });
+}
+
 exports.associatePromoter = function(req, res)
 {
 	Users.findOne({
