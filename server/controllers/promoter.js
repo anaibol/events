@@ -17,7 +17,9 @@ exports.promoteEvent = function(req, res)
                 end_date: new Date(parseInt(req.body.end_date)),
                 commentary: req.body.commentary
             };
+            ev.promoter = req.user;
             ev.promotion = promotion;
+            ev.in_promotion = true;
             Events.update({'eid': parseInt(req.params.eid)}, ev, function(err, ev){
                 if (err)
                     console.log(err);
