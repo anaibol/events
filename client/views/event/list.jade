@@ -4,8 +4,9 @@ section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite
   include sidebar
 
   .events.col-xs-12.col-sm-9.col-md-9.col-lg-10
-    .wrapper.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events track by ev.eid", id="{{::$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
-      .event(background)
+    .events-wrapper.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events track by ev.eid", id="{{::$index}}", isotope, ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
+      //- (adaptative-background)
+      .event
         .top
           .background
           a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{::ev.name}}
