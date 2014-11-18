@@ -17,21 +17,71 @@ header {
     i.fa {
       margin-left: 5px;
     }
+
+    .user {
+      float: right;
+    }
+
+    .login {
+      background-image: url('/img/facebook.png');
+      margin: 0;
+      height: 50px;
+      width: 100px;
+      text-indent: -9999px;
+      background-position-y: 3px;
+      background-repeat: no-repeat;
+
+      & {
+        .xs({
+          margin-right: 15px;
+        });
+      }
+    }
+
+    > li > .dropdown-menu {
+      min-width: 200%;
+      padding: 15px;
+    }
+
+
+    .navbar-header {
+      float: none;
+
+      .navbar-brand {
+        background-color: darken(@red, 5%);
+      }
+
+      .navbar-right {
+        float: none;
+
+
+        .navbar-collapse {
+          & {
+            .xs({
+              width: auto;
+              border-top: 0;
+              box-shadow: none;
+              display: block !important;
+              height: auto !important;
+              padding-bottom: 0;
+              overflow: visible !important;
+            });
+          }
+        }
+
+        .avatar {
+          width: 40px;
+          margin-bottom: -10px;
+          margin-top: -10px;
+          margin-left: 10px;
+        }
+        .avatar img {
+          width: 100%;
+        }
+      }
+    }
   }
 
-  .navbar .nav >li > a.login {
-    background-image: url('/img/facebook.png');
-    margin: 0;
-    height: px;
-    width: 100px;
-    text-indent: -9999px;
-    background-position-y: 3px;
-    background-repeat: no-repeat;
-  }
-  .navbar-nav > li > .dropdown-menu {
-    min-width: 200%;
-    padding: 15px;
-  }
   .banner {
     display: none;
     background-color: darken(@red, 5%);
@@ -39,18 +89,7 @@ header {
     z-index: 10000;
     height: 300px;
   }
-  .navbar-brand {
-    background-color: darken(@red, 5%);
-  }
-  .avatar {
-    width: 40px;
-    margin-bottom: -10px;
-    margin-top: -10px;
-    margin-left: 10px;
-  }
-  .avatar img {
-    width: 100%;
-  }
+
 }
 .unpinned {
   transform: translateY(-100%);

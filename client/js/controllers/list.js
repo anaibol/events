@@ -1,4 +1,4 @@
-app.controller('ListCtrl', function($scope, $window, Events, evs) {
+app.controller('ListCtrl', function($scope, $window, Event, evs) {
   $scope.events = evs;
   //$scope.mobileSortList = false;
 
@@ -11,7 +11,7 @@ app.controller('ListCtrl', function($scope, $window, Events, evs) {
   $scope.getMore = function() {
     if (!$scope.events || $scope.noMoreEvents) return;
 
-    Events.getMore().then(function(evs) {
+    Event.getMore().then(function(evs) {
       if (evs.length) {
         $scope.events.push.apply($scope.events, evs);
         $scope.getTags();

@@ -9,16 +9,25 @@
     display: block;
     background-color: darken(@red, 3%);
 
-    thead, tbody {
+    thead, tbody, tr {
       width: 100%;
-      display: inline-table;
+      display: inline-block;
+      text-align: center;
     }
+
+    td {
+     width: 14%;
+     display: inline-block; 
+    }
+
+
   }
 
   button {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0;
 
     &.active {
       background-color: transparent;

@@ -7837,6 +7837,51 @@ button.close {
 .fa-meanpath:before {
   content: "\f20c";
 }
+.lightbox-nav {
+  position: relative;
+  margin-bottom: 12px; /* the font-size of .btn-xs */
+  text-align: center;
+  font-size: 0; /* prevent the otherwise inherited font-size and line-height from adding extra space to the bottom of this div */
+}
+
+.lightbox-nav .btn-group {
+  vertical-align: top;
+}
+
+.lightbox-nav .close {
+  /* absolutely position this in order to center the nav buttons */
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.lightbox-image-container {
+  position: relative;
+  text-align: center; /* center the image */
+}
+
+/* the caption overlays the top left corner of the image */
+.lightbox-image-caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0.5em 0.9em; /* the left and right margins are offset by 0.4em for the span box-shadow */
+  color: #000;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: left;
+  text-shadow: 0.1em 0.1em 0.2em rgba(255, 255, 255, 0.5);
+}
+
+.lightbox-image-caption span {
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  background-color: rgba(255, 255, 255, 0.75);
+  /* pad the left and right of each line of text */
+  box-shadow: 0.4em 0 0 rgba(255, 255, 255, 0.75),
+    -0.4em 0 0 rgba(255, 255, 255, 0.75);
+}
+
 @charset "UTF-8";
 
 /*!
@@ -11059,12 +11104,21 @@ Copyright (c) 2013 Daniel Eden
   background-color: #8F714F;
   border: 1px solid #8F714F;
 }
+html,
+body,
+#wrapper {
+  height: 100%;
+}
 body {
   background-image: url('/img/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   margin: 0;
+}
+body > .container-fluid {
+  padding: 0;
+  height: 100%;
 }
 #wrapper {
   background: linear-gradient(180deg, rgba(55, 65, 64, 0.2) 0%, rgba(69, 29, 55, 0.6) 100%);
@@ -11084,6 +11138,9 @@ a:hover {
 * {
   -webkit-user-select: none;
 }
+.modal-content {
+  border-radius: 3px;
+}
 header {
   position: fixed;
   top: 0;
@@ -11101,18 +11158,55 @@ header .navbar {
 header .navbar i.fa {
   margin-left: 5px;
 }
-header .navbar .nav > li > a.login {
+header .navbar .user {
+  float: right;
+}
+header .navbar .login {
   background-image: url('/img/facebook.png');
   margin: 0;
-  height: px;
+  height: 50px;
   width: 100px;
   text-indent: -9999px;
   background-position-y: 3px;
   background-repeat: no-repeat;
 }
-header .navbar-nav > li > .dropdown-menu {
+@media (min-width: 767px) and (max-width: 767px) {
+  header .navbar .login {
+    margin-right: 15px;
+  }
+}
+header .navbar > li > .dropdown-menu {
   min-width: 200%;
   padding: 15px;
+}
+header .navbar .navbar-header {
+  float: none;
+}
+header .navbar .navbar-header .navbar-brand {
+  background-color: #c6301f;
+}
+header .navbar .navbar-header .navbar-right {
+  float: none;
+}
+@media (min-width: 767px) and (max-width: 767px) {
+  header .navbar .navbar-header .navbar-right .navbar-collapse {
+    width: auto;
+    border-top: 0;
+    box-shadow: none;
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+  }
+}
+header .navbar .navbar-header .navbar-right .avatar {
+  width: 40px;
+  margin-bottom: -10px;
+  margin-top: -10px;
+  margin-left: 10px;
+}
+header .navbar .navbar-header .navbar-right .avatar img {
+  width: 100%;
 }
 header .banner {
   display: none;
@@ -11120,18 +11214,6 @@ header .banner {
   width: 100%;
   z-index: 10000;
   height: 300px;
-}
-header .navbar-brand {
-  background-color: #c6301f;
-}
-header .avatar {
-  width: 40px;
-  margin-bottom: -10px;
-  margin-top: -10px;
-  margin-left: 10px;
-}
-header .avatar img {
-  width: 100%;
 }
 .unpinned {
   transform: translateY(-100%);
@@ -11145,6 +11227,7 @@ header .avatar img {
   right: 0;
   padding-left: 0;
   z-index: 999;
+  margin-top: 66px;
 }
 #sidebar li,
 #sidebar a,
@@ -11414,16 +11497,31 @@ header .avatar img {
   background-repeat: no-repeat;
   background-position: center;
 }
-#view .media .youtube-videos object {
-  width: 320px;
-  height: 240px;
-  float: left;
-}
 #view .media .facebook-pictures,
-#view .media .instagram-photos {
+#view .media .instagram-photos,
+#view .media .youtube-videos {
   display: inline-block;
   width: 100%;
   padding: 20px 0;
+  list-style: none;
+}
+#view .media .facebook-pictures li,
+#view .media .instagram-photos li,
+#view .media .youtube-videos li {
+  padding: 5px;
+}
+#view .media .facebook-pictures li .img-thumbnail,
+#view .media .instagram-photos li .img-thumbnail,
+#view .media .youtube-videos li .img-thumbnail {
+  border-radius: 2px;
+}
+#view .media .facebook-pictures object,
+#view .media .instagram-photos object,
+#view .media .youtube-videos object {
+  width: 100%;
+  height: 250px;
+  float: left;
+  background-color: black;
 }
 #fs-dialog {
   color: #333333;
@@ -11924,14 +12022,21 @@ li.checked .fs-anchor {
   background-color: #cf3220;
 }
 .datepicker table thead,
-.datepicker table tbody {
+.datepicker table tbody,
+.datepicker table tr {
   width: 100%;
-  display: inline-table;
+  display: inline-block;
+  text-align: center;
+}
+.datepicker table td {
+  width: 14%;
+  display: inline-block;
 }
 .datepicker button {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  padding: 0;
 }
 .datepicker button.active {
   background-color: transparent;
