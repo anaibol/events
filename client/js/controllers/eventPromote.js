@@ -14,7 +14,9 @@ app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
               reward: $scope.ev.promotion.reward,
               commentary: $scope.ev.promotion.commentary,
               end_date: end_date,
-              promoter: $scope.user.facebook.id
+              promoter: $scope.user.facebook.id,
+              quantity: $scope.ev.promotion.quantity,
+              value: $scope.ev.promotion.value
             },
             url: '/api/promote_event/' + $scope.ev.eid
           });

@@ -8,7 +8,7 @@ section#view
       .col-xs-12.col-sm-8.col-md-8.col-lg-8
         h3.title.truncate {{::ev.name}}
 
-        button.btn.promote(ng-click="promote(ev)") Promote event
+        button.btn.promote(ng-click="promote(ev)", ng-if='!ev.promotion') Promote event
         a.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{::ev.eid}}/') Facebook event
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
@@ -55,19 +55,20 @@ section#view
           .panel.panel-default
             .panel-heading Players
             .panel-body
-              p(list-event-player, ng-hide="ev.list_event_players") No players yet!
+              p(list-event-player, ng-hide='ev.list_event_players[0].uid') No Players yet !
               ul.list-group
-                input.form-control.input-sm(type="text", ng-model="search.name")
-                li.list-group-item(ng-repeat="player in ev.list_event_players")
-                img.img-circle(ng-src="{{::'http://graph.facebook.com/' + player.uid + '/picture?type=square'}}", ng-alt="{{::player.name}}")
-                | {{:: player.result }} pts
-                button.btn(boost-player) Boost
+                input.form-control.input-sm(type='text', ng-model='search.name')
+                hr
+                li.list-group-item(ng-repeat='player in ev.list_event_players')
+                  img.img-circle(ng-src='{{"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{player.name}}')
+                  | {{ player.result }} pts
+                  button.btn(boost-player) Boost
                   i-fa-fa-flash
-                li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if="player.facebook.id != ev.player_id")
-                  img.img-circle(ng-src="{{::'http://graph.facebook.com/' + player.uid + 'picture?type=square'}}", ng-alt="{{::player.name}}")
-                  | {{:: player.result }} pts
+                li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
+                  img.img-circle(ng-src='{{"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{player.name}}')
+                  | {{ player.result }} pts
                   button.btn Boost
-                    i-fa-fa-flash
+                  i-fa-fa-flash
 
 
     section.description.row

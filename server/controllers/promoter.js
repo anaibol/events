@@ -15,7 +15,9 @@ exports.promoteEvent = function(req, res)
             var promotion = {
                 reward: req.body.reward,
                 end_date: new Date(parseInt(req.body.end_date)),
-                commentary: req.body.commentary
+                commentary: req.body.commentary,
+                value: req.body.value,
+                quantity: req.body.quantity
             };
             ev.promoter = req.user;
             ev.promotion = promotion;
