@@ -7,26 +7,26 @@
   z-index: 999;
   margin-top: 66px;
 
-  // li, a, i, input, button {
-  //   color: @white;
-  // }
-
   .navbar-nav {
     font-size: 13px;
     width: 100%;
+
+    li, a, i, button, input {
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    ::-moz-placeholder {
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    ::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.84);
+    }
 
     > li {
       width: 100%;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
       background-color: @red;
-
-      // ::-moz-placeholder {
-      //   color: @white;
-      // }
-
-      // ::-webkit-input-placeholder {
-      //   color: @white;
-      // }
 
       a:focus, a:hover, a:active, a.active {
         background-color: darken(@red, 5%);

@@ -17054,6 +17054,19 @@ header .banner {
   font-size: 13px;
   width: 100%;
 }
+#sidebar .navbar-nav li,
+#sidebar .navbar-nav a,
+#sidebar .navbar-nav i,
+#sidebar .navbar-nav button,
+#sidebar .navbar-nav input {
+  color: rgba(255, 255, 255, 0.84);
+}
+#sidebar .navbar-nav ::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.84);
+}
+#sidebar .navbar-nav ::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.84);
+}
 #sidebar .navbar-nav > li {
   width: 100%;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
