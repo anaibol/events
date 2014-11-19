@@ -34,7 +34,7 @@
           .event-rsvp-btns
             button.btn.btn-primary(friend-selector) Invite your friends !
           .event-rsvp-btns
-            button.btn.btn-primary(share-event) Share with your friends?
+            button.btn.btn-primary.share(share-event) Share with your friends?
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
 
