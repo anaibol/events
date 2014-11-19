@@ -7,12 +7,17 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
     $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
       $scope.ev.attending = result;
       if ($scope.ev.attending.indexOf(parseInt($rootScope.user.facebook.id)) >= 0)
+      {
         $scope.attending = 'Leave';
+        
+      }
       else
         $scope.attending = 'Join';
     });
   }
-
+  else if(!$rootScope.user){
+      $scope.attending= 'Join';
+  }
   fbvideos.getFbVideo($scope.ev.eid).success(function(feed) {
     if (feed){
       fbvideos.getFbLink(feed, function(res){
