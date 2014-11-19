@@ -104,7 +104,7 @@ exports.get = function(req, res) {
 
   var limit = 30;
   var skip = params.skip || 0;
-  var sortBy = params.sortBy || 'start_time2';
+  var sortBy = params.sortBy || 'start_time';
   var sortOrder = params.sortOrder || 1;
   var since = params.since || 0;
   var until = params.until || 0;
@@ -120,7 +120,7 @@ exports.get = function(req, res) {
   since = new Date(since);
 
   var query = {
-    start_time2: {
+    start_time: {
       $gte: since
     }
   };
