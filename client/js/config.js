@@ -97,7 +97,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.user = window.user;
 
   if (!$localStorage.lng || !$localStorage.lat) {
-    geoip.getLocation().success(function(data) {
+    Geoip.getLocation().success(function(data) {
       var loc = data.loc.split(',');
       loc = {
         lng: loc[1],
