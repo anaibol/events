@@ -47,16 +47,16 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
       $scope.videos = $scope.videos;
     }
   });
+
   fbphoto.getFbPics($scope.ev.eid).success(function(res) {
     var pics = res.data;
     $scope.fbpics = [];
     for (var i = pics.length - 1; i >= 0; i--) {
       var pic = pics[i];
 
-
       var image = {
         url: 'https://graph.facebook.com/' + pic.id + '/picture?width=9999&height=9999',
-        thumbUrl: 'https://graph.facebook.com/' + pic.id + '/picture?width=9999&height=9999'
+        thumbUrl: 'https://graph.facebook.com/' + pic.id + '/picture?width=350&height=350'
       };
 
       $scope.fbpics.push(image);

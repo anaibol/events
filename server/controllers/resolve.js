@@ -8,17 +8,17 @@ var Ret = require('../services/retrieve.js');
 
 exports.getResults = function(req, res) {
 
-  console.log("Resolve the game for the event with id: " + req.params.eid);
+  // console.log("Resolve the game for the event with id: " + req.params.eid);
 
   Upd.updateActions(req.params.eid, function(err) {
     if (err)
       console.log(err)
 
-    console.log("UPDATE DONE");
+    // console.log("UPDATE DONE");
     Rso.resolveGames(req.params.eid, function(err) {
       if (err)
         console.log(err)
-      console.log("RESOLVE DONE");
+      // console.log("RESOLVE DONE");
     });
   });
 

@@ -1,0 +1,236 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '-g', 'node-gyp' ]
+2 info using npm@2.1.9
+3 info using node@v0.10.33
+4 silly cache add args [ 'node-gyp', null ]
+5 verbose cache add spec node-gyp
+6 silly cache add parsed spec { raw: 'node-gyp',
+6 silly cache add   scope: null,
+6 silly cache add   name: 'node-gyp',
+6 silly cache add   rawSpec: '',
+6 silly cache add   spec: '*',
+6 silly cache add   type: 'range' }
+7 verbose addNamed node-gyp@*
+8 silly addNamed semver.valid null
+9 silly addNamed semver.validRange *
+10 silly addNameRange { name: 'node-gyp', range: '*', hasData: false }
+11 silly mapToRegistry name node-gyp
+12 silly mapToRegistry using default registry
+13 silly mapToRegistry registry https://registry.npmjs.org/
+14 silly mapToRegistry uri https://registry.npmjs.org/node-gyp
+15 verbose addNameRange registry:https://registry.npmjs.org/node-gyp not in flight; fetching
+16 verbose request uri https://registry.npmjs.org/node-gyp
+17 verbose request no auth needed
+18 info attempt registry request try #1 at 14:39:52
+19 verbose request id bd97873fb12dee25
+20 verbose etag "B6TWWS25F9AYWHIYMUW2KEX3U"
+21 http request GET https://registry.npmjs.org/node-gyp
+22 http 304 https://registry.npmjs.org/node-gyp
+23 silly get cb [ 304,
+23 silly get   { date: 'Tue, 18 Nov 2014 17:39:54 GMT',
+23 silly get     server: 'Apache',
+23 silly get     via: '1.1 varnish',
+23 silly get     'last-modified': 'Tue, 18 Nov 2014 17:39:54 GMT',
+23 silly get     'cache-control': 'max-age=60',
+23 silly get     etag: '"B6TWWS25F9AYWHIYMUW2KEX3U"',
+23 silly get     age: '6',
+23 silly get     'x-served-by': 'cache-iad2139-IAD',
+23 silly get     'x-cache': 'HIT',
+23 silly get     'x-cache-hits': '1',
+23 silly get     'x-timer': 'S1416332394.509707,VS0,VE1',
+23 silly get     vary: 'Accept',
+23 silly get     'content-length': '0',
+23 silly get     'keep-alive': 'timeout=10, max=50',
+23 silly get     connection: 'Keep-Alive' } ]
+24 verbose etag https://registry.npmjs.org/node-gyp from cache
+25 silly addNameRange number 2 { name: 'node-gyp', range: '*', hasData: true }
+26 silly addNameRange versions [ 'node-gyp',
+26 silly addNameRange   [ '0.0.1',
+26 silly addNameRange     '0.0.2',
+26 silly addNameRange     '0.0.3',
+26 silly addNameRange     '0.0.4',
+26 silly addNameRange     '0.0.5',
+26 silly addNameRange     '0.0.6',
+26 silly addNameRange     '0.1.0',
+26 silly addNameRange     '0.1.1',
+26 silly addNameRange     '0.1.2',
+26 silly addNameRange     '0.1.3',
+26 silly addNameRange     '0.1.4',
+26 silly addNameRange     '0.2.0',
+26 silly addNameRange     '0.2.1',
+26 silly addNameRange     '0.2.2',
+26 silly addNameRange     '0.3.0',
+26 silly addNameRange     '0.3.1',
+26 silly addNameRange     '0.3.2',
+26 silly addNameRange     '0.3.4',
+26 silly addNameRange     '0.3.5',
+26 silly addNameRange     '0.3.6',
+26 silly addNameRange     '0.3.7',
+26 silly addNameRange     '0.3.8',
+26 silly addNameRange     '0.3.9',
+26 silly addNameRange     '0.3.10',
+26 silly addNameRange     '0.3.11',
+26 silly addNameRange     '0.4.0',
+26 silly addNameRange     '0.4.1',
+26 silly addNameRange     '0.4.2',
+26 silly addNameRange     '0.4.3',
+26 silly addNameRange     '0.4.4',
+26 silly addNameRange     '0.4.5',
+26 silly addNameRange     '0.5.0',
+26 silly addNameRange     '0.5.1',
+26 silly addNameRange     '0.5.2',
+26 silly addNameRange     '0.5.3',
+26 silly addNameRange     '0.5.4',
+26 silly addNameRange     '0.5.5',
+26 silly addNameRange     '0.5.6',
+26 silly addNameRange     '0.5.7',
+26 silly addNameRange     '0.5.8',
+26 silly addNameRange     '0.6.0',
+26 silly addNameRange     '0.6.1',
+26 silly addNameRange     '0.6.2',
+26 silly addNameRange     '0.6.3',
+26 silly addNameRange     '0.6.4',
+26 silly addNameRange     '0.6.5',
+26 silly addNameRange     '0.6.6',
+26 silly addNameRange     '0.6.7',
+26 silly addNameRange     '0.6.8',
+26 silly addNameRange     '0.6.9',
+26 silly addNameRange     '0.6.10',
+26 silly addNameRange     '0.6.11',
+26 silly addNameRange     '0.7.0',
+26 silly addNameRange     '0.7.1',
+26 silly addNameRange     '0.7.2',
+26 silly addNameRange     '0.7.3',
+26 silly addNameRange     '0.8.0',
+26 silly addNameRange     '0.8.1',
+26 silly addNameRange     '0.8.2',
+26 silly addNameRange     '0.8.3',
+26 silly addNameRange     '0.8.4',
+26 silly addNameRange     '0.8.5',
+26 silly addNameRange     '0.9.0',
+26 silly addNameRange     '0.9.1',
+26 silly addNameRange     '0.9.2',
+26 silly addNameRange     '0.9.3',
+26 silly addNameRange     '0.9.4',
+26 silly addNameRange     '0.9.5',
+26 silly addNameRange     '0.9.6',
+26 silly addNameRange     '0.10.0',
+26 silly addNameRange     '0.10.1',
+26 silly addNameRange     '0.10.2',
+26 silly addNameRange     '0.10.3',
+26 silly addNameRange     '0.10.4',
+26 silly addNameRange     '0.10.5',
+26 silly addNameRange     '0.10.6',
+26 silly addNameRange     '0.10.7',
+26 silly addNameRange     '0.10.8',
+26 silly addNameRange     '0.10.9',
+26 silly addNameRange     '0.10.10',
+26 silly addNameRange     '0.11.0',
+26 silly addNameRange     '0.12.0',
+26 silly addNameRange     '0.12.1',
+26 silly addNameRange     '0.12.2',
+26 silly addNameRange     '0.13.0',
+26 silly addNameRange     '0.13.1',
+26 silly addNameRange     '1.0.0',
+26 silly addNameRange     '1.0.1',
+26 silly addNameRange     '1.0.2' ] ]
+27 verbose addNamed node-gyp@1.0.2
+28 silly addNamed semver.valid 1.0.2
+29 silly addNamed semver.validRange 1.0.2
+30 silly cache afterAdd node-gyp@1.0.2
+31 verbose afterAdd /home/anaibol/.npm/node-gyp/1.0.2/package/package.json not in flight; writing
+32 verbose afterAdd /home/anaibol/.npm/node-gyp/1.0.2/package/package.json written
+33 silly install resolved [ { name: 'node-gyp',
+33 silly install resolved     description: 'Node.js native addon build tool',
+33 silly install resolved     keywords: [ 'native', 'addon', 'module', 'c', 'c++', 'bindings', 'gyp' ],
+33 silly install resolved     version: '1.0.2',
+33 silly install resolved     installVersion: 9,
+33 silly install resolved     author:
+33 silly install resolved      { name: 'Nathan Rajlich',
+33 silly install resolved        email: 'nathan@tootallnate.net',
+33 silly install resolved        url: 'http://tootallnate.net' },
+33 silly install resolved     repository:
+33 silly install resolved      { type: 'git',
+33 silly install resolved        url: 'git://github.com/TooTallNate/node-gyp.git' },
+33 silly install resolved     preferGlobal: true,
+33 silly install resolved     bin: { 'node-gyp': './bin/node-gyp.js' },
+33 silly install resolved     main: './lib/node-gyp.js',
+33 silly install resolved     dependencies:
+33 silly install resolved      { fstream: '^1.0.0',
+33 silly install resolved        glob: '3 || 4',
+33 silly install resolved        'graceful-fs': '3',
+33 silly install resolved        minimatch: '1',
+33 silly install resolved        mkdirp: '^0.5.0',
+33 silly install resolved        nopt: '2 || 3',
+33 silly install resolved        npmlog: '0',
+33 silly install resolved        osenv: '0',
+33 silly install resolved        request: '2',
+33 silly install resolved        rimraf: '2',
+33 silly install resolved        semver: '2.x || 3.x || 4',
+33 silly install resolved        tar: '^1.0.0',
+33 silly install resolved        which: '1' },
+33 silly install resolved     engines: { node: '>= 0.8.0' },
+33 silly install resolved     gitHead: '1e399b471945b35f3bfbca4a10fba31a6739b5db',
+33 silly install resolved     bugs: { url: 'https://github.com/TooTallNate/node-gyp/issues' },
+33 silly install resolved     homepage: 'https://github.com/TooTallNate/node-gyp',
+33 silly install resolved     _id: 'node-gyp@1.0.2',
+33 silly install resolved     scripts: {},
+33 silly install resolved     _shasum: 'b0bb6d2d762271408dd904853e7aa3000ed2eb57',
+33 silly install resolved     _from: 'node-gyp@*',
+33 silly install resolved     _npmVersion: '2.0.0-beta.3',
+33 silly install resolved     _npmUser: { name: 'isaacs', email: 'i@izs.me' },
+33 silly install resolved     maintainers: [ [Object], [Object], [Object] ],
+33 silly install resolved     dist:
+33 silly install resolved      { shasum: 'b0bb6d2d762271408dd904853e7aa3000ed2eb57',
+33 silly install resolved        tarball: 'http://registry.npmjs.org/node-gyp/-/node-gyp-1.0.2.tgz' },
+33 silly install resolved     directories: {},
+33 silly install resolved     _resolved: 'https://registry.npmjs.org/node-gyp/-/node-gyp-1.0.2.tgz',
+33 silly install resolved     readme: 'ERROR: No README data found!' } ]
+34 info install node-gyp@1.0.2 into /usr/lib
+35 info installOne node-gyp@1.0.2
+36 verbose installOne of node-gyp to /usr/lib not in flight; installing
+37 verbose lock using /home/anaibol/.npm/_locks/node-gyp-41dd5197f3670253.lock for /usr/lib/node_modules/node-gyp
+38 silly install write writing node-gyp 1.0.2 to /usr/lib/node_modules/node-gyp
+39 silly cache addNamed cb node-gyp@1.0.2
+40 verbose unbuild lib/node_modules/node-gyp
+41 info preuninstall node-gyp@1.0.2
+42 info uninstall node-gyp@1.0.2
+43 verbose unbuild rmStuff node-gyp@1.0.2 from /usr/lib/node_modules
+44 verbose gentlyRm verifying that /usr is managed by npm
+45 silly cacheAndTest /usr is not inside /usr/lib/node_modules
+46 silly isManaged /usr is not inside /usr/lib/node_modules
+47 silly cacheAndTest /usr is not inside /usr/bin
+48 silly cacheAndTest /usr is inside /usr
+49 silly gentlyRm /usr is managed by npm
+50 silly gentlyRm /usr/bin/node-gyp is under /usr
+51 verbose gentlyRm vacuuming /usr/bin/node-gyp up to /usr
+52 silly gentlyRm removing /usr/bin/node-gyp
+53 verbose unlock done using /home/anaibol/.npm/_locks/node-gyp-41dd5197f3670253.lock for /usr/lib/node_modules/node-gyp
+54 verbose stack Error: EACCES, unlink '/usr/bin/node-gyp'
+55 verbose cwd /home/anaibol/wooeva/client
+56 error Linux 3.12.20-1-MANJARO
+57 error argv "/usr/bin/node" "/usr/bin/npm" "install" "-g" "node-gyp"
+58 error node v0.10.33
+59 error npm  v2.1.9
+60 error path /usr/bin/node-gyp
+61 error code EACCES
+62 error errno 3
+63 error Error: EACCES, unlink '/usr/bin/node-gyp'
+63 error  { [Error: EACCES, unlink '/usr/bin/node-gyp'] errno: 3, code: 'EACCES', path: '/usr/bin/node-gyp' }
+64 error Please try running this command again as root/Administrator.
+65 verbose exit [ 3, true ]
+66 verbose unbuild lib/node_modules/node-gyp
+67 info preuninstall node-gyp@1.0.2
+68 info uninstall node-gyp@1.0.2
+69 verbose unbuild rmStuff node-gyp@1.0.2 from /usr/lib/node_modules
+70 verbose gentlyRm verifying that /usr is managed by npm
+71 silly isManaged /usr is not inside /usr/lib/node_modules
+72 silly isManaged /usr is not inside /usr/lib/node_modules
+73 silly isManaged /usr is not inside /usr/bin
+74 silly isManaged /usr is inside /usr
+75 silly gentlyRm /usr is managed by npm
+76 silly gentlyRm /usr/bin/node-gyp is under /usr
+77 verbose gentlyRm vacuuming /usr/bin/node-gyp up to /usr
+78 silly gentlyRm removing /usr/bin/node-gyp
+79 error error rolling back Error: EACCES, unlink '/usr/bin/node-gyp'
+79 error error rolling back  { [Error: EACCES, unlink '/usr/bin/node-gyp'] errno: 3, code: 'EACCES', path: '/usr/bin/node-gyp' }

@@ -1,5 +1,3 @@
-'use strict';
-
 // User routes use users controller
 var invite = require(controllersDir + 'invite');
 

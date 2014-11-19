@@ -1,5 +1,3 @@
-'use strict';
-
 // User routes use users controller
 var list_player = require(controllersDir + 'list_player');
 

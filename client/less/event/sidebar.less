@@ -7,9 +7,9 @@
   z-index: 999;
   margin-top: 66px;
 
-  li, a, i, input, button {
-    color: @white;
-  }
+  // li, a, i, input, button {
+  //   color: @white;
+  // }
 
   .navbar-nav {
     font-size: 13px;
@@ -20,22 +20,22 @@
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
       background-color: @red;
 
-      ::-moz-placeholder {
-        color: @white;
-      }
+      // ::-moz-placeholder {
+      //   color: @white;
+      // }
 
-      ::-webkit-input-placeholder {
-        color: @white;
-      }
+      // ::-webkit-input-placeholder {
+      //   color: @white;
+      // }
 
       a:focus, a:hover, a:active, a.active {
         background-color: darken(@red, 5%);
       }
 
-      &:not(:last-of-type) {
-        border-bottom: 1px solid lighten(@red, 5%);
-        float: none;
-      }
+      // &:not(:last-of-type) {
+      //   border-bottom: 1px solid lighten(@red, 5%);
+      //   float: none;
+      // }
 
       li a {
         padding-left: 25px;
@@ -47,13 +47,18 @@
     transition: height 0.5s;
   }
 
+  .sort {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+
   .sort, .date {
     margin-bottom: 7px;
   }
 
   .search {
-    padding: 15px ;
-    position: relative;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 
     i {
       position: absolute;
@@ -63,21 +68,26 @@
       line-height: 24px;
     }
 
-    input {
-      padding-left: 20px;
-      background-color: darken(@red, 3%);
-      width: 100%;
-      border: none;
-      line-height: 24px;
+    // input {
+    //   padding-left: 20px;
+    //   background-color: darken(@red, 3%);
+    //   width: 100%;
+    //   border: none;
+    //   line-height: 24px;
 
-      &:focus {
-        outline: none;
-      }
-    }
+    //   &:focus {
+    //     outline: none;
+    //   }
+    // }
 
     .dropdown-menu {
       background-color: darken(@red, 3%);
       padding: 0;
     }
+  }
+
+  .today {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
   }
 }

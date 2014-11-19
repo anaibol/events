@@ -6,7 +6,7 @@ var Results = db.get('results');
 
 exports.getAttendings = function(req, res) {
   Ev.updateAttendings(req.params.eid, function(attendings) {
-    console.log(">>" + attendings +"<<");
+    // console.log(">>" + attendings + "<<");
     res.json(attendings);
   });
 };

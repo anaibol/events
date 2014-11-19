@@ -1,5 +1,3 @@
-'use strict';
-
 // Events routes use events controller
 var events = require(controllersDir + 'events');
 var authorization = require(middlewaresDir + 'authorization');

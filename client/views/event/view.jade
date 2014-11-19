@@ -1,4 +1,4 @@
-section#view
+#view
   .container
     section.header.row
       //- (adaptive-background)
@@ -8,8 +8,8 @@ section#view
       .col-xs-12.col-sm-8.col-md-8.col-lg-8
         h3.title.truncate {{::ev.name}}
 
-        button.btn.promote(ng-click="promote(ev)") Promote event
-        a.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{::ev.eid}}/') Facebook event
+        button.btn.btn-primary.promote(ng-click="promote(ev)") Promote event
+        a.btn.btn-primary.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{::ev.eid}}/') Facebook event
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
         .title
@@ -24,17 +24,17 @@ section#view
           span.time
             i.fa.fa-clock-o
             span {{::ev.start_time | amDateFormat:"LT"}}
-            //- span {{::ev.start_time | amCalendar}}
+            span {{::ev.start_time | amCalendar}}
 
     section.row
       .col-md-4
         .event-buttons.wdiv.padding-10
           .event-rsvp-btns
-            button.btn(set-attendings) {{::attending}}
+            button.btn.btn-primary(set-attendings) {{::attending}}
           .event-rsvp-btns
-            button.btn(friend-selector) Invite your friends !
+            button.btn.btn-primary(friend-selector) Invite your friends !
           .event-rsvp-btns
-            button.btn(share-event) Share with your friends?
+            button.btn.btn-primary(share-event) Share with your friends?
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
 
@@ -61,12 +61,12 @@ section#view
                 li.list-group-item(ng-repeat="player in ev.list_event_players")
                 img.img-circle(ng-src="{{::'http://graph.facebook.com/' + player.uid + '/picture?type=square'}}", ng-alt="{{::player.name}}")
                 | {{:: player.result }} pts
-                button.btn(boost-player) Boost
+                button.btn.btn-primary(boost-player) Boost
                   i-fa-fa-flash
                 li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if="player.facebook.id != ev.player_id")
                   img.img-circle(ng-src="{{::'http://graph.facebook.com/' + player.uid + 'picture?type=square'}}", ng-alt="{{::player.name}}")
                   | {{:: player.result }} pts
-                  button.btn Boost
+                  button.btn.btn-primary Boost
                     i-fa-fa-flash
 
 

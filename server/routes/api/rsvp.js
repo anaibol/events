@@ -1,5 +1,3 @@
-'use strict';
-
 // User routes use users controller
 var rsvp = require(controllersDir + 'rsvp');
 var authorization = require(middlewaresDir + 'authorization');

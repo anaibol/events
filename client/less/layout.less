@@ -1,3 +1,27 @@
+@xs: ~'(min-width: @{screen-xs-max}) and (max-width: @{screen-xs-max})';
+@sm: ~'(min-width: @{screen-sm-min}) and (max-width: @{screen-sm-max})';
+@md: ~'(min-width: @{screen-md-min}) and (max-width: @{screen-md-max})';
+@lg: ~'(min-width: @{screen-lg-min})';
+.xs(@rules) {
+  @media @xs {
+    @rules();
+  }
+}
+.sm(@rules) {
+  @media @sm {
+    @rules();
+  }
+}
+.md(@rules) {
+  @media @md {
+    @rules();
+  }
+}
+.lg(@rules) {
+  @media @lg {
+    @rules();
+  }
+}
 
 // * {
 //   -moz-box-sizing: border-box;
@@ -31,10 +55,11 @@
 //   font-size: 14px;
 //   position: relative;
 // }
-html, body, #wrapper {
+html,
+body,
+#wrapper {
   height: 100%;
 }
-
 body {
   background-image: url('/img/background.jpg');
   background-repeat: no-repeat;
@@ -44,12 +69,20 @@ body {
   // font-family: Ubuntu;
   margin: 0;
 }
-
 #wrapper {
   padding: 0;
   background-image: linear-gradient(180deg, rgba(55, 65, 64, 0.2) 0%, rgba(69, 29, 55, 0.6) 100%);
   padding-top: 50px;
 }
+
+// .container-fluid {
+//   & {
+//     .xs({
+//       padding: 0 !important;
+//       background: blue;
+//     });
+//   }
+// }
 
 // #list #wrapper {
 //   margin-top: 50px;
@@ -58,52 +91,21 @@ i.fa {
   margin-right: 5px;
 }
 a {
-  color: @white;
+  // color: @white;
   transition: .5s;
 }
 a:hover {
   text-decoration: none;
-  color: lighten(@white, 10%);
+  // color: lighten(@white, 10%);
 }
-
 * {
   -webkit-user-select: none;
 }
-
 .modal-content {
   border-radius: 3px;
+  height: auto !important;
 }
-
 // .lightbox-modal .modal-dialog, .lightbox-modal .modal-dialog img {
 //   transition: height .3s;
 //   transition: width .3s;
 // }
-
-@xs: ~'(min-width: @{screen-xs-max}) and (max-width: @{screen-xs-max})';
-@sm: ~'(min-width: @{screen-sm-min}) and (max-width: @{screen-sm-max})';
-@md: ~'(min-width: @{screen-md-min}) and (max-width: @{screen-md-max})';
-@lg: ~'(min-width: @{screen-lg-min})';
-
-.xs(@rules) {
-  @media @xs {
-    @rules();
-  }
-}
-
-.sm(@rules) {
-  @media @sm {
-    @rules();
-  }
-}
-
-.md(@rules) {
-  @media @md {
-    @rules();
-  }
-}
-
-.lg(@rules) {
-  @media @lg {
-    @rules();
-  }
-}

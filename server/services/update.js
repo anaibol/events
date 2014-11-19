@@ -86,7 +86,7 @@ function updateActions(event_id, cb) {
         });
       }
     } else {
-      console.log("Nothing to do");
+      // console.log("Nothing to do");
       cb();
     }
   });

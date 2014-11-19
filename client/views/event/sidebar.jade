@@ -1,12 +1,15 @@
 section#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
   ul.nav.navbar-nav.row
     li.search
-      //- form(role='form')
-      //-   input.form-control(type='search', placeholder='Search...')
-      //-   button.btn
-      //-     i.fa.fa-search
-      i.fa.fa-search
-      input(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected", ng-controller="LocationpickerCtrl")
+      form.navbar-form
+        //- form(role='form')
+        //-   input.form-control(type='search', placeholder='Search...')
+        //-   button.btn
+        //-     i.fa.fa-search
+        .form-control-wrapper
+          i.fa.fa-search
+          input.form-control.col-lg-8(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected", ng-controller="LocationpickerCtrl")
+          span.material-input
     li.sort
       a(href='#', ng-click='isCollapsed = !isCollapsed')
         i.fa.fa-bar-chart-o
@@ -26,7 +29,7 @@ section#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl"
             i.fa.fa-calendar
             | Date
 
-    li
+    li.today
       a(href='#')
         i.fa.fa-calendar
         | Today

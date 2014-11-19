@@ -14,5 +14,5 @@ var hasAuthorization = function(req, res, next) {
 };
 
 module.exports = function(app, passport) {
-app.post('/api/rsvpn/:eid/rsvpn', authorization.requiresLogin, hasAuthorization, rsvpn.setNotAttending);
+  app.post('/api/rsvpn/:eid/rsvpn', authorization.requiresLogin, hasAuthorization, rsvpn.setNotAttending);
 };
