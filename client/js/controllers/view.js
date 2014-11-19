@@ -14,37 +14,11 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   }
 
   fbvideos.getFbVideo($scope.ev.eid).success(function(feed) {
-    if (feed && feed.data) {
-      var i = 0;
-      $scope.videos = new Array();
-      while (feed.data[i]) {
-        if (feed.data[i].type == "video") {
-          var j = 0;
-          var n = feed.data[i].source.indexOf("youtube");
-          if (n != -1) {
-            var test = 0;
-            while (test != -1) {
-              ++j;
-              if (!feed.data[i].source[j] || (feed.data[i].source[j] == '/' && feed.data[i].source[j + 1] == 'v' && feed.data[i].source[j + 2] == '/'))
-                test = -1;
-            }
-            j = j + 3;
-            var videoId = "";
-            var k = 0;
-            while (feed.data[i].source[j] && feed.data[i].source[j] != '?') {
-              videoId += feed.data[i].source[j];
-              ++j;
-              ++k;
-            }
-            var new_url = "http://www.youtube.com/embed/" + videoId;
-            j = 0;
-            k = 0;
-            $scope.videos.push(new_url)
-          }
-        }
-        ++i;
-      }
-      $scope.videos = $scope.videos;
+    if (feed){
+      fbvideos.getFbLink(feed, function(res){
+        if (res)
+          $scope.videos = res;
+      });
     }
   });
 

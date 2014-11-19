@@ -9,7 +9,6 @@
         h3.title.truncate {{::ev.name}}
 
         button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='!ev.promotion') Promote event
-        a.btn.btn-primary.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{::ev.eid}}/') Facebook event
 
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}

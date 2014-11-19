@@ -16,7 +16,7 @@ form.event-form.form-horizontal
             label.col-md-2(for='title') Deadline
             div.col-md-10
               p.input-group
-                input.form-control(ng-click='open($event)', datepicker-popup='{{format}}', style='width:50%', ng-model='ev.promotion.end_date', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+                input.small-input(ng-click='open($event)', datepicker-popup='{{format}}', style='width:50%', ng-model='ev.promotion.end_date', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
                 button.btn.btn-default(ng-click='open($event)')
                   i.fa.fa-calendar
           div.form-group(ng-controller='TimepickerCtrl')
