@@ -14169,6 +14169,9 @@ header .banner {
 #view .join {
   border: none;
 }
+#view .share {
+  border: non;
+}
 #view .description p {
   white-space: pre-line;
 }

@@ -56,7 +56,20 @@ app.directive('listEventPlayer', function($http) {
         url: '/api/list_player/' + scope.ev.eid
       }).success(function(data) {
         if (data)
-          scope.ev.list_event_players = data;
+        {
+          var params = data,
+          url;
+          var i = 0;
+          var j = 0;
+          for (i in params) {
+            url = 'https://graph.facebook.com//v2.2/' + params[i].uid + '?access_token=CAAVebA5FD2cBAIbo6iiWOcqbT4Fl4ZAmgmcfAa3LREBVgylXhZCv5N8qXMmmnP89y2hoDVRkkLcoFgZBn3A4teUx9y2FE1FgZAzecz5AP5KXTZAbSuF1qHDjh8FRkGVxbL4BgYkm6ezb3dZAk4MsJ57gJlF59ZAijLTEzE8paXpBBM5bPcGvJ1v7nSsXnvavzQ8TsPseuS0fDVmeGzJw1e391ZASiwOZAsCsZD&format=json&';
+            $http.get(url).success(function(response) {
+                  data[j].name = response.name;
+                  ++j;
+              });
+          }
+              scope.ev.list_event_players = data;
+        }
         else
           console.log('list_player_error');
       });
@@ -132,10 +145,25 @@ app.directive('shareEvent', function($http) {
             eid: scope.ev.eid
           },
           url: '/api/share/' + scope.ev.eid,
-        });
+        }).success(function(){
+            $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
+        }
+          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
       });
-    }
-  };
+      });
+    });
+  }
+};
 });
 
 app.directive('friendSelector', function($http) {
@@ -159,7 +187,20 @@ app.directive('friendSelector', function($http) {
             },
             url: '/api/invite/' + scope.ev.eid + '/' + uid,
           }).success(function(data) {
-
+      $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
+        }
+          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+      });
           });
         }
       });
