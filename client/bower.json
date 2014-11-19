@@ -20,7 +20,7 @@
     "bootstrap": "~3.2.0",
     "angularjs": "~1.2.26",
     "moment": "~2.8.3",
-    "angular-ui-router": "~0.2.11",
+    "angular-ui-router": "~0.2.12",
     "angular-ui": "~0.4.0",
     "moment-timezone": "~0.2.2",
     "angular-easyfb": "~1.2.0",
