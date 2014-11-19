@@ -32,7 +32,7 @@ app.factory('Event', function($q, $http, DSCacheFactory, $rootScope, $querystrin
         sortBy: params.sortBy || query.sortBy
       };
 
-      console.log(query);
+      // console.log(query);
 
       return this.runQuery();
     },
