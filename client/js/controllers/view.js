@@ -2,7 +2,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   console.log(ev);
 
   $scope.ev = ev;
-
+  $scope.today = new Date();
   if ($rootScope.user) {
     $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
       $scope.ev.attending = result;

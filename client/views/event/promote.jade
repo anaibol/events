@@ -3,18 +3,25 @@ form.event-form.form-horizontal
       .modal-body
         .control-group
           label.control-label Reward
-          input.reward.form-control(required='required', type='text', ng-model='ev.promotion.reward', placeholder='Reward for the game')
-        .control-group.datepicker
+          span
+            input.medium-input(required='required', type='text', ng-model='ev.promotion.reward', placeholder='')
+            label.promote-label Quantity
+            input.small-input(required='required', type='text', ng-model='ev.promotion.quantity', placeholder='')
+            label.promote-label Value
+            input.small-input(required='required', type='text', ng-model='ev.promotion.value', placeholder='')
+        .control-group.date
+          br
           div.form-group(ng-controller='DatepickerCtrl')
-            label.col-md-2.control-label(for='title') Date of end of the game
+            br
+            label.col-md-2(for='title') Deadline
             div.col-md-10
               p.input-group
-                input.form-control(type='text', ng-click='open($event)', datepicker-popup='{{format}}', ng-model='ev.start_time', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
-                span.input-group-btn
-                  button.btn.btn-default(ng-click='open($event)')
-                    i.fa.fa-calendar
-          label.control-label End Time
-            input(type="text")
+                input.form-control(ng-click='open($event)', datepicker-popup='{{format}}', style='width:50%', ng-model='ev.promotion.end_date', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+                button.btn.btn-default(ng-click='open($event)')
+                  i.fa.fa-calendar
+          div.form-group(ng-controller='TimepickerCtrl')
+            label.col-md-2.control-label(style='margin-top:6%;',for='title') End Time
+            timepicker(ng-model="ev.promotion.end_time",ng-change="changed()",hour-step="hstep",minute-step="mstep",show-meridian="ismeridian")
         .control-group
           label.control-label Commentary
           textarea#description.form-control(required="required", ng-model="ev.promotion.commentary", cols="30", rows="5", placeholder="Content")

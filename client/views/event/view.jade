@@ -8,8 +8,9 @@
       .col-xs-12.col-sm-8.col-md-8.col-lg-8
         h3.title.truncate {{::ev.name}}
 
-        button.btn.btn-primary.promote(ng-click="promote(ev)") Promote event
+        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='!ev.promotion') Promote event
         a.btn.btn-primary.facebook-link(target='_blank', ng-href='https://www.facebook.com/events/{{::ev.eid}}/') Facebook event
+
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
         .title
@@ -38,36 +39,47 @@
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
 
-        .padding-10(ng-if='ev.in_promotion && isInPromotion()')
+        .padding-10(ng-if='ev.promotion')
           .panel.panel-success
             .panel-heading Game Active
             .panel-body
               ul.list-group(ng-if="ev.promoter")
-                li.list-group-item(ng-if="!ev.promoter")
+                li.list-group-item(ng-if="ev.promoter")
                   img.img-circle(ng-src="{{ev.promoter.facebook.picture}}", ng-alt="{{::ev.promoter.name}}")
                   | {{:: ev.promoter.name }}
                 li.list-group-item {{::ev.promotion.reward}}
                 li.list-group-item
-                  | End:
+                  | End: &nbsp
                   strong
-                    | {{::ev.promotion.end_time | date:'mediyo iria mas con la aumDate'}} at {{::ev.promotion.end_time | date:'shortTime'}}
+                    | {{::ev.promotion.end_date | amCalendar}}
         .padding-10
           .panel.panel-default
             .panel-heading Players
             .panel-body
-              p(list-event-player, ng-hide="ev.list_event_players") No players yet!
+              p(list-event-player, ng-hide='ev.list_event_players[0].uid') No Players yet !
               ul.list-group
-                input.form-control.input-sm(type="text", ng-model="search.name")
-                li.list-group-item(ng-repeat="player in ev.list_event_players")
-                img.img-circle(ng-src="{{::'http://graph.facebook.com/' + player.uid + '/picture?type=square'}}", ng-alt="{{::player.name}}")
-                | {{:: player.result }} pts
-                button.btn.btn-primary(boost-player) Boost
-                  i-fa-fa-flash
-                li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if="player.facebook.id != ev.player_id")
-                  img.img-circle(ng-src="{{::'http://graph.facebook.com/' + player.uid + 'picture?type=square'}}", ng-alt="{{::player.name}}")
-                  | {{:: player.result }} pts
+                p(ng-hide='!ev.list_event_players[0].uid') {{ev.list_event_players.length}} &nbsp Players !
+                input.form-control.input-sm(placeholder='Search player', type='text', ng-model='search.name')
+                hr
+                li.list-group-item(ng-repeat='player in ev.list_event_players')
+                  table
+                    tr
+                      td 
+                        img.img-circle(ng-src='{{"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{player.name}}')
+                      td
+                        table
+                          tr
+                            td {{player.name}}
+                          tr
+                            td {{ player.result }} pts
+                            td 
+                              button.btn(boost-player) Boost
+                                i-fa-fa-flash
+                li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
+                  img.img-circle(ng-src='{{"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{player.name}}')
+                  | {{ player.result }} pts
                   button.btn.btn-primary Boost
-                    i-fa-fa-flash
+                  i-fa-fa-flash
 
 
     section.description.row
