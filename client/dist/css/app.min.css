@@ -17056,6 +17056,7 @@ header .banner {
   max-width: 300px;
   min-width: 200px;
   z-index: 1;
+  width: 300px;
 }
 #sidebar {
   position: fixed;
@@ -17312,6 +17313,9 @@ header .banner {
 }
 #view .header img {
   max-width: 100%;
+}
+#view .join {
+  border: none;
 }
 #view .description p {
   white-space: pre-line;

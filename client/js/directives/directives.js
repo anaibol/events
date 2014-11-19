@@ -172,22 +172,54 @@ app.directive('setAttendings', function($http) {
     restrict: 'A',
     scope: true,
     link: function(scope, elem) {
-      $(elem).on("click", function() {
-        if (scope.attending == 'Join') {
-          $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp');
+      $(elem).on('click', function() {
+        if (!scope.user || !scope.user.facebook || !scope.user.facebook.id)
+        {
+          document.location.href='/auth/facebook';
+        }
+        else if (scope.attending == 'Join') {
+          $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp').success(function(){
+            $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
+        }
+          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("button.btn.btn-primary.join").html(scope.attending);
+      });
+          });
           scope.attending = 'Leave';
         } else if (scope.attending == 'Leave') {
-          $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn');
-          scope.attending = 'Join';
+          $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn').success(function(){
+            $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
         }
-        $('#event-rsvp-btns').html(scope.attending);
+          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("button.btn.btn-primary.join").html(scope.attending);
       });
-
-    }
+          });
+          scope.attending = 'Join';
+        } 
+    });
+  }
   };
 });
-
-
 
 
 // app.directive("scroll", function() {

@@ -8,7 +8,7 @@
       .col-xs-12.col-sm-8.col-md-8.col-lg-8
         h3.title.truncate {{::ev.name}}
 
-        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='!ev.promotion') Promote event
+        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='!ev.promotion || ev.promoter.facebook.id === user.facebook.id') Promote event
 
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
@@ -30,7 +30,7 @@
       .col-md-4
         .event-buttons.wdiv.padding-10
           .event-rsvp-btns
-            button.btn.btn-primary(set-attendings) {{::attending}}
+            button.btn.btn-primary.join(set-attendings) {{::attending}}
           .event-rsvp-btns
             button.btn.btn-primary(friend-selector) Invite your friends !
           .event-rsvp-btns
