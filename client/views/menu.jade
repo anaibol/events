@@ -1,0 +1,53 @@
+#menu.navbar-collapse.collapse(ng-class="{'in':!navCollapsed}")
+  ul.nav.navbar-nav.visible-xs
+    li.search
+      form.navbar-form
+        //- form(role='form')
+        //-   input.form-control(type='search', placeholder='Search...')
+        //-   button.btn
+        //-     i.fa.fa-search
+        .form-control-wrapper
+          i.fa.fa-search
+          input.form-control.col-lg-8(type="text", placeholder="Type a city or location", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="locationSelected", ng-controller="LocationpickerCtrl")
+
+    li.sort
+      a(href='#', ng-click='isCollapsed = !isCollapsed')
+        i.fa.fa-bar-chart-o
+        | Sort by
+        i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
+      ul.nav.nav-collapse(collapse='isCollapsed')
+        li
+          a(href='#', ui-sref="list({sortBy: 'proximity'})")
+            i.fa.fa-map-marker 
+            | Proximity
+        li
+          a(href='#', ui-sref="list({sortBy: 'popularity'})")
+            i.fa.fa-group 
+            | Popularity
+        li
+          a(href='#', ui-sref="list({sortBy: ''})")
+            i.fa.fa-calendar
+            | Date
+
+    li.today
+      a(href='#')
+        i.fa.fa-calendar
+        | Today
+
+    li(ng-if="today.getTime() === Date.sun().getTime()")
+      a(href='#')
+        i.fa.fa-calendar
+        | This weekend
+
+    li(ng-if="today.getTime() !== Date.sun().getTime()")
+      a(href='#')
+        i.fa.fa-calendar
+        | Next weekend
+
+    li.datepicker
+      input(type="date", ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date")
+
+    li.tags
+      | Explore by category
+      .tag-list
+        a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}

@@ -98,6 +98,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
   if (!$localStorage.lng || !$localStorage.lat) {
     Geoip.getLocation().success(function(data) {
+
       var loc = data.loc.split(',');
       loc = {
         lng: loc[1],
@@ -113,6 +114,9 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
       $localStorage.lng = loc.lng;
       $localStorage.lat = loc.lat;
+
+
+
       // $localStorage.address = $rootScope.address;
       // $localStorage.city = $rootScope.city;
       // if ($state.current.name === 'home') {
@@ -120,8 +124,8 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
       //     city: $rootScope.city
       //   });
       // }
-    }).error(function(data) {
-      console.log(data);
+    }).error(function(err) {
+      console.log(err);
       Event.query.lng =  2.294694;
       Event.query.lat = 48.858093;
     });
