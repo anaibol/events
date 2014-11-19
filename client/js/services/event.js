@@ -50,8 +50,10 @@ app.factory('Event', function($q, $http, DSCacheFactory, $rootScope, $querystrin
         ev.tags.push('popular');
       }
 
-      if (ev.price.num === 0) {
-        ev.tags.push('free');
+      if (ev.price) {
+        if (ev.price.num === 0) {
+          ev.tags.push('free');
+        }
       }
 
       if (ev.festival) {
