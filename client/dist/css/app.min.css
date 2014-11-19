@@ -16946,10 +16946,6 @@ a:hover {
 * {
   -webkit-user-select: none;
 }
-.modal-content {
-  border-radius: 3px;
-  height: auto !important;
-}
 header {
   position: fixed;
   top: 0;
