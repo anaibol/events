@@ -158,7 +158,8 @@ app.directive('shareEvent', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("button.btn.btn-primary.share").html("Share again?");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
       });
       });
     });
@@ -199,7 +200,8 @@ app.directive('friendSelector', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("button.btn.btn-primary.invite").html("Invite again?");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
       });
           });
         }
@@ -232,7 +234,7 @@ app.directive('setAttendings', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
           $("button.btn.btn-primary.join").html(scope.attending);
       });
           });
@@ -251,7 +253,7 @@ app.directive('setAttendings', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
           $("button.btn.btn-primary.join").html(scope.attending);
       });
           });
@@ -262,7 +264,15 @@ app.directive('setAttendings', function($http) {
   };
 });
 
-
+app.directive('myTest', function(){
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function(scope, elem){
+  $(elem).countdown({until: scope.ev.promotion.end_date});
+    }
+  };
+});
 // app.directive("scroll", function() {
 //  return function(scope, elm, attr) {
 //      var raw = elm[0];

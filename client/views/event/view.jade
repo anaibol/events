@@ -32,13 +32,13 @@
           .event-rsvp-btns
             button.btn.btn-primary.join(set-attendings) {{attending}}
           .event-rsvp-btns
-            button.btn.btn-primary(friend-selector) Invite your friends !
+            button.btn.btn-primary.invite(friend-selector) Invite friends?
           .event-rsvp-btns
-            button.btn.btn-primary.share(share-event) Share with your friends?
+            button.btn.btn-primary.share(share-event) Share?
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
 
-        .padding-10(ng-if='ev.promotion')
+        .padding-10.promoter(ng-if='ev.promotion')
           .panel.panel-success
             .panel-heading Game Active
             .panel-body
@@ -60,7 +60,7 @@
                 p(ng-hide='!ev.list_event_players[0].uid') {{ev.list_event_players.length}} &nbsp Players !
                 input.form-control.input-sm(placeholder='Search player', type='text', ng-model='search.name')
                 hr
-                li.list-group-item(ng-repeat='player in ev.list_event_players')
+                li.list-group-item.players(ng-repeat='player in ev.list_event_players')
                   table
                     tr
                       td 

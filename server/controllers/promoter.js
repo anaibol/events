@@ -18,7 +18,8 @@ exports.promoteEvent = function(req, res)
                 value: req.body.value,
                 quantity: req.body.quantity
             };
-            ev.promoter = req.user;
+            ev.promoter.facebook.name = req.user.facebook.name;
+            ev.promoter.facebook.uid = req.user.facebook.uid;
             ev.promotion = promotion;
             ev.in_promotion = true;
             Events.update({'eid': parseInt(req.params.eid)}, ev, function(err, ev){

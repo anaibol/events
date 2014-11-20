@@ -12,21 +12,21 @@ function getDatesActives(ev, freq) {
         console.log(dateactive);
         console.log(((ev.end_time.getTime() / 1000 / 3600 / 24) - (dateactive.getTime() / 1000 / 3600 / 24)));
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000));
-        tab[j] = parseDate(dateactive, ev.timezone);
+        tab[j] = dateactive;
         ++j;
       }
       break;
     case 'weekly':
       while (ev.end_time.getTime() / 1000 / 3600 / 24 - dateactive.getTime() / 1000 / 3600 / 24 >= 7) {
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
-        tab[j] = parseDate(dateactive, ev.timezone);
+        tab[j] = dateactive;
         ++j;
       }
       break;
     case 'monthly':
       while (ev.end_time.getTime() / 1000 / 3600 / 24 - dateactive.getTime() / 1000 / 3600 / 24 >= 24) {
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
-        tab[j] = parseDate(dateactive, ev.timezone);
+        tab[j] = dateactive;
         ++j;
       }
       if (dateactive.getMonth() + 1 == ev.start_time.getMonth() + 1)
@@ -37,7 +37,7 @@ function getDatesActives(ev, freq) {
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
       else if ((ev.start_time.getDate() > 21 && ev.start_time.getDate() < 28) && (dateactive.getDate() <= 21))
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
-      tab[j] = parseDate(dateactive, ev.timezone);
+      tab[j] = dateactive;
       ++j;
       break;
   }
@@ -63,6 +63,7 @@ function getMulti_Dates(ev) {
       ev.dateactive = getDatesActives(ev, 'weekly');
     }
     ev.start_time = getladateActive(ev.dateactive);
+    ev.start_time2 = ev.start_time.toString();
   } else
     ev.multi_date = false;
   return (ev.multi_date);
