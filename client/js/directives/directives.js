@@ -44,7 +44,7 @@
 //     };
 // });
 
-app.directive('listEventPlayer', function($http) {
+app.directive('listEventPlayer', function($http, $rootScope) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
@@ -62,7 +62,7 @@ app.directive('listEventPlayer', function($http) {
           var i = 0;
           var j = 0;
           for (i in params) {
-            url = 'https://graph.facebook.com//v2.2/' + params[i].uid + '?access_token=CAAVebA5FD2cBAIbo6iiWOcqbT4Fl4ZAmgmcfAa3LREBVgylXhZCv5N8qXMmmnP89y2hoDVRkkLcoFgZBn3A4teUx9y2FE1FgZAzecz5AP5KXTZAbSuF1qHDjh8FRkGVxbL4BgYkm6ezb3dZAk4MsJ57gJlF59ZAijLTEzE8paXpBBM5bPcGvJ1v7nSsXnvavzQ8TsPseuS0fDVmeGzJw1e391ZASiwOZAsCsZD&format=json&';
+            url = 'https://graph.facebook.com/v2.2/' + params[i].uid + '?access_token=' + $rootScope.user.accessToken + '&format=json&';
             $http.get(url).success(function(response) {
                   data[j].name = response.name;
                   ++j;

@@ -1,5 +1,5 @@
 app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, Lightbox) {
-  console.log(ev);
+  // console.log(ev);
 
   $scope.ev = ev;
   $scope.today = new Date();

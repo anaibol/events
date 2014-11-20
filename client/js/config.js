@@ -30,7 +30,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       }
     })
     .state('list.view', {
-      url: ':slug/:eid',
+      url: '^/:slug/:eid',
       templateUrl: 'event/view',
       controller: 'ViewCtrl',
       parent: 'list',
@@ -110,10 +110,12 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
       // delete res.data.loc;
 
       // $.address = res.data;
-      // $rootScope.city = slug.slugify($rootScope.address.region);
+
+      $rootScope.city = data.region;
 
       $localStorage.lng = loc.lng;
       $localStorage.lat = loc.lat;
+      $localStorage.city = $rootScope.city;
 
 
 
@@ -131,10 +133,10 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     });
   } else {
     // $rootScope.address = $localStorage.address;
-    // $rootScope.city = $localStorage.city;
+    $rootScope.city = $localStorage.city;
     Event.query.lng = $localStorage.lng;
     Event.query.lat = $localStorage.lat;
-
+    
     // if ($state.current.name === '') {
     // $state.transitionTo('list', {
     //   city: $rootScope.city
@@ -152,12 +154,15 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     // // }
     // console.log(fromState);
     // console.log(toState);
-    if (fromState.name === '' && toState.name === 'list') {
-      $rootScope.renderList = true;
-    } else if (fromState.parent === 'list' && toState.name === 'list') {
-      $rootScope.renderList = true;
-    }
+    // if (fromState.name === '' && toState.name === 'list') {
+    //   $rootScope.renderList = true;
+    // } else if (fromState.parent === 'list' && toState.name === 'list') {
+    //   $rootScope.renderList = true;
+    // }
 
+      // if (fromState.name === 'list.view' && toState.name === 'list') {
+      //   event.preventDefault();
+      // }
   });
 
   ezfb.init();

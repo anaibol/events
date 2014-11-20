@@ -1,4 +1,6 @@
 app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope) {
+  $scope.locationSelected = $rootScope.city;
+
   $scope.onSelect = function($item, $model, $label) {
     var country;
 
