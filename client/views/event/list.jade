@@ -31,7 +31,6 @@ section#list(infinite-scroll="getMore()", infinite-scroll-distance="1", infinite
             i.fa.fa-group
             span {{ev.attending_count}}
           .place-info
-            .user.price.pull-right(ng-if="ev.price"){{ev.price.full}}
             .span.place(ng-click="openMap($event, ev)", ng-if="ev.location")
               i.fa.fa-map-marker
               span.location {{' ' + ev.location | characters:20}}{{ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}

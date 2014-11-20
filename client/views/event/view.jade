@@ -14,16 +14,12 @@
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
         .title
           .attending
+            i.fa.fa-group
             | {{ev.attending_count}}
-            i.icon-group
           .price {{ev.price.full}}
         .datetime
-          span.date
-            i.fa.fa-calendar
-            span {{ev.start_time2 | amDateFormat:'D MMM'}} 
           span.time
             i.fa.fa-clock-o
-            span {{ev.start_time2 | amDateFormat:"LT"}}
             span {{ev.start_time2 | amCalendar}}
 
     section.row
