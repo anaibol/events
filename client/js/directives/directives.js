@@ -55,24 +55,8 @@ app.directive('listEventPlayer', function($http, $rootScope) {
         },
         url: '/api/list_player/' + scope.ev.eid
       }).success(function(data) {
-        if (data)
-        {
-          var params = data,
-          url;
-          var i = 0;
-          var j = 0;
-          for (i in params) {
-            url = 'https://graph.facebook.com/v2.2/' + params[i].uid + '?access_token=' + $rootScope.user.accessToken + '&format=json&';
-            $http.get(url).success(function(response) {
-                  data[j].name = response.name;
-                  ++j;
-              });
-          }
               scope.ev.list_event_players = data;
-        }
-        else
-          console.log('list_player_error');
-      });
+        });
     }
   };
 });

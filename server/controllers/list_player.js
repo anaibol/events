@@ -20,9 +20,11 @@ exports.findPlayers = function(req, res) {
           var obj = {
             uid: 0,
             result: 0,
+            name:""
           };
           obj.uid = parseInt(rest[i].user_id);
           obj.result = parseInt(rest[i].result_boosted);
+          obj.name = rest[i].name;
           list.push(obj);
         }
         ++i;
