@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 function getDatesActives(ev, freq) {
   var tab = new Array();
   var j = 0;
@@ -10,21 +12,21 @@ function getDatesActives(ev, freq) {
         console.log(dateactive);
         console.log(((ev.end_time.getTime() / 1000 / 3600 / 24) - (dateactive.getTime() / 1000 / 3600 / 24)));
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000));
-        tab[j] = dateactive;
+        tab[j] = parseDate(dateactive, ev.timezone);
         ++j;
       }
       break;
     case 'weekly':
       while (ev.end_time.getTime() / 1000 / 3600 / 24 - dateactive.getTime() / 1000 / 3600 / 24 >= 7) {
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
-        tab[j] = dateactive;
+        tab[j] = parseDate(dateactive, ev.timezone);
         ++j;
       }
       break;
     case 'monthly':
       while (ev.end_time.getTime() / 1000 / 3600 / 24 - dateactive.getTime() / 1000 / 3600 / 24 >= 24) {
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
-        tab[j] = dateactive;
+        tab[j] = parseDate(dateactive, ev.timezone);
         ++j;
       }
       if (dateactive.getMonth() + 1 == ev.start_time.getMonth() + 1)
@@ -35,16 +37,22 @@ function getDatesActives(ev, freq) {
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
       else if ((ev.start_time.getDate() > 21 && ev.start_time.getDate() < 28) && (dateactive.getDate() <= 21))
         dateactive = new Date(ev.start_time.getTime() + (j * 86400000 * 7));
-      tab[j] = dateactive;
+      tab[j] = parseDate(dateactive, ev.timezone);
       ++j;
       break;
   }
   return (tab);
 }
 
+function parseDate(date, tz) {
+      if (!tz) {
+        return date;
+      }
+      var parsed = moment(date).tz(tz).format("YYYY/MM/DD hh:mm A");
+      return new Date(parsed);
+    }
 
 function getMulti_Dates(ev) {
-  return;
   var date = new Date();
 
   if (ev.end_time.getTime() > date.getTime() && ((ev.end_time.getTime() / 1000 / 3600) - ev.start_time.getTime() / 1000 / 3600) >= 24) {
@@ -63,7 +71,6 @@ function getMulti_Dates(ev) {
 function getladateActive(tab) {
   var date = new Date();
   date.setHours(0, 0, 0, 0);
-  console.log("raaphaaaaaaaaaa : " + date);
 
   var i = 0;
 

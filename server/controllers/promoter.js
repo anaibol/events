@@ -2,6 +2,33 @@ var Users = global.db.get('users');
 
 var Events = global.db.get('events');
 
+exports.promoteEvent = function(req, res)
+{
+    Events.findOne({'eid': parseInt(req.params.eid)},function(err, ev){
+        if (err)
+        {
+            console.log(err);
+        }
+        else if (ev)
+        {
+            var promotion = {
+                reward: req.body.reward,
+                end_date: new Date(parseInt(req.body.end_date)),
+                commentary: req.body.commentary,
+                value: req.body.value,
+                quantity: req.body.quantity
+            };
+            ev.promoter = req.user;
+            ev.promotion = promotion;
+            ev.in_promotion = true;
+            Events.update({'eid': parseInt(req.params.eid)}, ev, function(err, ev){
+                if (err)
+                    console.log(err);
+            })
+        }
+    });
+}
+
 exports.associatePromoter = function(req, res) {
   Users.findOne({
     'facebook.id': req.user.facebook.id

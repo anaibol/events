@@ -16,10 +16,11 @@ app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
               end_date: end_date,
               promoter: $scope.user.facebook.id,
               quantity: $scope.ev.promotion.quantity,
-              value: $scope.ev.promotion.value
+              value: $scope.ev.promotion.value,
             },
             url: '/api/promote_event/' + $scope.ev.eid
           });
+    ev.in_promotion = true;
   	$modalInstance.dismiss('cancel');
   };
 });
