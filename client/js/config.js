@@ -30,7 +30,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       }
     })
     .state('list.view', {
-      url: '^/:slug/:eid',
+      url: ':slug/:eid',
       templateUrl: 'event/view',
       controller: 'ViewCtrl',
       parent: 'list',
