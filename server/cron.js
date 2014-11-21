@@ -44,9 +44,9 @@ var users = ['EsenciaSalsaClub',
 
 var cronJob = require('cron').CronJob;
 
-var env = process.env.NODE_ENV || 'test';
+var env = process.env.NODE_ENV || 'development';
 
-if (env === 'test') {
+if (env === 'development') {
   var job = new cronJob('*/30 * * * *', function() {
     var date = new Date();
     console.log(date.toString());
@@ -58,7 +58,7 @@ if (env === 'test') {
     // fetchEventsFromLocations();
   }, null, true);
 
-  var job = new cronJob('*/1 * * * *', function() {
+  var job = new cronJob('*/0 * * * *', function() {
     updateMultidate();
   }, null, true);
   var job = new cronJob('*/60 * * * *', function() {
@@ -83,14 +83,14 @@ function updateMultidate(){
   date.setSeconds(0);
   date.setMinutes(0);
   date.setHours(0);
-  Events.find({$and:{
+  Events.find({$and:[{
     start_time: {
       $lt: date,
   },
  //     $gt: datebefore
     end_time: { //a enlever apres avoir fait tourné une fois
       $gt: date // a enlever apres avoir fait tourné une fois
-    }}// a enlever apres avoir fait tourné une fois
+    }}]// a enlever apres avoir fait tourné une fois
   }).success(function(evs){
     console.log("Il y a >>>" + evs.length + "<<< évènement multi_date updatés !")
     evs.forEach(function(ev){
@@ -100,7 +100,6 @@ function updateMultidate(){
     evs.forEach(function(ev) {
       eids.push(parseInt(ev.eid));
     });
-
     Ev.updateMultiple(eids);
   });
 }
