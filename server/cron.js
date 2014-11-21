@@ -41,12 +41,37 @@ var users = ['EsenciaSalsaClub',
   'MangosTropCafe',
   'victorsuco'
 ];
+starttime2();
 
+function starttime2(){
+  var date = new Date();
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+  Events.find({$or:[{
+    start_time: {
+      $gt: date
+    },
+    end_time:{
+      $gt:date
+    }
+  }]}).success(function(evs){
+    console.log("Il y a >>>" + evs.length + "<<< évènement live !")
+  var eids = [];
+    evs.forEach(function(ev) {
+      if (!ev.start_time2)
+      {
+        eids.push(parseInt(ev.eid));
+      }
+    });
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + eids.length + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    Ev.updateMultiple(eids);
+});}
 var cronJob = require('cron').CronJob;
-
 var env = process.env.NODE_ENV || 'development';
 
 if (env === 'development') {
+
   var job = new cronJob('*/30 * * * *', function() {
     var date = new Date();
     console.log(date.toString());
@@ -58,8 +83,9 @@ if (env === 'development') {
     // fetchEventsFromLocations();
   }, null, true);
 
-  var job = new cronJob('*/0 * * * *', function() {
-    updateMultidate();
+  var job = new cronJob('*/1440 * * * *', function() {
+    //updateMultidate();
+    updateJournalierMultidate();
   }, null, true);
   var job = new cronJob('*/60 * * * *', function() {
     // var date = new Date();
@@ -74,6 +100,31 @@ if (env === 'development') {
 
 } else {
   fetchEventsFromKeywords();
+}
+function updateJournalierMultidate(){
+  var date = new Date();
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+  var datebefore = date - 1000 * 60 * 60 * 24;
+  datebefore = new Date(datebefore);
+  Events.find({
+    start_time: {
+      $lt: date,
+      $gt: datebefore
+    },
+    multi_date: true
+  }).success(function(evs){
+    console.log("Il y a >>>" + evs.length + "<<< évènement multi_date updatés !")
+    evs.forEach(function(ev){
+      ev.multi_date = Mul.getMultiDates(ev);    
+    });
+    var eids = [];
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
+    });
+    Ev.updateMultiple(eids);
+  });
 }
 
 function updateMultidate(){
