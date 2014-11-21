@@ -3,12 +3,16 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  transition: transform 200ms linear;
+  // transition: all 200ms linear;
+  transition: all .2s cubic-bezier(.25,.46,.45,.94);
   padding: 0;
-  z-index: 998;
+  z-index: 1004;
+  box-shadow: 0 2px 2px rgba(0,0,0,.2);
 
   .navbar-inverse {
     background-color: @red;
+    margin: 0;
+    padding: 0;
   }
 
   nav {
@@ -47,11 +51,29 @@ header {
 
       .navbar-toggle {
         float: left;
-        padding: 6px 10px;
+        padding: 0;
+        margin: 5px 10px;
+        border-radius: 500px;
+        width: 40px;
+        height: 40px;
+
+        background-color: darken(@red, 10%);
+
+        &:hover, &:focus {
+          background-color: @red;
+          color: white;
+          border-color: white;
+        }
       }
 
       .navbar-brand {
-        background-color: darken(@red, 5%);
+        background-color: darken(@red, 10%);
+
+        &:hover, &:focus {
+          background-color: @red;
+          color: white;
+          border-color: white;
+        }
       }
 
       .navbar-right {
@@ -101,9 +123,11 @@ header {
   }
 
 }
-.unpinned {
+#event-list .unpinned {
   transform: translateY(-100%);
+  opacity: 0;
 }
 .pinned {
   transform: translateY(0%);
+  opacity: 1;
 }

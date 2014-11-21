@@ -1,8 +1,24 @@
 #view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0,0,0,.7);
+  padding-top: 50px;
+  z-index: 1;
+
   section {
     background: white;
     padding: 25px;
     margin: 10px 0;
+    float: left;
+    width: 100%;
+
+    & {
+      .xs({
+        height:: 100%;
+      });
+    }
   }
   .header {
     img {
@@ -42,6 +58,7 @@
         padding: 5px;
         .img-thumbnail {
           border: none;
+          width: 100%;
         }
       }
 
@@ -99,4 +116,24 @@
   //   // -moz-column-gap: 16px;
   //   // column-gap: 16px;
   // }
+
+  & {
+    .xs({
+      position: relative;
+      padding-top: 0;
+    });
+  }
+}
+
+.mobile #view {
+  position: relative;
+  padding-top: 0;
+
+  section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 50px;
+  }
 }

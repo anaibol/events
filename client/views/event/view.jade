@@ -1,6 +1,6 @@
-#view
+#view(ng-click="$state.go('^')")
   .container
-    section.header.row
+    section.header
       //- (adaptive-background)
       //- (style='background-image: url({{ev.pic_cover.source}});')
       .col-xs-12.col-sm-4.col-md-4.col-lg-4
@@ -26,7 +26,7 @@
             span {{ev.start_time2 | amDateFormat:"LT"}}
             span {{ev.start_time2 | amCalendar}}
 
-    section.row
+    section
       .col-md-4
         .event-buttons.wdiv.padding-10
           .event-rsvp-btns
@@ -81,10 +81,10 @@
                   i-fa-fa-flash
 
 
-    section.description.row
+    section.description
       p.description(ng-bind-html='ev.description | linky')
 
-    section.location.row
+    section.location
       a(href="https://maps.google.com/maps?q={{ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank')
         .place(ng-if='ev.location')
           i.fa.fa-map-marker
@@ -92,7 +92,7 @@
 
       .map(style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center={{ev.venue.coord.lat + ',' + ev.venue.coord.lng}}&zoom=14&size=640x200&markers=color:blue|{{ev.venue.coord.lat + ',' + ev.venue.coord.lng}})")
 
-    section.media.row
+    section.media
       ul.youtube-videos(ng-if="videos.length")
         li.col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="video in videos", ng-if="$index < 3")
           object.img-thumbnail(type="text/html" data="{{video}}")

@@ -96,6 +96,8 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
   $rootScope.user = window.user;
 
+  $rootScope.isMobile = window.isMobile;
+
   if (!$localStorage.lng || !$localStorage.lat) {
     Geoip.getLocation().success(function(data) {
 
@@ -151,18 +153,20 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     // } else if (!$rootScope.listRendered) {
     //   // $rootScope.iso.layout();
     //   console.log($state.current);
-    // // }
+    // }
     // console.log(fromState);
     // console.log(toState);
     // if (fromState.name === '' && toState.name === 'list') {
-    //   $rootScope.renderList = true;
+    //   $rootScope.listRendered = true;
     // } else if (fromState.parent === 'list' && toState.name === 'list') {
     //   $rootScope.renderList = true;
     // }
 
       // if (fromState.name === 'list.view' && toState.name === 'list') {
+      //   $('#view').hide();
       //   event.preventDefault();
       // }
+      $rootScope.menuOpen = false;
   });
 
   ezfb.init();

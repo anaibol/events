@@ -58,3 +58,14 @@ _.mixin({
     return o;
   }
 });
+
+
+angular.element('#menu-curtain').click(function(e){
+   angular.element('#menu-curtain').removeClass('fadeIn');
+   angular.element('#menu').removeClass('open');
+});
+
+// $('body, html, #wrapper').css({
+//   width: window.screen.availWidth,
+//   height: window.screen.availHeight
+// });

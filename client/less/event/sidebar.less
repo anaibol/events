@@ -1,15 +1,13 @@
 #sidebar {
   // z-index: 999;
   position: fixed;
-  top: 0;
-  right: 0;
-  padding-left: 0;
-  z-index: 999;
-  margin-top: 66px;
+  top: 60px;
+  right: 5px;
+  padding-left: 14px;
+  padding-right: 0;
 
   .navbar-nav {
     font-size: 13px;
-    width: 100%;
 
     li, a, i, button, input {
       color: rgba(255, 255, 255, 0.84);
@@ -27,6 +25,9 @@
       width: 100%;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
       background-color: @red;
+
+      transition: 0.2s ease-in-out;
+      transition-property: max-height, background-color, opacity;
 
       a:focus, a:hover, a:active, a.active {
         background-color: darken(@red, 5%);
@@ -63,22 +64,14 @@
     i {
       position: absolute;
       top: 0;
-      left: 5px;
-      padding: 15px;
+      left: 0;
       line-height: 24px;
     }
 
-    // input {
-    //   padding-left: 20px;
-    //   background-color: darken(@red, 3%);
-    //   width: 100%;
-    //   border: none;
-    //   line-height: 24px;
-
-    //   &:focus {
-    //     outline: none;
-    //   }
-    // }
+    input {
+      margin-left: 20px;
+      border-color: white;
+    }
 
     .dropdown-menu {
       background-color: darken(@red, 3%);

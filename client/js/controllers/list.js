@@ -1,6 +1,5 @@
 app.controller('ListCtrl', function($scope, $window, Event, evs) {
   $scope.events = evs;
-  //$scope.mobileSortList = false;
 
   $scope.getTags = function() {
     $scope.tags = _.uniq([].concat.apply([], _.pluck($scope.events, 'tags'))).sort();
