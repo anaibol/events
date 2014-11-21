@@ -39,6 +39,7 @@ function getDatesActives(ev, freq) {
       ++j;
       break;
   }
+  tab[tab.length] = ev.end_time;
   return (tab);
 }
 
