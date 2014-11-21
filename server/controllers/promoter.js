@@ -16,10 +16,14 @@ exports.promoteEvent = function(req, res)
                 end_date: new Date(parseInt(req.body.end_date)),
                 commentary: req.body.commentary,
                 value: req.body.value,
-                quantity: req.body.quantity
+                quantity: req.body.quantity,
             };
-            ev.promoter.facebook.name = req.user.facebook.name;
-            ev.promoter.facebook.uid = req.user.facebook.uid;
+            var promoter = {
+                  name : req.user.facebook.name,
+                  picture : req.user.facebook.picture,
+                  id : req.user.facebook.id
+              }
+            ev.promoter = promoter;
             ev.promotion = promotion;
             ev.in_promotion = true;
             Events.update({'eid': parseInt(req.params.eid)}, ev, function(err, ev){

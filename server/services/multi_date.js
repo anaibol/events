@@ -1,5 +1,3 @@
-var moment = require('moment');
-
 function getDatesActives(ev, freq) {
   var tab = new Array();
   var j = 0;
@@ -44,14 +42,6 @@ function getDatesActives(ev, freq) {
   return (tab);
 }
 
-function parseDate(date, tz) {
-      if (!tz) {
-        return date;
-      }
-      var parsed = moment(date).tz(tz).format("YYYY/MM/DD hh:mm A");
-      return new Date(parsed);
-    }
-
 function getMulti_Dates(ev) {
   var date = new Date();
 
@@ -75,11 +65,11 @@ function getladateActive(tab) {
 
   var i = 0;
 
-  while (tab[i].getTime() < date.getTime() && i < tab.length) {
+  while (i < tab.length - 1 && tab[i].getTime() < date.getTime()) {
     ++i;
   }
-  return (tab[i]);
-
+  if (tab[i])
+    return (tab[i]);
 }
 
 module.exports.getMultiDates = getMulti_Dates;

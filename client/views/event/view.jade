@@ -8,7 +8,7 @@
       .col-xs-12.col-sm-8.col-md-8.col-lg-8
         h3.title.truncate {{ev.name}}
 
-        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='!ev.promotion || ev.promoter.facebook.id === user.facebook.id') Promote event
+        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='ev.creator.id === user.facebook.id || user.admin == true') Promote event
 
         .tag-list
           span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
@@ -40,7 +40,7 @@
             .panel-body
               ul.list-group(ng-if="ev.promoter")
                 li.list-group-item(ng-if="ev.promoter")
-                  img.img-circle(ng-src="{{ev.promoter.facebook.picture}}", ng-alt="{{ev.promoter.name}}")
+                  img.img-circle(ng-src="{{ev.promoter.picture}}", ng-alt="{{ev.promoter.name}}")
                   | {{ ev.promoter.name }}
                 li.list-group-item {{ev.promotion.reward}}
                 li.list-group-item
