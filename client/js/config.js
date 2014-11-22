@@ -97,7 +97,7 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   $rootScope.user = window.user;
 
   $rootScope.isMobile = window.isMobile;
-
+  
   if (!$localStorage.lng || !$localStorage.lat) {
     Geoip.getLocation().success(function(data) {
 

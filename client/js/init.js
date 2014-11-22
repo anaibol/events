@@ -58,9 +58,3 @@ _.mixin({
     return o;
   }
 });
-
-// $('body, html, #wrapper').css({
-//   width: window.screen.availWidth,
-//   height: window.screen.availHeight
-// });
- $("body").unbind("mousewheel DOMMouseScroll");
