@@ -1,6 +1,7 @@
 var Results = db.get('results');
 var Invitations = db.get('invitations');
 var Res = require('./resolve.js');
+var Users = db.get('users');
 
 function AddPointsBoost(uid, eid, point) {
   Results.findOne({
@@ -36,13 +37,19 @@ function AddPoints(uid, eid, point) {
         }
       });
     } else if (!results && point >= 0) {
-      Results.insert({
-        user_id: uid,
-        event_id: eid,
-        result: point,
-        result_boosted: point,
-        score: 0
-      });
+      Users.findOne({'facebook.id':uid.toString()}, function(user){
+        if (user)
+        {
+        Results.insert({
+          user_id: uid,
+          name: user.facebook.name,
+          event_id: eid,
+          result: point,
+          result_boosted: point,
+          score: 0
+        });
+      }
+      })
     }
   });
 }

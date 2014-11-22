@@ -20,16 +20,16 @@
             span.date
               //- i.fa.fa-clock-o
               //- span {{ev.start_time2 | amCalendar}}
-              i.fa.fa-calendar
-              span {{ev.start_time2 | amDateFormat:'D MMM'}} 
+              //- i.fa.fa-calendar
               i.fa.fa-clock-o
-              span {{ev.start_time2 | amDateFormat:"LT"}}
+              span {{ev.start_time2 | amCalendar}} 
+             // i.fa.fa-clock-o
+             // span {{ev.start_time2 | amDateFormat:"LT"}}
 
           .attending.pull-right(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count")
             i.fa.fa-group
             span {{ev.attending_count}}
           .place-info
-            .user.price.pull-right(ng-if="ev.price"){{ev.price.full}}
             .span.place(ng-click="openMap($event, ev)", ng-if="ev.location")
               i.fa.fa-map-marker
               span.location {{' ' + ev.location | characters:20}}{{ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}

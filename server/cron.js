@@ -6,8 +6,7 @@ var Ev = require('./ev');
 
 var db = require('monk')(config.db);
 var Events = db.get('events');
-var Pho = require('./services/photos.js');
-
+var Mul = require('./services/multi_date.js');
 var Upd = require('./services/update.js');
 
 var Events = db.get('events');
@@ -42,12 +41,37 @@ var users = ['EsenciaSalsaClub',
   'MangosTropCafe',
   'victorsuco'
 ];
+starttime2();
 
+function starttime2(){
+  var date = new Date();
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+  Events.find({$or:[{
+    start_time: {
+      $gt: date
+    },
+    end_time:{
+      $gt:date
+    }
+  }]}).success(function(evs){
+    console.log("Il y a >>>" + evs.length + "<<< évènement live !")
+  var eids = [];
+    evs.forEach(function(ev) {
+      if (!ev.start_time2)
+      {
+        eids.push(parseInt(ev.eid));
+      }
+    });
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + eids.length + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    Ev.updateMultiple(eids);
+});}
 var cronJob = require('cron').CronJob;
-
 var env = process.env.NODE_ENV || 'development';
 
-if (env === 'production') {
+if (env === 'development') {
+
   var job = new cronJob('*/30 * * * *', function() {
     var date = new Date();
     console.log(date.toString());
@@ -59,9 +83,12 @@ if (env === 'production') {
     // fetchEventsFromLocations();
   }, null, true);
 
+  var job = new cronJob('*/1440 * * * *', function() {
+    //updateMultidate();
+    updateJournalierMultidate();
+  }, null, true);
   var job = new cronJob('*/60 * * * *', function() {
     // var date = new Date();
-    console.log(date.toString());
     updatePrioritaires();
   }, null, true);
 
@@ -74,7 +101,59 @@ if (env === 'production') {
 } else {
   fetchEventsFromKeywords();
 }
+function updateJournalierMultidate(){
+  var date = new Date();
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+  var datebefore = date - 1000 * 60 * 60 * 24;
+  datebefore = new Date(datebefore);
+  Events.find({
+    start_time: {
+      $lt: date,
+      $gt: datebefore
+    },
+    multi_date: true
+  }).success(function(evs){
+    console.log("Il y a >>>" + evs.length + "<<< évènement multi_date updatés !")
+    evs.forEach(function(ev){
+      ev.multi_date = Mul.getMultiDates(ev);    
+    });
+    var eids = [];
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
+    });
+    Ev.updateMultiple(eids);
+  });
+}
 
+function updateMultidate(){
+  var date = new Date();
+  var datebefore = date - 1000 * 60 * 60 * 24;
+  datebefore = new Date(datebefore);
+  date.setSeconds(0);
+  date.setMinutes(0);
+  date.setHours(0);
+  Events.find({$and:[{
+    start_time: {
+      $lt: date,
+  },
+ //     $gt: datebefore
+    end_time: { //a enlever apres avoir fait tourné une fois
+      $gt: date // a enlever apres avoir fait tourné une fois
+    }}]// a enlever apres avoir fait tourné une fois
+  }).success(function(evs){
+    console.log("Il y a >>>" + evs.length + "<<< évènement multi_date updatés !")
+    evs.forEach(function(ev){
+      ev.multi_date = Mul.getMultiDates(ev);    
+    });
+    var eids = [];
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
+    });
+    Ev.updateMultiple(eids);
+  });
+}
 function updatePopular() {
   var date = new Date();
 

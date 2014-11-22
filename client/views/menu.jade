@@ -1,4 +1,4 @@
-#menu-curtain.visible-xs(ng-class="{'fadeIn':$root.menuOpen}")
+#menu-curtain.visible-xs(ng-class="{'fadeIn':$root.menuOpen}", ng-click="$root.menuOpen = !$root.menuOpen")
 
 nav#menu.visible-xs(ng-class="{'open':$root.menuOpen}")
   ul.nav.navbar-nav

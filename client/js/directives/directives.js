@@ -44,7 +44,7 @@
 //     };
 // });
 
-app.directive('listEventPlayer', function($http) {
+app.directive('listEventPlayer', function($http, $rootScope) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
@@ -55,24 +55,8 @@ app.directive('listEventPlayer', function($http) {
         },
         url: '/api/list_player/' + scope.ev.eid
       }).success(function(data) {
-        if (data)
-        {
-          var params = data,
-          url;
-          var i = 0;
-          var j = 0;
-          for (i in params) {
-            url = 'https://graph.facebook.com//v2.2/' + params[i].uid + '?access_token=CAAVebA5FD2cBAIbo6iiWOcqbT4Fl4ZAmgmcfAa3LREBVgylXhZCv5N8qXMmmnP89y2hoDVRkkLcoFgZBn3A4teUx9y2FE1FgZAzecz5AP5KXTZAbSuF1qHDjh8FRkGVxbL4BgYkm6ezb3dZAk4MsJ57gJlF59ZAijLTEzE8paXpBBM5bPcGvJ1v7nSsXnvavzQ8TsPseuS0fDVmeGzJw1e391ZASiwOZAsCsZD&format=json&';
-            $http.get(url).success(function(response) {
-                  data[j].name = response.name;
-                  ++j;
-              });
-          }
               scope.ev.list_event_players = data;
-        }
-        else
-          console.log('list_player_error');
-      });
+        });
     }
   };
 });
@@ -168,7 +152,8 @@ app.directive('shareEvent', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("button.btn.btn-primary.share").html("Share again?");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
       });
       });
     });
@@ -209,7 +194,8 @@ app.directive('friendSelector', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("button.btn.btn-primary.invite").html("Invite again?");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
       });
           });
         }
@@ -242,7 +228,7 @@ app.directive('setAttendings', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
           $("button.btn.btn-primary.join").html(scope.attending);
       });
           });
@@ -261,7 +247,7 @@ app.directive('setAttendings', function($http) {
           var i = 0;
           scope.ev.list_event_players = data;
         }
-          $("li.list-group-item").html("<li class='list-group-item' ng-repeat='player in ev.list_event_players'></li>");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
           $("button.btn.btn-primary.join").html(scope.attending);
       });
           });
@@ -272,7 +258,15 @@ app.directive('setAttendings', function($http) {
   };
 });
 
-
+app.directive('myTest', function(){
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function(scope, elem){
+  $(elem).countdown({until: scope.ev.promotion.end_date});
+    }
+  };
+});
 // app.directive("scroll", function() {
 //  return function(scope, elm, attr) {
 //      var raw = elm[0];

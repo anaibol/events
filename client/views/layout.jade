@@ -1,7 +1,7 @@
 doctype html
-html
+html(ng-class="{noscroll: $root.menuOpen}")
   include head
-  body(id="event-{{$state.current.name.replace('.', '-')}}", ng-class="{mobile: $root.isMobile, desktop: !$root.isMobile}")
+  body(id="event-{{$state.current.name.replace('.', '-')}}", ng-class="{mobile: $root.isMobile, desktop: !$root.isMobile, noscroll: $root.menuOpen}")
     .container-fluid
       include header
       include menu

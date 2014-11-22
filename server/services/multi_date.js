@@ -39,12 +39,11 @@ function getDatesActives(ev, freq) {
       ++j;
       break;
   }
+  tab[tab.length] = ev.end_time;
   return (tab);
 }
 
-
 function getMulti_Dates(ev) {
-  return;
   var date = new Date();
 
   if (ev.end_time.getTime() > date.getTime() && ((ev.end_time.getTime() / 1000 / 3600) - ev.start_time.getTime() / 1000 / 3600) >= 24) {
@@ -55,6 +54,7 @@ function getMulti_Dates(ev) {
       ev.dateactive = getDatesActives(ev, 'weekly');
     }
     ev.start_time = getladateActive(ev.dateactive);
+    ev.start_time2 = ev.start_time.toString();
   } else
     ev.multi_date = false;
   return (ev.multi_date);
@@ -63,15 +63,14 @@ function getMulti_Dates(ev) {
 function getladateActive(tab) {
   var date = new Date();
   date.setHours(0, 0, 0, 0);
-  console.log("raaphaaaaaaaaaa : " + date);
 
   var i = 0;
 
-  while (tab[i].getTime() < date.getTime() && i < tab.length) {
+  while (i < tab.length - 1 && tab[i].getTime() < date.getTime()) {
     ++i;
   }
-  return (tab[i]);
-
+  if (tab[i])
+    return (tab[i]);
 }
 
 module.exports.getMultiDates = getMulti_Dates;

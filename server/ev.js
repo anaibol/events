@@ -73,21 +73,7 @@ function runQuery(query, cb) {
 }
 
 function save(ev, cb) {
-  if (ev) {
-    if (!ev.venue || !ev.venue.coord || !ev.venue.coord.lng || !ev.venue.coord.lat) {
-      var venue = {
-        city: "City",
-        country: "Antarctique",
-        street: "Street",
-        zip: "99999",
-        coord: {
-          lng: -135,
-          lat: -82.862751
-        }
-      };
-      ev.venue = venue;
-    }
-
+      if (ev) {
     Events.insert(ev, function(err, newEv) {
       if (err) {
         console.log(err);
@@ -336,6 +322,8 @@ function update(eid, cb) {
       eid: ev.eid
     }, {
       $set: ev
+    }).error(function(err){
+      console.log(err);
     });
     cb(ev);
   });
@@ -388,6 +376,7 @@ function slug(str) {
 }
 
 function normalize(ev) {
+
   ev.eid = parseInt(ev.eid);
 
   ev.start_time2 = ev.start_time;
@@ -416,6 +405,19 @@ function normalize(ev) {
   delete ev.venue.latitude;
   delete ev.venue.longitude;
 
+    if (!ev.venue || !ev.venue.coord || !ev.venue.coord.lng || !ev.venue.coord.lat) {
+      var venue = {
+        city: "City",
+        country: "Antarctique",
+        street: "Street",
+        zip: "99999",
+        coord: {
+          lng: -135,
+          lat: -82.862751
+        }
+      };
+      ev.venue = venue;
+    }
   // delete ev.pic_cover;
 
   // if (ev.place.indexOf('porto')) {
