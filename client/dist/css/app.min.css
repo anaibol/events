@@ -14274,7 +14274,7 @@ header .banner {
   width: 100%;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.7);
-  transition: .5s;
+  transition: .3s;
 }
 #list .event .content .top .title {
   text-align: center;
