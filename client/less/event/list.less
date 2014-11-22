@@ -5,7 +5,7 @@
 
   .event {
     margin: 0;
-    padding: 10px 0.5%;
+    padding: 6px 0.3%;
 
     & {
       .xs({
@@ -19,14 +19,14 @@
       // color: @white;
       position: relative;
       box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25);
-      color: rgba(255, 255, 255, 0.84);
-      // &.ab-dark-background {
-      //   color: @white;
-      // }
 
-      // &.ab-light-background {
-      //   color: @black;
-      // }
+      &.ab-dark-background {
+        color: @darkbg-text;
+      }
+
+      &.ab-light-background {
+        color: @lightbg-text;
+      }
 
       .image-container {
         padding: 10px 10px 0 10px;
@@ -39,7 +39,6 @@
         position: relative;
 
         img {
-          // visibility: hidden;
           height: auto;
           width: 100%;
         }
@@ -56,8 +55,7 @@
         width: 100%;
         z-index: 1;
         background-color: rgba(0, 0, 0, 0.7);
-        -webkit-filter: blur(30px);
-        -moz-filter: blur(30px);
+        transition: .3s;
 
         .title {
           text-align: center;
@@ -81,12 +79,10 @@
       &:hover {
         .image {
           opacity: 0.85;
-          transition: .3s;
         }
 
         .top {
           opacity: 1;
-          transition: .3s;
         }
       }
       .box-shadow {
@@ -186,8 +182,25 @@
 
 #event-list-view #list {
   position: fixed;
-  top: 60px;
+  top: 50px;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+#list-overlay {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+
+  &.visible {
+    z-index: 1;
+    opacity: 1;
+  }
 }

@@ -4,8 +4,8 @@
   include sidebar
 
   .events.col-xs-12.col-sm-9.col-md-9.col-lg-10(isotope)
-    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events track by ev.eid", id="{{$index}}", ui-sref="list.view({slug: ev.slug, eid: ev.eid})", adaptative-background)
-      .content
+    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events track by ev.eid", id="{{$index}}", ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
+      .content(adaptive-background)
         .top
           a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{ev.name}}
           .tag-list
@@ -34,5 +34,7 @@
               i.fa.fa-map-marker
               span.location {{' ' + ev.location | characters:20}}{{ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
         .box-shadow
+
+#list-overlay(ng-class="{visible: $state.current.name === 'list.view'}")
 
 ui-view
