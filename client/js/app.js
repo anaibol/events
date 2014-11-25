@@ -1,5 +1,5 @@
-var app = angular.module('wooepa', ['wooepa-templates', 'ngStorage', 'bootstrapLightbox', 'mb-adaptive-backgrounds', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom']); //'imageupload', , 'seo' 'leaflet-directive', 'geolocation'
-angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 1000);
+var app = angular.module('wooepa', ['wooepa-templates', 'geolocation', 'ngStorage', 'bootstrapLightbox', 'querystring', 'ui.router', 'ui.bootstrap', 'ezfb', 'truncate', 'ngSanitize', 'angular-data.DSCacheFactory', 'angularMoment', 'gettext', 'infinite-scroll', 'headroom']); //'imageupload', , 'seo' 'leaflet-directive'
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 500);
 var getStringDate = function(date) {
   var dd = date;
   var yy = dd.getYear();

@@ -19,8 +19,9 @@ app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
               value: $scope.ev.promotion.value,
             },
             url: '/api/promote_event/' + $scope.ev.eid
+          }).success(function(){
+              ev.in_promotion = true;
+              $modalInstance.dismiss('cancel');
           });
-    ev.in_promotion = true;
-  	$modalInstance.dismiss('cancel');
   };
 });

@@ -59,7 +59,6 @@ html,
 body,
 #wrapper {
   height: 100%;
-  width: 100%;
 }
 body {
   background-image: url('/img/background.jpg');
@@ -76,16 +75,14 @@ body {
   padding-top: 50px;
 }
 
-.container-fluid {
-  padding: 0;
-
-  & {
-    .xs({
-      padding: 0 !important;
-      background: blue;
-    });
-  }
-}
+// .container-fluid {
+//   & {
+//     .xs({
+//       padding: 0 !important;
+//       background: blue;
+//     });
+//   }
+// }
 
 // #list #wrapper {
 //   margin-top: 50px;
@@ -93,9 +90,9 @@ body {
 i.fa {
   margin-right: 5px;
 }
-a, button {
+a {
   // color: @white;
-  transition: .3s;
+  transition: .5s;
 }
 a:hover {
   text-decoration: none;
@@ -109,7 +106,3 @@ a:hover {
 //   transition: height .3s;
 //   transition: width .3s;
 // }
-
-.noscroll {
-  overflow: hidden;
-}

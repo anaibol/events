@@ -15,7 +15,7 @@ var MongoStore = require('connect-mongo')({
 });
 var flash = require('connect-flash');
 
-var mobile = require('detectmobilebrowsers');
+//var mobile = require('detectmobilebrowsers');
 
 var db = require('monk')(global.config.db);
 
@@ -81,7 +81,7 @@ module.exports = function(app, passport, db) {
   app.use(serveStatic(publicDir));
   app.use(serveStatic(distDir));
 
-  app.use(mobile.is_mobile());
+  //app.use(mobile.is_mobile());
 
   var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {

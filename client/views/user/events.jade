@@ -1,0 +1,6 @@
+#view
+  .container
+   section.header.row 
+      h1 Your Live Events !
+      div(ng-repeat='evs in user.my_events.data')
+        a(href="{{evs.slug}}") {{evs.name}}

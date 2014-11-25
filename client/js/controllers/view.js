@@ -1,6 +1,5 @@
 app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, Lightbox) {
   // console.log(ev);
-
   $scope.ev = ev;
   $scope.today = new Date();
   if ($rootScope.user) {
@@ -9,7 +8,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
       if ($scope.ev.attending.indexOf(parseInt($rootScope.user.facebook.id)) >= 0)
       {
         $scope.attending = 'Leave';
-        
+        $http.post('/api/rsvp/joined/');
       }
       else
         $scope.attending = 'Join';

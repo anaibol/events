@@ -74,23 +74,13 @@ app.directive('boostPlayer', function($http) {
   };
 });
 
-app.directive('isotope', function($timeout, $rootScope) {
-  if ($rootScope.isMobile) {
-    return;
-  }
-
+app.directive('isotope', function($rootScope) {
   return {
     restrict: 'A',
-    link: function(scope, element) {
-      $timeout(function() {
-        angular.element(element).imagesLoaded( function() {
-          angular.element(element).isotope({
-            onLayout: function() {
-              angular.element(element).imagesLoaded( function() {
-                angular.element(element).isotope('reLayout');
-              });
-            }
-          });
+    link: function(scope, element, attrs) {
+      imagesLoaded(element[0].parentElement, function(instance) {
+        var iso = new Isotope(element[0].parentElement, {
+          itemSelector: '.events-wrapper'
         });
       });
     }

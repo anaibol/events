@@ -1,7 +1,5 @@
-#menu-curtain.visible-xs(ng-class="{'fadeIn':$root.menuOpen}", ng-click="$root.menuOpen = !$root.menuOpen")
-
-nav#menu.visible-xs(ng-class="{'open':$root.menuOpen}")
-  ul.nav.navbar-nav
+#menu.navbar-collapse.collapse(ng-class="{'in':!navCollapsed}")
+  ul.nav.navbar-nav.visible-xs
     li.search
       form.navbar-form
         //- form(role='form')
@@ -47,8 +45,7 @@ nav#menu.visible-xs(ng-class="{'open':$root.menuOpen}")
         | Next weekend
 
     li.datepicker
-      input(ng-if="$root.isMobile", type="date", ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date")
-      datepicker(ng-if="!$root.isMobile", ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
+      input(type="date", ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date")
 
     li.tags
       | Explore by category

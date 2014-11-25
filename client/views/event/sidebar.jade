@@ -1,5 +1,5 @@
-nav#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
-  ul.nav.navbar-nav
+section#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
+  ul.nav.navbar-nav.row
     li.search
       form.navbar-form
         //- form(role='form')
@@ -17,30 +17,30 @@ nav#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
         i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
       ul.nav.nav-collapse(collapse='isCollapsed')
         li
-          a(href='#', ui-sref="list({sortBy: 'proximity'})", ui-sref-active="active")
+          a(href='#', ui-sref="list({sortBy: 'proximity'})")
             i.fa.fa-map-marker 
             | Proximity
         li
-          a(href='#', ui-sref="list({sortBy: 'popularity'})", ui-sref-active="active")
+          a(href='#', ui-sref="list({sortBy: 'popularity'})")
             i.fa.fa-group 
             | Popularity
         li
-          a(href='#', ui-sref="list({sortBy: 'date'})", ui-sref-active="active")
+          a(href='#', ui-sref="list({sortBy: ''})")
             i.fa.fa-calendar
             | Date
 
     li.today
-      a(href='#', ui-sref-active="active")
+      a(ui-sref="list({since:getStringDate(today)})")
         i.fa.fa-calendar
         | Today
 
-    li(ng-if="today.getTime() === Date.sun().getTime()")
-      a(href='#', ui-sref-active="active")
+    li(ng-if="today.getDay() >= 5 || today.getDat === 0")
+      a(ui-sref="list({since:getStringDate(today)})")
         i.fa.fa-calendar
         | This weekend
 
-    li(ng-if="today.getTime() !== Date.sun().getTime()")
-      a(href='#', ui-sref-active="active")
+    li(ng-if="today.getDay() < 5 && today.getDay > 0")
+      a(ui-sref="list({since:getNextDay('Friday')})")
         i.fa.fa-calendar
         | Next weekend
 
@@ -48,10 +48,9 @@ nav#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
       datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
 
     li.tags
-      i.fa.fa-tag
-      | Explore by tags
+      | Explore by category
       .tag-list
-        a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})", ui-sref-active="active") {{tag}}
+        a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})") {{tag}}
 
 
     //- li(ng-if='$root.user')

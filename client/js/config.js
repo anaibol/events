@@ -45,10 +45,10 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       url: '/me/events',
       templateUrl: 'user/user'
     })
-    .state('me.events', {
-      parent: 'me',
-      url: '/me/events',
-      templateUrl: 'event/user'
+    .state('events', {
+      url:'/my_events',
+      controller: 'myEventsCtrl',
+      templateUrl:'user/events'
     })
     .state('me.logout', {
       parent: 'me',
@@ -96,8 +96,6 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
   $rootScope.user = window.user;
 
-  $rootScope.isMobile = window.isMobile;
-  
   if (!$localStorage.lng || !$localStorage.lat) {
     Geoip.getLocation().success(function(data) {
 
@@ -153,20 +151,18 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
     // } else if (!$rootScope.listRendered) {
     //   // $rootScope.iso.layout();
     //   console.log($state.current);
-    // }
+    // // }
     // console.log(fromState);
     // console.log(toState);
     // if (fromState.name === '' && toState.name === 'list') {
-    //   $rootScope.listRendered = true;
+    //   $rootScope.renderList = true;
     // } else if (fromState.parent === 'list' && toState.name === 'list') {
     //   $rootScope.renderList = true;
     // }
 
       // if (fromState.name === 'list.view' && toState.name === 'list') {
-      //   $('#view').hide();
       //   event.preventDefault();
       // }
-      $rootScope.menuOpen = false;
   });
 
   ezfb.init();

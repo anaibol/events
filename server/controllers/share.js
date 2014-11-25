@@ -33,12 +33,6 @@ exports.saveShare = function(post_id, event_id, user_id, data) {
     active: true,
     data: data
   }
-  actions.find({user_id:user_id, event_id:event_id}, function(err, act){
-    if (act.length <= 1)
-    {
-      Game.AddPoints(user_id, event_id, 2);
-    }
-  });
   actions.insert(action, function(err) {
     if (err)
       console.log(err);
@@ -46,12 +40,14 @@ exports.saveShare = function(post_id, event_id, user_id, data) {
 }
 
 exports.share = function(req, res) {
+  
   if (!req.user) {
     res.json({
       error: "Please log-in"
     });
     return (null);
   }
+  Game.AddPoints(req.user.facebook.id, req.params.eid, 2);
   var months = ["janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre"
   ];
@@ -62,7 +58,9 @@ exports.share = function(req, res) {
   Ev.findById(req.params.eid, function(ev) {
     if (!ev)
       return (0);
-    if (ev.name.length > 56)
+    if (ev.in_promotion == true && ev.promotion.reward)
+      var name = ev.promotion.commentary;
+    else if (ev.name.length > 56)
       var name = ev.name.substring(0, 56) + "..."
     else
       var name = ev.name

@@ -17,7 +17,7 @@ var graph = require('fbgraph');
 var accessToken = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGlDcQcEAzZAtmyDrOlrwDpOG7N64BTdloH0tDia3OPRb0fRLBXiLKATFMPzRoE0estUT8z6gz7Mb73yBLh3oXXFCt8UmI5fe3pLg0cUi1ZAamY02PZC25OxBYwMKYKMJKlzedF1CmIoh7Iekah5tJQ7';
 graph.setAccessToken(accessToken);
 
-var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'zouk', 'regueton', 'reggaeton', 'kuduru', 'chachacha', 'zumba']; //'suelta'
+//var keywords = ['salsa', 'bachata', 'kizomba', 'porto', 'cubaine', 'cubana', 'semba', 'samba', 'merengue', 'tango', 'lambazouk', 'zouk', 'regueton', 'reggaeton', 'kuduru', 'chachacha', 'zumba']; //'suelta'
 
 function existsInDb(eid, cb) {
   var res;
@@ -128,9 +128,7 @@ function fetchMultiple(eids, term, saving, cb) {
 
               ev.query = term;
 
-              if (ev.venue) {
-                if (ev.venue.longitude) {
-                  if (ev.venue.latitude) {
+
                     ev = normalize(ev);
 
                     if (saving) {
@@ -140,9 +138,9 @@ function fetchMultiple(eids, term, saving, cb) {
                         console.log(newEv.query + ': ' + newEv.name);
                       });
                     }
-                  }
-                }
-              }
+                  
+                
+              
             }
           });
         });
@@ -649,19 +647,18 @@ function getTags(ev) {
 
   var name = ev.name;
   var desc = ev.description;
-
-  var text = name + ' ' + desc;
+  var query = ev.query;
+  var text = name + ' ' + desc + ' ' + ev.query;
   text = text.toLowerCase();
 
-  for (var i = 0; i < keywords.length; i++) {
-    var str = keywords[i];
+  for (var i = 0; i < global.keywords.length; i++) {
+    var str = global.keywords[i].toLowerCase();
     var n = text.search(str);
 
     if (n > 0) {
-      tags.push(keywords[i]);
+      tags.push(global.keywords[i].toLowerCase());
     }
   }
-
   return tags;
 }
 

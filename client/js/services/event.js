@@ -78,7 +78,7 @@ app.factory('Event', function($q, $http, DSCacheFactory, $rootScope, $querystrin
     runQuery: function() {
       var that = this;
       var deferred = $q.defer();
-      
+
       $http.get('/api/events?' + $querystring.toString(_.compactObject(query))).success(function(evs) {
         var ev = {};
 
