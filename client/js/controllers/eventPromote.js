@@ -1,6 +1,6 @@
 app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
   $scope.ev = ev;
-
+  $scope.ismeridian = true;
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
   };
