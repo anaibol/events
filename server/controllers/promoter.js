@@ -11,26 +11,43 @@ exports.promoteEvent = function(req, res)
         }
         else if (ev)
         {
-            var promotion = {
-                reward: req.body.reward,
-                end_date: new Date(parseInt(req.body.end_date)),
-                commentary: req.body.commentary,
-                value: req.body.value,
-                quantity: req.body.quantity,
-            };
-            var promoter = {
-                  name : req.user.facebook.name,
-                  picture : req.user.facebook.picture,
-                  id : req.user.facebook.id
+         var promoter = {
+            name : req.user.facebook.name,
+            picture : req.user.facebook.picture,
+            id : req.user.facebook.id
               }
+          var promotion = {
+            reward: req.body.reward,
+            commentary: req.body.commentary,
+            value: req.body.value,
+            quantity: req.body.quantity,
+            };
             ev.promoter = promoter;
             ev.promotion = promotion;
             ev.in_promotion = true;
-            Events.update({'eid': parseInt(req.params.eid)}, ev, function(err, ev){
+          if (!req.body.end_date || req.body.end_date <= new Date().getTime())
+         {
+          Events.findOne({'eid':parseInt(req.params.eid)}, function(err, new_ev){
+            if (new_ev)
+            {
+              ev.promotion.end_date = new_ev.promotion.end_date;
+              Events.update({'eid': parseInt(req.params.eid)},ev, function(err, ev){
                 if (err)
-                    console.log(err);
-            })
+                  console.log(err);
+                });
+            }
+            });
+         }
+          else
+          {
+            ev.promotion.end_date = new Date(parseInt(req.body.end_date)),
+            Events.update({'eid': parseInt(req.params.eid)},ev, function(err, ev){
+             if (err)
+                console.log(err);
+            });
+          }
         }
+
     });
 }
 
