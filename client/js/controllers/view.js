@@ -4,15 +4,15 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   $scope.today = new Date();
   if ($rootScope.user) {
     $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
-      $scope.ev.attending = result;
-      if ($scope.ev.attending.indexOf(parseInt($rootScope.user.facebook.id)) >= 0)
+      $scope.ev.attending = result; 
+      if ($scope.ev.attending.indexOf(parseInt($rootScope.user.facebook.id)) >= 0) 
       {
         $scope.attending = 'Leave';
-        $http.post('/api/rsvp/joined/');
+        $http.post('/api/rsvp/' +$scope.ev.eid + '/rsvp');
       }
       else
         $scope.attending = 'Join';
-    });
+  });
   }
   else if(!$rootScope.user){
       $scope.attending= 'Join';

@@ -33,7 +33,7 @@ exports.setNotAttending = function(req, res) {
           });
         }
       });
-      Game.AddPoints(req.user.facebook.id, req.params.eid, -6);
+      Game.AddPoints(req.user.facebook.id, req.params.eid, -6, "unjoin");
        if (req.body.attendingStatus === 'attending') {
          Events.update({ eid: parseInt(req.params.eid) }, { $addToSet: { attending: parseInt(req.user.facebook.id)}});
        } else {

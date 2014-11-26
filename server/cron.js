@@ -40,10 +40,7 @@ var users = ['EsenciaSalsaClub',
   'MangosTropCafe',
   'victorsuco'
 ];
-//starttime2();
-fetchEventsFromKeywords();
-    updatePopular();
-
+updateAntarctique();
 function starttime2(){
   var date = new Date();
   date.setSeconds(0);
@@ -73,6 +70,9 @@ var env = process.env.NODE_ENV || 'development';
 
 if (env === 'development') {
 
+  var job = new cronJob('*/1440 * * * *', function(){
+    updateAntarctique();
+  }, null, true);
   var job = new cronJob('*/30 * * * *', function() {
     var date = new Date();
     console.log(date.toString());
@@ -101,6 +101,25 @@ if (env === 'development') {
 
 } else {
   fetchEventsFromKeywords();
+}
+
+function updateAntarctique(){
+  var date = new Date();
+
+  Events.find({
+    start_time:{
+      $gt: date
+    },
+    'venue.country': "Antarctique"
+  }).success(function(evs){
+    var eids = [];
+    console.log(">>>>>>>>>>>>>" + evs.length + "<<<<<<<<<<<<<");
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
+    });
+    Ev.updateMultiple(eids);
+  console.log(">>>>>>>>>>>>>" + evs.length + "<<<<<<<<<<<<<");
+  });
 }
 function updateJournalierMultidate(){
   var date = new Date();

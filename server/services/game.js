@@ -21,12 +21,27 @@ function AddPointsBoost(uid, eid, point) {
   });
 }
 
-function AddPoints(uid, eid, point) {
+function AddPoints(uid, eid, point, type) {
   Results.findOne({
     user_id: uid,
     event_id: eid
   }, function(err, results) {
     if (results && results.result + point >= 0) {
+      if (type === "join" || type === "unjoin")
+      {
+        if ((results.join == 0 && point == 6) || (results.join == 6 && point == -6))
+          Results.update({
+        user_id: uid,
+        event_id: eid
+      }, {
+        $inc: {
+          result: point,
+          result_boosted: point,
+          join: point
+        }
+      });
+      }
+      else if (type != "join" && type != "unjoin")
       Results.update({
         user_id: uid,
         event_id: eid
@@ -40,16 +55,32 @@ function AddPoints(uid, eid, point) {
       Users.findOne({'facebook.id':uid.toString()}, function(user){
         if (user)
         {
-        Results.insert({
+          if (type === "join")
+          {
+                    Results.insert({
           user_id: uid,
           name: user.facebook.name,
           event_id: eid,
           result: point,
           result_boosted: point,
-          score: 0
+          score: 0,
+          join: 6
         });
+          }
+          else
+          {
+          Results.insert({
+            user_id: uid,
+            name: user.facebook.name,
+            event_id: eid,
+            result: point,
+            result_boosted: point,
+            score: 0,
+            join: 0
+        });
+        }
       }
-      })
+      });
     }
   });
 }
