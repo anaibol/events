@@ -6,7 +6,10 @@ app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
   };
   $scope.submit = function()
   {
- 	var end_date = new Date($scope.ev.promotion.end_date).setHours($scope.ev.promotion.end_time.getHours(), $scope.ev.promotion.end_time.getMinutes());
+  if ($scope.ev.promotion.end_time)
+  {
+ 	  var end_date = new Date($scope.ev.promotion.end_date).setHours($scope.ev.promotion.end_time.getHours(), $scope.ev.promotion.end_time.getMinutes());
+  }
   	$http({
             method: 'POST',
             data: {
@@ -21,7 +24,7 @@ app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
             url: '/api/promote_event/' + $scope.ev.eid
           }).success(function(){
               ev.in_promotion = true;
-              $modalInstance.dismiss('cancel');
           });
+  $modalInstance.dismiss('cancel');  
   };
 });

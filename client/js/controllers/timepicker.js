@@ -2,7 +2,7 @@ app.controller('TimepickerCtrl', function ($scope) {
   $scope.mytime = new Date();
 
   $scope.hstep = 1;
-  $scope.mstep = 30;
+  $scope.mstep = 1;
 
   $scope.options = {
     hstep: [1, 2, 3],

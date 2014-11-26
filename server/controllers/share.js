@@ -59,7 +59,7 @@ exports.share = function(req, res) {
     if (!ev)
       return (0);
     if (ev.in_promotion == true && ev.promotion.reward)
-      var name = ev.promotion.commentary;
+      var name = ev.promotion.reward;
     else if (ev.name.length > 56)
       var name = ev.name.substring(0, 56) + "..."
     else

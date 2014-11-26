@@ -21,7 +21,7 @@ form.event-form.form-horizontal
                   i.fa.fa-calendar
           div.form-group(ng-controller='TimepickerCtrl')
             label.col-md-2.control-label(style='margin-top:6%;',for='title') End Time
-            timepicker(ng-model="ev.promotion.end_time",ng-change="changed()",hour-step="hstep",minute-step="mstep",show-meridian="ismeridian")
+            timepicker(ng-model="ev.promotion.end_time",ng-change="changed()",hour-step="hstep",minute-step="mstep",show-meridian="ismeridian", required="false")
         .control-group
           label.control-label Commentary
           textarea#description.form-control(ng-model="ev.promotion.commentary", cols="30", rows="5", placeholder="Content")
