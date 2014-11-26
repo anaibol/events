@@ -100,7 +100,7 @@ function save(ev, cb) {
   }
 }
 
-function fetchMultiple(eids, term, saving, cb) {
+function fetchMultiple(eids, term, cb) {
   eids = eids.join(',');
 
   var query = {
@@ -119,32 +119,35 @@ function fetchMultiple(eids, term, saving, cb) {
           var eid = parseInt(ev.eid);
 
           existsInDb(eid, function(exists) {
-            if (!exists || !saving) {
+            if (!exists) {
               // ev.attending = [];
 
               // for (j = 0; j < attendings.length; j++) {
               //   ev.attending.push(parseInt(attendings[j].uid));
               // }
-
               ev.query = term;
-
-
                     ev = normalize(ev);
-
-                    if (saving) {
                       ev.saved = new Date();
-
+                      ev = normalize(ev);
                       save(ev, function(newEv) {
                         console.log(newEv.query + ': ' + newEv.name);
                       });
-                    }
-                  
-                
-              
             }
-          });
+          else if(exists)
+          {
+            if (parseInt(ev.eid) == 518928278147534)
+              console.log(ev);
+            ev = normalize(ev);
+            if (parseInt(ev.eid) == 518928278147534)
+              console.log(ev);
+            //ev.updated = new Date();
+            //getAttendings(ev.eid, function(attendings) {
+              //ev.attending = attendings;
+          Events.update({eid: ev.eid}, {$set: ev});
+            //});
+          }
         });
-
+        });
         cb(evs);
       } else {
         cb(false);
@@ -329,29 +332,8 @@ function update(eid, cb) {
 
 function updateMultiple(eids) {
   console.log(eids);
-  fetchMultiple(eids, '', false, function(eves) {
+  fetchMultiple(eids, '', function(eves) {
     var eids = [];
-
-    eves.forEach(function(ev) {
-      eids.push(parseInt(ev.eid));
-
-      ev = normalize(ev);
-
-      ev.updated = new Date();
-
-      // Pho.searchPhotos(ev, db);
-
-      getAttendings(ev.eid, function(attendings) {
-        ev.attending = attendings;
-
-        Events.update({
-          eid: ev.eid
-        }, {
-          $set: ev
-        });
-      });
-    });
-    console.log('Updating ' + eids.length + ' events');
   });
 }
 

@@ -113,7 +113,6 @@ function updateAntarctique(){
     'venue.country': "Antarctique"
   }).success(function(evs){
     var eids = [];
-    console.log(">>>>>>>>>>>>>" + evs.length + "<<<<<<<<<<<<<");
     evs.forEach(function(ev) {
       eids.push(parseInt(ev.eid));
     });
