@@ -282,7 +282,7 @@ function paginate(page, term) {
           eids.push(parseInt(ev.id));
         });
 
-        Ev.fetchMultiple(eids, term, true, function(eves) {});
+        Ev.fetchMultiple(eids, term, function(eves) {});
       }
     }
   });
@@ -326,7 +326,7 @@ function fetchEventsFromKeyword(term) {
           eids.push(parseInt(ev.id));
         });
 
-        Ev.fetchMultiple(eids, term, true, function(eves) {});
+        Ev.fetchMultiple(eids, term, function(eves) {});
       }
     }
   });
