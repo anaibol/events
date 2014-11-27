@@ -57,17 +57,13 @@ function runQuery(query, cb) {
       cb(false);
       return;
     }
-
-    if (res.data) {
-      if (res.data.length) {
+    var result;
+    if (res.data && res.data.length) {
         result = res.data;
-      } else {
-        result = false;
       }
-    } else {
+    else {
       result = false;
     }
-
     cb(result);
   });
 }
