@@ -50,6 +50,11 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       controller: 'myEventsCtrl',
       templateUrl:'user/events'
     })
+    .state('in_promotion', {
+      url:'/in_promotion',
+      controller: 'inPromotionCtrl',
+      templateUrl:'event/in_promotion'
+    })
     .state('me.logout', {
       parent: 'me',
       url: '/me/logout'
