@@ -5,7 +5,7 @@ app.controller('myEventsCtrl', function($scope, moment, $http) {
   	$scope.updateEvents = function()
   	{
   		$http.get('/import/user/' + $scope.user.facebook.id).success(function(update_evs){
-  			
+  			location.reload();
   		});
   	};
 	$http({url: '/api/my_events/', method: 'GET'}).success(function(my_evs){
