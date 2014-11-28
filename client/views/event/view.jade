@@ -61,7 +61,7 @@
                 p(ng-hide='!ev.list_event_players[0].uid') {{ev.list_event_players.length}} &nbsp Players !
                 input.form-control.input-sm(placeholder='Search player', type='text', ng-model='search.name')
                 hr
-                li.list-group-item.players(ng-repeat='player in ev.list_event_players')
+                li.list-group-item.players(ng-repeat='player in ev.list_event_players | orderBy:\'-result\'')
                   table
                     tr
                       td

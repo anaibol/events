@@ -112,7 +112,8 @@ function giveInvitePoints(eid, uid, uids) {
         event_id: eid,
         result: 0,
         result_boosted: 0,
-        score: 0
+        score: 0,
+        join: 0
       });
     }
     Invitations.findOne({
@@ -161,7 +162,7 @@ function getAttendingBonus2(event, uid) {
         bonus = 6;
       }
       if (nb_done == event.attending.length)
-        AddPoints(uid, event.eid, 6);
+        AddPoints(uid, event.eid, 6, "join");
     }
   }
 

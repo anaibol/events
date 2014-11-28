@@ -314,7 +314,7 @@ function retrieveEventAttendingUser(user_id, cb) {
 					cb();
 
 				for (i = 0; i < result.data.length; i++) {
-					Game.AddPoints(user_id, result.data[i].id, 6);
+					Game.AddPoints(user_id, result.data[i].id, 6, "join");
 				}
 			});
 		}
