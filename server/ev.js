@@ -472,7 +472,6 @@ function getFromUser(userName, accessToken, userLoggedIn, cb) {
           fetch(parseInt(ev.id), term, function(result) {
             // newEvents++;
             console.log(userName + ': ' + ev.name);
-            cb(true);
 
             if (!result) {
               updateAttendings(ev.id, function(attendings) {});
