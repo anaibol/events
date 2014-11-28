@@ -40,7 +40,32 @@ var users = ['EsenciaSalsaClub',
   'MangosTropCafe',
   'victorsuco'
 ];
-updateAntarctique();
+removeDuplicates();
+
+function removeDuplicates(){
+  Events.find().success(function(evs){
+    var eids = [];
+    evs.forEach(function(ev){
+      eids.push(ev.eid);
+    });
+    eids.forEach(function(eid){
+          Events.find({eid:eid}).success(function(result){
+            if (result)
+            {
+              if (result[1])
+              {
+                Events.remove({_id:result[1]._id}).success(function(err, res){
+                  if (err)
+                    console.log(err);
+                  console.log("removed !");
+                });
+                console.log("removing !");
+              }
+            }
+          });
+    });
+  });
+}
 function starttime2(){
   var date = new Date();
   date.setSeconds(0);
