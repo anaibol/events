@@ -9,7 +9,7 @@ exports.getInPromotion = function(req, res)
 
 exports.getMyEvents = function(req, res)
 {
-	Events.find({$and:[{start_time:{$gt: new Date()}}, {attending:parseInt(req.user.facebook.id)}]}).success(function(evs){
+	Events.find({$and:[{start_time:{$gt: new Date()}}, {attending:parseInt(req.params.uid)}]}).success(function(evs){
 		res.json(evs);
 	});
 };

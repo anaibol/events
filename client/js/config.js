@@ -46,8 +46,8 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       templateUrl: 'user/user'
     })
     .state('events', {
-      url:'/my_events',
-      controller: 'myEventsCtrl',
+      url:'/user=:uid',
+      controller:'myEventsCtrl',
       templateUrl:'user/events'
     })
     .state('in_promotion', {

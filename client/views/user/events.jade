@@ -8,11 +8,11 @@ section#list
    .event
     .top
      .background
-     a(href="{{'http://localhost:3000/' + ev.slug + '/' + ev.eid}}").title.truncate {{ev.name}}
+     a(href="{{document.baseURI + ev.slug + '/' + ev.eid}}").title.truncate {{ev.name}}
      .tag-list
       span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}", ng-click="openTag($event, ev)") {{tag}}
     .image-container
-     a(href="{{'http://localhost:3000/' + ev.slug + '/' + ev.eid}}")
+     a(href="{{document.baseURI + ev.slug + '/' + ev.eid}}")
       .image
        .ribbon-wrapper-green(ng-if="ev.price.num === 0")
         .ribbon-green {{ev.price.full}}

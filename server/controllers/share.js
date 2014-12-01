@@ -51,8 +51,7 @@ exports.share = function(req, res) {
   var months = ["janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre"
   ];
-  var days = ["Lundi", "Mardi", "Mecredi", "Jeudi", "Vendredi", "Samedi",
-    "Dimanche"
+  var days = ["Dimanche", "Lundi", "Mardi", "Mecredi", "Jeudi", "Vendredi", "Samedi"
   ];
 
   Ev.findById(req.params.eid, function(ev) {
@@ -93,16 +92,15 @@ exports.share = function(req, res) {
 
     if (ev.start_time)
       ev.start_time = convertToUTC(ev.start_time, ev.timezone); {
-      wallPost.description += "W! "
+      wallPost.description += " - ";
 
       var currentdate = new Date();
 
       console.log(currentdate.getDate());
-
       if (ev.start_time.getDate() == currentdate.getDate())
         wallPost.description += "Aujourd'hui "
       else
-        wallPost.description += days[ev.start_time.getDay() - 1] + " " + ev.start_time.getDate() + " " + months[ev.start_time.getMonth()]
+        wallPost.description += days[ev.start_time.getDay()] + " " + ev.start_time.getDate() + " " + months[ev.start_time.getMonth()]
 
       wallPost.description += " à " + ev.start_time.getHours() + "h"
 
@@ -113,15 +111,15 @@ exports.share = function(req, res) {
     }
     if (ev.attending_count) {
       if (ev.attending_count > 10) {
-        wallPost.description += 'A! ' + ev.attending_count + ' \n'
+        wallPost.description += ' - ' + ev.attending_count + ' participants' + ' \n'
 
       }
     }
     if (ev.price.full) {
       if (ev.price.num == 0)
-        wallPost.description += '$ #' + ev.price.full + ' \n'
+        wallPost.description += ' - ' + ev.price.full + ' \n'
       else
-        wallPost.description += "$ " + ev.price.full + " \n"
+        wallPost.description += " - " + ev.price.full + " \n"
     }
     for (i = 0; i < 3; i++) {
       if (ev.tags[i])
