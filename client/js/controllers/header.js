@@ -1,11 +1,4 @@
-app.controller('HeaderCtrl', function($scope, $location) {
-	$scope.isCollapsed = true;
-
-	$scope.changeDate = function(date) {
-		date = getStringDate(date);
-		$location.url('/date/' + date);
-	};
-
+app.controller('HeaderCtrl', function($scope) {
 	function getStringDate(aDate) {
 		var dd = aDate;
 		var yy = dd.getYear();

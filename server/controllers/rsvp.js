@@ -3,7 +3,6 @@ var Ev = require('../ev');
 var Game = require('../services/game.js');
 var graph = require('fbgraph');
 var Results = db.get('results');
-var Users = db.get('users');
 
 exports.getAttendings = function(req, res) {
   Ev.updateAttendings(req.params.eid, function(attendings) {

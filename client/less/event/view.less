@@ -1,12 +1,62 @@
 #view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 50px;
+  z-index: 1;
+
   section {
     background: white;
     padding: 25px;
     margin: 10px 0;
+    float: left;
+    width: 100%;
+
+    & {
+      .xs({
+        height:: 100%;
+      });
+    }
   }
   .header {
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+
     img {
       max-width: 100%;
+    }
+
+    .bg-image {
+      display: block;
+      position: absolute;
+      left: -20%;
+      top: -20%;
+      width: 140%;
+      height: 140%;
+      // z-index: 2;
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      -webkit-filter: blur(10px);
+    }
+
+    .overlay {
+      display: block;
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      cursor: default;
+      zoom: 1;
+      filter: alpha(opacity=40);
+      -webkit-opacity: .4;
+      -moz-opacity: .4;
+      opacity: .4;
     }
   }
   .join .invite .share .players .promote{
@@ -18,7 +68,9 @@
   }
   .location {
     .map {
-      height: 200px;
+      display: block;
+      width: 100%;
+      height: 280px;
       margin-top: 20px;
       background-repeat: no-repeat;
       background-position: center;
@@ -38,61 +90,41 @@
         padding: 5px;
         .img-thumbnail {
           border: none;
+          width: 100%;
         }
       }
+    }
+
+    .youtube-videos li .video-container {
+      padding-bottom: 56.25%;
+      padding-top: 30px;
 
       object {
-        width: 100%;
-        height: 250px;
-        float: left;
-        background-color: black;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
       }
     }
   }
-  // background-color: white;
-  // // padding: 25px;
-  // .view-header {
-  //   width: 100%;
-  //   height: 200px;
-  //   overflow: hidden;
-  //   position: relative;
-  //   .bg-image {
-  //     width: 100%;
-  //     height: 204px;
-  //     background-repeat: no-repeat;
-  //     -webkit-filter: blur(10px);
-  //     -moz-filter: blur(10px);
-  //     -ms-filter: blur(10px);
-  //     filter: blur(10px);
-  //     display: block;
-  //     position: absolute;
-  //     left: -20%;
-  //     top: -20%;
-  //     width: 140%;
-  //     height: 140%;
-  //     background-size: 100% 100%;
-  //     background-size: cover;
-  //     background-repeat: no-repeat;
-  //   }
-  // }
-  // .map {
-  //   width: 233px;
-  //   height: 100%;
-  //   position: absolute;
-  //   right: 0;
-  //   top: 0;
-  // }
-  // .title {
-  //   position: absolute;
-  //   width: 100%;
-  //   text-align: center;
-  // }
-  // .description {
-  //   // -webkit-column-count: 2;
-  //   // -moz-column-count: 2;
-  //   // column-count: 2;
-  //   // -webkit-column-gap: 16px;
-  //   // -moz-column-gap: 16px;
-  //   // column-gap: 16px;
-  // }
+
+  & {
+    .xs({
+      position: relative;
+      padding-top: 0;
+    });
+  }
 }
+
+// .mobile #view {
+//   position: relative;
+//   padding-top: 0;
+
+//   section {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     height: 100%;
+//     padding-top: 50px;
+//   }
+// }

@@ -48,6 +48,10 @@ app.directive('listEventPlayer', function($http, $rootScope) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
+      if ($rootScope.isMobile) {
+        return;
+      }
+
       $http({
         method: 'GET',
         data: {
@@ -74,13 +78,27 @@ app.directive('boostPlayer', function($http) {
   };
 });
 
-app.directive('isotope', function($rootScope) {
+app.directive('isotope', function($timeout, $rootScope) {
   return {
     restrict: 'A',
-    link: function(scope, element, attrs) {
-      imagesLoaded(element[0].parentElement, function(instance) {
-        var iso = new Isotope(element[0].parentElement, {
-          itemSelector: '.events-wrapper'
+    link: function(scope, element) {
+      if ($rootScope.isMobile) {
+        return;
+      }
+
+      $timeout(function() {
+        var elm = angular.element(element);
+
+        elm.imagesLoaded( function() {
+          elm.removeClass('loading');
+          // $('#wrapper').css('height', $('.events').innerHeight() + 50);
+          elm.isotope({
+            onLayout: function() {
+              elm.imagesLoaded( function() {
+                elm.isotope('reLayout');
+              });
+            }
+          });
         });
       });
     }
@@ -269,3 +287,146 @@ app.directive('myTest', function(){
 //      });
 //  };
 // });
+
+app.directive('adaptiveBackground', function($window) {
+  var digitsRegexp, getCSSBackground, getYIQ, options;
+
+  options = {
+    imageClass: null,
+    exclude: ['rgb(0,0,0)', 'rgba(255,255,255)'],
+    lightClass: 'ab-light-background',
+    darkClass: 'ab-dark-background'
+  };
+
+  getCSSBackground = function(raw) {
+    return $window.getComputedStyle(raw, null).getPropertyValue('background-image').replace('url(', '').replace(')', '');
+  };
+  digitsRegexp = /\d+/g;
+  getYIQ = function(color) {
+    var rgb;
+    rgb = color.match(digitsRegexp);
+    return ((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
+  };
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var adaptBackground, childElement, findImage, handleImg, rawChildElement, rawElement, setColors, useCSSBackground;
+      rawElement = element[0];
+      useCSSBackground = function(el) {
+        return el.tagName !== 'IMG';
+      };
+      findImage = function() {
+        var elementWithClass, imageClass;
+        imageClass = attrs.abImageClass || options.imageClass;
+        if (imageClass != null) {
+          elementWithClass = rawElement.querySelector('.' + imageClass);
+          if (elementWithClass != null) {
+            return angular.element(elementWithClass);
+          }
+        }
+        return angular.element(element.find('img')[0]);
+      };
+      setColors = function(colors) {
+        var yiq;
+        element.css('backgroundColor', colors.dominant);
+        yiq = getYIQ(colors.dominant);
+        if (yiq <= 128) {
+          element.addClass(options.darkClass);
+          element.removeClass(options.lightClass);
+        } else {
+          element.addClass(options.lightClass);
+          element.removeClass(options.darkClass);
+        }
+        colors.backgroundYIQ = yiq;
+        return scope.adaptiveBackgroundColors = colors;
+      };
+      adaptBackground = function(image) {
+        return RGBaster.colors(image, {
+          paletteSize: 20,
+          exclude: options.exclude,
+          success: setColors
+        });
+      };
+      childElement = findImage();
+      rawChildElement = childElement[0];
+      if (useCSSBackground(rawChildElement)) {
+        return adaptBackground(getCSSBackground(rawChildElement));
+      } else {
+        handleImg = function() {
+          if (rawChildElement.src) {
+            return adaptBackground(rawChildElement);
+          }
+        };
+        childElement.on('load', handleImg);
+        scope.$on('$destroy', function() {
+          return childElement.off('load', handleImg);
+        });
+        return handleImg();
+      }
+    }
+  };
+});
+
+// app.directive('infiniteScroll', [
+//   '$rootScope', '$window', '$timeout', function($rootScope, $window, $timeout) {
+//     return {
+//       link: function(scope, elem, attrs) {
+//         var checkWhenEnabled, handler, scrollDistance, scrollEnabled;
+//         $window = angular.element($window);
+//         // elem.css('overflow-y', 'scroll');
+//         // elem.css('overflow-x', 'hidden');
+//         // elem.css('height', 'inherit');
+//         scrollDistance = 0;
+//         if (attrs.infiniteScrollDistance != null) {
+//           scope.$watch(attrs.infiniteScrollDistance, function(value) {
+//             return scrollDistance = parseInt(value, 10);
+//           });
+//         }
+//         scrollEnabled = true;
+//         checkWhenEnabled = false;
+//         if (attrs.infiniteScrollDisabled != null) {
+//           scope.$watch(attrs.infiniteScrollDisabled, function(value) {
+//             scrollEnabled = !value;
+//             if (scrollEnabled && checkWhenEnabled) {
+//               checkWhenEnabled = false;
+//               return handler();
+//             }
+//           });
+//         }
+//         $rootScope.$on('refreshStart', function(event, parameters){
+//             elem.animate({ scrollTop: "0" });
+//         });
+//         handler = function() {
+//           var container, elementBottom, remaining, shouldScroll, containerBottom;
+//           container = $(elem.children()[0]);
+//           elementBottom = elem.offset().top + elem.height();
+//           containerBottom = container.offset().top + container.height();
+//           remaining = containerBottom - elementBottom ;
+//           shouldScroll = remaining <= elem.height() * scrollDistance;
+//           if (shouldScroll && scrollEnabled) {
+//             if ($rootScope.$$phase) {
+//               return scope.$eval(attrs.infiniteScroll);
+//             } else {
+//               return scope.$apply(attrs.infiniteScroll);
+//             }
+//           } else if (shouldScroll) {
+//             return checkWhenEnabled = true;
+//           }
+//         };
+//         elem.on('scroll', handler);
+//         scope.$on('$destroy', function() {
+//           return $window.off('scroll', handler);
+//         });
+//         return $timeout((function() {
+//           if (attrs.infiniteScrollImmediateCheck) {
+//             if (scope.$eval(attrs.infiniteScrollImmediateCheck)) {
+//               return handler();
+//             }
+//           } else {
+//             return handler();
+//           }
+//         }), 0);
+//       }
+//     };
+//   }
+// ]);
