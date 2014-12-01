@@ -73,7 +73,7 @@ app.config(function(datepickerPopupConfig) {
   datepickerPopupConfig.showButtonBar = false;
 });
 
-app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb, Geoip, Event) { //geolocation, reverseGeocode
+app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $querystring, $localStorage, amMoment, ezfb, Geoip, Event) { //geolocation, reverseGeocode
   // geolocation.getLocation().then(function(data) {
   //   $rootScope.loc = {
   //     lat: data.coords.latitude,
@@ -88,6 +88,8 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
 
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;
+
+  $rootScope.location = $location;
 
   $rootScope.lang = navigator.language || navigator.userLanguage;
 
@@ -150,6 +152,13 @@ app.run(function($rootScope, $state, $stateParams, $localStorage, amMoment, ezfb
   }
 
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+    $rootScope.stateParams = $querystring.toString(_.compactObject(toParams));
+
+    if (toParams.slug === 'auth') {
+      window.location.href = window.location.href;
+    }
+
     // console.log(toState);
     // if (!toState.parent) {
     //   $rootScope.listRendered = true;
