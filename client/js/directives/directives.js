@@ -26,18 +26,18 @@
 // });
 
 // app.directive("linkOverload", function () {
-//     return function (scope, element) {
-//         element.on("click", function (evt) {           
+//     return function (scope, elm) {
+//         elm.on("click", function (evt) {           
 //             evt.preventDefault();
 //         });
 //     }
 // });
 
 // app.directive('backImg', function() {
-//     return function(scope, element, attrs){
+//     return function(scope, elm, attrs){
 //         var url = attrs.backImg;
 //         console.log(url);
-//         element.css({
+//         elm.css({
 //             'background-image': 'url(' + url +')',
 //             'background-size' : 'cover'
 //         });
@@ -47,7 +47,7 @@
 app.directive('listEventPlayer', function($http, $rootScope) {
   return {
     restrict: 'A',
-    link: function(scope, element, attrs) {
+    link: function(scope, elm, attrs) {
       if ($rootScope.isMobile) {
         return;
       }
@@ -108,7 +108,7 @@ app.directive('isotope', function($timeout, $rootScope) {
 // app.directive('background', function($timeout) {
 //   return {
 //     restrict: 'A',
-//     compile: function compile(tElement, tAttrs, transclude) {
+//     compile: function compile(telm, tAttrs, transclude) {
 //       return {
 //         post: function postLink(scope, elm, iAttrs, controller) {
 //             // console.log('child post')
@@ -128,7 +128,7 @@ app.directive('isotope', function($timeout, $rootScope) {
 //             });
 //           }); 
 //         },
-//         pre:  function preLink(scope, iElement, iAttrs, controller) {
+//         pre:  function preLink(scope, ielm, iAttrs, controller) {
 //           console.log('child pre');
 //         }
 //       };
@@ -139,8 +139,8 @@ app.directive('isotope', function($timeout, $rootScope) {
 app.directive('shareEvent', function($http) {
   return {
     restrict: 'A',
-    link: function(scope, element, req) {
-      element.on("click", function() {
+    link: function(scope, elm, req) {
+      elm.on("click", function() {
         $http({
           method: 'POST',
           data: {
@@ -309,33 +309,39 @@ app.directive('adaptiveBackground', function($window) {
   };
   return {
     restrict: 'A',
-    link: function(scope, element, attrs) {
-      var adaptBackground, childElement, findImage, handleImg, rawChildElement, rawElement, setColors, useCSSBackground;
-      rawElement = element[0];
+    link: function(scope, elm, attrs) {
+      var adaptBackground, childelm, findImage, handleImg, rawChildelm, rawElm, setColors, useCSSBackground;
+      rawElm = elm[0];
       useCSSBackground = function(el) {
         return el.tagName !== 'IMG';
       };
       findImage = function() {
-        var elementWithClass, imageClass;
+        var elmWithClass, imageClass;
         imageClass = attrs.abImageClass || options.imageClass;
         if (imageClass != null) {
-          elementWithClass = rawElement.querySelector('.' + imageClass);
-          if (elementWithClass != null) {
-            return angular.element(elementWithClass);
+          elmWithClass = rawElm.querySelector('.' + imageClass);
+          if (elmWithClass != null) {
+            return angular.element(elmWithClass);
           }
         }
-        return angular.element(element.find('img')[0]);
+        return angular.element(elm.find('img')[0]);
       };
       setColors = function(colors) {
         var yiq;
-        element.css('backgroundColor', colors.dominant);
+
+        if (attrs.abBgToClass) {
+          elm.find("section:not(.header)").css('backgroundColor', colors.dominant);
+        } else {
+          elm.css('backgroundColor', colors.dominant);
+        }
+
         yiq = getYIQ(colors.dominant);
         if (yiq <= 128) {
-          element.addClass(options.darkClass);
-          element.removeClass(options.lightClass);
+          elm.addClass(options.darkClass);
+          elm.removeClass(options.lightClass);
         } else {
-          element.addClass(options.lightClass);
-          element.removeClass(options.darkClass);
+          elm.addClass(options.lightClass);
+          elm.removeClass(options.darkClass);
         }
         colors.backgroundYIQ = yiq;
         return scope.adaptiveBackgroundColors = colors;
@@ -347,25 +353,26 @@ app.directive('adaptiveBackground', function($window) {
           success: setColors
         });
       };
-      childElement = findImage();
-      rawChildElement = childElement[0];
-      if (useCSSBackground(rawChildElement)) {
-        return adaptBackground(getCSSBackground(rawChildElement));
+      childelm = findImage();
+      rawChildelm = childelm[0];
+      if (useCSSBackground(rawChildelm)) {
+        return adaptBackground(getCSSBackground(rawChildelm));
       } else {
         handleImg = function() {
-          if (rawChildElement.src) {
-            return adaptBackground(rawChildElement);
+          if (rawChildelm.src) {
+            return adaptBackground(rawChildelm);
           }
         };
-        childElement.on('load', handleImg);
+        childelm.on('load', handleImg);
         scope.$on('$destroy', function() {
-          return childElement.off('load', handleImg);
+          return childelm.off('load', handleImg);
         });
         return handleImg();
       }
     }
   };
 });
+
 
 // app.directive('infiniteScroll', [
 //   '$rootScope', '$window', '$timeout', function($rootScope, $window, $timeout) {
@@ -397,11 +404,11 @@ app.directive('adaptiveBackground', function($window) {
 //             elem.animate({ scrollTop: "0" });
 //         });
 //         handler = function() {
-//           var container, elementBottom, remaining, shouldScroll, containerBottom;
+//           var container, elmBottom, remaining, shouldScroll, containerBottom;
 //           container = $(elem.children()[0]);
-//           elementBottom = elem.offset().top + elem.height();
+//           elmBottom = elem.offset().top + elem.height();
 //           containerBottom = container.offset().top + container.height();
-//           remaining = containerBottom - elementBottom ;
+//           remaining = containerBottom - elmBottom ;
 //           shouldScroll = remaining <= elem.height() * scrollDistance;
 //           if (shouldScroll && scrollEnabled) {
 //             if ($rootScope.$$phase) {

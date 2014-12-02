@@ -6,8 +6,20 @@
   padding-top: 50px;
   z-index: 1;
 
+  .ab-dark-background {
+    color: @darkbg-text;
+  }
+
+  .ab-light-background {
+    color: @lightbg-text;
+  }
+
+  .left-container, .right-container {
+    padding: 10px;
+  }
+
   section {
-    background: white;
+    // background: white;
     padding: 25px;
     margin: 10px 0;
     float: left;
@@ -18,8 +30,7 @@
         height:: 100%;
       });
     }
-  }
-  .header {
+  
     position: relative;
     overflow: hidden;
     background-color: transparent;
@@ -31,15 +42,39 @@
     .bg-image {
       display: block;
       position: absolute;
-      left: -20%;
       top: -20%;
       width: 140%;
       height: 140%;
-      // z-index: 2;
       background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
       -webkit-filter: blur(10px);
+      z-index: -1;
+
+      &.left {
+        left: 0;
+        top: -50%;
+        width: 151%;
+        height: 149%;
+      }
+
+      &.right {
+        top: -127%;
+        right: 0%;
+        height: 298%;
+        width: 100%;
+        background-position-x: 100%;
+        background-position-y: 144%;
+      }
+
+      &.down {
+        top: -127%;
+        right: 0%;
+        height: 298%;
+        width: 100%;
+        background-position-x: 100%;
+        background-position-y: 144%;
+      }
     }
 
     .overlay {
@@ -115,16 +150,3 @@
     });
   }
 }
-
-// .mobile #view {
-//   position: relative;
-//   padding-top: 0;
-
-//   section {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     height: 100%;
-//     padding-top: 50px;
-//   }
-// }
