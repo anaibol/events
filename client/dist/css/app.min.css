@@ -11772,6 +11772,14 @@ body.desktop #list .events.loading {
 #list .event .ribbon-green:after {
   right: 0;
 }
+body#event-list-view #list {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: blur(10px);
+}
 .ribbon-wrapper-green {
   width: 85px;
   height: 88px;
@@ -11813,20 +11821,13 @@ body.desktop #list .events.loading {
 .ribbon-green:after {
   right: 0;
 }
-#event-list-view #list {
-  position: fixed;
-  top: 50px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 #list-overlay {
   position: fixed;
   top: 50px;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.8);
   opacity: 0;
   transition: opacity 0.3s;
   z-index: -1;
@@ -11858,6 +11859,7 @@ body.desktop #list .events.loading {
   margin: 10px 0;
   float: left;
   width: 100%;
+  border-radius: 2px;
   position: relative;
   overflow: hidden;
   background-color: transparent;
@@ -11870,39 +11872,77 @@ body.desktop #list .events.loading {
 #view section img {
   max-width: 100%;
 }
-#view section .bg-image {
+#view section.header {
+  height: 295px;
+  padding: 0;
+}
+#view section.header > img {
   display: block;
   position: absolute;
-  top: -20%;
-  width: 140%;
-  height: 140%;
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  -webkit-filter: blur(10px);
+  width: 100%;
+  left: 0;
   z-index: -1;
 }
-#view section .bg-image.left {
+#view section.header .info {
+  position: absolute;
+  bottom: 0;
+}
+#view section.image {
+  text-align: center;
+}
+#view section.description.opened p {
+  max-height: none;
+}
+#view section.description:not(.opened) p {
+  cursor: pointer;
+}
+#view section.description p {
+  white-space: pre-line;
+  max-height: 350px;
+  overflow: hidden;
+}
+#view section.description button {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
   left: 0;
-  top: -50%;
-  width: 151%;
-  height: 149%;
+  margin: 0;
+  color: inherit;
 }
-#view section .bg-image.right {
-  top: -127%;
-  right: 0%;
-  height: 298%;
+#view section.location .map {
+  display: block;
   width: 100%;
-  background-position-x: 100%;
-  background-position-y: 144%;
+  height: 280px;
+  margin-top: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-#view section .bg-image.down {
-  top: -127%;
-  right: 0%;
-  height: 298%;
+#view section.media .pictures,
+#view section.media .youtube-videos {
+  display: inline-block;
   width: 100%;
-  background-position-x: 100%;
-  background-position-y: 144%;
+  padding: 20px 0;
+  list-style: none;
+}
+#view section.media .pictures li,
+#view section.media .youtube-videos li {
+  text-align: center;
+  padding: 5px;
+}
+#view section.media .pictures li .img-thumbnail,
+#view section.media .youtube-videos li .img-thumbnail {
+  border: none;
+  width: 100%;
+}
+#view section.media .youtube-videos li .video-container {
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+}
+#view section.media .youtube-videos li .video-container object {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
 }
 #view section .overlay {
   display: block;
@@ -11919,47 +11959,6 @@ body.desktop #list .events.loading {
   -webkit-opacity: .4;
   -moz-opacity: .4;
   opacity: .4;
-}
-#view .description p {
-  white-space: pre-line;
-}
-#view .location .map {
-  display: block;
-  width: 100%;
-  height: 280px;
-  margin-top: 20px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-#view .media .facebook-pictures,
-#view .media .instagram-photos,
-#view .media .youtube-videos {
-  display: inline-block;
-  width: 100%;
-  padding: 20px 0;
-  list-style: none;
-}
-#view .media .facebook-pictures li,
-#view .media .instagram-photos li,
-#view .media .youtube-videos li {
-  text-align: center;
-  padding: 5px;
-}
-#view .media .facebook-pictures li .img-thumbnail,
-#view .media .instagram-photos li .img-thumbnail,
-#view .media .youtube-videos li .img-thumbnail {
-  border: none;
-  width: 100%;
-}
-#view .media .youtube-videos li .video-container {
-  padding-bottom: 56.25%;
-  padding-top: 30px;
-}
-#view .media .youtube-videos li .video-container object {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
 }
 @media (min-width: 767px) and (max-width: 767px) {
   #view {

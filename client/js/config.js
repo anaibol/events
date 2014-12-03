@@ -110,17 +110,17 @@ app.run(function($rootScope, $state, $stateParams, $location, $localStorage, $ro
 
       var data = $rootScope.loc;
 
-      Event.query.lng = loc.lng;
-      Event.query.lat = loc.lat;
+      Event.query.lng = data.lng;
+      Event.query.lat = data.lat;
       // delete res.data.loc;
 
       // $.address = res.data;
 
       $rootScope.city = data.region_name;
 
-      $localStorage.lng = loc.lng;
-      $localStorage.lat = loc.lat;
-      $localStorage.city = $rootScope.city;
+      $localStorage.lng = data.lng;
+      $localStorage.lat = data.lat;
+      $localStorage.city = data.region_name;
 
       // $localStorage.address = $rootScope.address;
       // $localStorage.city = $rootScope.city;

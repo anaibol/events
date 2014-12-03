@@ -144,6 +144,15 @@
       right: 0;
     }
   }
+
+  body#event-list-view & {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-filter: blur(10px);
+  }
 }
 
 .ribbon-wrapper-green {
@@ -190,21 +199,13 @@
   right: 0;
 }
 
-#event-list-view #list {
-  position: fixed;
-  top: 50px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 #list-overlay {
   position: fixed;
   top: 50px;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.8);
   opacity: 0;
   transition: opacity 0.3s;
   z-index: -1;

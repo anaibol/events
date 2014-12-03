@@ -61,6 +61,24 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
     $http.get('/api/resolve/' + $scope.ev.eid + '/results');
   }
 
+  $scope.getCoverTopPosition = function() {
+    offset_y = ev.pic_cover.offset_y;
+
+    var cover_w = 740;
+    var cover_h = 295;
+    var img_w = angular.element('.header > img').width();
+    console.log(img_w);
+    var img_h = angular.element('.header > img').height();
+    console.log(img_h);
+    var real_img_h = (cover_w * img_h / img_w) - cover_h;
+
+    var top = parseInt(real_img_h * offset_y / 100);
+    console.log(top);
+    return ('-' + top + 'px');
+  };
+
+  $scope.coverTopPosition = $scope.getCoverTopPosition();
+
   $scope.promote = function(ev) {
     var modalInstance = $modal.open({
       templateUrl: 'event/promote',

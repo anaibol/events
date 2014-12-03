@@ -1,49 +1,52 @@
 #view
   .container(off-click="$state.go('^')", adaptive-background, ab-bg-to-class="description")
-    .left-container.col-xs-12.col-sm-4.col-md-4.col-lg-8
+    .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header
-        .bg-image.left(style='background-image: url({{::ev.pic_cover.source}})')
-        h3.title.truncate {{::ev.name}}
+        img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
 
-        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='ev.creator.id === user.facebook.id || user.admin == true') Promote event
+        .info
+          h3.title.truncate {{::ev.name}}
+          .tag-list
+            span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
+          .title
+            .attending
+              i.fa.fa-group
+              | {{::ev.attending_count}}
+            .price {{::ev.price.full}}
+          .datetime
+            span.time
+              i.fa.fa-clock-o
+              span {{::ev.start_time2 | amCalendar}}
 
-        .tag-list
-          span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
-        .title
-          .attending
-            i.fa.fa-group
-            | {{::ev.attending_count}}
-          .price {{::ev.price.full}}
-        .datetime
-          span.time
-            i.fa.fa-clock-o
-            span {{::ev.start_time2 | amCalendar}}
 
-
-      section.description
+      section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)")
         .bg-image.down(style='background-image: url({{::ev.pic_cover.source}})')
-        p.description(ng-bind-html='ev.description | linky')
+        p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
+        {{ev.description.length }}
+        button.btn(ng-click="descriptionOpened = !descriptionOpened")
+          i.fa(ng-class="{'fa-chevron-down': !descriptionOpened, 'fa-chevron-up': descriptionOpened}")
+
+
 
 
       section.media
-        ul.facebook-pictures(ng-if="fbpics.length")
-          li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="pic in fbpics")
-            a(ng-click="openLightboxModal(fbpics, $index)")
-              img.img-thumbnail(ng-src="{{::pic.thumbUrl}}", alt="")
+        ul.pictures(ng-if="fbpics.length")
+            li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="pic in fbpics")
+              a(href="#")
+                img(ng-src="{{::pic.thumbUrl}}", alt="")
 
-        ul.instagram-photos(ng-if="instagramPhotos.length")
-          li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos")
-            a(ng-click="openLightboxModal(instagramPhotos, $index)")
-              img.img-thumbnail(ng-src="{{::photo.thumbUrl}}", alt="")
+            li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos")
+              a(href="#")
+                img(ng-src="{{::photo.thumbUrl}}", alt="")
 
         ul.youtube-videos(ng-if="videos.length")
           li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="video in videos")
             .video-container
-              object.img-thumbnail(type="text/html", data="{{::video}}")
+              object(type="text/html", data="{{::video}}")
 
-    .right-container.col-xs-12.col-sm-4.col-md-4.col-lg-4
-      section.header
-        .bg-image.right(style='background-image: url({{::ev.pic_cover.source}})')
+    .right-container.col-xs-12.col-sm-12.col-md-4.col-lg-4
+      section.image
+        //- .bg-image.right(style='background-image: url({{::ev.pic_cover.source}})')
         img.event-image(src="{{::ev.pic_cover.source}}")
 
       section.datepicker
@@ -58,6 +61,8 @@
 
 
       section
+        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='ev.creator.id === user.facebook.id || user.admin == true') Promote event
+
         .event-buttons
           .event-rsvp-btns
             button.btn.btn-primary.join(set-attendings) {{::attending}}
