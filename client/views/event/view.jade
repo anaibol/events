@@ -1,5 +1,5 @@
 #view
-  .container(off-click="$state.go('^')", adaptive-background, ab-bg-to-class="description")
+  .container(off-click="$state.go('^')", off-click-filter='header', adaptive-background, ab-bg-to-class="description")
     .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
@@ -19,15 +19,11 @@
               span {{::ev.start_time2 | amCalendar}}
 
 
-      section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)")
+      section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)", ng-if="ev.description")
         .bg-image.down(style='background-image: url({{::ev.pic_cover.source}})')
         p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
-        {{ev.description.length }}
-        button.btn(ng-click="descriptionOpened = !descriptionOpened")
+        button.btn(ng-click="descriptionOpened = !descriptionOpened", ng-if="ev.description.length >= 600")
           i.fa(ng-class="{'fa-chevron-down': !descriptionOpened, 'fa-chevron-up': descriptionOpened}")
-
-
-
 
       section.media
         ul.pictures(ng-if="fbpics.length")
@@ -49,8 +45,8 @@
         //- .bg-image.right(style='background-image: url({{::ev.pic_cover.source}})')
         img.event-image(src="{{::ev.pic_cover.source}}")
 
-      section.datepicker
-        datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
+      //- section.datepicker
+      //-   datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
 
       section.location
         a(href="https://maps.google.com/maps?q={{::ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank')

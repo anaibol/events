@@ -5,12 +5,12 @@
   include sidebar
 
   .events.loading.col-xs-12.col-sm-9.col-md-9.col-lg-10(isotope)
-    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events track by ev.eid", id="{{::$index}}", ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
+    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(quick-ng-repeat="ev in events track by ev.eid", id="{{::$index}}", ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
       .content(adaptive-background)
         .top
           a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{::ev.name}}
           .tag-list
-            span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}", ng-click="openTag($event, ev)") {{::tag}}
+            span.tag(quick-ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}", ng-click="openTag($event, ev)") {{::tag}}
         .image-container
           .image
             .ribbon-wrapper-green(ng-if="ev.price.num === 0")
@@ -42,4 +42,4 @@
 
 #list-overlay(ng-class="{visible: $state.current.name === 'list.view'}")
 
-ui-view
+ui-view(autoscroll='true')

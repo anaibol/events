@@ -1,4 +1,4 @@
-var app = angular.module('wooepa', ['wooepa-templates', 'ngStorage', 'querystring', 'ui.router', 'ui.bootstrap', 'truncate', 'ngTouch', 'ngSanitize', 'angular-data.DSCacheFactory', 'angularMoment', 'rt.encodeuri', 'offClick', 'QuickList', 'ezfb']); //'imageupload', , 'seo' 'leaflet-directive', 'geolocation' ,  'gettext', 
+var app = angular.module('wooepa', ['wooepa-templates', 'querystring', 'ui.router', 'ui.bootstrap', 'truncate', 'ngTouch', 'ngSanitize', 'angular-data.DSCacheFactory', 'angularMoment', 'rt.encodeuri', 'offClick', 'QuickList', 'ezfb']); //'imageupload', , 'seo' 'leaflet-directive', 'geolocation' ,  'gettext',  'ngStorage', 
 
 var getStringDate = function(date) {
   var dd = date;

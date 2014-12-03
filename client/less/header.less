@@ -94,7 +94,6 @@ header {
         border: none;
         padding: 10px;
         margin: 0;
-        overflow: hidden;
 
         ::-moz-placeholder {
           color: white;
@@ -113,6 +112,13 @@ header {
           color: white;
           font-size: 20px;
           margin-left: 24px;
+          font-family: 'Open Sans';
+
+          &:focus {
+            color: black;
+            background-color: white;
+            box-shadow: 0 0 5px 1px #969696;
+          }
         }
       }
 

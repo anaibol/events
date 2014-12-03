@@ -329,6 +329,10 @@ app.directive('adaptiveBackground', function($window) {
       setColors = function(colors) {
         var yiq;
 
+        // if (attrs.abAddTransparency) {
+          colors.dominant = colors.dominant.replace('rgb', 'rgba').replace(')', ', 0.5)');
+        // }
+
         if (attrs.abBgToClass) {
           elm.find("section:not(.header)").css('backgroundColor', colors.dominant);
         } else {

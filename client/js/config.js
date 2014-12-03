@@ -1,5 +1,7 @@
-app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbProvider) {
+app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbProvider, $uiViewScrollProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
+
+  $uiViewScrollProvider.useAnchorScroll();
 
   $stateProvider
   // .state('home', {
@@ -20,7 +22,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       // url: '{city}{slash:[/]?}{tag:[^0-9]}',
       // url: '/{city}',
       // url: '/{city}{slash:[/]?}{tag}',
-      url: '/?since?lng?lat?country?tags?sortBy',
+      url: '/:city?since?lng?lat?tags?sortBy',
       templateUrl: 'event/list',
       controller: 'ListCtrl',
       resolve: {
@@ -30,7 +32,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       }
     })
     .state('list.view', {
-      url: ':slug/:eid',
+      url: '/:slug/:eid',
       templateUrl: 'event/view',
       controller: 'ViewCtrl',
       parent: 'list',
@@ -71,7 +73,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
   ezfbProvider.setLocale(lang);
 });
 
-app.run(function($rootScope, $state, $stateParams, $location, $localStorage, $rootScope, $window, $location, Event, ezfb, amMoment, $querystring) { //geolocation, reverseGeocode  Geoip, 
+app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $window, $location, Event, ezfb, amMoment, $querystring) { //geolocation, reverseGeocode  Geoip,  $localStorage
   // geolocation.getLocation().then(function(data) {
   //   $rootScope.loc = {
   //     lat: data.coords.latitude,
@@ -110,17 +112,17 @@ app.run(function($rootScope, $state, $stateParams, $location, $localStorage, $ro
 
       var data = $rootScope.loc;
 
-      Event.query.lng = data.lng;
-      Event.query.lat = data.lat;
+      Event.query.lng = data.longitude;
+      Event.query.lat = data.latitude;
       // delete res.data.loc;
 
       // $.address = res.data;
 
       $rootScope.city = data.region_name;
 
-      $localStorage.lng = data.lng;
-      $localStorage.lat = data.lat;
-      $localStorage.city = data.region_name;
+      // $localStorage.lng = data.lng;
+      // $localStorage.lat = data.lat;
+      // $localStorage.city = data.region;
 
       // $localStorage.address = $rootScope.address;
       // $localStorage.city = $rootScope.city;
@@ -150,7 +152,7 @@ app.run(function($rootScope, $state, $stateParams, $location, $localStorage, $ro
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     $rootScope.stateParams = $querystring.toString(_.compactObject(toParams));
 
-
+ 
     if (toParams.slug === 'auth') {
       window.location.href = window.location.href;
     }

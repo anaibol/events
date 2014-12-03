@@ -2,9 +2,33 @@ var url = require('url');
 var request = require('request');
 var Events = global.db.get('events');
 
-module.exports = function(app) {
-  app.get('*', function(req, res) {
+function slug(str) {
+  str = str.replace(/^\s+|\s+$/g, ''); // trim
+  str = str.toLowerCase();
 
+  // remove accents, swap ñ for n, etc
+  var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+  var to = "aaaaaeeeeeiiiiooooouuuunc------";
+  for (var i = 0, l = from.length; i < l; i++) {
+    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
+
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
+
+  return str;
+}
+
+module.exports = function(app) {
+  app.get('', function(req, res) {
+    getLocation(req, function(loc) {
+      res.redirect('/' + slug(loc.region_name));
+    });
+  });
+
+
+  app.get('*', function(req, res) {
     getLocation(req, function(loc) {
       var url_parts = url.parse(req.url, true);
       var params = url_parts.query;
@@ -12,7 +36,7 @@ module.exports = function(app) {
       var limit;
 
       if (req.isMobile) {
-        limit = 5;
+        limit = 10;
       } else {
         limit = 30;
       }
@@ -48,8 +72,8 @@ module.exports = function(app) {
         };
       } else {
         coord = {
-          lng: loc.lng,
-          lat: loc.lat
+          lng: loc.longitude,
+          lat: loc.latitude
         };
       }
 
@@ -150,29 +174,31 @@ module.exports = function(app) {
   });
 
   function getLocation(req, cb) {
-    if (!req.session.loc) {
+    // if (!req.session.loc) {
       var ip;
       if (process.env.NODE_ENV === 'development') {
-        ip = '82.142.63.255';
+        ip = '186.136.222.189';
       } else {
         ip = req.connection.remoteAddress;
       }
 
-      request('http://ipinfo.io/' + ip, function(error, response, body) {
+      request('http://freegeoip.net/json/' + ip, function(error, response, body) {
         var location = JSON.parse(body);
-        req.session.loc = location;
+        cb(location);
 
-        req.session.loc.lat = req.session.loc.latitude;
-        req.session.loc.lng = req.session.loc.longitude;
+        // req.session.loc = location;
 
-        delete req.session.loc.latitude;
-        delete req.session.loc.longitude;
+        // req.session.loc.lat = req.session.loc.latitude;
+        // req.session.loc.lng = req.session.loc.longitude;
 
-        cb(req.session.loc);
+        // delete req.session.loc.latitude;
+        // delete req.session.loc.longitude;
+
+        // cb(req.session.loc);
       });
-    } else {
-      cb(req.session.loc);
-    }
+    // } else {
+    //   cb(req.session.loc);
+    // }
   }
 
 };

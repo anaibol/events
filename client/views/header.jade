@@ -1,4 +1,4 @@
-fheader
+header
   nav.navbar-inverse(role="navigation", ng-controller='HeaderCtrl')
     .container
       .navbar-header
@@ -18,7 +18,7 @@ fheader
 
         ul.nav.navbar-nav.navbar-right
           li.dropdown(ng-if='$root.user')
-            a.dropdown-toggle(href='#')
+            a.dropdown-toggle(href='#', dropdown-toggle)
               span.avatar.pull-right
                 img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
               span.hidden-xs.hidden-sm.hidden-md {{$root.user.facebook.name}}

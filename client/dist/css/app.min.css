@@ -11314,8 +11314,9 @@ icon-material-lightgrey {
   background-color: #8F714F;
   border: 1px solid #8F714F;
 }
-html {
+* {
   font-family: 'Open Sans';
+  color: white;
 }
 html,
 body,
@@ -11444,7 +11445,6 @@ header nav .navbar-header .city {
   border: none;
   padding: 10px;
   margin: 0;
-  overflow: hidden;
 }
 header nav .navbar-header .city ::-moz-placeholder {
   color: white;
@@ -11456,10 +11456,21 @@ header nav .navbar-header .city i {
   position: absolute;
   line-height: 28px;
 }
+header nav .navbar-header .city .form-control-wrapper input:focus {
+  color: black;
+  background-color: white;
+  box-shadow: 0 0 5px 1px #969696;
+}
 header nav .navbar-header .city input {
   color: white;
   font-size: 20px;
   margin-left: 24px;
+  font-family: 'Open Sans';
+}
+header nav .navbar-header .city input:focus {
+  color: black;
+  background-color: white;
+  box-shadow: 0 0 5px 1px #969696;
 }
 header nav .navbar-header .navbar-right {
   margin: 0;
@@ -11886,6 +11897,12 @@ body#event-list-view #list {
 #view section.header .info {
   position: absolute;
   bottom: 0;
+  padding: 15px;
+}
+#view section.header .info h3 {
+  font-size: 25px;
+  font-family: 'Open Sans';
+  margin: 0;
 }
 #view section.image {
   text-align: center;

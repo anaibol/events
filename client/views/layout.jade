@@ -8,7 +8,7 @@ html(ng-class="{noscroll: $root.menuOpen}")
       .banner
 
       #wrapper(ng-class="{'move':$root.menuOpen}", ng-swipe-left="$root.menuOpen = !$root.menuOpen")
-        .container-fluid(ui-view)
+        ui-view.container-fluid(autoscroll="autoscroll='true'")
 
       //- .global-navigation.back
       //-   a(href='/', ui-sref="^", ng-if="$state.$current !== ''")

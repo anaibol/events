@@ -66,14 +66,11 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
 
     var cover_w = 740;
     var cover_h = 295;
-    var img_w = angular.element('.header > img').width();
-    console.log(img_w);
-    var img_h = angular.element('.header > img').height();
-    console.log(img_h);
+    var elm = angular.element('.header > img');
+    var img_w = elm.width();
+    var img_h = elm.height();
     var real_img_h = (cover_w * img_h / img_w) - cover_h;
-
     var top = parseInt(real_img_h * offset_y / 100);
-    console.log(top);
     return ('-' + top + 'px');
   };
 
