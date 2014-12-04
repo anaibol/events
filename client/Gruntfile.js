@@ -19,7 +19,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          'tmp/css/app.min.css': 'less/index.less'
+          'dist/css/app.min.css': 'less/index.less'
         }
       },
       dev: {
@@ -226,7 +226,7 @@ module.exports = function(grunt) {
 
   // grunt.registerTask('build', ['clean', 'less', 'jade', 'useminPrepare', 'uglify', 'cssmin', 'htmlmin', 'usemin']);
 
-  grunt.registerTask('build:prod', ['clean', 'less:prod', 'jade', 'uncss', 'html2js', 'ngAnnotate', 'concat:prod', 'uglify']);
+  grunt.registerTask('build:prod', ['clean', 'less:prod', 'jade', 'html2js', 'ngAnnotate', 'concat:prod', 'uglify']); //'uncss', 
   grunt.registerTask('build:dev', ['clean', 'less:dev', 'html2js', 'concat:dev']);
 
   grunt.registerTask('prod', ['build:prod', 'concurrent']);

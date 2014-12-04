@@ -1,4 +1,4 @@
-app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, Lightbox) {
+app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos) {
   // console.log(ev);
   $scope.ev = ev;
   if ($scope.ev.price.edited)
@@ -87,12 +87,25 @@ $scope.switchToSpan = function () {
       });
     }
   });
-  $http.get('/api/resolve/' + $scope.ev.eid + '/results');
 
-  $scope.openLightboxModal = function(pics, index) {
-    console.log(pics, index)
-    Lightbox.openModal(pics, index);
+  if ($rootScope.isMobile) {
+    $http.get('/api/resolve/' + $scope.ev.eid + '/results');
+  }
+
+  $scope.getCoverTopPosition = function() {
+    offset_y = ev.pic_cover.offset_y;
+
+    var cover_w = 740;
+    var cover_h = 295;
+    var elm = angular.element('.header > img');
+    var img_w = elm.width();
+    var img_h = elm.height();
+    var real_img_h = (cover_w * img_h / img_w) - cover_h;
+    var top = parseInt(real_img_h * offset_y / 100);
+    return ('-' + top + 'px');
   };
+
+  $scope.coverTopPosition = $scope.getCoverTopPosition();
 
   $scope.promote = function(ev) {
     var modalInstance = $modal.open({

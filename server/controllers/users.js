@@ -109,6 +109,8 @@ exports.getEvents = function(req, res) {
 };
 
 exports.getMyEvents = function(req, res) {
+  var events = {};
+
   res.render('index', {
     title: 'Wooepa',
     user: req.user ? JSON.stringify(req.user) : 'null',

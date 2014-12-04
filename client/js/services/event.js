@@ -37,10 +37,18 @@ app.factory('Event', function($q, $http, DSCacheFactory, $rootScope, $querystrin
       return this.runQuery();
     },
     getMore: function() {
-      if (!query.skip) {
-        query.skip = 30;
+      var limit;
+
+      if ($rootScope.isMobile) {
+        limit = 5;
       } else {
-        query.skip += 30;
+        limit = 30;
+      }
+
+      if (!query.skip) {
+        query.skip = limit;
+      } else {
+        query.skip += limit;
       }
 
       return this.runQuery();

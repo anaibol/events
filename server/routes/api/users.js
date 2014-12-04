@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
   }), users.authCallback);
 
   app.get('/:user/events', users.getEvents);
-  app.get('/me/events', users.getMyEvents);
+  app.get('/api/me/events', users.getMyEvents);
   app.get('/api/user/:uid', users.getOne);
   app.get('/api/users/:uids/info', users.getInfo);
   app.get('/api/users/:uid/picture', users.getPicture)

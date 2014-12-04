@@ -1,9 +1,7 @@
-'use strict';
-
 var express = require('express');
 var session = require('express-session');
 var helpers = require('view-helpers');
-var morgan = require('morgan');
+// var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var serveStatic = require('serve-static');
 var bodyParser = require('body-parser');
@@ -15,7 +13,7 @@ var MongoStore = require('connect-mongo')({
 });
 var flash = require('connect-flash');
 
-//var mobile = require('detectmobilebrowsers');
+var mobile = require('detectmobilebrowsers');
 
 var db = require('monk')(global.config.db);
 
@@ -29,7 +27,7 @@ var fs = require('fs');
 
 module.exports = function(app, passport, db) {
   if (env === 'development') {
-    app.use(morgan('dev'));
+    // app.use(morgan('dev'));
     app.locals.pretty = true;
     app.set('dumpExceptions', true);
     app.set('showStackError', true);
@@ -81,7 +79,7 @@ module.exports = function(app, passport, db) {
   app.use(serveStatic(publicDir));
   app.use(serveStatic(distDir));
 
-  //app.use(mobile.is_mobile());
+  app.use(mobile.is_mobile());
 
   var walk = function(path) {
     fs.readdirSync(path).forEach(function(file) {
@@ -120,5 +118,5 @@ module.exports = function(app, passport, db) {
   //     error: 'Not found'
   //   });
   // });
-  app.use(require('prerender-node').set('prerenderToken', 'tlgCZ16mK7RTP1i5BQGK'));
+  // app.use(require('prerender-node').set('prerenderToken', 'tlgCZ16mK7RTP1i5BQGK'));
 };

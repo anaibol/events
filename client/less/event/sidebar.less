@@ -1,25 +1,15 @@
 #sidebar {
   // z-index: 999;
   position: fixed;
-  top: 0;
-  right: 0;
-  padding-left: 0;
-  z-index: 999;
-  margin-top: 66px;
+  top: 60px;
+  right: 5px;
+  padding-left: 20px;
+  padding-right: 0;
 
   .navbar-nav {
     font-size: 13px;
-    width: 100%;
 
-    li, a, i, button, input {
-      color: rgba(255, 255, 255, 0.84);
-    }
-
-    ::-moz-placeholder {
-      color: rgba(255, 255, 255, 0.84);
-    }
-
-    ::-webkit-input-placeholder {
+    li, a, i, button {
       color: rgba(255, 255, 255, 0.84);
     }
 
@@ -27,15 +17,13 @@
       width: 100%;
       text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
       background-color: @red;
+      border-bottom: 1px solid darken(@red, 5%);
+
+      transition: all .5s;
 
       a:focus, a:hover, a:active, a.active {
         background-color: darken(@red, 5%);
       }
-
-      // &:not(:last-of-type) {
-      //   border-bottom: 1px solid lighten(@red, 5%);
-      //   float: none;
-      // }
 
       li a {
         padding-left: 25px;
@@ -54,36 +42,6 @@
 
   .sort, .date {
     margin-bottom: 7px;
-  }
-
-  .search {
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-
-    i {
-      position: absolute;
-      top: 0;
-      left: 5px;
-      padding: 15px;
-      line-height: 24px;
-    }
-
-    // input {
-    //   padding-left: 20px;
-    //   background-color: darken(@red, 3%);
-    //   width: 100%;
-    //   border: none;
-    //   line-height: 24px;
-
-    //   &:focus {
-    //     outline: none;
-    //   }
-    // }
-
-    .dropdown-menu {
-      background-color: darken(@red, 3%);
-      padding: 0;
-    }
   }
 
   .today {

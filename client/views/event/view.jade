@@ -1,37 +1,67 @@
 #view
-  .container
-    section.header.row
-      //- (adaptive-background)
-      //- (style='background-image: url({{ev.pic_cover.source}});')
-      .col-xs-12.col-sm-4.col-md-4.col-lg-4
-        img(src="{{ev.pic_cover.source}}")
-      .col-xs-12.col-sm-8.col-md-8.col-lg-8
-        h3.title.truncate {{ev.name}}
+  .container(off-click="$state.go('^')", off-click-filter='header', adaptive-background, ab-bg-to-class="description")
+    .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
+      section.header
+        img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
 
+        .info
+          h3.title.truncate {{::ev.name}}
+          .tag-list
+            span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
+          .title
+            .attending
+              i.fa.fa-group
+              | {{::ev.attending_count}}
+            .price {{::ev.price.full}}
+          .datetime
+            span.time
+              i.fa.fa-clock-o
+              span {{::ev.start_time2 | amCalendar}}
+
+
+      section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)", ng-if="ev.description")
+        .bg-image.down(style='background-image: url({{::ev.pic_cover.source}})')
+        p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
+        button.btn(ng-click="descriptionOpened = !descriptionOpened", ng-if="ev.description.length >= 600")
+          i.fa(ng-class="{'fa-chevron-down': !descriptionOpened, 'fa-chevron-up': descriptionOpened}")
+
+      section.media
+        ul.pictures(ng-if="fbpics.length")
+            li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="pic in fbpics")
+              a(href="#")
+                img(ng-src="{{::pic.thumbUrl}}", alt="")
+
+            li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos")
+              a(href="#")
+                img(ng-src="{{::photo.thumbUrl}}", alt="")
+
+        ul.youtube-videos(ng-if="videos.length")
+          li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="video in videos")
+            .video-container
+              object(type="text/html", data="{{::video}}")
+
+    .right-container.col-xs-12.col-sm-12.col-md-4.col-lg-4
+      section.image
+        //- .bg-image.right(style='background-image: url({{::ev.pic_cover.source}})')
+        img.event-image(src="{{::ev.pic_cover.source}}")
+
+      //- section.datepicker
+      //-   datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
+
+      section.location
+        a(href="https://maps.google.com/maps?q={{::ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank')
+          .place(ng-if='ev.location')
+            i.fa.fa-map-marker
+            | {{::ev.location}} - {{::ev.venue.street}}{{::ev.venue.street && ev.venue.city ? ', ' : ''}}{{::ev.venue.city}}{{::ev.venue.city && ev.venue.country ? ', ' : ''}} {{::ev.venue.country}}
+        a.map(href="https://maps.google.com/maps?q={{::ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank', style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center={{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}}&zoom=14&size=640x280&markers=color:blue|{{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}})")
+
+
+      section
         button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='ev.creator.id === user.facebook.id || user.admin == true') Promote event
 
-        .tag-list
-          span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{tag}}") {{tag}}
-        .title
-          .attending
-            i.fa.fa-group
-            | {{ev.attending_count}}
-          .price {{ev.price.full}}
-        .datetime
-          span.time
-            i.fa.fa-clock-o
-            span {{ev.start_time2 | amCalendar}}
-        .location
-          a(href="https://maps.google.com/maps?q={{ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank')
-            .place(ng-if='ev.location')
-              i.fa.fa-map-marker
-              | {{ev.location}} - {{ev.venue.street}}{{ev.venue.street && ev.venue.city ? ', ' : ''}}{{ev.venue.city}}{{ev.venue.city && ev.venue.country ? ', ' : ''}} {{ev.venue.country}}
-
-    section.row
-      .col-md-4
-        .event-buttons.wdiv.padding-10
+        .event-buttons
           .event-rsvp-btns
-            button.btn.btn-primary.join(set-attendings) {{attending}}
+            button.btn.btn-primary.join(set-attendings) {{::attending}}
           .event-rsvp-btns
             button.btn.btn-primary.invite(friend-selector) Invite friends?
           .event-rsvp-btns
@@ -39,68 +69,44 @@
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
 
-        .padding-10.promoter(ng-if='ev.promotion')
+        .promoter(ng-if='ev.promotion')
           .panel.panel-success
             .panel-heading Game Active
             .panel-body
               ul.list-group(ng-if="ev.promoter")
                 li.list-group-item(ng-if="ev.promoter")
-                  img.img-circle(ng-src="{{ev.promoter.picture}}", ng-alt="{{ev.promoter.name}}")
-                  | {{ ev.promoter.name }}
-                li.list-group-item {{ev.promotion.reward}}
+                  img.img-circle(ng-src="{{::ev.promoter.picture}}", ng-alt="{{::ev.promoter.name}}")
+                  | {{::ev.promoter.name }}
+                li.list-group-item {{::ev.promotion.reward}}
                 li.list-group-item
                   | End: &nbsp
                   strong
-                    | {{ev.promotion.end_date | amCalendar}}
-        .padding-10
+                    | {{::ev.promotion.end_date | amCalendar}}
+        .hidden-xs
           .panel.panel-default
             .panel-heading Players
             .panel-body
               p(list-event-player, ng-hide='ev.list_event_players[0].uid') No Players yet !
               ul.list-group
-                p(ng-hide='!ev.list_event_players[0].uid') {{ev.list_event_players.length}} &nbsp Players !
+                p(ng-hide='!ev.list_event_players[0].uid') {{::ev.list_event_players.length}} &nbsp Players !
                 input.form-control.input-sm(placeholder='Search player', type='text', ng-model='search.name')
                 hr
-                li.list-group-item.players(ng-repeat='player in ev.list_event_players | orderBy:\'-result\'')
+                li.list-group-item.players(ng-repeat='player in ev.list_event_players')
                   table
                     tr
-                      td
-                        img.img-circle(ng-src='{{"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{player.name}}')
+                      td 
+                        img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
                       td
                         table
                           tr
-                            td {{player.name}}
+                            td {{::player.name}}
                           tr
-                            td {{ player.result }} pts
-                            td
+                            td {{:: player.result }} pts
+                            td 
                               button.btn(boost-player) Boost
                                 i-fa-fa-flash
                 li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
-                  img.img-circle(ng-src='{{"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{player.name}}')
-                  | {{ player.result }} pts
+                  img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
+                  | {{:: player.result }} pts
                   button.btn.btn-primary Boost
                   i-fa-fa-flash
-    section.description.row
-      p.description(ng-bind-html='ev.description | linky')
-
-    section.location.row
-      a(href="https://maps.google.com/maps?q={{ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank')
-        .map(style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center={{ev.venue.coord.lat + ',' + ev.venue.coord.lng}}&zoom=14&size=640x200&markers=color:blue|{{ev.venue.coord.lat + ',' + ev.venue.coord.lng}})")
-
-    section.media.row
-      ul.youtube-videos(ng-if="videos.length")
-        li.col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="video in videos", ng-if="$index < 3")
-          object.img-thumbnail(type="text/html" data="{{video}}")
-
-      ul.facebook-pictures(ng-if="fbpics.length")
-        li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="pic in fbpics")
-          a(ng-click="openLightboxModal(fbpics, $index)")
-            img.img-thumbnail(ng-src="{{pic.thumbUrl}}", alt="")
-
-      ul.instagram-photos(ng-if="instagramPhotos.length")
-        li.col-xs-12.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos")
-          a(ng-click="openLightboxModal(instagramPhotos, $index)")
-            img.img-thumbnail(ng-src="{{photo.thumbUrl}}", alt="")
-
-      //- .instagram-photos
-      //-   img.col-xs-6.col-sm-4.col-md-3.col-lg-4(ng-repeat="photo in instagramPhotos", ng-if="$index < 3", ng-src="{{photo.images.low_resolution.url}}")

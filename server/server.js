@@ -1,8 +1,3 @@
-'use strict';
-
-/**
- * Module dependencies.
- */
 var express = require('express');
 var passport = require('passport');
 

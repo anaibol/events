@@ -12,7 +12,7 @@ var Locations = db.get('locations');
 var Events = global.db.get('events');
 
 var Ev = require('../ev');
-var Resolve = require('../services/resolve.js')
+var Resolve = require('../services/resolve.js');
 
 function clone(a) {
   return JSON.parse(JSON.stringify(a));
@@ -120,7 +120,14 @@ exports.get = function(req, res) {
   var url_parts = url.parse(req.url, true);
   var params = url_parts.query;
 
-  var limit = 30;
+  var limit;
+
+  if (req.isMobile) {
+    limit = 5;
+  } else {
+    limit = 30;
+  }
+
   var skip = params.skip || 0;
   var sortBy = params.sortBy || 'start_time';
   var sortOrder = params.sortOrder || 1;
