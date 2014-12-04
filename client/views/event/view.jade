@@ -12,7 +12,10 @@
             .attending
               i.fa.fa-group
               | {{::ev.attending_count}}
-            .price {{::ev.price.full}}
+          .price(ng-if='user && (ev.creator.id === user.facebook.id || user.admin == true)')
+            span.loadNum(span-input) {{ev.price.full}}
+          .price(ng-if='(ev.creator.id != user.facebook.id && user.admin != true)')
+            span {{ev.price.full}}
           .datetime
             span.time
               i.fa.fa-clock-o
@@ -103,7 +106,7 @@
                           tr
                             td {{:: player.result }} pts
                             td 
-                              button.btn(boost-player) Boost
+                              button.btn(ng-if='player.result > user.result', boost-player) Boost
                                 i-fa-fa-flash
                 li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
                   img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
