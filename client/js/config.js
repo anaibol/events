@@ -47,15 +47,15 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       url: '/me/events',
       templateUrl: 'user/user'
     })
-    .state('events', {
-      url:'/user=:uid',
-      controller:'myEventsCtrl',
-      templateUrl:'user/events'
+    .state('userEvents', {
+      url: '/user/:uid',
+      controller: 'myEventsCtrl',
+      templateUrl: 'user/events'
     })
     .state('in_promotion', {
-      url:'/in_promotion',
+      url: '/in_promotion',
       controller: 'inPromotionCtrl',
-      templateUrl:'event/in_promotion'
+      templateUrl: 'event/in_promotion'
     })
     .state('me.logout', {
       parent: 'me',

@@ -26,10 +26,10 @@ header
               i.fa.fa-chevron-down
             ul.dropdown-menu
               li
-                a(ui-sref='events', href='/me/events') My events
+                a(ui-sref="userEvents({uid: $root.user.facebook.id})") My events
               li.divider
               li
-                a(href="/auth/signout", target='_self' translate) Logout
+                a(href="/auth/signout", target="_self" translate) Logout
                   i.fa.fa-sign-out
           li(ng-if='!$root.user')
             a.login(ng-href="/auth/facebook?redirectUrl={{$root.location.path() | encodeUri}}?{{$root.stateParams | encodeUri}}", translate) Login
