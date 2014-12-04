@@ -17,15 +17,16 @@ header
             span.material-input
 
         ul.nav.navbar-nav.navbar-right
-          li.dropdown(ng-if='$root.user')
+          li.dropdown(dropdown, is-open="dropDownIsOpen")
             a.dropdown-toggle(href='#', dropdown-toggle)
               span.avatar.pull-right
                 img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
-              span.hidden-xs.hidden-sm.hidden-md {{$root.user.facebook.name}}
+              span.hidden-xs.hidden-sm.hidden-m
+              d {{$root.user.facebook.name}}
               i.fa.fa-chevron-down
             ul.dropdown-menu
               li
-                a(ui-sref='app.page.profile', href='/me/events') My events
+                a(ui-sref='events', href='/me/events') My events
               li.divider
               li
                 a(href="/auth/signout", target='_self' translate) Logout

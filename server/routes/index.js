@@ -22,9 +22,9 @@ function slug(str) {
 
 module.exports = function(app) {
   app.get('', function(req, res) {
-    getLocation(req, function(loc) {
-      res.redirect('/' + slug(loc.region_name));
-    });
+    // getLocation(req, function(loc) {
+      res.redirect('/' + slug('buenos-aires'));
+    // });
   });
 
 

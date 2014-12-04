@@ -11456,11 +11456,6 @@ header nav .navbar-header .city i {
   position: absolute;
   line-height: 28px;
 }
-header nav .navbar-header .city .form-control-wrapper input:focus {
-  color: black;
-  background-color: white;
-  box-shadow: 0 0 5px 1px #969696;
-}
 header nav .navbar-header .city input {
   color: white;
   font-size: 20px;
