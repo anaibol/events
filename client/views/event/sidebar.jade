@@ -34,12 +34,12 @@ section#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl"
         i.fa.fa-calendar
         | Today
 
-    li(ng-if="today.getDay() >= 5 || today.getDat === 0")
+    li(ng-if="today.getDay() >= 5 || today.getDay() === 0")
       a(ui-sref="list({since:getStringDate(today)})")
         i.fa.fa-calendar
         | This weekend
 
-    li(ng-if="today.getDay() < 5 && today.getDay > 0")
+    li(ng-if="today.getDay() < 5 && today.getDay() > 0")
       a(ui-sref="list({since:getNextDay('Friday')})")
         i.fa.fa-calendar
         | Next weekend

@@ -1,6 +1,9 @@
 app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, Lightbox) {
   // console.log(ev);
   $scope.ev = ev;
+  if ($scope.ev.price.edited)
+    $scope.ev.price.full = $scope.ev.price.edited;
+  $scope.editing = false;
   $scope.today = new Date();
   if ($rootScope.user) {
     $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
@@ -25,7 +28,35 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
       });
     }
   });
-
+$scope.switchToInput = function () {
+    var $input = $('<input id="edit">', {
+        val: $(this).text(),
+        type: 'text'
+    });
+    $input.addClass('loadNum');
+    $(this).replaceWith($input);
+    $input.on('blur', $scope.switchToSpan);
+    $input.select();
+};
+$scope.switchToSpan = function () {
+    if (document.getElementById('edit').value != '')
+    {
+      $scope.ev.price.full = document.getElementById('edit').value;
+      $http({method: 'POST',data:{eid:$scope.ev.eid, edited_price: $scope.ev.price.full},url: '/api/updateprice/' + $scope.ev.eid})
+      var $span = $('<span>', {
+          text: $(this).val()
+    });
+    }
+    else
+    {
+    var $span = $('<span>', {
+          text: $scope.ev.price.full
+      });
+    }
+    $span.addClass('loadNum');
+    $(this).replaceWith($span);
+    $span.on('click', $scope.switchToInput);
+};
   fbphoto.getFbPics($scope.ev.eid).success(function(res) {
     var pics = res.data;
     $scope.fbpics = [];
@@ -78,7 +109,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
       $scope.ev = selected;
     }, function() {});
   };
-
+});
 
   // $scope.attending = '';
   // $scope.today = new Date();
@@ -89,16 +120,16 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   // // $scope.shared = false;
 
   //  $scope.isDisabled = false;
-  // // $scope.btnShareText = "Share with your friends?";
-  // // $scope.btnShareClass = "btn btn-success";
+  // // $scope.btnShareText = 'Share with your friends?';
+  // // $scope.btnShareClass = 'btn btn-success';
 
   //  $scope.isBtnJoinDisabled = false;
-  // // $scope.btnJoinText = "Join";
+  // // $scope.btnJoinText = 'Join';
 
   //  $scope.isBtnLeaveDisabled = false;
   //  $scope.ev.promotion = {};
   //  $scope.ev.in_promotion = false;
-  //$scope.btnLeaveText = "Leave";
+  //$scope.btnLeaveText = 'Leave';
 
   // $scope.boosted = 0;
 
@@ -111,7 +142,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //     return date;
   //   }
 
-  //   var transformed = moment(date.getTime()).tz(timezone).format("YYYY/MM/DD hh:mm A");
+  //   var transformed = moment(date.getTime()).tz(timezone).format('YYYY/MM/DD hh:mm A');
   //   transformed = new Date(transformed);
 
   //   return transformed;
@@ -123,7 +154,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //    if ($scope.ev) {
   //      if ($scope.ev.in_promotion) {
 
-  //        var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, "UTC");
+  //        var end_date = $scope.convertToUTC($scope.ev.promotion.end_time, 'UTC');
 
   //        if (end_date >= currentDate) {
   //         return (true);
@@ -147,7 +178,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   // }
 
   // $scope.supBoost = function(player_id, event_id) {
-  //   $http.get('boost/' + event_id + '/' + player_id + "/sup").post().success(function(res) {
+  //   $http.get('boost/' + event_id + '/' + player_id + '/sup').post().success(function(res) {
   //     $scope.boosted = 0;
 
   //     $http.get('results/' + player_id + '/' + event_id).get('result').success(function(player_res) {
@@ -207,7 +238,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //           $scope.ev.list_event_players[i].result = results[j].result_boosted;
   //         if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id && $scope.ev.list_event_players[i].facebook.id == results[j].user_id) {
   //           $scope.ev.player_result = results[j].result_boosted;
-  //           $scope.btnShareClass = "btn";
+  //           $scope.btnShareClass = 'btn';
   //         }
   //       }
   //     }
@@ -245,8 +276,8 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   // Restangular.one('events', ev.eid)
 
   // $scope.setAttending = function(eid) {
-  //   $scope.isBtnJoinDisabled = "true";
-  //   $scope.btnJoinText = "...";
+  //   $scope.isBtnJoinDisabled = 'true';
+  //   $scope.btnJoinText = '...';
 
   //   $http.get('events/' + ev.eid + '/rsvp').post({
   //     attendingStatus: 'attending'
@@ -254,11 +285,11 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //     if (err) {
   //       console.log(err);
   //       $scope.isBtnJoinDisabled = false;
-  //       $scope.btnJoinText = "Please log-in";
+  //       $scope.btnJoinText = 'Please log-in';
   //     } else {
   //       $scope.attending = 'attending';
   //       $scope.isBtnJoinDisabled = false;
-  //       $scope.btnJoinText = "Join";
+  //       $scope.btnJoinText = 'Join';
   //       $scope.ev.attending.push(Global.user.facebook.id);
 
   //       if (!$scope.ev.list_event_players)
@@ -273,7 +304,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //       }
 
   //       if (find) {
-  //         console.log("Ok");
+  //         console.log('Ok');
   //         for (i = 0; i < $scope.ev.list_event_players.length; i++) {
   //           if ($scope.ev.list_event_players[i].facebook.id == $scope.ev.player_id) {
   //             $scope.ev.list_event_players[i].result += 6;
@@ -282,7 +313,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //           }
   //         }
   //       } else {
-  //         console.log("Test");
+  //         console.log('Test');
   //         if (Global.user) {
   //           if (!Global.user.result)
   //             Global.user.result = 2;
@@ -303,13 +334,13 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   // }
 
   // $scope.setNotAttending = function(eid) {
-  //   $scope.isBtnLeaveDisabled = "true";
-  //   $scope.btnLeaveText = "...";
+  //   $scope.isBtnLeaveDisabled = 'true';
+  //   $scope.btnLeaveText = '...';
 
   //   $http.get('events/' + ev.eid + '/rsvp').post({
   //     attendingStatus: 'declined'
   //   }).success(function(res) {
-  //     if ($scope.attending == "attending") {
+  //     if ($scope.attending == 'attending') {
   //       if (!$scope.ev.list_event_players)
   //         $scope.ev.list_event_players = [];
   //       else
@@ -324,7 +355,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
 
   //     $scope.attending = '';
   //     $scope.isBtnLeaveDisabled = false;
-  //     $scope.btnLeaveText = "Leave";
+  //     $scope.btnLeaveText = 'Leave';
 
 
   //     var index = -1;
@@ -344,8 +375,8 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   // }
 
   // $scope.shareEvent = function() {
-  //   $scope.isDisabled = "true";
-  //   $scope.btnShareText = "Sharing...";
+  //   $scope.isDisabled = 'true';
+  //   $scope.btnShareText = 'Sharing...';
 
   //   FB.ui(
   //       {
@@ -355,10 +386,10 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //       function(response) {
   //         if (response && !response.error_code) {
   //           $scope.shared = true;
-  //           console.log("Shared");
+  //           console.log('Shared');
   //         } else {
-  //           $scope.isDisabled = "";
-  //           $scope.btnShareText = "Share with your friends?";
+  //           $scope.isDisabled = '';
+  //           $scope.btnShareText = 'Share with your friends?';
   //         }
   //       }
   //     );
@@ -370,8 +401,8 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //       $scope.btnShareText = res.error;
   //     } else {
   //       $scope.isDisabled = false;
-  //       $scope.btnShareText = "Share again?";
-  //       $scope.btnShareClass = "btn";
+  //       $scope.btnShareText = 'Share again?';
+  //       $scope.btnShareClass = 'btn';
 
   //       var find = 0;
 
@@ -400,4 +431,3 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   //     $http.get('results/' + $scope.ev.eid).post().success(function(res) {});
   //   });
   // }
-});

@@ -73,6 +73,24 @@ exports.importFromUser = function(req, res) {
   });
 };
 
+exports.updatePrice = function(req, res) {
+  Events.findOne({eid: parseInt(req.params.eid)}, function(err, result){
+    if (result)
+    {
+      result.price.edited = req.body.edited_price;
+      Events.update({eid:req.body.eid}, result, function(err, new_ev){
+        if (err)
+        {
+          console.log(err);
+          res.json(null);
+        }
+        else
+          res.json(new_ev);
+      });
+    }
+  });
+};
+
 exports.importFromUserTimeline = function(req, res) {
   Ev.crawlUserTimeline(req.params.name, function(result) {
     res.send(result);
