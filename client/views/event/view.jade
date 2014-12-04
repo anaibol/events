@@ -1,5 +1,5 @@
 #view
-  .container(off-click="$state.go('^')", off-click-filter='header', adaptive-background, ab-bg-to-class="description")
+  .container(off-click="$state.go('^')", off-click-filter="header, .modal", adaptive-background, ab-bg-to-class="description")
     .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
@@ -60,7 +60,7 @@
 
 
       section
-        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if='ev.creator.id === user.facebook.id || user.admin == true') Promote event
+        button.btn.btn-primary.promote(ng-click="promote(ev)") Promote event
 
         .event-buttons
           .event-rsvp-btns

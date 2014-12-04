@@ -11848,7 +11848,12 @@ body#event-list-view #list {
   left: 0;
   width: 100%;
   padding-top: 50px;
+  padding-left: 0;
+  padding-right: 0;
   z-index: 1;
+}
+#view .container {
+  padding: 0;
 }
 #view .ab-dark-background {
   color: rgba(255, 255, 255, 0.84);
@@ -11856,9 +11861,12 @@ body#event-list-view #list {
 #view .ab-light-background {
   color: rgba(0, 0, 0, 0.84);
 }
-#view .left-container,
+#view .left-container {
+  padding-left: 0;
+  padding-right: 20px;
+}
 #view .right-container {
-  padding: 10px;
+  padding: 0;
 }
 #view section {
   padding: 25px;
@@ -11902,16 +11910,15 @@ body#event-list-view #list {
 #view section.image {
   text-align: center;
 }
-#view section.description.opened p {
-  max-height: none;
-}
-#view section.description:not(.opened) p {
-  cursor: pointer;
-}
 #view section.description p {
   white-space: pre-line;
   max-height: 350px;
   overflow: hidden;
+  cursor: pointer;
+}
+#view section.description.opened p {
+  max-height: none;
+  cursor: inherit;
 }
 #view section.description button {
   width: 100%;
@@ -11977,6 +11984,9 @@ body#event-list-view #list {
     position: relative;
     padding-top: 0;
   }
+}
+.loadNum {
+  cursor: pointer;
 }
 .medium-input {
   width: 25%;

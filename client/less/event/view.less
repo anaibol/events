@@ -4,7 +4,13 @@
   left: 0;
   width: 100%;
   padding-top: 50px;
+  padding-left: 0;
+  padding-right: 0;
   z-index: 1;
+
+  .container {
+    padding: 0;
+  }
 
   .ab-dark-background {
     color: @darkbg-text;
@@ -14,8 +20,13 @@
     color: @lightbg-text;
   }
 
-  .left-container, .right-container {
-    padding: 10px;
+  .left-container {
+    padding-left: 0;
+    padding-right: 20px;
+  }
+
+  .right-container {
+    padding: 0;
   }
 
   section {
@@ -76,21 +87,19 @@
       text-align: center;
     }
 
-    &.description.opened p {
-      max-height: none;
-    }
-
-    &.description:not(.opened) p {
-      cursor: pointer;
-    }
-
-
     &.description {
       p {
         white-space: pre-line;
         max-height: 350px;
         overflow: hidden;
+        cursor: pointer;
       }
+
+      &.opened p {
+        max-height: none;
+        cursor: inherit;
+      }
+
 
       button {
         width: 100%;
