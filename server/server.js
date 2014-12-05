@@ -1,6 +1,13 @@
 var express = require('express');
 var passport = require('passport');
 
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+var privateKey  = fs.readFileSync('../wooepa-key.pem', 'utf8');
+var certificate = fs.readFileSync('../wooepa-crt.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 global.rootDir = __dirname + '/';
 global.publicDir = rootDir + '../client/public/';
 global.distDir = rootDir + '../client/dist/';
@@ -27,12 +34,21 @@ require('./config/passport')(passport);
 // Express settings
 require('./config/express')(app, passport, config.db);
 
-// Start the app by listening on <port>
 var port = process.env.PORT || config.port;
 
-app.listen(port);
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(port);
+httpsServer.listen(443);
 
 console.log('Express app started on port ' + port);
 
 // Expose app
 exports = module.exports = app;
+
+
+
+
+
+
