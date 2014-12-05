@@ -11366,6 +11366,32 @@ a:hover {
 button {
   box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.2);
 }
+.glyphicon {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon.pull-left {
+  margin-right: .3em;
+}
+.glyphicon.pull-right {
+  margin-left: .3em;
+}
+.glyphicon-chevron-left:before {
+  content: "\f053";
+}
+.glyphicon-chevron-right:before {
+  content: "\f054";
+}
+.glyphicon-chevron-up:before {
+  content: "\f077";
+}
+.glyphicon-chevron-down:before {
+  content: "\f078";
+}
 header {
   position: fixed;
   top: 0;
@@ -11995,6 +12021,7 @@ body#event-list-view #list {
 .loadNum {
   cursor: pointer;
 }
+<<<<<<< HEAD
 .promote-form {
   color: black;
 }
@@ -12014,21 +12041,27 @@ body#event-list-view #list {
   color: black;
 }
 .medium-input {
+=======
+#promote .medium-input {
+>>>>>>> d4d378f80848ae782a1dd851e60026f2a846bddf
   width: 25%;
   display: inline;
   margin-left: 10px;
 }
-.small-input {
+#promote .small-input {
   margin-left: 10px;
   width: 10%;
   display: inline;
 }
-.promote-label {
+#promote .promote-label {
   margin-left: 20px;
   display: inline;
 }
-.promote-inline {
+#promote .promote-inline {
   display: inline;
+}
+#promote * {
+  color: black;
 }
 #fs-dialog {
   color: #333333;
@@ -12564,26 +12597,6 @@ li.checked .fs-anchor {
 }
 .datepicker tbody .btn:hover span {
   color: #f44336;
-}
-.datepicker .glyphicon {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.datepicker .glyphicon.pull-left {
-  margin-right: .3em;
-}
-.datepicker .glyphicon.pull-right {
-  margin-left: .3em;
-}
-.datepicker .glyphicon-chevron-left:before {
-  content: "\f053";
-}
-.datepicker .glyphicon-chevron-right:before {
-  content: "\f054";
 }
 .tags {
   padding: 15px;
