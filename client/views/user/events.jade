@@ -1,6 +1,6 @@
 #list(ng-show="$state.current.name === 'list' || !$root.isMobile")
  div(style='text-align:center;')
-  h2(style='color:red;') Your Live Events !
+  h2(style='color:red;') {{events.printname + events.printmessage}}
   br
   button.btn(ng-click='updateEvents()', style='background-color:red;color:white;') Update
  .events.loading.col-xs-12.col-sm-9.col-md-9.col-lg-10(isotope)
