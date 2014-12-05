@@ -12021,7 +12021,6 @@ body#event-list-view #list {
 .loadNum {
   cursor: pointer;
 }
-<<<<<<< HEAD
 .promote-form {
   color: black;
 }
@@ -12040,10 +12039,7 @@ body#event-list-view #list {
   content: "\f078";
   color: black;
 }
-.medium-input {
-=======
 #promote .medium-input {
->>>>>>> d4d378f80848ae782a1dd851e60026f2a846bddf
   width: 25%;
   display: inline;
   margin-left: 10px;
