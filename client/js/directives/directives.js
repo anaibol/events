@@ -212,44 +212,31 @@ app.directive('shareEvent', function($http) {
 };
 });
 
-app.directive('friendSelector', function($http) {
+app.directive('friendSelector', function($http, ezfb) {
   return {
     restrict: 'A',
     link: function(scope, elem, req) {
-      $(elem).fSelector({
-        onSubmit: function(uid) {
-          // example response usage
-          var event_intives = {
-            method: 'events.invite',
-            eid: scope.ev.eid,
-            uids: uid,
-            personal_message: 'custom request message'
-          };
+      $(elem).on('click', function() {
+        ezfb.ui({
+          method: 'apprequests', 
+          message: 'Invite your friends to play now.',
+        }, function() {
           $http({
-            method: 'POST',
+            method: 'GET',
             data: {
-              eid: scope.ev.eid,
-              uids: uid
+              eid: scope.ev.eid
             },
-            url: '/api/invite/' + scope.ev.eid + '/' + uid,
+            url: '/api/list_player/' + scope.ev.eid
           }).success(function(data) {
-      $http({
-        method: 'GET',
-        data: {
-          eid: scope.ev.eid
-        },
-        url: '/api/list_player/' + scope.ev.eid
-      }).success(function(data) {
-        if (data)
-        {
-          var i = 0;
-          scope.ev.list_event_players = data;
-        }
-          $("button.btn.btn-primary.invite").html("Invite again?");
-          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-      });
+            if (data)
+            {
+              var i = 0;
+              scope.ev.list_event_players = data;
+            }
+              $("button.btn.btn-primary.invite").html("Invite again?");
+              $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
           });
-        }
+        });
       });
     }
   };
