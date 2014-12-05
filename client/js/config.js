@@ -53,7 +53,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       templateUrl: 'user/events'
     })
     .state('in_promotion', {
-      url: '/in_promotion',
+      url: '/events/in_promotion',
       controller: 'inPromotionCtrl',
       templateUrl: 'event/in_promotion'
     })

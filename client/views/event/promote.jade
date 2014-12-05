@@ -2,28 +2,28 @@ form#promote.form-horizontal
     .modal-header Event Promotion
       .modal-body
         .control-group
-          label.control-label Reward
+          label.control-label.promote-form Reward
           span
-            input.medium-input(type='text', ng-model='ev.promotion.reward', placeholder='')
-            label.promote-label Quantity
-            input.small-input(type='text', ng-model='ev.promotion.quantity', placeholder='')
-            label.promote-label Value
-            input.small-input(type='text', ng-model='ev.promotion.value', placeholder='')
+            input.medium-input.promote-form(type='text', ng-model='ev.promotion.reward', placeholder='')
+            label.promote-label.promote-form Quantity
+            input.small-input.promote-form(type='text', ng-model='ev.promotion.quantity', placeholder='')
+            label.promote-label.promote-form Value
+            input.small-input.promote-form(type='text', ng-model='ev.promotion.value', placeholder='')
         .control-group.date
           br
           div.form-group(ng-controller='DatepickerCtrl')
             br
-            label.col-md-2(for='title') Deadline
+            label.col-md-2.promote-form(for='title') Deadline
             div.col-md-10
-              p.input-group
-                input.small-input(ng-click='open($event)', datepicker-popup='{{format}}', style='width:50%', ng-model='ev.promotion.end_date', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
-                button.btn.btn-default(ng-click='open($event)')
-                  i.fa.fa-calendar
+              p.input-group.datepicker
+                input.small-input.promote-form(ng-click='open($event)', datepicker-popup='{{format}}', style='width:50%', ng-model='ev.promotion.end_date', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
+                button.btn.btn-default.promote-form(ng-click='open($event)')
+                  i.fa.fa-calendar(style="color:black;")
           div.form-group(ng-controller='TimepickerCtrl')
-            label.col-md-2.control-label(style='margin-top:6%;',for='title') End Time
-            timepicker(ng-model="ev.promotion.end_time",ng-change="changed()",hour-step="hstep",minute-step="mstep",show-meridian="ismeridian", required="false")
+            label.col-md-2.control-label.promote-form(style='margin-top:6%;',for='title') End Time
+            timepicker.promote-form(ng-model="ev.promotion.end_time",ng-change="changed()",hour-step="hstep",minute-step="mstep",show-meridian="ismeridian", required="false")
         .control-group
-          label.control-label Commentary
+          label.control-label.promote-form Commentary
           textarea#description.form-control(ng-model="ev.promotion.commentary", cols="30", rows="5", placeholder="Content")
           input(type='hidden', name='in_promotion', ng-model="ev.in_promotion", value="value")
       .modal-footer

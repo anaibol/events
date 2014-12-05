@@ -60,7 +60,7 @@
 
 
       section
-        button.btn.btn-primary.promote(ng-click="promote(ev)") Promote event
+        button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if="user && (ev.creator.id === user.facebook.id || user.admin == true)") Promote event
 
         .event-buttons
           .event-rsvp-btns
@@ -77,19 +77,19 @@
             .panel-heading Game Active
             .panel-body
               ul.list-group(ng-if="ev.promoter")
-                li.list-group-item(ng-if="ev.promoter")
+                li.list-group-item.promote-form(ng-if="ev.promoter")
                   img.img-circle(ng-src="{{::ev.promoter.picture}}", ng-alt="{{::ev.promoter.name}}")
                   | {{::ev.promoter.name }}
-                li.list-group-item {{::ev.promotion.reward}}
-                li.list-group-item
+                li.list-group-item.promote-form {{::ev.promotion.reward}}
+                li.list-group-item.promote-form
                   | End: &nbsp
-                  strong
+                  strong.promote-form
                     | {{::ev.promotion.end_date | amCalendar}}
         .hidden-xs
           .panel.panel-default
             .panel-heading Players
             .panel-body
-              p(list-event-player, ng-hide='ev.list_event_players[0].uid') No Players yet !
+              p.promote-form(list-event-player, ng-hide='ev.list_event_players[0].uid') No Players yet !
               ul.list-group
                 p(ng-hide='!ev.list_event_players[0].uid') {{::ev.list_event_players.length}} &nbsp Players !
                 input.form-control.input-sm(placeholder='Search player', type='text', ng-model='search.name')
@@ -97,17 +97,17 @@
                 li.list-group-item.players(ng-repeat='player in ev.list_event_players')
                   table
                     tr
-                      td 
+                      td
                         img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
                       td
                         table
                           tr
-                            td {{::player.name}}
+                            td.promote-form {{::player.name}}
                           tr
-                            td {{:: player.result }} pts
+                            td.promote-form {{:: player.result }} pts
                             td 
                               button.btn(ng-if='player.result > user.result', boost-player) Boost
-                                i-fa-fa-flash
+                                i-fa-fa-flash.promote-form
                 li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
                   img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
                   | {{:: player.result }} pts
