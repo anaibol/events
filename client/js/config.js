@@ -118,7 +118,7 @@ app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $windo
 
       // $.address = res.data;
 
-      $rootScope.city = data.region_name;
+      $rootScope.city = data.region;
 
       // $localStorage.lng = data.lng;
       // $localStorage.lat = data.lat;

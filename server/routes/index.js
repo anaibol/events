@@ -182,7 +182,7 @@ module.exports = function(app) {
         ip = req.connection.remoteAddress;
       }
 
-      request('http://freegeoip.net/json/' + ip, function(error, response, body) {
+      request('http://ipinfo.io/' + ip + '/json/', function(error, response, body) {
         var location = JSON.parse(body);
         cb(location);
 

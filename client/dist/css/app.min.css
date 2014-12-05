@@ -11363,6 +11363,9 @@ a:hover {
 .noscroll {
   overflow: hidden;
 }
+button {
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+}
 header {
   position: fixed;
   top: 0;
@@ -11606,9 +11609,7 @@ header .banner {
 #sidebar {
   position: fixed;
   top: 60px;
-  right: 5px;
-  padding-left: 20px;
-  padding-right: 0;
+  right: 0;
 }
 #sidebar .navbar-nav {
   font-size: 13px;
@@ -11664,10 +11665,8 @@ body.desktop #list .events.loading {
   margin: 0;
   padding: 6px 0.3%;
 }
-@media (min-width: 767px) and (max-width: 767px) {
-  #list .event {
-    position: relative !important;
-  }
+body.mobile #list .event {
+  padding: 0;
 }
 #list .event .content {
   cursor: pointer;
@@ -11711,12 +11710,16 @@ body.desktop #list .events.loading {
 }
 #list .event .content .top .title {
   text-align: center;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 18px;
+  line-height: 24px;
   width: 100%;
   max-height: 3em;
   padding: 5px;
   color: white;
+  text-shadow: 0 0 0 white;
+}
+#list .event .content .bottom {
+  text-shadow: 0 1px 1px black;
 }
 #list .event .content .bottom .date,
 #list .event .content .bottom .time {
@@ -11835,7 +11838,7 @@ body#event-list-view #list {
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity .2s;
   z-index: -1;
 }
 #list-overlay.visible {
@@ -11869,7 +11872,7 @@ body#event-list-view #list {
   padding: 0;
 }
 #view section {
-  padding: 25px;
+  padding: 20px;
   margin: 10px 0;
   float: left;
   width: 100%;
@@ -11898,19 +11901,23 @@ body#event-list-view #list {
   z-index: -1;
 }
 #view section.header .info {
+  width: 100%;
   position: absolute;
   bottom: 0;
-  padding: 15px;
+  padding: 7px 10px;
+  background-color: rgba(0, 0, 0, 0.7);
 }
-#view section.header .info h3 {
+#view section.header .info .title {
   font-size: 25px;
   font-family: 'Open Sans';
   margin: 0;
+  text-shadow: 0 1px 2px black;
 }
 #view section.image {
   text-align: center;
 }
 #view section.description p {
+  margin: 0;
   white-space: pre-line;
   max-height: 350px;
   overflow: hidden;
@@ -11940,7 +11947,7 @@ body#event-list-view #list {
 #view section.media .youtube-videos {
   display: inline-block;
   width: 100%;
-  padding: 20px 0;
+  padding: 0;
   list-style: none;
 }
 #view section.media .pictures li,

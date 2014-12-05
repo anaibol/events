@@ -31,7 +31,7 @@
 
   section {
     // background: white;
-    padding: 25px;
+    padding: 20px;
     margin: 10px 0;
     float: left;
     width: 100%;
@@ -71,14 +71,17 @@
       }
 
       .info {
+        width: 100%;
         position: absolute;
         bottom: 0;
-        padding: 15px;
+        padding: 7px 10px;
+        background-color: rgba(0, 0, 0, 0.7);
 
-        h3 {
+        .title {
           font-size: 25px;
           font-family: 'Open Sans';
           margin: 0;
+          text-shadow: 0 1px 2px black;
         }
       }
     }
@@ -89,6 +92,7 @@
 
     &.description {
       p {
+        margin: 0;
         white-space: pre-line;
         max-height: 350px;
         overflow: hidden;
@@ -126,7 +130,7 @@
       .youtube-videos {
         display: inline-block;
         width: 100%;
-        padding: 20px 0;
+        padding: 0;
         list-style: none;
 
         li {
