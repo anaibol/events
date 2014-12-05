@@ -4,8 +4,8 @@ var passport = require('passport');
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('wooepa-key.pem', 'utf8');
-var certificate = fs.readFileSync('wooepa-crt.pem', 'utf8');
+var privateKey  = fs.readFileSync('../wooepa-key.pem', 'utf8');
+var certificate = fs.readFileSync('../wooepa-crt.pem', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 
 global.rootDir = __dirname + '/';
