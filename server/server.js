@@ -33,8 +33,8 @@ require('./config/express')(app, passport, config.db);
 
 var port = process.env.PORT || config.port;
 
-var privateKey  = fs.readFileSync(rootDir + 'wooepa-key.pem', 'utf8');
-var certificate = fs.readFileSync(rootDir + 'wooepa-crt.pem', 'utf8');
+var privateKey  = fs.readFileSync(rootDir + '../wooepa-key.pem', 'utf8');
+var certificate = fs.readFileSync(rootDir + '../wooepa-crt.pem', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 
 var httpServer = http.createServer(app);
