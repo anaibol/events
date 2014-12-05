@@ -1,4 +1,19 @@
-app.controller('myEventsCtrl', function($scope, moment, $http, $stateParams) {
+app.controller('myEventsCtrl', function($scope, moment, $http) {
+  var url = document.location.pathname;
+  if (url.substring(0, 1) == '/') { 
+  url = url.substring(1);
+}
+  if (url == "")
+    url = $scope.user.facebook.id;
+  else
+  {
+    var i = url.length;
+    if (url[i] == '/')
+      --i;
+    while (url[i] != '/')
+      --i;
+    url = url.substring(i + 1, url.length);
+  }
   $scope.getTags = function() {
     $scope.tags = _.uniq([].concat.apply([], _.pluck($scope.events, 'tags'))).sort();
     };
@@ -8,7 +23,7 @@ app.controller('myEventsCtrl', function($scope, moment, $http, $stateParams) {
         location.reload();
       });
     };
-  $http({url: '/api/me/events', method: 'GET'}).success(function(my_evs){
+  $http({url: '/api/me/events/' + url, method: 'GET'}).success(function(my_evs){
     $scope.events = my_evs;
     $scope.getTags();
   });

@@ -424,15 +424,18 @@ function getAttendings(eid, cb) {
     if (err) {
       console.log(err);
     }
-    var att = res.data;
+    if (res && res.data)
+    {
+      var att = res.data;
 
-    if (att) {
-      attendings = [];
+      if (att) {
+        attendings = [];
 
       for (var i = att.length - 1; i >= 0; i--) {
         attendings.push(parseInt(att[i].id));
       }
       cb(attendings);
+      }
     }
   });
 

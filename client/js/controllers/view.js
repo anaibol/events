@@ -1,4 +1,4 @@
-app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos) {
+app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache ) {
   // console.log(ev);
   $scope.ev = ev;
   if ($scope.ev.price.edited)
@@ -108,7 +108,7 @@ $scope.switchToSpan = function () {
   $scope.coverTopPosition = $scope.getCoverTopPosition();
 
   $scope.promote = function(ev) {
-    var modalInstance = $modal.open({
+    var modalInstance2 = $modal.open({
       templateUrl: 'event/promote',
       controller: 'EventPromoteCtrl',
       resolve: {
@@ -118,8 +118,7 @@ $scope.switchToSpan = function () {
       }
     });
 
-    modalInstance.result.then(function(selected) {
-      $scope.ev = selected;
+    modalInstance2.result.then(function(selected) {
     }, function() {});
   };
 });

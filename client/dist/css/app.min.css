@@ -11995,6 +11995,24 @@ body#event-list-view #list {
 .loadNum {
   cursor: pointer;
 }
+.promote-form {
+  color: black;
+}
+.glyphicon {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+.glyphicon-chevron-up:before {
+  content: "\f077";
+  color: black;
+}
+.glyphicon-chevron-down:before {
+  content: "\f078";
+  color: black;
+}
 .medium-input {
   width: 25%;
   display: inline;

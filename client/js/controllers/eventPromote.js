@@ -1,4 +1,4 @@
-app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
+app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http, $templateCache) {
   $scope.ev = ev;
   $scope.ismeridian = true;
   $scope.cancel = function() {
@@ -25,6 +25,6 @@ app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http) {
           }).success(function(){
               ev.in_promotion = true;
           });
-  $modalInstance.dismiss('cancel');  
+  $modalInstance.close($scope.ev.promotion);  
   };
 });
