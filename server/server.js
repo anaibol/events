@@ -4,9 +4,6 @@ var passport = require('passport');
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('../wooepa-key.pem', 'utf8');
-var certificate = fs.readFileSync('../wooepa-crt.pem', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
 
 global.rootDir = __dirname + '/';
 global.publicDir = rootDir + '../client/public/';
@@ -35,6 +32,10 @@ require('./config/passport')(passport);
 require('./config/express')(app, passport, config.db);
 
 var port = process.env.PORT || config.port;
+
+var privateKey  = fs.readFileSync(rootDir + 'wooepa-key.pem', 'utf8');
+var certificate = fs.readFileSync(rootDir + 'wooepa-crt.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
