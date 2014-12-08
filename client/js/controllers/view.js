@@ -78,9 +78,11 @@ $scope.switchToSpan = function () {
         if (res.data.length > 0) {
           $scope.instagramPhotos = [];
           for (var i = res.data.length - 1; i >= 0; i--) {
+            var new_url = 'https://' + res.data[i].images.standard_resolution.url.substring(7);
+            var new_thumbUrl = 'https://' + res.data[i].images.low_resolution.url.substring(7);
             $scope.instagramPhotos[i] = {
-              url: res.data[i].images.standard_resolution.url,
-              thumbUrl: res.data[i].images.low_resolution.url
+              url: new_url,
+              thumbUrl: new_thumbUrl
             };
           }
         }
