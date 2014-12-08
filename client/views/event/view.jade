@@ -22,10 +22,10 @@
             span {{ev.price.full}}
 
 
-      section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)", ng-if="ev.description")
+      section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)", ng-if="ev.description", ng-click="descriptionOpened = true")
         .bg-image.down(style='background-image: url({{::ev.pic_cover.source}})')
         p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
-        button.btn(ng-click="descriptionOpened = !descriptionOpened", ng-if="ev.description.length >= 600")
+        button.btn(ng-show="!descriptionOpened", ng-if="ev.description.length >= 600")
           i.fa(ng-class="{'fa-chevron-down': !descriptionOpened, 'fa-chevron-up': descriptionOpened}")
 
       section.media
@@ -98,7 +98,7 @@
                   table
                     tr
                       td
-                        img.img-circle(ng-src='{{::"https://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
+                        img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
                       td
                         table
                           tr
@@ -109,7 +109,7 @@
                               button.btn(ng-if='player.result > user.result', boost-player) Boost
                                 i-fa-fa-flash.promote-form
                 li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
-                  img.img-circle(ng-src='{{::"https://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
+                  img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
                   | {{:: player.result }} pts
                   button.btn.btn-primary Boost
                   i-fa-fa-flash

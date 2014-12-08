@@ -22,9 +22,23 @@ function slug(str) {
 
 module.exports = function(app) {
   app.get('', function(req, res) {
-    // getLocation(req, function(loc) {
-      res.redirect('/' + slug('buenos-aires'));
-    // });
+    getLocation(req, function(loc) {
+      var i = 0;
+      var longitude = "";
+      var latitude = "";
+      while (loc.loc[i] && loc.loc[i] != ',')
+      {
+        latitude += loc.loc[i]
+        ++i;
+      }
+      ++i;
+      while (loc.loc[i])
+      {
+        longitude += loc.loc[i];
+        ++i;
+      }
+      res.redirect('/' + loc.city + '?lng=' + longitude + '&lat=' + latitude);
+     });
   });
 
 
@@ -177,15 +191,25 @@ module.exports = function(app) {
     // if (!req.session.loc) {
       var ip;
       if (process.env.NODE_ENV === 'development') {
-        ip = '186.136.222.189';
+        ip = '81.57.24.93';
       } else {
         ip = req.connection.remoteAddress;
       }
 
       request('http://ipinfo.io/' + ip + '/json/', function(error, response, body) {
-        var location = JSON.parse(body);
+        if (body === "Please provide a valid IP address")
+        {
+          var location = {
+            city: "Paris",
+            country: "France",
+            loc: "48.8667,2.3333"
+          };
+        }
+        else
+        {
+          var location = JSON.parse(body);
+        }
         cb(location);
-
         // req.session.loc = location;
 
         // req.session.loc.lat = req.session.loc.latitude;

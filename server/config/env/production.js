@@ -8,7 +8,7 @@ module.exports = {
   facebook: {
     clientID: '439472799532734',
     clientSecret: '6e940b23fdbf539939dffbe479678623',
-    callbackURL: 'http://wooepa.com/auth/facebook/callback'
+    callbackURL: 'https://wooepa.com/auth/facebook/callback'
   }
   /*,
   twitter: {
