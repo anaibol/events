@@ -24,19 +24,8 @@ module.exports = function(app) {
   app.get('', function(req, res) {
     getLocation(req, function(loc) {
       var i = 0;
-      var longitude = "";
-      var latitude = "";
-      while (loc.loc[i] && loc.loc[i] != ',')
-      {
-        latitude += loc.loc[i]
-        ++i;
-      }
-      ++i;
-      while (loc.loc[i])
-      {
-        longitude += loc.loc[i];
-        ++i;
-      }
+      var longitude = loc.lon;
+      var latitude = loc.lat;
       res.redirect('/' + loc.city + '?lng=' + longitude + '&lat=' + latitude);
      });
   });
@@ -191,23 +180,25 @@ module.exports = function(app) {
     // if (!req.session.loc) {
       var ip;
       if (process.env.NODE_ENV === 'development') {
-        ip = '81.57.24.93';
+        ip = "190.195.18.48";
       } else {
         ip = req.connection.remoteAddress;
       }
-
-      request('http://ipinfo.io/' + ip + '/json/', function(error, response, body) {
-        if (body === "Please provide a valid IP address")
+      request('http://ip-api.com//json/' + ip, function(error, response, body) {
+       var location = JSON.parse(body);
+        if (location.status === "fail" || location.city === "" || location.lat == "" || location.lon == "")
         {
           var location = {
             city: "Paris",
             country: "France",
-            loc: "48.8667,2.3333"
+            lon: 2.3333,
+            lat: 48.8667
           };
         }
         else
         {
           var location = JSON.parse(body);
+          location.city = location.city.replace(' ','-');
         }
         cb(location);
         // req.session.loc = location;
