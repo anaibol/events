@@ -177,14 +177,14 @@ module.exports = function(app) {
   });
 
   function getLocation(req, cb) {
-    // if (!req.session.loc) {
+    // if (!req.session.loc) {  
       var ip;
       if (process.env.NODE_ENV === 'development') {
         ip = "190.195.18.48";
       } else {
         ip = req.connection.remoteAddress;
       }
-      request('http://ip-api.com//json/' + ip, function(error, response, body) {
+      request('http://ip-api.com/json/' + ip, function(error, response, body) {
        var location = JSON.parse(body);
         if (location.status === "fail" || location.city === "" || location.lat == "" || location.lon == "")
         {
@@ -198,7 +198,7 @@ module.exports = function(app) {
         else
         {
           var location = JSON.parse(body);
-          location.city = location.city.replace(' ','-');
+          location.city = slug(location.city);
         }
         cb(location);
         // req.session.loc = location;

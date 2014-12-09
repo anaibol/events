@@ -1,5 +1,7 @@
 //- , infinite-scroll="getMore()", infinite-scroll-distance="10"
 #list(ng-show="$state.current.name === 'list' || !$root.isMobile")
+  div(style='text-align:center;')
+    h1(style='color:red;',ng-if="events.noev === 'No Events found !'") {{events.noev}}
 
   include mobile-bar
   include sidebar

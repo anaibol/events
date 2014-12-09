@@ -11,7 +11,7 @@ header
         form.navbar-form.city
           .form-control-wrapper
             i.fa.fa-search
-            input.form-control.col-lg-8(type="text", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.city", ng-controller="LocationpickerCtrl")
+            input.form-control.col-lg-8(type="text", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.loc.city", ng-controller="LocationpickerCtrl", id="test123")
             //- placeholder="Type a city or location", 
             span.material-input
         a.navbar-brand(href='/', ui-sref="in_promotion") Play!

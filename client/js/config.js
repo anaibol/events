@@ -22,7 +22,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       // url: '{city}{slash:[/]?}{tag:[^0-9]}',
       // url: '/{city}',
       // url: '/{city}{slash:[/]?}{tag}',
-      url: '/:city?since?lng?lat?tags?sortBy',
+      url: '/:city?since?lat?lng?tags?sortBy',
       templateUrl: 'event/list',
       controller: 'ListCtrl',
       resolve: {

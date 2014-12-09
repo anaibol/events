@@ -1,17 +1,16 @@
 app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope) {
-  $scope.locationSelected = $rootScope.city;
-
+  $scope.locationSelected = $rootScope.loc.city;
   $scope.onSelect = function($item, $model, $label) {
-    var country;
+    var city;
 
-    if ($item.address_components[0].types[0] === 'country') {
-      country = $item.address_components[0].long_name.toLowerCase();
+    if ($item.address_components[0].types[0] === 'locality') {
+      city = $item.address_components[0].long_name.toLowerCase();
+      city = city.replace(' ', '-');
     }
-
     $state.go('list', {
       lng: $item.geometry.location.lng,
       lat: $item.geometry.location.lat,
-      country: country
+      city: city
     });
   };
 

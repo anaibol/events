@@ -1,7 +1,9 @@
 app.controller('ListCtrl', function($scope, $window, Event, evs) {
+  if (evs.length == 0)
+    evs.noev = "No Events found !"
   $scope.events = evs;
+  document.getElementById("test123").blur();
   //$scope.mobileSortList = false;
-
   $scope.getTags = function() {
     $scope.tags = _.uniq([].concat.apply([], _.pluck($scope.events, 'tags'))).sort();
   };

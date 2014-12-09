@@ -351,11 +351,27 @@ exports.get = function(req, res) {
   // ]};
 
   Events.find(query, options, function(err, data) {
-    if (err) {
-      console.log(err);
-      res.render('error', {
-        status: 500
-      });
+    if (data.length < 1) {
+        query['venue.coord'] = {
+      $near: {
+        $geometry: {
+          type: "Point",
+          coordinates: [parseFloat(params.lng), parseFloat(params.lat)]
+        },
+        $maxDistance: 100000
+      }
+    };
+        Events.find(query, options, function(err, data) {
+          if (err) {
+            console.log(err);
+            res.render('error', {
+            status: 500
+            });
+        } else 
+          {
+            res.json(data);
+          }
+        });
     } else {
       res.json(data);
     }
