@@ -1,6 +1,5 @@
 {
   "dev": [
-    "lib/jquery/dist/jquery.js",
     "lib/lodash/dist/lodash.js",
     "lib/angular/angular.js",
     "lib/angular-ui-router/release/angular-ui-router.js",
@@ -22,7 +21,6 @@
     "lib/angular-querystring/angular-querystring.js",
     "lib/rgbaster/rgbaster.js",
     "lib/quick-ng-repeat/quick-ng-repeat.js",
-    "js/lib/jquery.friend.selector-1.2.1.js",
     "tmp/js/templates.js",
     "js/app.js",
     "js/config.js",
@@ -33,7 +31,6 @@
     "js/init.js"
   ],
   "prod": [
-    "lib/jquery/dist/jquery.js",
     "lib/lodash/dist/lodash.js",
     "lib/angular/angular.js",
     "lib/angular-ui-router/release/angular-ui-router.js",
@@ -55,7 +52,6 @@
     "lib/angular-querystring/angular-querystring.js",
     "lib/rgbaster/rgbaster.js",
     "lib/quick-ng-repeat/quick-ng-repeat.js",
-    "js/lib/jquery.friend.selector-1.2.1.js",
     "tmp/js/templates.js",
     "tmp/js/annotated/app.js",
     "tmp/js/annotated/config.js",

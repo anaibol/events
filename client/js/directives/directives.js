@@ -108,39 +108,30 @@ app.directive('listEventPlayer', function($http, $rootScope) {
   };
 });
 
-app.directive('boostPlayer', function($http) {
-  return {
-    restrict: 'A',
-    link: function(scope, elem, req) {
-      $(elem).on("click", function() {
-        $http.post('/api/boost/' + scope.ev.eid + '/' + scope.player.uid);
-        $http.post('/api/boost/update/' + scope.ev.eid + '/' + scope.player.uid);
-      });
-      //$(elem).html(retour);
-    }
-  };
-});
-
 app.directive('isotope', function($timeout, $rootScope) {
   return {
     restrict: 'A',
-    link: function(scope, element) {
+    link: function(scope, elm) {
       if ($rootScope.isMobile) {
         return;
       }
 
       $timeout(function() {
-        var elm = angular.element(element);
-
-        elm.imagesLoaded( function() {
+        imagesLoaded(elm, function() {
           elm.removeClass('loading');
           // $('#wrapper').css('height', $('.events').innerHeight() + 50);
-          elm.isotope({
-            onLayout: function() {
-              elm.imagesLoaded( function() {
-                elm.isotope('reLayout');
-              });
-            }
+
+
+          // $('#wrapper').css('height', $('.events').innerHeight() + 50);
+          // console.log(elm);
+          console.log(elm);
+          var iso = new Isotope(elm[0], {
+            // onLayout: function() {
+            //   imagesLoaded(elm, function() {
+            //     var iso = new Isotope(element, {});
+            //     elm.isotope('reLayout');
+            //   });
+            // });
           });
         });
       });
@@ -179,132 +170,94 @@ app.directive('isotope', function($timeout, $rootScope) {
 //   };
 // });
 
-app.directive('shareEvent', function($http) {
-  return {
-    restrict: 'A',
-    link: function(scope, elm, req) {
-      elm.on("click", function() {
-        $http({
-          method: 'POST',
-          data: {
-            eid: scope.ev.eid
-          },
-          url: '/api/share/' + scope.ev.eid,
-        }).success(function(){
-            $http({
-        method: 'GET',
-        data: {
-          eid: scope.ev.eid
-        },
-        url: '/api/list_player/' + scope.ev.eid
-      }).success(function(data) {
-        if (data)
-        {
-          var i = 0;
-          scope.ev.list_event_players = data;
-        }
-          $("button.btn.btn-primary.share").html("Share again?");
-          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-      });
-      });
-    });
-  }
-};
-});
+// app.directive('shareEvent', function($http) {
+//   return {
+//     restrict: 'A',
+//     link: function(scope, elm, req) {
+//       elm.on("click", function() {
+//         $http({
+//           method: 'POST',
+//           data: {
+//             eid: scope.ev.eid
+//           },
+//           url: '/api/share/' + scope.ev.eid,
+//         }).success(function(){
+//             $http({
+//         method: 'GET',
+//         data: {
+//           eid: scope.ev.eid
+//         },
+//         url: '/api/list_player/' + scope.ev.eid
+//       }).success(function(data) {
+//         if (data)
+//         {
+//           var i = 0;
+//           scope.ev.list_event_players = data;
+//         }
+//           $("button.btn.btn-primary.share").html("Share again?");
+//           $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
+//       });
+//       });
+//     });
+//   }
+// };
+// });
 
-app.directive('friendSelector', function($http, ezfb) {
-  return {
-    restrict: 'A',
-    link: function(scope, elem, req) {
-      $(elem).on('click', function() {
-        ezfb.ui({
-          method: 'apprequests', 
-          message: 'Invite your friends to play now.',
-        }, function() {
-          $http({
-            method: 'GET',
-            data: {
-              eid: scope.ev.eid
-            },
-            url: '/api/list_player/' + scope.ev.eid
-          }).success(function(data) {
-            if (data)
-            {
-              var i = 0;
-              scope.ev.list_event_players = data;
-            }
-              $("button.btn.btn-primary.invite").html("Invite again?");
-              $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-          });
-        });
-      });
-    }
-  };
-});
+// app.directive('setAttendings', function($http) {
+//   return {
+//     restrict: 'A',
+//     scope: true,
+//     link: function(scope, elem) {
+//       $(elem).on('click', function() {
+//         if (!scope.user || !scope.user.facebook || !scope.user.facebook.id)
+//         {
+//           document.location.href='/auth/facebook';
+//         }
+//         else if (scope.attending == 'Join') {
+//           $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp').success(function(){
+//             $http({
+//         method: 'GET',
+//         data: {
+//           eid: scope.ev.eid
+//         },
+//         url: '/api/list_player/' + scope.ev.eid
+//       }).success(function(data) {
+//         if (data)
+//         {
+//           var i = 0;
+//           scope.ev.list_event_players = data;
+//         }
+//           $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
+//           $("button.btn.btn-primary.join").html(scope.attending);
+//       });
+//           });
+//           scope.attending = 'Leave';
+//         } else if (scope.attending == 'Leave') {
+//           $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn').success(function(){
+//             $http({
+//         method: 'GET',
+//         data: {
+//           eid: scope.ev.eid
+//         },
+//         url: '/api/list_player/' + scope.ev.eid
+//       }).success(function(data) {
+//         if (data)
+//         {
+//           var i = 0;
+//           scope.ev.list_event_players = data;
+//         }
+//           $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
+//           $("button.btn.btn-primary.join").html(scope.attending);
+//       });
+//           });
+//           scope.attending = 'Join';
+//         }
+//     });
+//   }
+//   };
+// });
 
-app.directive('setAttendings', function($http) {
-  return {
-    restrict: 'A',
-    scope: true,
-    link: function(scope, elem) {
-      $(elem).on('click', function() {
-        if (!scope.user || !scope.user.facebook || !scope.user.facebook.id)
-        {
-          document.location.href='/auth/facebook';
-        }
-        else if (scope.attending == 'Join') {
-          $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp').success(function(){
-            $http({
-        method: 'GET',
-        data: {
-          eid: scope.ev.eid
-        },
-        url: '/api/list_player/' + scope.ev.eid
-      }).success(function(data) {
-        if (data)
-        {
-          var i = 0;
-          scope.ev.list_event_players = data;
-        }
-          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-          $("button.btn.btn-primary.join").html(scope.attending);
-      });
-          });
-          scope.attending = 'Leave';
-        } else if (scope.attending == 'Leave') {
-          $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn').success(function(){
-            $http({
-        method: 'GET',
-        data: {
-          eid: scope.ev.eid
-        },
-        url: '/api/list_player/' + scope.ev.eid
-      }).success(function(data) {
-        if (data)
-        {
-          var i = 0;
-          scope.ev.list_event_players = data;
-        }
-          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-          $("button.btn.btn-primary.join").html(scope.attending);
-      });
-          });
-          scope.attending = 'Join';
-        } 
-    });
-  }
-  };
-});
 
-app.directive('myTest', function(){
-  return {
-    restrict: 'A',
-    scope: true,
-    link: function(scope, elem){
-  $(elem).countdown({until: scope.ev.promotion.end_date});
-    }
-  };
-});
 // app.directive("scroll", function() {
 //  return function(scope, elm, attr) {
 //      var raw = elm[0];

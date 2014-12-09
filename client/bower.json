@@ -29,7 +29,6 @@
     "angular-truncate": "*",
     "angular-bootstrap": "~0.12.0",
     "angular-ui-utils": "~0.1.1",
-    "jquery": "~2.1.1",
     "imagesloaded": "~3.1.8",
     "isotope": "~2.0.1",
     "fontawesome": "~4.2.0",

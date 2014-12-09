@@ -1,26 +1,30 @@
 app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache ) {
   // console.log(ev);
   $scope.ev = ev;
+
   $scope.descriptionOpened = false;
-  if ($scope.ev.price.edited)
+  if ($scope.ev.price.edited) {
     $scope.ev.price.full = $scope.ev.price.edited;
+  }
+
   $scope.editing = false;
   $scope.today = new Date();
+
   if ($rootScope.user) {
     $http.get('/api/rsvp/' + $scope.ev.eid + '/attendings').success(function(result) {
       $scope.ev.attending = result; 
-      if ($scope.ev.attending.indexOf(parseInt($rootScope.user.facebook.id)) >= 0) 
-      {
+      if ($scope.ev.attending.indexOf(parseInt($rootScope.user.facebook.id)) >= 0) {
         $scope.attending = 'Leave';
         $http.post('/api/rsvp/' +$scope.ev.eid + '/rsvp');
       }
-      else
+      else {
         $scope.attending = 'Join';
-  });
-  }
-  else if(!$rootScope.user){
+      }
+    });
+  } else if (!$rootScope.user) {
       $scope.attending= 'Join';
   }
+
   fbvideos.getFbVideo($scope.ev.eid).success(function(feed) {
     if (feed){
       fbvideos.getFbLink(feed, function(res){
@@ -29,35 +33,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
       });
     }
   });
-$scope.switchToInput = function () {
-    var $input = $('<input id="edit">', {
-        val: $(this).text(),
-        type: 'text'
-    });
-    $input.addClass('loadNum');
-    $(this).replaceWith($input);
-    $input.on('blur', $scope.switchToSpan);
-    $input.select();
-};
-$scope.switchToSpan = function () {
-    if (document.getElementById('edit').value != '')
-    {
-      $scope.ev.price.full = document.getElementById('edit').value;
-      $http({method: 'POST',data:{eid:$scope.ev.eid, edited_price: $scope.ev.price.full},url: '/api/updateprice/' + $scope.ev.eid})
-      var $span = $('<span>', {
-          text: $(this).val()
-    });
-    }
-    else
-    {
-    var $span = $('<span>', {
-          text: $scope.ev.price.full
-      });
-    }
-    $span.addClass('loadNum');
-    $(this).replaceWith($span);
-    $span.on('click', $scope.switchToInput);
-};
+
   fbphoto.getFbPics($scope.ev.eid).success(function(res) {
     var pics = res.data;
     $scope.fbpics = [];
@@ -100,9 +76,9 @@ $scope.switchToSpan = function () {
 
     var cover_w = 740;
     var cover_h = 295;
-    var elm = angular.element('.header > img');
-    var img_w = elm.width();
-    var img_h = elm.height();
+    var elm =  document.querySelectorAll('.header > img')[0];
+    var img_w = elm.offsetWidth;
+    var img_h = elm.offsetHeight;
     var real_img_h = (cover_w * img_h / img_w) - cover_h;
     var top = parseInt(real_img_h * offset_y / 100);
     return ('-' + top + 'px');
@@ -111,7 +87,7 @@ $scope.switchToSpan = function () {
   $scope.coverTopPosition = $scope.getCoverTopPosition();
 
   $scope.promote = function(ev) {
-    var modalInstance2 = $modal.open({
+    var modalInstance = $modal.open({
       templateUrl: 'event/promote',
       controller: 'EventPromoteCtrl',
       resolve: {
@@ -121,11 +97,39 @@ $scope.switchToSpan = function () {
       }
     });
 
-    modalInstance2.result.then(function(selected) {
+    modalInstance.result.then(function(selected) {
     }, function() {});
   };
-});
 
+  $scope.boostPlayer = function(player) {
+    $http.post('/api/boost/' + scope.ev.eid + '/' + player.uid);
+    $http.post('/api/boost/update/' + scope.ev.eid + '/' + player.uid);
+  };
+
+  $scope.inviteFriends = function(player) {
+    ezfb.ui({
+      method: 'apprequests',
+      message: 'Invite your friends to play now.',
+      object_id: scope.ev.eid
+    }, function() {
+      $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
+        }
+          // $("button.btn.btn-primary.invite").html("Invite again?");
+          // $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
+      });
+    });
+  };
+});
   // $scope.attending = '';
   // $scope.today = new Date();
 

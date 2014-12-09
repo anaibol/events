@@ -101,6 +101,7 @@ app.factory('Event', function($q, $http, DSCacheFactory, $rootScope, $querystrin
       });
 
       return deferred.promise;
-    }
+    },
+    
   };
 });

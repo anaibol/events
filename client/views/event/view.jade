@@ -66,7 +66,7 @@
           .event-rsvp-btns
             button.btn.btn-primary.join(set-attendings) {{::attending}}
           .event-rsvp-btns
-            button.btn.btn-primary.invite(friend-selector) Invite friends?
+            button.btn.btn-primary.invite(ng-click="inviteFriends()") Invite friends?
           .event-rsvp-btns
             button.btn.btn-primary.share(share-event) Share?
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
@@ -106,7 +106,7 @@
                           tr
                             td.promote-form {{:: player.result }} pts
                             td 
-                              button.btn(ng-if='player.result > user.result', boost-player) Boost
+                              button.btn(ng-if='player.result > user.result', ng-click="boostPlayer(player)") Boost
                                 i-fa-fa-flash.promote-form
                 li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
                   img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
