@@ -102,6 +102,8 @@ function calcPoints(eid, uid, uids, inv) {
 function giveInvitePoints(eid, uid, uids) {
   var tabuids = new Array();
   tabuids = uids.split(',');
+  if (tabuids.length > 1)
+    tabuids.pop();
   Results.findOne({
     user_id: uid,
     event_id: eid

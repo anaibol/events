@@ -103,6 +103,13 @@ app.directive('listEventPlayer', function($http, $rootScope) {
         url: '/api/list_player/' + scope.ev.eid
       }).success(function(data) {
               scope.ev.list_event_players = data;
+              var i = 0;
+              while (scope.ev.list_event_players[i])
+              {
+                  if (scope.ev.list_event_players[i].uid == parseInt(scope.user.facebook.id))
+                      scope.user.result = scope.ev.list_event_players[i].result;
+                ++i;
+              }
         });
     }
   };
@@ -169,92 +176,92 @@ app.directive('isotope', function($timeout, $rootScope) {
 //   };
 // });
 
-// app.directive('shareEvent', function($http) {
-//   return {
-//     restrict: 'A',
-//     link: function(scope, elm, req) {
-//       elm.on("click", function() {
-//         $http({
-//           method: 'POST',
-//           data: {
-//             eid: scope.ev.eid
-//           },
-//           url: '/api/share/' + scope.ev.eid,
-//         }).success(function(){
-//             $http({
-//         method: 'GET',
-//         data: {
-//           eid: scope.ev.eid
-//         },
-//         url: '/api/list_player/' + scope.ev.eid
-//       }).success(function(data) {
-//         if (data)
-//         {
-//           var i = 0;
-//           scope.ev.list_event_players = data;
-//         }
-//           $("button.btn.btn-primary.share").html("Share again?");
-//           $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-//       });
-//       });
-//     });
-//   }
-// };
-// });
+app.directive('shareEvent', function($http) {
+  return {
+    restrict: 'A',
+    link: function(scope, elm, req) {
+      elm.on("click", function() {
+        $http({
+          method: 'POST',
+          data: {
+            eid: scope.ev.eid
+          },
+          url: '/api/share/' + scope.ev.eid,
+        }).success(function(){
+            $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
+        }
+          elm.html("Share again?");
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
+      });
+      });
+    });
+  }
+};
+});
 
-// app.directive('setAttendings', function($http) {
-//   return {
-//     restrict: 'A',
-//     scope: true,
-//     link: function(scope, elem) {
-//       $(elem).on('click', function() {
-//         if (!scope.user || !scope.user.facebook || !scope.user.facebook.id)
-//         {
-//           document.location.href='/auth/facebook';
-//         }
-//         else if (scope.attending == 'Join') {
-//           $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp').success(function(){
-//             $http({
-//         method: 'GET',
-//         data: {
-//           eid: scope.ev.eid
-//         },
-//         url: '/api/list_player/' + scope.ev.eid
-//       }).success(function(data) {
-//         if (data)
-//         {
-//           var i = 0;
-//           scope.ev.list_event_players = data;
-//         }
-//           $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-//           $("button.btn.btn-primary.join").html(scope.attending);
-//       });
-//           });
-//           scope.attending = 'Leave';
-//         } else if (scope.attending == 'Leave') {
-//           $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn').success(function(){
-//             $http({
-//         method: 'GET',
-//         data: {
-//           eid: scope.ev.eid
-//         },
-//         url: '/api/list_player/' + scope.ev.eid
-//       }).success(function(data) {
-//         if (data)
-//         {
-//           var i = 0;
-//           scope.ev.list_event_players = data;
-//         }
-//           $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-//           $("button.btn.btn-primary.join").html(scope.attending);
-//       });
-//           });
-//           scope.attending = 'Join';
-//         }
-//     });
-//   }
-//   };
-// });
+app.directive('setAttendings', function($http) {
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function(scope, elm) {
+      elm.on('click', function() {
+        if (!scope.user || !scope.user.facebook || !scope.user.facebook.id)
+        {
+          document.location.href='/auth/facebook';
+        }
+        else if (scope.attending == 'Join') {
+          scope.attending = 'Leave';
+          elm.html('Leave');
+          $http.post('/api/rsvp/' + scope.ev.eid + '/rsvp').success(function(){
+            $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
+        }
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
+          elm.html(scope.attending);
+      });
+          });
+        } else if (scope.attending == 'Leave') {
+          scope.attending = 'Join';
+          elm.html('Join');
+          $http.post('/api/rsvpn/' + scope.ev.eid + '/rsvpn').success(function(){
+            $http({
+        method: 'GET',
+        data: {
+          eid: scope.ev.eid
+        },
+        url: '/api/list_player/' + scope.ev.eid
+      }).success(function(data) {
+        if (data)
+        {
+          var i = 0;
+          scope.ev.list_event_players = data;
+        }
+          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");      });
+          });
+        }
+    });
+  }
+  };
+});
 
 
 // app.directive("scroll", function() {

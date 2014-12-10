@@ -12021,6 +12021,36 @@ body#event-list-view #list {
 .promote-form {
   color: black;
 }
+.in_promotion {
+  font-size: large;
+}
+.promoterinfo {
+  display: inline;
+  width: 30%;
+  margin-left: 8%;
+}
+.reward {
+  display: inline;
+  width: 30%;
+  margin-left: 18%;
+  margin-right: 18%;
+}
+.end_date {
+  display: inline;
+  width: 30%;
+}
+.smallp_andfont {
+  width: 10%;
+  font-size: small;
+  text-align: center;
+}
+.aligncenter {
+  text-align: center;
+}
+.marginstd {
+  border-collapse: separate;
+  border-spacing: 40px 5px;
+}
 .glyphicon {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
