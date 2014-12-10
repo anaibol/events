@@ -1,4 +1,4 @@
-app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache ) {
+app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
   // console.log(ev);
   $scope.ev = ev;
 
@@ -110,14 +110,14 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
     ezfb.ui({
       method: 'apprequests',
       message: 'Invite your friends to play now.',
-      object_id: scope.ev.eid
+      data: $window.location.href
     }, function() {
       $http({
         method: 'GET',
         data: {
-          eid: scope.ev.eid
+          eid: $scope.ev.eid
         },
-        url: '/api/list_player/' + scope.ev.eid
+        url: '/api/list_player/' + $scope.ev.eid
       }).success(function(data) {
         if (data)
         {

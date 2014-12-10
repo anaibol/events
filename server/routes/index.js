@@ -2,6 +2,8 @@ var url = require('url');
 var request = require('request');
 var Events = global.db.get('events');
 
+var graph = require('fbgraph');
+
 function slug(str) {
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   str = str.toLowerCase();
@@ -21,13 +23,28 @@ function slug(str) {
 }
 
 module.exports = function(app) {
+  // app.get('*', function(req, res) {
+  //   res.json(req.query);
+  // });
+
   app.get('', function(req, res) {
-    getLocation(req, function(loc) {
-      var i = 0;
-      var longitude = loc.lon;
-      var latitude = loc.lat;
-      res.redirect('/' + loc.city);
-     });
+    if (req.query.fb_source) {
+      req.query.request_ids = req.query.request_ids.split(',')[0];
+
+      var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
+      console.log(query);
+      graph.get(query, function(err, data) {
+        console.log(data); // { id: xxxxx}
+        res.redirect(data.data);
+      });
+    } else {
+      getLocation(req, function(loc) {
+        var i = 0;
+        var longitude = loc.lon;
+        var latitude = loc.lat;
+        res.redirect('/' + loc.city);
+      });
+    }
   });
 
   app.get('/:slug/:eid', function(req, res) {

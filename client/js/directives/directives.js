@@ -124,7 +124,6 @@ app.directive('isotope', function($timeout, $rootScope) {
 
           // $('#wrapper').css('height', $('.events').innerHeight() + 50);
           // console.log(elm);
-          console.log(elm);
           var iso = new Isotope(elm[0], {
             // onLayout: function() {
             //   imagesLoaded(elm, function() {
