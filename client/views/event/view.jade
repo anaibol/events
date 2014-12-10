@@ -3,24 +3,35 @@
     .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
-
+      section.info
         .info
           h3.title.truncate {{::ev.name}}
-          .tag-list
-            span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}}
-          span.attending
-            i.fa.fa-group
-            | {{::ev.attending_count}}
-          span.datetime
-            span.time
-              i.fa.fa-clock-o
-              span {{::ev.start_time2 | amCalendar}}
-
-          .price(ng-if='user && (ev.creator.id === user.facebook.id || user.admin == true)')
-            span.loadNum(span-input) {{ev.price.full}}
-          .price(ng-if='(ev.creator.id != user.facebook.id && user.admin != true)')
-            span {{ev.price.full}}
-
+        table
+          tr
+            td
+              i.fa.fa-clock-o.fa-lg
+              span.fontmedium {{::ev.start_time | amCalendar}}
+          tr
+            td
+              i.fa.fa-map-marker.fa-lg
+              span.fontmedium {{::ev.location}} - {{::ev.venue.street}}{{::ev.venue.street && ev.venue.city ? ', ' : ''}}{{::ev.venue.city}}{{::ev.venue.city && ev.venue.country ? ', ' : ''}} {{::ev.venue.country}}
+          tr
+            td
+              i.fa.fa-dot-circle-o.fa-lg
+              span.fontmedium NightLife
+          tr
+            td
+              i.fa.fa-tags.fa-lg
+              span.tag(style="font-size:larger;", ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}} &nbsp
+      section
+        div.aligncenter(style="width:30%;display:inline-block;margin-left:15%")
+          span.fontlarge {{::ev.attending_count}} &nbsp
+          br
+          span.fontlarge Attendees
+        div.aligncenter(ng-if="ev.price.full", style='display:inline-block;width:30%;margin-left:20%')
+          span.fontlarge{{ev.price.full}} &nbsp
+          br
+          span.fontlarge Price
       section.in_promotion(ng-if="ev.in_promotion")
         table.marginstd
           tr
