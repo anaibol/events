@@ -28,6 +28,15 @@ module.exports = function(app) {
   // });
 
   app.get('', function(req, res) {
+    getLocation(req, function(loc) {
+      var i = 0;
+      var longitude = loc.lon;
+      var latitude = loc.lat;
+      res.redirect('/' + loc.city);
+    });
+  });
+
+  app.post('', function(req, res) {
     if (req.query.fb_source) {
       req.query.request_ids = req.query.request_ids.split(',')[0];
 
@@ -37,15 +46,9 @@ module.exports = function(app) {
         console.log(data); // { id: xxxxx}
         res.redirect(data.data);
       });
-    } else {
-      getLocation(req, function(loc) {
-        var i = 0;
-        var longitude = loc.lon;
-        var latitude = loc.lat;
-        res.redirect('/' + loc.city);
-      });
     }
   });
+
 
   app.get('/:slug/:eid', function(req, res) {
     getLocation(req, function(loc) {
