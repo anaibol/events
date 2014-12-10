@@ -37,11 +37,14 @@ module.exports = function(app) {
   });
 
   app.post('', function(req, res) {
+    console.log(1);
     if (req.query.fb_source) {
+      console.log(2);
       req.query.request_ids = req.query.request_ids.split(',')[0];
 
       var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
       graph.get(query, function(err, data) {
+        console.log(3);
         res.redirect(data.data);
       });
     }
