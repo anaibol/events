@@ -1,6 +1,6 @@
 //LocalStrategy = require('passport-local').Strategy,
 //TwitterStrategy = require('passport-twitter').Strategy,
-var FacebookStrategy = require('passport-facebook').Strategy;
+var FacebookStrategy = require('passport-facebook-canvas').Strategy;
 
 var Users = global.db.get('users');
 

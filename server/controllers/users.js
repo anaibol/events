@@ -9,6 +9,7 @@ var graph = require('fbgraph');
  */
 exports.authCallback = function(req, res) {
   Ev.getFromUser(req.user.username, req.user.accessToken, true, function() {});
+  console.log(req.session.redirectUrl);
   res.redirect(req.session.redirectUrl);
 };
 

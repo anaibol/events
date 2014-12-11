@@ -2,6 +2,8 @@ var url = require('url');
 var request = require('request');
 var Events = global.db.get('events');
 
+var users = require(controllersDir + 'users');
+
 var graph = require('fbgraph');
 
 function slug(str) {
@@ -22,7 +24,7 @@ function slug(str) {
   return str;
 }
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
   // app.get('*', function(req, res) {
   //   res.json(req.query);
   // });
@@ -36,17 +38,38 @@ module.exports = function(app) {
     });
   });
 
+  app.post('/auth/facebook/canvas', 
+  passport.authenticate('facebook-canvas', { successRedirect: '/',
+                                             failureRedirect: '/auth/facebook/canvas/autologin' }));
+
+  app.get('/auth/facebook/canvas/autologin', function( req, res ){
+    res.send( '<!DOCTYPE html>' +
+                '<body>' +
+                  '<script type="text/javascript">' +
+                    'top.location.href = "/auth/facebook";' +
+                  '</script>' +
+                '</body>' +
+              '</html>' );
+  });
+
   app.post('', function(req, res) {
     console.log(1);
     if (req.query.fb_source) {
       console.log(2);
-      req.query.request_ids = req.query.request_ids.split(',')[0];
+      passport.authenticate('facebook-canvas', {
+        scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests'],
+        failureRedirect: '/signin'
+      }, users.authCallback);
 
-      var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
-      graph.get(query, function(err, data) {
-        console.log(3);
-        res.redirect(data.data);
-      });
+
+      // console.log(2);
+      // req.query.request_ids = req.query.request_ids.split(',')[0];
+
+      // var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
+      // graph.get(query, function(err, data) {
+      //   console.log(3);
+      //   res.redirect(data.data);
+      // });
     }
   });
 
