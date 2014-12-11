@@ -52,7 +52,7 @@ function AddPoints(uid, eid, point, type) {
         }
       });
     } else if (!results && point >= 0) {
-      Users.findOne({'facebook.id':uid.toString()}, function(user){
+      Users.findOne({'facebook.id':uid.toString()}, function(err, user){
         if (user)
         {
           if (type === "join")

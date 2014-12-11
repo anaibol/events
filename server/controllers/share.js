@@ -47,7 +47,7 @@ exports.share = function(req, res) {
     });
     return (null);
   }
-  Game.AddPoints(req.user.facebook.id, req.params.eid, 2);
+  Game.AddPoints(req.user.facebook.id.toString(), req.params.eid.toString(), 2);
   var months = ["janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre"
   ];
@@ -69,9 +69,16 @@ exports.share = function(req, res) {
     else
       var pic = "";
 
+    var link = "";
+    if (ev.venue && ev.venue.city)
+    {
+      link = "www.wooepa.com/" + ev.venue.city + '/' + ev.slug + "/" + ev.eid;
+    }
+    else
+      link = "www.wooepa.com/" + "events/" + ev.slug + "/" + ev.eid;
     var wallPost = {
       name: name,
-      link: "www.wooepa.com/" + ev.slug + "/" + ev.eid,
+      link: link,
       picture: pic,
       description: "",
       message: ""
