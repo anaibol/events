@@ -61,12 +61,12 @@ module.exports = function(passport) {
           Ret.retrieveActions(user.facebook.id, function(err) {
             if (err)
               console.log(err);
-            console.log("Retrieve DONE on Signin");
+            // console.log("Retrieve DONE on Signin");
           });
           Ret.retrieveEventAttendingUser(user.facebook.id, function(err) {
             if (err)
               console.log(err);
-            console.log("Retrieve Attending done on login");
+            // console.log("Retrieve Attending done on login");
           });
 
           Users.insert(user, function(err) {
@@ -79,12 +79,12 @@ module.exports = function(passport) {
           Ret.retrieveEventAttendingUser(user.facebook.id, function(err) {
             if (err)
               console.log(err);
-            console.log("Retrieve Attending done on login");
+            // console.log("Retrieve Attending done on login");
           });
           Ret.retrieveActions(user.facebook.id, function(err) {
             if (err)
               console.log(err);
-            console.log("Retrieve DONE on Login");
+            // console.log("Retrieve DONE on Login");
           });
           Users.update({
             _id: user._id

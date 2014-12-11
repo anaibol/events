@@ -132,10 +132,10 @@ function fetchMultiple(eids, term, cb) {
           else if(exists)
           {
             if (parseInt(ev.eid) == 518928278147534)
-              console.log(ev);
+              // console.log(ev);
             ev = normalize(ev);
             if (parseInt(ev.eid) == 518928278147534)
-              console.log(ev);
+              // console.log(ev);
             //ev.updated = new Date();
             //getAttendings(ev.eid, function(attendings) {
               //ev.attending = attendings;

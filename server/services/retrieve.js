@@ -278,7 +278,7 @@ function retrieveForEvent(event_id, cb) {
 			var nb_done = 0;
 
 			for (i = 0; i < list_players.length; i++) {
-				console.log(list_players[i]);
+				// console.log(list_players[i]);
 				retrieveEventActions(db, list_players[i], event_id, function(err) {
 					nb_done++;
 					if (err)
@@ -306,12 +306,22 @@ function retrieveEventAttendingUser(user_id, cb) {
 			var request = '/' + user_id + '/events' + '?access_token=' + user.accessToken;
 
 			graph.get(request, function(err, result) {
-				if (err)
+				if (err) {
 					cb(err);
-				console.log(result);
-				var nb_done = 0;
-				if (result.data.length == 0)
+				}
+
+				if (!result.data) {
 					cb();
+					return;
+				}
+
+				var nb_done = 0;
+
+
+				if (result.data.length === 0) {
+					cb();
+					return;
+				}
 
 				for (i = 0; i < result.data.length; i++) {
 					Game.AddPoints(user_id, result.data[i].id, 6, "join");

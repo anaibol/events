@@ -38,9 +38,9 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.post('/auth/facebook/canvas', 
-  passport.authenticate('facebook-canvas', { successRedirect: '/',
-                                             failureRedirect: '/auth/facebook/canvas/autologin' }));
+  app.post('/auth/facebook/canvas', passport.authenticate('facebook-canvas', {
+    scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests']
+  }), users.authCallback);
 
   app.get('/auth/facebook/canvas/autologin', function( req, res ){
     res.send( '<!DOCTYPE html>' +
@@ -53,9 +53,7 @@ module.exports = function(app, passport) {
   });
 
   app.post('', function(req, res) {
-    console.log(1);
     if (req.query.fb_source) {
-      console.log(2);
       passport.authenticate('facebook-canvas', {
         scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests'],
         failureRedirect: '/signin'

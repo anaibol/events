@@ -9,8 +9,24 @@ var graph = require('fbgraph');
  */
 exports.authCallback = function(req, res) {
   Ev.getFromUser(req.user.username, req.user.accessToken, true, function() {});
-  console.log(req.session.redirectUrl);
-  res.redirect(req.session.redirectUrl);
+
+  if (req.session.redirectUrl) {
+    res.redirect(req.session.redirectUrl);
+  } else {
+    req.query.request_ids = req.query.request_ids.split(',')[0];
+    var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
+    graph.get(query, function(err, data) {
+
+    res.send( '<!DOCTYPE html>' +
+                '<body>' +
+                  '<script type="text/javascript">' +
+                    'top.location.href = "' + data.data + '";' +
+                  '</script>' +
+                '</body>' +
+              '</html>' );
+    });
+  }
+  
 };
 
 /**
