@@ -51,7 +51,7 @@ module.exports = function(app, passport) {
   });
 
   app.get('/:city/:slug/:eid', function(req, res) {
-    getLocation(req, function(loc) {
+    getLocFromSlug(req.params.city, function(loc) {
       res.render('index', {
         title: 'Wooepa',
         is_mobile: req.is_mobile,
