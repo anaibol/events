@@ -14,7 +14,7 @@ module.exports = function(app, passport) {
   }));
 
   app.get('/auth/facebook/canvas', function(req, res, next) {
-    req.session.redirectUrl = req.query.redirectUrl;
+    console.log(123);
     next();
   }, passport.authenticate('facebook', {
     scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests'],

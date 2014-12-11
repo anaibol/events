@@ -38,26 +38,6 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.post('', function(req, res) {
-    if (req.query.fb_source) {
-      passport.authenticate('facebook-canvas', {
-        scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests'],
-        failureRedirect: '/signin'
-      }, users.authCallback);
-
-
-      // console.log(2);
-      // req.query.request_ids = req.query.request_ids.split(',')[0];
-
-      // var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
-      // graph.get(query, function(err, data) {
-      //   console.log(3);
-      //   res.redirect(data.data);
-      // });
-    }
-  });
-
-
   app.get('/:slug/:eid', function(req, res) {
     getLocation(req, function(loc) {
       res.render('index', {

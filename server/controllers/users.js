@@ -8,7 +8,7 @@ var graph = require('fbgraph');
  * Auth callback
  */
 exports.authCallback = function(req, res) {
-  Ev.getFromUser(req.user.username, req.user.accessToken, true, function() {});
+  // Ev.getFromUser(req.user.username, req.user.accessToken, true, function() {});
 console.log(1);
   if (req.session.redirectUrl) {
     res.redirect(req.session.redirectUrl);
