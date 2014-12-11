@@ -38,20 +38,6 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.post('/auth/facebook/canvas', passport.authenticate('facebook-canvas', {
-    scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests']
-  }), users.authCallback);
-
-  app.get('/auth/facebook/canvas/autologin', function( req, res ){
-    res.send( '<!DOCTYPE html>' +
-                '<body>' +
-                  '<script type="text/javascript">' +
-                    'top.location.href = "/auth/facebook";' +
-                  '</script>' +
-                '</body>' +
-              '</html>' );
-  });
-
   app.post('', function(req, res) {
     if (req.query.fb_source) {
       passport.authenticate('facebook-canvas', {
