@@ -63,7 +63,11 @@ module.exports = function(app, passport) {
   });
 
   app.get('/:city', function(req, res) {
-    getLocation(req, function(loc) {
+    getLocFromSlug(req.params.city, function(loc) {
+      req.session.loc = loc;
+
+      // res.json(loc);
+
       res.render('index', {
         title: 'Wooepa',
         is_mobile: req.is_mobile,
@@ -73,6 +77,35 @@ module.exports = function(app, passport) {
       });
     });
   });
+
+  function getLocFromSlug(slug, cb) {
+    request('http://maps.googleapis.com/maps/api/geocode/json?address=' + slug + '&sensor=false', function (error, res, body) {
+      if (!error && res.statusCode == 200) {
+        body = JSON.parse(body);
+        if (body.results) {
+          var loc = body.results[0];
+
+          if (!loc) {
+            cb({
+              city: 'Paris',
+              country: 'France',
+              lng: 2.3333,
+              lat: 48.8667
+            });
+            return;
+          }
+
+          loc = {
+            city: loc.address_components[0].long_name,
+            lng: loc.geometry.location.lng,
+            lat: loc.geometry.location.lat
+          };
+
+          cb(loc);
+        }
+      }
+    });
+  }
 
   function getLocation(req, cb) {
     // if (!req.session.loc) {  
@@ -88,7 +121,7 @@ module.exports = function(app, passport) {
           var location = {
             city: 'Paris',
             country: 'France',
-            lon: 2.3333,
+            lng: 2.3333,
             lat: 48.8667
           };
         }
@@ -97,16 +130,16 @@ module.exports = function(app, passport) {
           var location = JSON.parse(body);
           location.city = slug(location.city);
         }
-        cb(location);
-        // req.session.loc = location;
 
-        // req.session.loc.lat = req.session.loc.latitude;
-        // req.session.loc.lng = req.session.loc.longitude;
+        req.session.loc = location;
 
-        // delete req.session.loc.latitude;
-        // delete req.session.loc.longitude;
+        req.session.loc.lat = req.session.loc.latitude;
+        req.session.loc.lng = req.session.loc.longitude;
 
-        // cb(req.session.loc);
+        delete req.session.loc.latitude;
+        delete req.session.loc.longitude;
+
+        cb(req.session.loc);
       });
     // } else {
     //   cb(req.session.loc);

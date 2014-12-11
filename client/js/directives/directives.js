@@ -323,7 +323,7 @@ app.directive('adaptiveBackground', function($window) {
         // }
 
         if (attrs.abBgToClass) {
-          elm.find("section:not(.header)").css('backgroundColor', colors.dominant);
+          angular.element(elm[0].querySelector("section:not(.header)")).css('backgroundColor', colors.dominant);
         } else {
           elm.css('backgroundColor', colors.dominant);
         }

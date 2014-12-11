@@ -36,6 +36,11 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   fbphoto.getFbPics($scope.ev.eid).success(function(res) {
     var pics = res.data;
     $scope.fbpics = [];
+
+    if (!pics) {
+      return;
+    }
+
     for (var i = pics.length - 1; i >= 0; i--) {
       var pic = pics[i];
 
@@ -49,21 +54,30 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   });
 
   Instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
-    if (res.data.length > 0) {
-      Instagram.getPhotosByLocationId(res.data[0].id, 10).success(function(res) {
-        if (res.data.length > 0) {
-          $scope.instagramPhotos = [];
-          for (var i = res.data.length - 1; i >= 0; i--) {
-            var new_url = 'https://' + res.data[i].images.standard_resolution.url.substring(7);
-            var new_thumbUrl = 'https://' + res.data[i].images.low_resolution.url.substring(7);
-            $scope.instagramPhotos[i] = {
-              url: new_url,
-              thumbUrl: new_thumbUrl
-            };
-          }
-        }
-      });
+    var locations = res.data;
+
+    if (!locations.length) {
+      return;
     }
+
+    Instagram.getPhotosByLocationId(locations[0].id, 10).success(function(res) {
+      var pics = res.data;
+
+      if (!pics) {
+        return;
+      }
+
+      $scope.instagramPhotos = [];
+
+      for (var i = res.data.length - 1; i >= 0; i--) {
+        var new_url = 'https://' + res.data[i].images.standard_resolution.url.substring(7);
+        var new_thumbUrl = 'https://' + res.data[i].images.low_resolution.url.substring(7);
+        $scope.instagramPhotos[i] = {
+          url: new_url,
+          thumbUrl: new_thumbUrl
+        };
+      }
+    });
   });
 
   if ($rootScope.isMobile) {
@@ -75,7 +89,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
 
     var cover_w = 740;
     var cover_h = 295;
-    var elm =  document.querySelectorAll('.header > img')[0];
+    var elm =  document.querySelector('.header > img');
     var img_w = elm.offsetWidth;
     var img_h = elm.offsetHeight;
     var real_img_h = (cover_w * img_h / img_w) - cover_h;

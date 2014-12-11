@@ -22,7 +22,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       // url: '{city}{slash:[/]?}{tag:[^0-9]}',
       // url: '/{city}',
       // url: '/{city}{slash:[/]?}{tag}',
-      url: '/:city?since?lng?lat?tags?sortBy',
+      url: '/:city?since?tags?sortBy',
       templateUrl: 'event/list',
       controller: 'ListCtrl',
       resolve: {
@@ -51,6 +51,12 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       url: '/user/:uid',
       controller: 'myEventsCtrl',
       templateUrl: 'user/events'
+    })
+    .state('auth', {
+      url: '/auth/facebook?redirectUrl',
+      controller: function($window, $stateParams) {
+        $window.location.href = $window.location;
+      }
     })
     .state('in_promotion', {
       url: '/events/in_promotion',
@@ -101,24 +107,20 @@ app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $windo
   $rootScope.today.setMinutes(0);
   $rootScope.today.setHours(0);
 
-  $rootScope.user = window.user;
+  $rootScope.user = $window.user;
   
-  $rootScope.isMobile = window.isMobile;
+  $rootScope.isMobile = $window.isMobile;
 
-  $rootScope.loc = window.loc;
+  $rootScope.loc = $window.loc;
 
   // if (!$localStorage.lng || !$localStorage.lat) {
     // Geoip.getLocation().success(function(data) {
 
-      var data = $rootScope.loc;
-
-      Event.query.lng = data.longitude;
-      Event.query.lat = data.latitude;
+      Event.query.lng = $rootScope.loc.lng;
+      Event.query.lat = $rootScope.loc.lat;
       // delete res.data.loc;
 
       // $.address = res.data;
-
-      $rootScope.city = data.region;
 
       // $localStorage.lng = data.lng;
       // $localStorage.lat = data.lat;

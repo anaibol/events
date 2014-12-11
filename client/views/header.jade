@@ -19,7 +19,7 @@ header
           li.dropdown(dropdown, is-open="dropDownIsOpen", ng-if='!$root.isMobile && $root.user')
             a.dropdown-toggle(href='#', dropdown-toggle)
               span.avatar.pull-right
-                img.img-circle(src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
+                img.img-circle(ng-src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
               span.hidden-xs.hidden-sm.hidden-m
               d {{$root.user.facebook.name}}
               i.fa.fa-chevron-down
