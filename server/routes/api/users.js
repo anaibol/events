@@ -13,12 +13,8 @@ module.exports = function(app, passport) {
     failureRedirect: '/signin'
   }));
 
-  app.get('/auth/facebook/canvas', function(req, res, next) {
-    console.log(123);
-    next();
-  }, passport.authenticate('facebook', {
-    scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests'],
-    failureRedirect: '/signin'
+  app.post('/auth/facebook/canvas', passport.authenticate('facebook-canvas', {
+    scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests']
   }), users.authCallback);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook-canvas', {
