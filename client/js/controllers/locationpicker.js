@@ -7,6 +7,8 @@ app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope)
       city = $item.address_components[0].long_name.toLowerCase();
       city = city.replace(' ', '-');
     }
+    $rootScope.loc.lng = $item.geometry.location.lng;
+    $rootScope.loc.lat = $item.geometry.location.lat;
     $state.go('list', {
       lng: $item.geometry.location.lng,
       lat: $item.geometry.location.lat,

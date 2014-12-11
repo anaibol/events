@@ -26,8 +26,8 @@ app.factory('Event', function($q, $http, DSCacheFactory, $rootScope, $querystrin
       query = {
         since: params.since || getStringDate($rootScope.today),
         country: params.country || query.country,
-        lng: params.lng || query.lng,
-        lat: params.lat || query.lat,
+        lng: $rootScope.loc.lng || query.lng,
+        lat: $rootScope.loc.lat || query.lat,
         tags: params.tags || query.tags,
         sortBy: params.sortBy || query.sortBy
       };
