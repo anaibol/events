@@ -11251,69 +11251,6 @@ icon-material-lightgrey {
   display: inline-block;
   text-transform: uppercase;
 }
-.tag.salsa {
-  background-color: #3eb9b9;
-  border: 1px solid #3eb9b9;
-}
-.tag.bachata {
-  background-color: #639b34;
-  border: 1px solid #639b34;
-}
-.tag.kizomba {
-  background-color: #c9a95d;
-  border: 1px solid #c9a95d;
-}
-.tag.reggaeton,
-.tag.regueton {
-  background-color: #692673;
-  border: 1px solid #692673;
-}
-.tag.porto {
-  background-color: #84349c;
-  border: 1px solid #84349c;
-}
-.tag.semba,
-.tag.samba {
-  background-color: #c57652;
-  border: 1px solid #c57652;
-}
-.tag.cubaine,
-.tag.cubana {
-  background-color: #7b2b29;
-  border: 1px solid #7b2b29;
-}
-.tag.merengue {
-  background-color: #ad3a48;
-  border: 1px solid #ad3a48;
-}
-.tag.kuduru {
-  background-color: #fce94f;
-  border: 1px solid #fce94f;
-}
-.tag.tango {
-  background-color: #215f64;
-  border: 1px solid #215f64;
-}
-.tag.lambazouk {
-  background-color: #2c561d;
-  border: 1px solid #2c561d;
-}
-.tag.zouk {
-  background-color: #008755;
-  border: 1px solid #008755;
-}
-.tag.popular {
-  background-color: #8C2637;
-  border: 1px solid #8C2637;
-}
-.tag.festival {
-  background-color: #008ACF;
-  border: 1px solid #008ACF;
-}
-.tag.free {
-  background-color: #8F714F;
-  border: 1px solid #8F714F;
-}
 * {
   font-family: 'Open Sans';
   color: white;
@@ -12047,6 +11984,13 @@ body#event-list-view #list {
 .aligncenter {
   text-align: center;
 }
+.fontmedium {
+  margin-left: 5px;
+  font-size: medium;
+}
+.fontlarge {
+  font-size: large;
+}
 .marginstd {
   border-collapse: separate;
   border-spacing: 40px 5px;
@@ -12065,6 +12009,14 @@ body#event-list-view #list {
 .glyphicon-chevron-down:before {
   content: "\f078";
   color: black;
+}
+.info {
+  width: 100%;
+}
+.info .title {
+  font-size: 25px;
+  margin: 0;
+  text-shadow: 0 1px 2px black;
 }
 #promote .medium-input {
   width: 25%;
