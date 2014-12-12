@@ -37,8 +37,6 @@
                     td.smallp_andfont Deadline
       section.aligncenter
         button.btn(ui-sref="list.game({slug:ev.slug, eid:ev.eid})",style='background-color:red;color:white;text-align:center;') Play!
-      section.in_promotion(ng-if="!ev.in_promotion && user && (ev.creator.id != user.facebook.id)", style="text-align:center;")
-        button.btn(ui-sref="list.game({slug:ev.slug, eid:ev.eid})",style='background-color:red;color:white;text-align:center;') Play!
       section.info
         .info
           h3.title.truncate {{::ev.name}}
