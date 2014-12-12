@@ -22,7 +22,7 @@
             img(ng-src="{{::ev.pic_cover.source}}")
             //- hm-swipe="$root.menuOpen = !$root.menuOpen"
         .bottom
-          span.date
+          .date.col-md-4
             //- i.fa.fa-clock-o
             //- span {{::ev.start_time2 | amCalendar}}
             //- i.fa.fa-calendar
@@ -31,13 +31,14 @@
            // i.fa.fa-clock-o
            // span {{::ev.start_time2 | amDateFormat:"LT"}}
 
-          .attending.pull-right(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count")
+          .attending.col-md-4(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count")
             i.fa.fa-group
             span {{::ev.attending_count}}
 
-          .span.place(ng-click="openMap($event, ev)", ng-if="ev.location")
+          .location.col-md-4(ng-click="openMap($event, ev)", ng-if="ev.location")
             i.fa.fa-map-marker
-            span.location {{::' ' + ev.location | characters:45}}{{::ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
+            //- span.location {{::' ' + ev.location | characters:45}}{{::ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
+            span {{::ev.location | characters: 20}}
         .box-shadow
 
   //- button.btn.btn-default(ng-click="getMore()") Get more events

@@ -84,6 +84,24 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
     $http.get('/api/resolve/' + $scope.ev.eid + '/results');
   }
 
+
+  $scope.purchase = function() {
+    var handler = StripeCheckout.configure({
+      key: 'pk_test_ZQr0i3Ul8GWH2G92uyByRNV9',
+      image: $scope.ev.pic_cover.source,
+      token: function(token) {
+        // Use the token to create the charge with a server-side script.
+        // You can access the token ID with `token.id`
+      }
+    });
+
+    handler.open({
+      name: 'Demo Site',
+      description: '1 ticket for ' + $scope.ev.name + ' (' + $scope.ev.price.full + ')',
+      amount: $scope.ev.price.num * 100
+    });
+  };
+
   $scope.getCoverTopPosition = function() {
     offset_y = ev.pic_cover.offset_y;
 

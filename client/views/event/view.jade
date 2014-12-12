@@ -57,12 +57,18 @@
                 tr
                   td.smallp_andfont End date
 
-
       section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)", ng-if="ev.description", ng-click="descriptionOpened = true")
-        .bg-image.down(style='background-image: url({{::ev.pic_cover.source}})')
+        .bg-image.down(style='background-image: url({{::ev.pic_coveg.source}})')
         p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
         button.btn(ng-show="!descriptionOpened", ng-if="ev.description.length >= 600")
           i.fa(ng-class="{'fa-chevron-down': !descriptionOpened, 'fa-chevron-up': descriptionOpened}")
+
+
+      //- section.image(ng-if="angular.element('.header img').offsetHeight !== angular.element('.header').offsetHeight")
+      section.image
+        //- .bg-image.right(style='background-image: url({{::ev.pic_cover.source}})')
+        img.event-image(src="{{::ev.pic_cover.source}}")
+
 
       section.media
         ul.pictures(ng-if="fbpics.length")
@@ -80,10 +86,6 @@
               object(type="text/html", data="{{::video}}")
 
     .right-container.col-xs-12.col-sm-12.col-md-4.col-lg-4
-      section.image
-        //- .bg-image.right(style='background-image: url({{::ev.pic_cover.source}})')
-        img.event-image(src="{{::ev.pic_cover.source}}")
-
       //- section.datepicker
       //-   datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
 
@@ -94,6 +96,8 @@
             | {{::ev.location}} - {{::ev.venue.street}}{{::ev.venue.street && ev.venue.city ? ', ' : ''}}{{::ev.venue.city}}{{::ev.venue.city && ev.venue.country ? ', ' : ''}} {{::ev.venue.country}}
         a.map(href="https://maps.google.com/maps?q={{::ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank', style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center={{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}}&zoom=14&size=640x280&markers=color:blue|{{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}})")
 
+      section
+        button.btn.btn-primary(ng-click="purchase()") Purchase a ticket
 
       section
         button.btn.btn-primary.promote(ng-click="promote(ev)", ng-if="user && (ev.creator.id === user.facebook.id || user.admin == true)") Promote event

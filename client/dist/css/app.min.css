@@ -11340,6 +11340,9 @@ header {
   z-index: 1004;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
+header * {
+  text-shadow: rgba(100, 100, 100, 0.6) 0 1px 2px;
+}
 header .navbar-inverse {
   background-color: #f44336;
   margin: 0;
@@ -11682,15 +11685,33 @@ body.mobile #list .event {
   text-shadow: 0 0 0 white;
 }
 #list .event .content .bottom {
-  text-shadow: 0 1px 1px black;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
-#list .event .content .bottom .date,
-#list .event .content .bottom .time {
-  display: inline-block;
-  margin-right: 5px;
+#list .event .content .bottom > div {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-#list .event .content .bottom .place:hover {
-  color: #8a0808;
+#list .event .content .bottom > div i {
+  display: block;
+  font-size: 20px;
+}
+#list .event .content .bottom > div span {
+  font-size: 18px;
+  line-height: 18px;
+}
+#list .event .content .bottom > div.attending i {
+  font-size: 16px;
+}
+#list .event .content .bottom > div.location span {
+  font-size: 16px;
+}
+#list .event .content .bottom > div.location i {
+  font-size: 22px;
 }
 #list .event .content:hover .image {
   opacity: 0.85;
@@ -11852,6 +11873,8 @@ body#event-list-view #list {
 #view section.header {
   height: 295px;
   padding: 0;
+  margin: 0;
+  margin-top: 10px;
 }
 #view section.header > img {
   display: block;
@@ -11875,6 +11898,9 @@ body#event-list-view #list {
 }
 #view section.image {
   text-align: center;
+}
+#view section.image img {
+  max-width: 100%;
 }
 #view section.description p {
   margin: 0;
