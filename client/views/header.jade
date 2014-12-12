@@ -14,7 +14,7 @@ header
             input.form-control.col-lg-8(type="text", typeahead="address.formatted_address for address in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.loc.city", ng-controller="LocationpickerCtrl", id="test123")
             //- placeholder="Type a city or location", 
             span.material-input
-        a.navbar-brand(href='/', ui-sref="in_promotion") Play!
+        a.navbar-brand(href='', ui-sref="in_promotion") Play!
         ul.nav.navbar-nav.navbar-right
           li.dropdown(dropdown, is-open="dropDownIsOpen", ng-if='!$root.isMobile && $root.user')
             a.dropdown-toggle(href='#', dropdown-toggle)

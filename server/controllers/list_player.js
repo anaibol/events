@@ -4,7 +4,8 @@ var Game = require('../services/game.js');
 var graph = require('fbgraph');
 var Results = db.get('results');
 var Users = global.db.get('users');
-
+var Resolve = require('../services/resolve')
+var Retrieve = require('../services/retrieve')
 exports.findPlayers = function(req, res) {
   var i = 0;
   var list = [];
@@ -25,10 +26,15 @@ exports.findPlayers = function(req, res) {
           obj.uid = parseInt(rest[i].user_id);
           obj.result = parseInt(rest[i].result_boosted);
           obj.name = rest[i].name;
+          Retrieve.retrieveActions(rest[i].user_id, function(err){
+            if (err)
+              console.log(err);
+          });
           list.push(obj);
         }
         ++i;
       }
+      Resolve.resolveGames(req.params.eid);
       res.json(list);
     }
   });
