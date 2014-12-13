@@ -92,9 +92,9 @@ app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $windo
   //   });
   // });
 
-  var lang = navigator.language || navigator.userLanguage;
+  $rootScope.lang = navigator.language || navigator.userLanguage;
 
-  amMoment.changeLocale(lang);
+  amMoment.changeLocale($rootScope.lang);
 
   $rootScope.$state = $state;
   $rootScope.$stateParams = $stateParams;

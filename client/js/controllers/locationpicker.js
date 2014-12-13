@@ -17,15 +17,16 @@ app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope)
   };
 
   $scope.getLocation = function(val) {
-    return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+    return $http.get('/api/autocomplete/locations', {
       params: {
-        address: val,
-        sensor: false,
-        language: $rootScope.lang
+        q: val,
+        lang: $rootScope.lang
       }
     }).then(function(response) {
-      return response.data.results.map(function(location) {
-        return location;
+      return response.data.filter(function(location) {
+        if (location.types.indexOf("locality") !== -1 || location.types.indexOf("neighborhood") !== -1) {
+          return location;
+        }
       });
     });
   };
