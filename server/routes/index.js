@@ -39,6 +39,15 @@ module.exports = function(app, passport) {
     });
   });
 
+  app.get('/api/autocomplete/placeid', function(req, res) {
+    var url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + req.param('placeid') + '&key=AIzaSyBD3PFdwyYlZ8i-CgUK3kQDUBEfaPY2ALQ';
+    request(url, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        body = JSON.parse(body);
+        res.json(body.result.geometry.location);
+      }
+    });
+  });
 
   app.get('', function(req, res) {
     getLocation(req, function(loc) {

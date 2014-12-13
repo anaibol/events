@@ -1,18 +1,23 @@
 app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope) {
   $scope.locationSelected = $rootScope.loc.city;
   $scope.onSelect = function($item, $model, $label) {
-    var city;
+    $rootScope.loc.city = $item.description.split(',')[0];
 
-    if ($item.address_components[0].types[0] === 'locality') {
-      city = $item.address_components[0].long_name.toLowerCase();
-      city = city.replace(' ', '-');
-    }
-    $rootScope.loc.lng = $item.geometry.location.lng;
-    $rootScope.loc.lat = $item.geometry.location.lat;
-    $state.go('list', {
-      lng: $item.geometry.location.lng,
-      lat: $item.geometry.location.lat,
-      city: city
+    $http.get('/api/autocomplete/placeid', {
+      params: {
+        placeid: $item.place_id,
+      }
+    }).then(function(response) {
+      var loc = response.data;
+
+      $rootScope.loc.lng = loc.lng;
+      $rootScope.loc.lat = loc.lat;
+
+      $state.go('list', {
+        lng: $rootScope.loc.lng,
+        lat: $rootScope.loc.lat,
+        city: $rootScope.loc.city
+      });
     });
   };
 
