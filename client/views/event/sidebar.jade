@@ -1,10 +1,13 @@
 nav#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
   ul.nav.navbar-nav
     li.tags
-      i.fa.fa-tag
-      | Explore by tags
-      .tag-list
-        a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})", ui-sref-active="active") {{tag}}
+      a(href='#', ng-click='isCollapsed2 = !isCollapsed2')
+        i.fa.fa-tag
+        | Explore by tags
+        i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed2, 'fa-chevron-down': !isCollapsed2}")
+      ul.tag-list.nav-collapse(collapse='isCollapsed2')
+        li(ng-hide="isCollapsed2")
+          a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})", ui-sref-active="active", style="padding-left:4px;") {{tag}}
 
     li.sort
       a(href='#', ng-click='isCollapsed = !isCollapsed')
@@ -12,10 +15,6 @@ nav#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
         | Sort by
         i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
       ul.nav.nav-collapse(collapse='isCollapsed')
-        li
-          a(href='#', ui-sref="list({sortBy: 'proximity'})", ui-sref-active="active")
-            i.fa.fa-map-marker 
-            | Proximity
         li
           a(href='#', ui-sref="list({sortBy: 'popularity'})", ui-sref-active="active")
             i.fa.fa-group 

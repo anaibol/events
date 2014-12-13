@@ -78,7 +78,7 @@ function getActionsResult(event, event_id, user_id, cb) {
 Results.findOne({user_id:user_id,event_id:event_id},function(err,results){
         if (!results)
         {
-            Results.insert({user_id:user_id,event_id:event_id, result:0, result_boosted:0, score:0});
+            Results.insert({user_id:user_id,event_id:event_id, result:0, result_boosted:0, score:0, share:0, join:0});
         }
     Actions.find({
         'event_id': event_id,

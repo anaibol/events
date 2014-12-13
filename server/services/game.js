@@ -27,7 +27,24 @@ function AddPoints(uid, eid, point, type) {
     event_id: eid
   }, function(err, results) {
     if (results && results.result + point >= 0) {
-      if (type === "join" || type === "unjoin")
+      if (type === 'share')
+      {
+        if (results.share == 0)
+        {
+
+          Results.update({
+            user_id: uid,
+            event_id: eid
+            }, {
+            $inc: {
+            result: point,
+            result_boosted: point,
+            share: 2
+            }
+          });
+        }
+      }
+      else if (type === "join" || type === "unjoin")
       {
         if ((results.join == 0 && point == 6) || (results.join == 6 && point == -6))
           Results.update({
@@ -41,7 +58,7 @@ function AddPoints(uid, eid, point, type) {
         }
       });
       }
-      else if (type != "join" && type != "unjoin")
+      else if (type != "join" && type != "unjoin" && type != 'share')
       Results.update({
         user_id: uid,
         event_id: eid
@@ -64,10 +81,11 @@ function AddPoints(uid, eid, point, type) {
           result: point,
           result_boosted: point,
           score: 0,
-          join: 6
+          join: 6,
+          share: 0
         });
           }
-          else
+          else if (type === 'share')
           {
           Results.insert({
             user_id: uid,
@@ -76,9 +94,23 @@ function AddPoints(uid, eid, point, type) {
             result: point,
             result_boosted: point,
             score: 0,
-            join: 0
+            join: 0,
+            share: 2
         });
         }
+          else
+          {
+            Results.insert({
+            user_id: uid,
+            name: user.facebook.name,
+            event_id: eid,
+            result: point,
+            result_boosted: point,
+            score: 0,
+            join: 0,
+            share: 0
+            });
+          }
       }
       });
     }
@@ -115,7 +147,8 @@ function giveInvitePoints(eid, uid, uids) {
         result: 0,
         result_boosted: 0,
         score: 0,
-        join: 0
+        join: 0,
+        share:0
       });
     }
     Invitations.findOne({

@@ -9,7 +9,7 @@ exports.sendInvitations = function(req, res) {
  //    else {
     if (req.user) {
       Inv.giveInvitePoints(req.params.eid, req.user.facebook.id, req.params.uids);
-      res.json(result);
+      res.json();
     }
   //   }
   // });

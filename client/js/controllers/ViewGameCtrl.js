@@ -1,4 +1,4 @@
-app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
+app.controller('ViewGameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
   $scope.ev = ev;
 
   $scope.descriptionOpened = false;
@@ -103,9 +103,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   };
 
   $scope.getCoverTopPosition = function() {
-    if (elm && ev.pic_cover && ev.pic_cover.source)
-    {
-    var offset_y = ev.pic_cover.offset_y;
+    offset_y = ev.pic_cover.offset_y;
 
     var cover_w = 740;
     var cover_h = 295;
@@ -115,7 +113,6 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
     var real_img_h = (cover_w * img_h / img_w) - cover_h;
     var top = parseInt(real_img_h * offset_y / 100);
     return ('-' + top + 'px');
-    }
   };
 
   $scope.coverTopPosition = $scope.getCoverTopPosition();

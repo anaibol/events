@@ -11239,6 +11239,7 @@ icon-material-lightgrey {
 }
 .tag-list {
   padding: 3px 0;
+  text-align: center;
 }
 .tag {
   border-radius: 2px;
@@ -11250,6 +11251,7 @@ icon-material-lightgrey {
   padding: 1px 4px;
   display: inline-block;
   text-transform: uppercase;
+  text-align: center;
 }
 * {
   font-family: 'Open Sans';
@@ -11685,33 +11687,15 @@ body.mobile #list .event {
   text-shadow: 0 0 0 white;
 }
 #list .event .content .bottom {
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-content: center;
+  text-shadow: 0 1px 1px black;
 }
-#list .event .content .bottom > div {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#list .event .content .bottom .date,
+#list .event .content .bottom .time {
+  display: inline-block;
+  margin-right: 5px;
 }
-#list .event .content .bottom > div i {
-  display: block;
-  font-size: 20px;
-}
-#list .event .content .bottom > div span {
-  font-size: 18px;
-  line-height: 18px;
-}
-#list .event .content .bottom > div.attending i {
-  font-size: 16px;
-}
-#list .event .content .bottom > div.location span {
-  font-size: 16px;
-}
-#list .event .content .bottom > div.location i {
-  font-size: 22px;
+#list .event .content .bottom .place:hover {
+  color: #8a0808;
 }
 #list .event .content:hover .image {
   opacity: 0.85;
@@ -11828,6 +11812,14 @@ body#event-list-view #list {
 #list-overlay.visible {
   z-index: 1;
   opacity: 1;
+}
+body#event-list-game #list {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: blur(10px);
 }
 #view {
   position: absolute;
@@ -12043,6 +12035,10 @@ body#event-list-view #list {
   font-size: 25px;
   margin: 0;
   text-shadow: 0 1px 2px black;
+}
+.rsvp {
+  margin-left: 5%;
+  margin-right: 5%;
 }
 #promote .medium-input {
   width: 25%;

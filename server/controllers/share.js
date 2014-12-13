@@ -47,7 +47,7 @@ exports.share = function(req, res) {
     });
     return (null);
   }
-  Game.AddPoints(req.user.facebook.id.toString(), req.params.eid.toString(), 2);
+  Game.AddPoints(req.user.facebook.id.toString(), req.params.eid.toString(), 2, 'share');
   var months = ["janvier", "février", "mars", "avril", "mai", "juin",
     "juillet", "août", "septembre", "octobre", "novembre", "décembre"
   ];

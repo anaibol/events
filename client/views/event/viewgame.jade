@@ -1,0 +1,82 @@
+#view
+  .container(off-click="$state.go('^')", off-click-filter="header, .modal", adaptive-background, ab-bg-to-class="description")
+    .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
+      section.header
+        img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
+      section.in_promotion(ng-if="ev.in_promotion")
+        .panel-success
+          .panel-heading.aligncenter(style="border-color:rgba(233, 198, 226, 0);") Game Active
+          table.marginstd
+            tr
+              td
+                table.promoterinfo
+                  tr
+                    td.aligncenter 
+                      img.img-circle(style="width:70%;",ng-src="{{::ev.promoter.picture}}", ng-alt="{{::ev.promoter.name}}")
+                  tr
+                    td.aligncenter {{::ev.promoter.name}}
+                  tr
+                    td.smallp_andfont Promoter
+              td
+                table.reward
+                  tr
+                    td.aligncenter
+                      i.fa.fa-gift.fa-4x
+                  tr
+                    td.aligncenter {{::ev.promotion.reward}}
+                  tr
+                    td.smallp_andfont Reward
+              td
+                table.end_date
+                  tr
+                    td.aligncenter
+                      i.fa.fa-bomb.fa-4x
+                  tr
+                    td.aligncenter {{::ev.promotion.end_date | amCalendar}}
+                  tr
+                    td.smallp_andfont Deadline
+      section.in_promotion(ng-if="!ev.in_promotion && user && (ev.creator.id === user.facebook.id || user.admin == true)", style="text-align:center;")
+        button.btn(ng-click="promote(ev)", ng-if="user && (ev.creator.id === user.facebook.id || user.admin == true)", style='background-color:red;color:white;text-align:center;')
+          i.fa.fa-bullhorn.fa-lg
+          | &nbsp Promote Event!
+
+      section.aligncenter 
+        .event-buttons
+          .event-rsvp-btns
+            button.btn.join(set-attendings,style='background-color:red;color:white;') {{::attending}} &nbsp &nbsp +6
+            button.btn.rsvp(ng-click="inviteFriends()",style='background-color:red;color:white;') Invite friends?  &nbsp &nbsp +3
+            button.btn.share(share-event, style='background-color:red;color:white;') Share?  &nbsp &nbsp +2
+      section.aligncenter
+        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
+          .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
+        .hidden-xs
+          .panel.panel-default
+            .panel-heading Players
+            .panel-body
+              p.promote-form(list-event-player, ng-hide='ev.list_event_players[0].uid') No Players yet !
+              ul.list-group
+                p(ng-hide='!ev.list_event_players[0].uid') {{::ev.list_event_players.length}} &nbsp Players !
+                input.form-control.input-sm(placeholder='Search player', type='text', ng-model='search.name')
+                hr
+                li.list-group-item.players(ng-repeat='player in ev.list_event_players')
+                  table
+                    tr
+                      td
+                        img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
+                      td
+                        table
+                          tr
+                            td.promote-form {{::player.name}}
+                          tr
+                            td.promote-form {{:: player.result }} pts
+                            td 
+                              button.btn(ng-if='player.result > user.result', ng-click="boostPlayer(player)") Boost
+                                i-fa-fa-flash.promote-form
+                li.list-group-item(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='player.facebook.id != ev.player_id')
+                  img.img-circle(ng-src='{{::"http://graph.facebook.com/" + player.uid + "/picture?type=square"}}', ng-alt='{{::player.name}}')
+                  | {{:: player.result }} pts
+                  button.btn.btn-primary Boost
+                  i-fa-fa-flash
+    .right-container.col-xs-12.col-sm-12.col-md-4.col-lg-4
+      section.aligncenter
+        button.btn(ng-click="purchase()",style='background-color:red;color:white;') Purchase a ticket
