@@ -20,14 +20,17 @@ app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope)
     return $http.get('/api/autocomplete/locations', {
       params: {
         q: val,
-        lang: $rootScope.lang
+        lang: $rootScope.lang,
+        lng: $rootScope.loc.lng,
+        lat: $rootScope.loc.lat
       }
     }).then(function(response) {
-      return response.data.filter(function(location) {
-        if (location.types.indexOf("locality") !== -1 || location.types.indexOf("neighborhood") !== -1) {
-          return location;
-        }
-      });
+      return response.data;
+      // return response.data.filter(function(location) {
+      //   if (location.types.indexOf("locality") !== -1 || location.types.indexOf("neighborhood") !== -1) {
+      //     return location;
+      //   }
+      // });
     });
   };
 });
