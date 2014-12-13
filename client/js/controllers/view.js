@@ -87,7 +87,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
 
   $scope.purchase = function() {
     var handler = StripeCheckout.configure({
-      key: 'pk_test_ZQr0i3Ul8GWH2G92uyByRNV9',
+      key: 'pk_live_idzgWiVeCmU0u9XChNm6IFlw',
       image: $scope.ev.pic_cover.source,
       token: function(token) {
         // Use the token to create the charge with a server-side script.

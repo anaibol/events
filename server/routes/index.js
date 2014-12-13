@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
   // });
 
   app.get('/api/autocomplete/locations', function(req, res) {
-    var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?type=localit&key=AIzaSyBD3PFdwyYlZ8i-CgUK3kQDUBEfaPY2ALQ&input=' + req.param('q') + '&language=' + req.param('lang');
+    var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?types=(cities)&key=AIzaSyBD3PFdwyYlZ8i-CgUK3kQDUBEfaPY2ALQ&input=' + req.param('q') + '&language=' + req.param('lang');
     console.log(url);
     request(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
