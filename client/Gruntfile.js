@@ -232,4 +232,5 @@ module.exports = function(grunt) {
   grunt.registerTask('prod', ['build:prod', 'concurrent']);
   grunt.registerTask('default', ['build:dev', 'concurrent']);
 
+  grunt.task.run('notify_hooks');
 };

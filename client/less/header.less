@@ -9,9 +9,9 @@ header {
   z-index: 1004;
   box-shadow: 0 2px 2px rgba(0,0,0,.2);
 
-  * {
-    text-shadow: rgba(100, 100, 100 ,0.6) 0 1px 2px;
-  }
+  // * {
+  //   text-shadow: rgba(100, 100, 100 ,0.6) 0 1px 2px;
+  // }
 
   .navbar-inverse {
     background-color: @red;
@@ -84,12 +84,35 @@ header {
         margin: 0;
 
         .form-control-wrapper {
+          padding-left: 24px;
           // overflow: hidden;
 
           .dropdown-menu {
             width: 100%;
             left: 0 !important;
             border-radius: 0;
+            margin-top: -2px !important;
+            padding-left: 24px;
+            padding-top: 0;
+            background: transparent !important;
+
+            li {
+              background-color: white;
+              text-shadow: none;
+
+              a {
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                strong {
+                  color: black;
+                }
+              }
+            }
+
+            > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+
+            }
           }
         }
 
@@ -104,12 +127,13 @@ header {
         i {
           position: absolute;
           line-height: 28px;
+          left: 0;
+          top: 0;
         }
 
         input {
           color: white;
           font-size: 20px;
-          margin-left: 24px;
           font-family: 'Open Sans';
 
           &:focus {
