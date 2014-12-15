@@ -1,4 +1,4 @@
-app.controller('ViewGameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
+app.controller('GameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
   $scope.ev = ev;
 
   $scope.descriptionOpened = false;

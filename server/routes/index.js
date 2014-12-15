@@ -82,6 +82,18 @@ module.exports = function(app, passport) {
     });
   });
 
+  app.get('/:city/:slug/:eid/game', function(req, res) {
+    getLocFromSlug(req.params.city, function(loc) {
+      res.render('index', {
+        title: 'Wooepa',
+        is_mobile: req.is_mobile,
+        user: req.user ? JSON.stringify(req.user) : 'null',
+        fbAppId: global.fbAppId,
+        loc: loc
+      });
+    });
+  });
+
   app.get('/:city', function(req, res) {
     getLocFromSlug(req.params.city, function(loc) {
       req.session.loc = loc;
@@ -117,6 +129,7 @@ module.exports = function(app, passport) {
 
           loc = {
             city: loc.address_components[0].long_name,
+            citySlug: slug,
             lng: loc.geometry.location.lng,
             lat: loc.geometry.location.lat
           };

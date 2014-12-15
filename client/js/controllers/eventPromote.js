@@ -23,7 +23,7 @@ app.controller('EventPromoteCtrl', function($scope, $modalInstance, ev, $http, $
             },
             url: '/api/promote_event/' + $scope.ev.eid
           }).success(function(){
-              ev.in_promotion = true;
+              ev.promoted = true;
           });
   $modalInstance.close($scope.ev.promotion);  
   };

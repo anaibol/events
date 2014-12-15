@@ -41,6 +41,5 @@
 
   //- button.btn.btn-default(ng-click="getMore()") Get more events
 
-#list-overlay(ng-class="{visible: $state.current.name === 'list.view'}")
-#list-overlay(ng-class="{visible: $state.current.name === 'list.game'}")
+#list-overlay(ng-class="{visible: $state.current.parent !== '' &&  $state.current.name !== 'list'}")
 ui-view(autoscroll='true')

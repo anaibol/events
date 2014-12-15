@@ -3,7 +3,7 @@
     .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
-      section.in_promotion(ng-if="ev.in_promotion")
+      section.promoted(ng-if="ev.promoted")
         .panel-success
           .panel-heading.aligncenter(style="border-color:rgba(233, 198, 226, 0);") Game Active
           table.marginstd
@@ -35,7 +35,7 @@
                     td.aligncenter {{::ev.promotion.end_date | amCalendar}}
                   tr
                     td.smallp_andfont Deadline
-      section.in_promotion(ng-if="!ev.in_promotion && user && (ev.creator.id === user.facebook.id || user.admin == true)", style="text-align:center;")
+      section.promoted(ng-if="!ev.promoted && user && (ev.creator.id === user.facebook.id || user.admin == true)", style="text-align:center;")
         button.btn(ng-click="promote(ev)", ng-if="user && (ev.creator.id === user.facebook.id || user.admin == true)", style='background-color:red;color:white;text-align:center;')
           i.fa.fa-bullhorn.fa-lg
           | &nbsp Promote Event!
@@ -47,7 +47,7 @@
             button.btn.rsvp(ng-click="inviteFriends()",style='background-color:red;color:white;') Invite friends?  &nbsp &nbsp +3
             button.btn.share(share-event, style='background-color:red;color:white;') Share?  &nbsp &nbsp +2
       section.aligncenter
-        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
+        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
         .hidden-xs
           .panel.panel-default

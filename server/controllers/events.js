@@ -219,7 +219,7 @@ exports.get = function(req, res) {
           break;
 
         case 'promoted':
-          query.in_promotion = true;
+          query.promoted = true;
 
           break;
 
@@ -312,7 +312,7 @@ exports.get = function(req, res) {
   //     break;
 
   //   case 'promoted':
-  //     query.in_promotion = true;
+  //     query.promoted = true;
 
   //     delete query.tags;
   //     delete query.$near;
