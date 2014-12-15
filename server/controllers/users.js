@@ -12,27 +12,18 @@ exports.authCallback = function(req, res) {
   if (req.session.redirectUrl) {
     res.redirect(req.session.redirectUrl);
   } else {
-    if (req && req.query && req.request_ids)
-    {
-      req.query.request_ids = req.query.request_ids.split(',')[0];
-      var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
-
-      console.log(query);
-
-      graph.get(query, function(err, data) {
-        console.log(err);
-        console.log(data.data);
-        res.send( '<!DOCTYPE html>' +
-                  '<body>' +
-                    '<script type="text/javascript">' +
-                      'top.location.href = "' + data.data + '";' +
-                    '</script>' +
-                  '</body>' +
-                '</html>' );
-      });
-    }
-  }
-  
+    req.query.request_ids = req.query.request_ids.split(',')[0];
+    var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
+    graph.get(query, function(err, data) {
+      res.send( '<!DOCTYPE html>' +
+                '<body>' +
+                  '<script type="text/javascript">' +
+                    'top.location.href = "' + data.data + '";' +
+                  '</script>' +
+                '</body>' +
+              '</html>' );
+    });
+  }  
 };
 
 /**

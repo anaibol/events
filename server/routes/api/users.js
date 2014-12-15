@@ -17,11 +17,6 @@ module.exports = function(app, passport) {
     scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests']
   }), users.authCallback);
 
-  app.get('/auth/facebook/callback', passport.authenticate('facebook-canvas', {
-    failureRedirect: '/signin'
-  }), users.authCallback);
-
-
   app.get('/auth/facebook/canvas/autologin', function( req, res ){
     res.send( '<!DOCTYPE html>' +
                 '<body>' +
