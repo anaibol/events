@@ -42,7 +42,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
         }
       }
     })
-        .state('list.game', {
+    .state('list.game', {
       url: '/slug/:eid/game',
       templateUrl: 'event/viewgame',
       controller: 'ViewGameCtrl',

@@ -35,27 +35,11 @@ header {
     }
 
     .login {
-      background-image: url('/img/facebook.png');
-      margin: 0;
-      height: 50px;
-      width: 100px;
-      text-indent: -9999px;
-      background-position-y: 3px;
-      background-repeat: no-repeat;
 
-      & {
-        .xs({
-          margin-right: 15px;
-        });
-      }
     }
 
     .container {
-      & {
-        .xs({
-          margin: 0;
-        });
-      }
+      padding: 0;
     }
 
     .navbar-header {
@@ -98,6 +82,16 @@ header {
         border: none;
         padding: 10px;
         margin: 0;
+
+        .form-control-wrapper {
+          // overflow: hidden;
+
+          .dropdown-menu {
+            width: 100%;
+            left: 0 !important;
+            border-radius: 0;
+          }
+        }
 
         ::-moz-placeholder {
           color: white;

@@ -30,18 +30,15 @@
   }
 
   section {
-    // background: white;
     padding: 20px;
     margin: 10px 0;
     float: left;
     width: 100%;
     border-radius: 2px;
 
-    & {
-      .xs({
-        height:: 100%;
-      });
-    }
+    // &.xs({
+    //   height: 100%;
+    // });
   
     position: relative;
     overflow: hidden;
@@ -214,12 +211,10 @@
     }
   }
 
-  & {
-    .xs({
-      position: relative;
-      padding-top: 0;
-    });
-  }
+  // &.xs({
+  //   position: relative;
+  //   padding-top: 0;
+  // });
 
   // background-color: white;
   // // padding: 25px;
@@ -313,22 +308,22 @@
   border-spacing: 40px 5px;
 }
 .glyphicon {
-display: inline-block;
-font: normal normal normal 14px/1 FontAwesome;
-font-size: inherit;
-text-rendering: auto;
--webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
 }
 .glyphicon-chevron-up:before  { content: @fa-var-chevron-up; color:black;}
 .glyphicon-chevron-down:before{ content: @fa-var-chevron-down; color:black;}
 .info {
-        width: 100%;
-        .title {
-          font-size: 25px;
-          margin: 0;
-          text-shadow: 0 1px 2px black;
-        }
-      }
+  width: 100%;
+  .title {
+    font-size: 25px;
+    margin: 0;
+    text-shadow: 0 1px 2px black;
+  }
+}
 .rsvp {
   margin-left:5%;
   margin-right:5%; 

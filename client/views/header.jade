@@ -2,7 +2,7 @@ header
   nav.navbar-inverse(role="navigation", ng-controller='HeaderCtrl')
     .container
       .navbar-header
-        a.navbar-brand(href='/', ui-sref="list") W!
+        a.hidden-xs.navbar-brand(href='/', ui-sref="list") W!
           i.fa.fa-tag
         button.navbar-toggle(type='button', ng-click="$root.menuOpen = !$root.menuOpen")
           span.sr-only
@@ -14,7 +14,7 @@ header
             input.form-control.col-lg-8(type="text", typeahead="location.description for location in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.loc.city", ng-controller="LocationpickerCtrl", id="test123")
             //- placeholder="Type a city or location", 
             span.material-input
-        a.navbar-brand(href='', ui-sref="in_promotion") Play!
+        a.hidden-xs.navbar-brand(href='', ui-sref="in_promotion") Play!
         ul.nav.navbar-nav.navbar-right
           li.dropdown(dropdown, is-open="dropDownIsOpen", ng-if='!$root.isMobile && $root.user')
             a.dropdown-toggle(href='#', dropdown-toggle)
@@ -31,4 +31,6 @@ header
                 a(href="/auth/signout", target="_self" translate) Logout
                   i.fa.fa-sign-out
           li(ng-if='!$root.user')
-            a.login(ng-href="/auth/facebook?redirectUrl={{$root.location.path() | encodeUri}}?{{$root.stateParams | encodeUri}}", translate) Login
+            a.login(ng-href="/auth/facebook?redirectUrl={{$root.location.path() | encodeUri}}?{{$root.stateParams | encodeUri}}", translate)
+              i.fa.fa-facebook
+              | Login

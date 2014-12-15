@@ -2,6 +2,7 @@
 @sm: ~'(min-width: @{screen-sm-min}) and (max-width: @{screen-sm-max})';
 @md: ~'(min-width: @{screen-md-min}) and (max-width: @{screen-md-max})';
 @lg: ~'(min-width: @{screen-lg-min})';
+@fullhd: ~'(min-width: 1920px)';
 .xs(@rules) {
   @media @xs {
     @rules();
@@ -19,6 +20,11 @@
 }
 .lg(@rules) {
   @media @lg {
+    @rules();
+  }
+}
+.fullhd(@rules) {
+  @media @fullhd {
     @rules();
   }
 }
@@ -96,11 +102,6 @@ a:hover {
 * {
   -webkit-user-select: none;
 }
-
-// .lightbox-modal .modal-dialog, .lightbox-modal .modal-dialog img {
-//   transition: height .3s;
-//   transition: width .3s;
-// }
 
 .noscroll {
   overflow: hidden;
