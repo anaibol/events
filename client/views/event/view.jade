@@ -107,4 +107,15 @@
 
       section
         button.btn.btn-primary(ng-click="purchase()") Purchase a ticket
+
+        .event-buttons
+          .event-rsvp-btns
+            button.btn.btn-primary.join(set-attendings) {{::attending}}
+          .event-rsvp-btns
+            button.btn.btn-primary.invite(ng-click="inviteFriends()") Invite friends?
+          .event-rsvp-btns
+            button.btn.btn-primary.share(share-event) Share?
+        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
+          .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
+
 #list-overlay(ng-class="{visible: $state.current.name === 'list.game'}")

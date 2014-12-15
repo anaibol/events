@@ -1,6 +1,6 @@
 app.controller('myEventsCtrl', function($scope, moment, $http) {
   var url = document.location.pathname;
-  if (url.substring(0, 1) == '/') { 
+  if (url.substring(0, 1) == '/') {
   url = url.substring(1);
 }
   if (url == "")
