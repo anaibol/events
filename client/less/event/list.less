@@ -77,47 +77,14 @@
         }
       }
       .bottom {
-        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
-        display: flex;
-        justify-content: center;
-        align-content: center;
+        text-shadow: 0 1px 1px black;
 
-        > div {
-          text-align: center;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 0;
-
-          i {
-            display: table;
-            font-size: 20px;
-          }
-
-          span {
-            font-size: 16px;
-            line-height: 18px;
-          }
-
-          &.attending {
-            span {
-              font-size: 16px;
-            }
-
-            i {
-              font-size: 16px;
-            }
-          }
-
-          &.location {
-            span {
-              font-size: 14px;
-            }
-
-            i {
-              font-size: 20px;
-            }
-          }
+        .date, .time {
+          display: inline-block;
+          margin-right: 5px;
+        }
+        .place:hover {
+          color: #8a0808;
         }
       }
       &:hover {

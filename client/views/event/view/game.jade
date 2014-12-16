@@ -36,24 +36,20 @@
                   tr
                     td.smallp_andfont Deadline
       section.in_promotion(ng-if="ev.list_event_players[0].uid", id="winner", style="text-align:center;")
-        .centertable
-          table
-            tr
-              td
-                 img.img-circle(ng-src='{{::"http://graph.facebook.com/" + ev.winner.uid + "/picture?type=square"}}', ng- alt='{{::ev.winner.name}}')
-              td
-                 &nbsp {{::ev.winner.name}} is currently winning with {{::ev.winner.result}} points !
+        span.aligncenter
+          img.img-circle(ng-src='{{::"http://graph.facebook.com/" + ev.winner.uid + "/picture?type=square"}}', ng- alt='{{::ev.winner.name}}')
+          &nbsp {{::ev.winner.name}} is currently winning with {{::ev.winner.result}} points !
       section.aligncenter 
         .event-buttons
           .event-rsvp-btns
-            button.btn.join(set-attendings,style='background-color:red;color:white;')
-              i.fa.fa-facebook
+            button.btn.btn-primary.join(set-attendings)
+              i.fa.fa-thumbs-o-up
               &nbsp {{::attending}} &nbsp &nbsp +6
-            button.btn.rsvp(ng-click="inviteFriends()",style='background-color:red;color:white;')
-              i.fa.fa-facebook
+            button.btn.btn-primary.rsvp(ng-click="inviteFriends()")
+              i.fa.fa-users
               anbsp Invite friends?  &nbsp &nbsp +3
-            button.btn.share(share-event, style='background-color:red;color:white;')
-              i.fa.fa-facebook
+            button.btn.btn-primary.share(share-event)
+              i.fa.fa-share-alt
               &nbsp Share?  &nbsp &nbsp +2
       section.aligncenter
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
@@ -78,8 +74,10 @@
                         tr
                           td.promote-form {{:: player.result }} pts
                           td 
-                            button.btn(ng-if='player.result > user.result', ng-click="boostPlayer(player)") Boost
+                            button.btn.success(ng-if='player.result > user.result', ng-click="boostPlayer(player)") Boost
                               i-fa-fa-flash.promote-form
     .right-container.col-xs-12.col-sm-12.col-md-4.col-lg-4
       section.aligncenter
-        button.btn(ng-click="purchase()",style='background-color:red;color:white;') Purchase a ticket
+        button.btn.btn-danger(ng-click="purchase()") 
+          i.fa.fa-ticket
+          |Purchase a ticket

@@ -84,7 +84,6 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
     $http.get('/api/resolve/' + $scope.ev.eid + '/results');
   }
 
-
   $scope.purchase = function() {
     var handler = StripeCheckout.configure({
       key: 'pk_live_idzgWiVeCmU0u9XChNm6IFlw',

@@ -6,7 +6,7 @@
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
       section.promoted(ng-if="ev.promoted", ui-sref="list.view.game()")
         .panel-success
-          .panel-heading.aligncenter Game Active
+          .panel-heading.aligncenter(style="border-color:rgba(233, 198, 226, 0);") Game Active
           table.marginstd
             tr
               td
@@ -37,7 +37,12 @@
                   tr
                     td.smallp_andfont Deadline
       section.aligncenter
-        button.btn.btn-warning(ui-sref="list.view.game()") Play!
+        button.btn.btn-warning(ng-click="promote(ev)", ng-if="user && (ev.creator.id === user.facebook.id || user.admin == true)")
+          i.fa.fa-bullhorn.fa-lg
+          | &nbsp Promote Event!
+        button.btn.btn-warning(ui-sref="game({city:$root.loc.city, slug:ev.slug, eid:ev.eid})") 
+          i.fa.fa-gamepad.fa-lg
+          | &nbsp Play!
       section.info
         .info
           h3.title.truncate {{::ev.name}}
@@ -59,11 +64,11 @@
               i.fa.fa-tags.fa-lg
               span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}} &nbsp
       section
-        div.aligncenter
+        div.aligncenter.attendees
           span.fontlarge {{::ev.attending_count}} &nbsp
           br
           span.fontlarge Attendees
-        div.aligncenter(ng-if="ev.price.full")
+        div.aligncenter.marginprice(ng-if="ev.price.full")
           span.fontlarge{{ev.price.full}} &nbsp
           br
           span.fontlarge Price

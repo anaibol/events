@@ -24,62 +24,6 @@ app.controller('GameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
       $scope.attending= 'Join';
   }
 
-  fbvideos.getFbVideo($scope.ev.eid).success(function(feed) {
-    if (feed){
-      fbvideos.getFbLink(feed, function(res){
-        if (res)
-          $scope.videos = res;
-      });
-    }
-  });
-
-  fbphoto.getFbPics($scope.ev.eid).success(function(res) {
-    var pics = res.data;
-    $scope.fbpics = [];
-
-    if (!pics) {
-      return;
-    }
-
-    for (var i = pics.length - 1; i >= 0; i--) {
-      var pic = pics[i];
-
-      var image = {
-        url: 'https://graph.facebook.com/' + pic.id + '/picture?width=9999&height=9999',
-        thumbUrl: 'https://graph.facebook.com/' + pic.id + '/picture?width=350&height=350'
-      };
-
-      $scope.fbpics.push(image);
-    }
-  });
-
-  Instagram.getLocationId($scope.ev.venue.coord.lat, $scope.ev.venue.coord.lng).success(function(res) {
-    var locations = res.data;
-
-    if (!locations.length) {
-      return;
-    }
-
-    Instagram.getPhotosByLocationId(locations[0].id, 10).success(function(res) {
-      var pics = res.data;
-
-      if (!pics) {
-        return;
-      }
-
-      $scope.instagramPhotos = [];
-
-      for (var i = res.data.length - 1; i >= 0; i--) {
-        var new_url = 'https://' + res.data[i].images.standard_resolution.url.substring(7);
-        var new_thumbUrl = 'https://' + res.data[i].images.low_resolution.url.substring(7);
-        $scope.instagramPhotos[i] = {
-          url: new_url,
-          thumbUrl: new_thumbUrl
-        };
-      }
-    });
-  });
-
   if ($rootScope.isMobile) {
     $http.get('/api/resolve/' + $scope.ev.eid + '/results');
   }
