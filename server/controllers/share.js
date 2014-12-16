@@ -57,7 +57,7 @@ exports.share = function(req, res) {
   Ev.findById(req.params.eid, function(ev) {
     if (!ev)
       return (0);
-    if (ev.in_promotion == true && ev.promotion.reward)
+    if (ev.promoted == true && ev.promotion.reward)
       var name = ev.promotion.reward;
     else if (ev.name.length > 56)
       var name = ev.name.substring(0, 56) + "..."

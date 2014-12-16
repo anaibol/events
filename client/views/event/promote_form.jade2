@@ -16,7 +16,7 @@ form.event-form.form-horizontal
         .control-group
           label.control-label Commentary
           textarea#description.form-control(required='required', ng-model='ev.promotion.commentary', cols='30', rows='5', placeholder='Content')
-        input(type='hidden', name='in_promotion', ng-model='ev.in_promotion', value='value', ng-init='ev.in_promotion=true')
+        input(type='hidden', name='promoted', ng-model='ev.promoted', value='value', ng-init='ev.promoted=true')
         .modal-footer
           button.btn.btn-primary(ng-click='submit()')
             i.fui-check

@@ -104,12 +104,19 @@ app.directive('listEventPlayer', function($http, $rootScope) {
       }).success(function(data) {
               scope.ev.list_event_players = data;
               var i = 0;
+              var winner ={};
+              winner.result = 0;
               while (scope.ev.list_event_players[i])
               {
-                  if (scope.ev.list_event_players[i].uid == parseInt(scope.user.facebook.id))
-                      scope.user.result = scope.ev.list_event_players[i].result;
+                if (scope.ev.list_event_players[i].result > winner.result)
+                {
+                  winner = scope.ev.list_event_players[i];
+                }
+                if (scope.ev.list_event_players[i].uid == parseInt(scope.user.facebook.id))
+                  scope.user.result = scope.ev.list_event_players[i].result;
                 ++i;
               }
+          scope.ev.winner = winner;
         });
     }
   };

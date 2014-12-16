@@ -42,16 +42,11 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
         }
       }
     })
-    .state('list.game', {
-      url: '/slug/:eid/game',
-      templateUrl: 'event/viewgame',
-      controller: 'ViewGameCtrl',
-      parent: 'list',
-      resolve: {
-        ev: function(Event, $stateParams) {
-          return Event.getOne($stateParams.eid);
-        }
-      }
+    .state('list.view.game', {
+      url: '/game',
+      templateUrl: 'event/view/game',
+      controller: 'GameCtrl',
+      parent: 'list.view'
     })
     .state('me', {
       parent: '',
@@ -69,10 +64,10 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
         $window.location.href = $window.location;
       }
     })
-    .state('in_promotion', {
-      url: '/events/in_promotion',
-      controller: 'inPromotionCtrl',
-      templateUrl: 'event/in_promotion'
+    .state('promoted', {
+      url: '/:city/promoted',
+      controller: 'promotedCtrl',
+      templateUrl: 'event/promoted'
     })
     .state('me.logout', {
       parent: 'me',
@@ -102,6 +97,8 @@ app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $windo
   //     console.log($rootScope.address);
   //   });
   // });
+
+  $window.$rootScope = $rootScope;
 
   $rootScope.lang = navigator.language || navigator.userLanguage;
 
@@ -162,15 +159,26 @@ app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $windo
   //   // }
   // }
 
+  $rootScope.login = function() {
+    ezfb.login(function(response) {
+      console.log(response);
+    }, {scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests', 'user_likes']});
+  };
+
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     $rootScope.stateParams = $querystring.toString(_.compactObject(toParams));
-
  
     if (toParams.slug === 'auth') {
       window.location.href = window.location.href;
     }
+    console.log($window.redirectPath);
+    if ($window.redirectPath && $window.redirectPath !== 'undefined') {
+      $location.path($window.redirectPath);
+    }
 
-    // console.log(toState);
+    console.log(toState);
+
+     
     // if (!toState.parent) {
     //   $rootScope.listRendered = true;
     // } else if (!$rootScope.listRendered) {

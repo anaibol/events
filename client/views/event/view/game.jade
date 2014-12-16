@@ -3,7 +3,7 @@
     .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
-      section.in_promotion(ng-if="ev.in_promotion")
+      section.promoted(ng-if="ev.promoted")
         .panel-success
           .panel-heading.aligncenter(style="border-color:rgba(233, 198, 226, 0);") Game Active
           table.marginstd
@@ -56,7 +56,7 @@
               i.fa.fa-facebook
               &nbsp Share?  &nbsp &nbsp +2
       section.aligncenter
-        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
+        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
         .hidden-xs
           .panel.panel-default

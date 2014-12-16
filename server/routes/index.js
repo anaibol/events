@@ -54,7 +54,10 @@ module.exports = function(app, passport) {
       var i = 0;
       var longitude = loc.lon;
       var latitude = loc.lat;
-      res.redirect('/' + loc.city);
+
+      if (loc.city) {
+        res.redirect('/' + loc.city);
+      }
     });
   });
 
@@ -71,6 +74,18 @@ module.exports = function(app, passport) {
   });
 
   app.get('/:city/:slug/:eid', function(req, res) {
+    getLocFromSlug(req.params.city, function(loc) {
+      res.render('index', {
+        title: 'Wooepa',
+        is_mobile: req.is_mobile,
+        user: req.user ? JSON.stringify(req.user) : 'null',
+        fbAppId: global.fbAppId,
+        loc: loc
+      });
+    });
+  });
+
+  app.get('/:city/:slug/:eid/game', function(req, res) {
     getLocFromSlug(req.params.city, function(loc) {
       res.render('index', {
         title: 'Wooepa',
@@ -117,6 +132,7 @@ module.exports = function(app, passport) {
 
           loc = {
             city: loc.address_components[0].long_name,
+            citySlug: slug,
             lng: loc.geometry.location.lng,
             lat: loc.geometry.location.lat
           };

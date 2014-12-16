@@ -1,18 +1,19 @@
 #view
+  ui-view(autoscroll='true')
   .container(off-click="$state.go('^')", off-click-filter="header, .modal", adaptive-background, ab-bg-to-class="description")
     .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header(ng-if="ev.pic_cover && ev.pic_cover.source")
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
-      section.in_promotion(ng-if="ev.in_promotion", ui-sref="list.game({slug: ev.slug, eid: ev.eid})")
+      section.promoted(ng-if="ev.promoted", ui-sref="list.view.game()")
         .panel-success
-          .panel-heading.aligncenter(style="border-color:rgba(233, 198, 226, 0);") Game Active
+          .panel-heading.aligncenter Game Active
           table.marginstd
             tr
               td
                 table.promoterinfo
                   tr
                     td.aligncenter 
-                      img.img-circle(style="width:70%;",ng-src="{{::ev.promoter.picture}}", ng-alt="{{::ev.promoter.name}}")
+                      img.img-circle(ng-src="{{::ev.promoter.picture}}", ng-alt="{{::ev.promoter.name}}")
                   tr
                     td.aligncenter {{::ev.promoter.name}}
                   tr
@@ -36,7 +37,7 @@
                   tr
                     td.smallp_andfont Deadline
       section.aligncenter
-        button.btn(ui-sref="list.game({slug:ev.slug, eid:ev.eid})",style='background-color:red;color:white;text-align:center;') Play!
+        button.btn.btn-warning(ui-sref="list.view.game()") Play!
       section.info
         .info
           h3.title.truncate {{::ev.name}}
@@ -56,13 +57,13 @@
           tr
             td
               i.fa.fa-tags.fa-lg
-              span.tag(style="font-size:larger;", ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}} &nbsp
+              span.tag(ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}") {{::tag}} &nbsp
       section
-        div.aligncenter(style="width:30%;display:inline-block;margin-left:15%")
+        div.aligncenter
           span.fontlarge {{::ev.attending_count}} &nbsp
           br
           span.fontlarge Attendees
-        div.aligncenter(ng-if="ev.price.full", style='display:inline-block;width:30%;margin-left:20%')
+        div.aligncenter(ng-if="ev.price.full")
           span.fontlarge{{ev.price.full}} &nbsp
           br
           span.fontlarge Price
@@ -106,16 +107,21 @@
         a.map(href="https://maps.google.com/maps?q={{::ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank', style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center={{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}}&zoom=14&size=640x280&markers=color:blue|{{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}})")
 
       section
-        button.btn.btn-primary(ng-click="purchase()") Purchase a ticket
-
+        button.btn.btn-primary(ng-click="purchase()")
+          i.fa.fa-ticket
+          | Purchase a ticket
         .event-buttons
           .event-rsvp-btns
-            button.btn.btn-primary.join(set-attendings) {{::attending}}
+            button.btn.btn-primary.join(set-attendings)
+              i.fa.fa-thumbs-o-up
+              | {{::attending}}
           .event-rsvp-btns
-            button.btn.btn-primary.invite(ng-click="inviteFriends()") Invite friends?
+            button.btn.btn-primary.invite(ng-click="inviteFriends()")
+              i.fa.fa-users
+              | Invite friends
           .event-rsvp-btns
-            button.btn.btn-primary.share(share-event) Share?
-        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.in_promotion")
+            button.btn.btn-primary.share(share-event)
+              i.fa.fa-share-alt
+              | Share
+        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
-
-#list-overlay(ng-class="{visible: $state.current.name === 'list.game'}")
