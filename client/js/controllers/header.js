@@ -1,4 +1,4 @@
-app.controller('HeaderCtrl', function($scope) {
+app.controller('HeaderCtrl', function($scope, $rootScope) {
 	function getStringDate(aDate) {
 		var dd = aDate;
 		var yy = dd.getYear();

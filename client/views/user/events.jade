@@ -4,7 +4,7 @@
   br
   button.btn(ng-click='updateEvents()', style='background-color:red;color:white;') Update
  .events.loading.col-xs-12.col-sm-9.col-md-9.col-lg-10(isotope)
-    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events | orderBy:\'start_time\'", ui-sref="list.view({slug: ev.slug, eid: ev.eid})")
+    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events | orderBy:\'start_time\'", ui-sref="list.view({city: $root.loc.city, slug: ev.slug, eid: ev.eid})")
       .content(adaptive-background)
         .top
           a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{::ev.name}}

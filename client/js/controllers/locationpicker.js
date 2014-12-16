@@ -2,7 +2,7 @@ app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope)
   $scope.locationSelected = $rootScope.loc.city;
   $scope.onSelect = function($item, $model, $label) {
     $rootScope.loc.city = $item.description.split(',')[0];
-
+    $rootScope.loc.city = slug($rootScope.loc.city);
     $http.get('/api/autocomplete/placeid', {
       params: {
         placeid: $item.place_id,
@@ -16,7 +16,7 @@ app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope)
       $state.go('list', {
         lng: $rootScope.loc.lng,
         lat: $rootScope.loc.lat,
-        city: slug($rootScope.loc.city)
+        city: $rootScope.loc.city
       });
     });
   };
@@ -38,8 +38,6 @@ app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope)
       // });
     });
   };
-});
-
 function slug(str) {
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   str = str.toLowerCase();
@@ -57,3 +55,4 @@ function slug(str) {
 
   return str;
 }
+});

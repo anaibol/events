@@ -2,6 +2,7 @@ var Results = db.get('results');
 var Invitations = db.get('invitations');
 var Res = require('./resolve.js');
 var Users = db.get('users');
+var nodemailer = require('nodemailer');
 
 function AddPointsBoost(uid, eid, point) {
   Results.findOne({
@@ -22,6 +23,27 @@ function AddPointsBoost(uid, eid, point) {
 }
 
 function AddPoints(uid, eid, point, type) {
+// var transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//         user: 'wooepa@gmail.com',
+//         pass: 'wwwwoo123'
+//     }
+// });
+// var mailOptions = {
+//     from: 'Tristan Roby ✔ <hello@wooepa.com>', // sender address
+//     to: 'tristan.roby@epitech.eu', // list of receivers
+//     subject: 'Hello ✔', // Subject line
+//     text: 'Hello world ✔', // plaintext body
+//     html: '<b>Hello world ✔</b>' // html body
+// };
+// transporter.sendMail(mailOptions, function(error, info){
+//     if(error){
+//         console.log(error);
+//     }else{
+//         console.log('Message sent: ' + info.response);
+//     }
+// });
   Results.findOne({
     user_id: uid,
     event_id: eid

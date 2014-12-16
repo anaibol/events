@@ -74,8 +74,8 @@
                         tr
                           td.promote-form {{:: player.result }} pts
                           td 
-                            button.btn.success(ng-if='player.result > user.result', ng-click="boostPlayer(player)") Boost
-                              i-fa-fa-flash.promote-form
+                            button.btn.btn-success(ng-if='player.result > user.result', ng-click="boostPlayer(player)") Boost &nbsp
+                              i.fa.fa-bolt.promote-form
     .right-container.col-xs-12.col-sm-12.col-md-4.col-lg-4
       section.aligncenter
         button.btn.btn-danger(ng-click="purchase()") 

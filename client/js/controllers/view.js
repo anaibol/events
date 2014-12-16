@@ -1,6 +1,5 @@
 app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
   $scope.ev = ev;
-
   $scope.descriptionOpened = false;
   if ($scope.ev.price.edited) {
     $scope.ev.price.full = $scope.ev.price.edited;
