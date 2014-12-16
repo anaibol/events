@@ -159,15 +159,26 @@ app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $windo
   //   // }
   // }
 
+  $rootScope.login = function() {
+    ezfb.login(function(response) {
+      console.log(response);
+    }, {scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests', 'user_likes']});
+  };
+
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
     $rootScope.stateParams = $querystring.toString(_.compactObject(toParams));
-
  
     if (toParams.slug === 'auth') {
       window.location.href = window.location.href;
     }
+    console.log($window.redirectPath);
+    if ($window.redirectPath && $window.redirectPath !== 'undefined') {
+      $location.path($window.redirectPath);
+    }
 
     console.log(toState);
+
+     
     // if (!toState.parent) {
     //   $rootScope.listRendered = true;
     // } else if (!$rootScope.listRendered) {

@@ -54,7 +54,10 @@ module.exports = function(app, passport) {
       var i = 0;
       var longitude = loc.lon;
       var latitude = loc.lat;
-      res.redirect('/' + loc.city);
+
+      if (loc.city) {
+        res.redirect('/' + loc.city);
+      }
     });
   });
 

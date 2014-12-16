@@ -1,4 +1,4 @@
-app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
+app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window ) {
   $scope.ev = ev;
 
   $scope.descriptionOpened = false;
@@ -144,7 +144,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
     ezfb.ui({
       method: 'apprequests',
       message: 'Invite your friends to play now.',
-      data: $window.location.href
+      data: window.location.pathname
     }, function(response) {
       if (response.to)
       {

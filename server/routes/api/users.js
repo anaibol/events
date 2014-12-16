@@ -9,12 +9,12 @@ module.exports = function(app, passport) {
     req.session.redirectUrl = req.query.redirectUrl;
     next();
   }, passport.authenticate('facebook', {
-    scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests'],
+    scope: ['email', 'create_event', 'rsvp_event', 'user_events', 'user_interests'],
     failureRedirect: '/signin'
   }));
 
   app.post('/auth/facebook/canvas', passport.authenticate('facebook-canvas', {
-    scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests']
+    scope: ['email', 'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests', 'user_likes']
   }), users.authCallback);
 
   app.get('/auth/facebook/canvas/autologin', function( req, res ){
@@ -26,6 +26,10 @@ module.exports = function(app, passport) {
                 '</body>' +
               '</html>' );
   });
+
+  app.get('/auth/facebook/callback', passport.authenticate('facebook-canvas', {
+    failureRedirect: '/signin'
+  }), users.authCallback);
 
   app.get('/:user/events', users.getEvents);
   app.get('/api/me/events', users.getMyEvents);

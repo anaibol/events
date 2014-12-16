@@ -31,6 +31,6 @@ header
                 a(href="/auth/signout", target="_self" translate) Logout
                   i.fa.fa-sign-out
           li(ng-if='!$root.user')
-            a.login(ng-href="/auth/facebook?redirectUrl={{$root.location.url()}}", translate)
+            a.login(ng-href="/auth/facebook?redirectUrl={{$root.location.url()}}", ng-click="$rootScope.login()", translate)
               i.fa.fa-facebook
               | Login
