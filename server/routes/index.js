@@ -56,7 +56,7 @@ module.exports = function(app, passport) {
       var latitude = loc.lat;
 
       if (loc.city) {
-        res.redirect('/' + loc.city);
+        res.redirect('/' + slug(loc.city));
       }
     });
   });
