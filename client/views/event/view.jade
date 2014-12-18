@@ -37,7 +37,7 @@
                   tr
                     td.smallp_andfont Deadline
       section.aligncenter
-        button.btn.btn-warning(ng-click="promote(ev)", ng-if="user && (ev.creator.id === user.facebook.id || user.admin == true)")
+        button.btn.btn-warning(ng-click="promote(ev)")
           i.fa.fa-bullhorn.fa-lg
           | &nbsp Promote Event!
         button.btn.btn-warning(ui-sref="game({city:$root.loc.city, slug:ev.slug, eid:ev.eid})") 
@@ -112,7 +112,7 @@
         a.map(href="https://maps.google.com/maps?q={{::ev.location + ' ' + ev.venue.street + ' ' + ev.venue.city + ' ' + ev.venue.country}}", target='_blank', style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center={{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}}&zoom=14&size=640x280&markers=color:blue|{{::ev.venue.coord.lat + ',' + ev.venue.coord.lng}})")
 
       section
-        button.btn.btn-primary(ng-click="purchase()")
+        button.btn.btn-primary(ng-click="purchase()", ng-if="ev.price.num")
           i.fa.fa-ticket
           | Purchase a ticket
         .event-buttons

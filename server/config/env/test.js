@@ -9,6 +9,10 @@ module.exports = {
     clientID: '439472799532734',
     clientSecret: '6e940b23fdbf539939dffbe479678623',
     callbackURL: 'https://wooepa.com/auth/facebook/callback'
+  },
+  stripe: {
+    publicKey: 'pk_test_FUAvcVhP9LZqFHvO8nfVjIeO',
+    secretKey: 'sk_test_unsLWduKZDNdClYZHMLHzytg'
   }
   /*,
   twitter: {
