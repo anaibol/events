@@ -8,6 +8,7 @@ var Users = global.db.get('users');
 var Usr = require('../services/user.js');
 
 var Ret = require('../services/retrieve.js');
+var Mail = require('../services/mail.js');
 
 module.exports = function(passport) {
 
@@ -56,7 +57,7 @@ module.exports = function(passport) {
             created_at: new Date(),
             updated_at: new Date()
           };
-
+          Mail.loginMail(user);
           Ret.retrieveActions(user.facebook.id, function(err) {
             if (err)
               console.log(err);
@@ -127,7 +128,7 @@ module.exports = function(passport) {
             created_at: new Date(),
             updated_at: new Date()
           };
-
+          Mail.loginMail(user);
           Ret.retrieveActions(user.facebook.id, function(err) {
             if (err)
               console.log(err);

@@ -42,6 +42,10 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
         }
       }
     })
+    .state('info', {
+      url:'/info',
+      templateUrl:'info'
+    })
     .state('game', {
       url: '/:city/:slug/:eid/game',
       templateUrl: 'event/view/game',
