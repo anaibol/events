@@ -40,7 +40,7 @@
         button.btn.btn-warning(ng-click="promote(ev)", ng-if="user && (ev.creator.id === user.facebook.id || user.admin == true)")
           i.fa.fa-bullhorn.fa-lg
           | &nbsp Promote Event!
-        button.btn.btn-warning(ui-sref="game({city:$root.loc.city, slug:ev.slug, eid:ev.eid})") 
+        button.btn.btn-warning(ui-sref="game({city:$root.loc.citySlug, slug:ev.slug, eid:ev.eid})") 
           i.fa.fa-gamepad.fa-lg
           | &nbsp Play!
       section.info
