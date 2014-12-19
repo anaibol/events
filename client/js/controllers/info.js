@@ -10,7 +10,6 @@ app.controller('infoCtrl', function($scope, $sce) {
   $scope.playbutton = $sce.trustAsResourceUrl('/img/getrewarded/playbutton.png');
   
   $scope.headermail = $sce.trustAsResourceUrl('/img/discoverevents/headermail.jpg');
-  $scope.footer = $sce.trustAsResourceUrl('/img/discoverevents/footer.jpg');
   $scope.loupemail = $sce.trustAsResourceUrl('/img/discoverevents/loupemail.png');
   $scope.cadeaumail = $sce.trustAsResourceUrl('/img/discoverevents/cadeaumail.png');
   $scope.megaphonemail = $sce.trustAsResourceUrl('/img/discoverevents/megaphonemail.png');
