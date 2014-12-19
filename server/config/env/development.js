@@ -8,8 +8,10 @@ module.exports = {
   facebook: {
     clientID: "1511193072439143",
     clientSecret: "2d463b32df69fd1f1e398868705ff0eb",
-    //clientID: "439472799532734",
-    //clientSecret: "6e940b23fdbf539939dffbe479678623",
     callbackURL: "http://localhost:3000/auth/facebook/callback"
+  },
+  stripe: {
+    publicKey: 'pk_test_FUAvcVhP9LZqFHvO8nfVjIeO',
+    secretKey: 'sk_test_unsLWduKZDNdClYZHMLHzytg'
   }
 };

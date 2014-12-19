@@ -14,7 +14,7 @@ var hasAuthorization = function(req, res, next) {
 
 module.exports = function(app) {
   app.get('/update', authorization.requiresLogin, hasAuthorization, events.updateAll);
-  app.post('/api/updateprice/:eid', events.updatePrice)
+  app.post('/api/updateprice/:eid', events.updatePrice);
   app.get('/import/user/:name', authorization.requiresLogin, hasAuthorization, events.importFromUser);
   app.get('/import/user/timeline/:name', authorization.requiresLogin, hasAuthorization, events.importFromUserTimeline);
   app.get('/import/page/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPage);
@@ -22,7 +22,9 @@ module.exports = function(app) {
   app.get('/import/event/:eid', authorization.requiresLogin, hasAuthorization, events.import);
   app.get('/api/events', events.get);
   app.get('/api/events/:eid', events.getOne);
-  app.post('/api/event/update/:eid', events.updatePrice)
+  app.post('/api/events/:eid/purchase', events.purchase);
+  app.post('/api/events/:eid/activate-game', events.activateGame);
+  app.post('/api/event/update/:eid', events.updatePrice);
   // app.put('/api/events/:eid', authorization.requiresLogin, hasAuthorization, events.update);
   // app.post('/api/events/:eid', authorization.requiresLogin, hasAuthorization, events.create);
   // app.delete('/api/events', authorization.requiresLogin, hasAuthorization, events.destroy);

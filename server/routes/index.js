@@ -67,7 +67,6 @@ module.exports = function(app, passport) {
         title: 'Wooepa',
         is_mobile: req.is_mobile,
         user: req.user ? JSON.stringify(req.user) : 'null',
-        fbAppId: global.fbAppId,
         loc: loc
       });
     });

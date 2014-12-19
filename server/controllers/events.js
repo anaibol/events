@@ -14,6 +14,8 @@ var Events = global.db.get('events');
 var Ev = require('../ev');
 var Resolve = require('../services/resolve.js');
 
+var stripe = require('stripe')(global.stripe.secretKey);
+
 function clone(a) {
   return JSON.parse(JSON.stringify(a));
 }
@@ -57,17 +59,41 @@ function getLocation(req, cb) {
   }
 }
 
-exports.importFromUser = function(req, res) {
-  // Ev.crawlUser(req.params.name, function (result) {
-  //   if (!result) {
-  //     Ev.getFromUser(req.params.name, null, function (result) {
-  //       res.send(result);
-  //     });
-  //   } else {
-  //     res.send(result);
-  //   }
-  // });
+exports.purchase = function(req, res) {
+  var stripeToken = req.body.stripeToken;
 
+  var charge = stripe.charges.create({
+    amount: req.body.amount, // amount in cents, again
+    currency: req.body.currency,
+    card: stripeToken.id,
+    description: stripeToken.email
+  }, function(err, charge) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(charge);
+    }
+  });
+};
+
+exports.activateGame = function(req, res) {
+  var stripeToken = req.body.stripeToken;
+
+  var charge = stripe.charges.create({
+    amount: req.body.amount, // amount in cents, again
+    currency: req.body.currency,
+    card: stripeToken.id,
+    description: stripeToken.email
+  }, function(err, charge) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(charge);
+    }
+  });
+};
+
+exports.importFromUser = function(req, res) {
   Ev.getFromUser(req.params.name, null, function(result) {
     res.send(result);
   });

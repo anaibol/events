@@ -28,6 +28,8 @@ module.exports = function(passport) {
   });
 
   global.fbAppId = global.config.facebook.clientID;
+  global.stripe = global.config.stripe;
+  global.stripePublicKey = stripe.publicKey;
 
   passport.use(new FacebookStrategy({
       clientID: global.config.facebook.clientID,

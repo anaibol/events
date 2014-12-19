@@ -23,6 +23,7 @@
     "request": "^2.45.0",
     "serve-favicon": "^2.1.5",
     "serve-static": "^1.6.3",
+    "stripe": "^3.0.2",
     "view-helpers": "^0.1.5"
   },
   "devDependencies": {
