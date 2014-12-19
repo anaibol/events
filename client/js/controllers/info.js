@@ -16,7 +16,7 @@ app.controller('infoCtrl', function($scope, $sce) {
   $scope.megaphonemail = $sce.trustAsResourceUrl('/img/discoverevents/megaphonemail.png');
   $scope.midbanner = $sce.trustAsResourceUrl('/img/discoverevents/midbanner.jpg');
   $scope.loupemailbot = $sce.trustAsResourceUrl('/img/discoverevents/loupemailbot.png');
-  
+  $scope.footer = $sce.trustAsResourceUrl('/img/discoverevents/footer.jpg');
   $scope.headerboost = $sce.trustAsResourceUrl('/img/boostyourevent/header.png');
   $scope.boostmidbanner = $sce.trustAsResourceUrl('/img/boostyourevent/midbanner.png');
 });
