@@ -42,9 +42,13 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
         }
       }
     })
-    .state('info', {
-      url:'/info',
-      templateUrl:'info'
+    .state('discoverevents', {
+      url:'/info/discover-events',
+      templateUrl:'discoverevents'
+    })
+    .state('getrewarded', {
+      url:'/info/get-rewarded',
+      templateUrl:'getrewarded'
     })
     .state('game', {
       url: '/:city/:slug/:eid/game',

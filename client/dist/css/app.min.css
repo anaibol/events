@@ -12037,50 +12037,6 @@ body#event-list-game #list {
   display: inline-block;
   margin-left: 40%;
 }
-#information {
-  background-color: white;
-  color: black;
-}
-#information .summary {
-  display: inline-flex;
-  width: 100%;
-  margin-top: 5%;
-  font-size: 1em;
-}
-#information .summary .span {
-  text-align: left;
-  margin-left: 10%;
-  width: 20%;
-}
-#information .summary .h3 {
-  color: red;
-}
-#information .summary .rightdiv {
-  margin-left: 25%;
-}
-#information .summary .aligncenter {
-  text-align: center;
-}
-#information .bottom .maindiv {
-  margin-top: 10%;
-  font-size: 20px;
-  margin-bottom: 10%;
-}
-#information .bottom .black {
-  text-align: center;
-  color: black;
-}
-#information .bottom .grey {
-  text-align: center;
-  color: grey;
-}
-#information .bottom .grey.small {
-  font-size: 10px;
-}
-#information .bottom .red {
-  text-align: center;
-  color: red;
-}
 #promote .medium-input {
   width: 25%;
   display: inline;
@@ -12636,4 +12592,122 @@ li.checked .fs-anchor {
 }
 .tags .tag-list {
   margin-top: 10px;
+}
+#getrewarded {
+  background-color: white;
+  color: black;
+}
+#getrewarded .summary {
+  width: 100%;
+  margin-top: 5%;
+  font-size: 1.5em;
+}
+#getrewarded .summary .span {
+  text-align: left;
+  margin-left: 10%;
+  width: 20%;
+}
+#getrewarded .summary .h3 {
+  color: red;
+  font-size: 2em;
+}
+#getrewarded .summary .getreward {
+  margin-top: 3%;
+  width: 5%;
+}
+#getrewarded .summary .black {
+  text-align: center;
+  color: black;
+}
+#getrewarded .summary .aligncenter {
+  text-align: center;
+}
+#getrewarded .bottom {
+  font-size: 1.5em;
+  margin-top: 5%;
+}
+#getrewarded .bottom .h3 {
+  color: blue;
+  margin-bottom: 5%;
+}
+#getrewarded .bottom .aligncenter {
+  text-align: center;
+}
+#getrewarded .bottom .maindiv {
+  margin-top: 10%;
+  font-size: 20px;
+  margin-bottom: 10%;
+}
+#getrewarded .bottom .black {
+  text-align: center;
+  color: black;
+}
+#getrewarded .bottom .grey {
+  text-align: center;
+  color: grey;
+}
+#getrewarded .bottom .grey.small {
+  font-size: 10px;
+}
+#getrewarded .bottom .red {
+  text-align: center;
+  color: red;
+}
+#getrewarded .end {
+  font-size: 1.5em;
+  margin-top: 3%;
+}
+#getrewarded .end .h3 {
+  color: red;
+}
+#getrewarded .end .grey {
+  text-align: center;
+  color: grey;
+}
+#getrewarded .end .grey.small {
+  font-size: 10px;
+}
+#information {
+  background-color: white;
+  color: black;
+}
+#information .summary {
+  display: inline-flex;
+  width: 100%;
+  margin-top: 5%;
+  font-size: 1em;
+}
+#information .summary .span {
+  text-align: left;
+  margin-left: 10%;
+  width: 20%;
+}
+#information .summary .h3 {
+  color: red;
+}
+#information .summary .rightdiv {
+  margin-left: 25%;
+}
+#information .summary .aligncenter {
+  text-align: center;
+}
+#information .bottom .maindiv {
+  margin-top: 10%;
+  font-size: 20px;
+  margin-bottom: 10%;
+}
+#information .bottom .black {
+  text-align: center;
+  color: black;
+}
+#information .bottom .grey {
+  text-align: center;
+  color: grey;
+}
+#information .bottom .grey.small {
+  font-size: 1.5em;
+}
+#information .bottom .red {
+  text-align: center;
+  color: red;
 }
