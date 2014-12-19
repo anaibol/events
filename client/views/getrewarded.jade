@@ -1,6 +1,6 @@
 #getrewarded
   div(align='center')
-    img(ng-src='http://wooepa.com/img/getrewarded/header.png', width='100%;')
+    img(ng-src='{{headerimg}}', width='100%;')
   div.summary.aligncenter
     h3.h3 Invite your friends to GET REWARDED !
     br
@@ -10,32 +10,32 @@
     br
     p
       b.black IT'S FUN! IT'S EASY! IT'S FREE!
-    img.getreward(src="/img/getrewarded/cadeaumail.png", width='5%', align='center', alt='reward')
+    img.getreward(ng-src="{{cadeaumail}}", width='5%', align='center', alt='reward')
     h3.h3 REWARDS
     div.aligncenter
-      img.aligncenter(ng-src='http://wooepa.com/img/getrewarded/midbanner.png', width='50%', align='center', alt='discover events')
+      img.aligncenter(ng-src='{{midbanner}}', width='50%', align='center', alt='discover events')
   div.bottom.aligncenter
     b.h3  HOW DOES IT WORK ?
     br
     br
-    img(align='center', ng-src='http://wooepa.com/img/getrewarded/inviteyourfriends.png', alt='invite your friends',width='50%')
+    img(align='center', ng-src='{{inviteyourfriends}}', alt='invite your friends',width='50%')
     br
     div.aligncenter
       br
-      img(ng-src='http://wooepa.com/img/getrewarded/bluearrow.png', alt='bluearrow',width='2%')
+      img(ng-src='{{bluearrow}}', alt='bluearrow',width='2%')
       b.h3 THE MORE INVITES, THE MORE POINTS & THE CLOSER TO WINNING!
   div.end.aligncenter
     b.h3 PLAY AS A TEAM
     br
     br
-    img(align='center', ng-src='http://wooepa.com/img/getrewarded/getboosted.png', alt='get boosted',width='50%')
+    img(align='center', ng-src='{{getboosted}}', alt='get boosted',width='50%')
     div.aligncenter
       br
-      img(ng-src='http://wooepa.com/img/getrewarded/redarrow.png', alt='bluearrow',width='2%')
+      img(ng-src='{{redarrow}}', alt='bluearrow',width='2%')
       b.h3 BOOST A FRIEND'S SCORE TO MAKE THEM WIN!
       br
       br
       a(href='')
-        img(align='center', ng-src='http://wooepa.com/img/getrewarded/playbutton.png', width='10%')
+        img(align='center', ng-src='{{playbutton}}', width='10%')
       p.grey.small by clicking above
-  img(ng-src='http://wooepa.com/img/getrewarded/footer.png', alt='footer', width='100%')
+  img(ng-src='{{footer}}', alt='footer', width='100%')

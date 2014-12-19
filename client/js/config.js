@@ -44,10 +44,12 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
     })
     .state('discoverevents', {
       url:'/info/discover-events',
+      controller:'infoCtrl',
       templateUrl:'discoverevents'
     })
     .state('getrewarded', {
       url:'/info/get-rewarded',
+      controller:'infoCtrl',
       templateUrl:'getrewarded'
     })
     .state('game', {
