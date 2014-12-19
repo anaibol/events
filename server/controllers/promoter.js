@@ -1,6 +1,7 @@
 var Users = global.db.get('users');
 
 var Events = global.db.get('events');
+var Mail = require('../services/mail.js');
 
 exports.promoteEvent = function(req, res)
 {
@@ -11,7 +12,7 @@ exports.promoteEvent = function(req, res)
         }
         else if (ev)
         {
-         var promoter = {
+                   var promoter = {
             name : req.user.facebook.name,
             picture : req.user.facebook.picture,
             id : req.user.facebook.id
@@ -25,6 +26,7 @@ exports.promoteEvent = function(req, res)
             ev.promoter = promoter;
             ev.promotion = promotion;
             ev.promoted = true;
+            Mail.promoteMail(ev);
           if (!req.body.end_date || req.body.end_date <= new Date().getTime())
          {
           Events.findOne({'eid':parseInt(req.params.eid)}, function(err, new_ev){

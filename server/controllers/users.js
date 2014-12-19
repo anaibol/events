@@ -70,7 +70,6 @@ exports.authCallback = function(req, res) {
 
   if (req.query.fb_source) {
     req.query.request_ids = req.query.request_ids.split(',')[0];
-
     var query = req.query.request_ids + '_' + req.user.facebook.id + '?access_token=' + req.user.accessToken;
     graph.get(query, function(err, data) {
       // res.redirect(data.data);

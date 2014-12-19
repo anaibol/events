@@ -137,19 +137,44 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
 
   $scope.coverTopPosition = $scope.getCoverTopPosition();
 
-  $scope.promote = function(ev) {
+  $scope.promote = function() {
     var modalInstance = $modal.open({
       templateUrl: 'event/promote',
       controller: 'EventPromoteCtrl',
       resolve: {
         ev: function() {
-          return ev;
+          return $scope.ev;
         }
       }
     });
 
     modalInstance.result.then(function(selected) {
     }, function() {});
+  };
+
+
+  $scope.activateGame = function(ev) {
+    var handler = StripeCheckout.configure({
+      key: $window.stripePublicKey,
+      image: $scope.ev.pic_cover.source,
+      token: function(token) {
+        console.log(token);
+
+        var currency = 'eur';
+
+        var data = {
+          stripeToken: token,
+          amount: 10 * 100,
+          currency: currency
+        };
+
+        // Use the token to create the charge with a server-side script.
+        // You can access the token ID with `token.id`
+        $http.post('/api/events/' + $scope.ev.eid + '/activate-game', data).then(function(res) {
+          console.log(res);
+        });
+      }
+    });
   };
 
   $scope.boostPlayer = function(player) {

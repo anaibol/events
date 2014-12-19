@@ -37,9 +37,12 @@
                   tr
                     td.smallp_andfont Deadline
       section.aligncenter
-        button.btn.btn-warning(ng-click="promote(ev)")
+        button.btn.btn-warning(ng-click="promote()")
           i.fa.fa-bullhorn.fa-lg
-          | &nbsp Promote Event!
+          | &nbsp Promote event!
+        button.btn.btn-warning(ng-click="activateGame()")
+          i.fa.fa-gamepad.fa-lg
+          | &nbsp Activate game
         button.btn.btn-warning(ui-sref="game({city:$root.loc.city, slug:ev.slug, eid:ev.eid})") 
           i.fa.fa-gamepad.fa-lg
           | &nbsp Play!
