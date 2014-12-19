@@ -7,4 +7,11 @@ app.controller('infoCtrl', function($scope, $sce) {
   $scope.getboosted = $sce.trustAsResourceUrl('/img/getrewarded/getboosted.png');
   $scope.redarrow = $sce.trustAsResourceUrl('/img/getrewarded/redarrow.png');
   $scope.footer = $sce.trustAsResourceUrl('/img/getrewarded/footer.png');
+  $scope.headermail = $sce.trustAsResourceUrl('/img/discoverevents/headermail.png');
+  $scope.loupemail = $sce.trustAsResourceUrl('/img/discoverevents/loupemail.png');
+  $scope.cadeaumail = $sce.trustAsResourceUrl('/img/discoverevents/cadeaumail.png');
+  $scope.megaphonemail = $sce.trustAsResourceUrl('/img/discoverevents/megaphonemail.png');
+  $scope.midbanner = $sce.trustAsResourceUrl('/img/discoverevents/midbanner.png');
+  $scope.loupemailbot = $sce.trustAsResourceUrl('/img/discoverevents/loupemailbot.png');
+  $scope.footer = $sce.trustAsResourceUrl('/img/getrewarded/footer.png');
 });
