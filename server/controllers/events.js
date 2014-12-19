@@ -377,7 +377,7 @@ exports.get = function(req, res) {
   // ]};
 
   Events.find(query, options, function(err, data) {
-    if (data.length < 1) {
+    if (!data || data.length < 1) {
         query['venue.coord'] = {
       $near: {
         $geometry: {
