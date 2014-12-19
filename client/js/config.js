@@ -52,6 +52,11 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       controller:'infoCtrl',
       templateUrl:'getrewarded'
     })
+    .state('boostyourevent', {
+      url:'/info/boost-your-event',
+      controller:'infoCtrl',
+      templateUrl:'boostyourevent'
+    })
     .state('game', {
       url: '/:city/:slug/:eid/game',
       templateUrl: 'event/view/game',

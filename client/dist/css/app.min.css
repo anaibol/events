@@ -12672,6 +12672,7 @@ li.checked .fs-anchor {
   color: black;
 }
 #information .summary {
+  margin-bottom: 5%;
   display: inline-flex;
   width: 100%;
   margin-top: 5%;
@@ -12710,4 +12711,82 @@ li.checked .fs-anchor {
 #information .bottom .red {
   text-align: center;
   color: red;
+}
+#boost {
+  background-color: white;
+  color: black;
+}
+#boost .summary {
+  width: 100%;
+  margin-top: 5%;
+  font-size: 1.5em;
+}
+#boost .summary .span {
+  text-align: left;
+  margin-left: 10%;
+  width: 20%;
+}
+#boost .summary .red {
+  text-align: center;
+  color: red;
+}
+#boost .summary .h3 {
+  color: black;
+  font-size: 2em;
+}
+#boost .summary .getreward {
+  margin-top: 3%;
+  width: 5%;
+}
+#boost .summary .black {
+  text-align: center;
+  color: black;
+}
+#boost .summary .aligncenter {
+  text-align: center;
+}
+#boost .bottom {
+  font-size: 1.5em;
+  margin-top: 5%;
+}
+#boost .bottom .h3 {
+  color: purple;
+  margin-bottom: 5%;
+}
+#boost .bottom .aligncenter {
+  text-align: center;
+}
+#boost .bottom .maindiv {
+  margin-top: 10%;
+  font-size: 20px;
+  margin-bottom: 10%;
+}
+#boost .bottom .black {
+  text-align: center;
+  color: black;
+}
+#boost .bottom .grey {
+  text-align: center;
+  color: grey;
+}
+#boost .bottom .grey.small {
+  font-size: 10px;
+}
+#boost .bottom .red {
+  text-align: center;
+  color: red;
+}
+#boost .end {
+  font-size: 1.5em;
+  margin-top: 3%;
+}
+#boost .end .h3 {
+  color: red;
+}
+#boost .end .grey {
+  text-align: center;
+  color: grey;
+}
+#boost .end .grey.small {
+  font-size: 10px;
 }
