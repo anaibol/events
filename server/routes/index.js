@@ -61,6 +61,53 @@ module.exports = function(app, passport) {
     });
   });
 
+
+
+  app.post('/facebook-canvas', function(req, res) {
+    if (req.query.fb_source) {
+      var signedRequest = req.body.signed_request;
+
+      var data = signedRequest.split('.')[1];
+
+      data = new Buffer(data, 'base64');
+      data = data.toString();
+      data = JSON.parse(data);
+
+      var userId = data.user_id;
+
+      req.query.request_ids = req.query.request_ids.split(',')[0];
+
+      var query = req.query.request_ids + '_' + userId + '?access_token=' + req.user.accessToken;
+      graph.get(query, function(err, data) {
+        // res.redirect(data.data);
+
+        getLocation(req, function(loc) {
+          res.render('index', {
+            title: 'Wooepa',
+            is_mobile: req.is_mobile,
+            user: req.user ? JSON.stringify(req.user) : 'null',
+            fbAppId: global.fbAppId,
+            loc: loc,
+            redirectPath: data.data
+          });
+        });
+      });
+    } else {
+      getLocation(req, function(loc) {
+        res.render('index', {
+          title: 'Wooepa',
+          is_mobile: req.is_mobile,
+          user: req.user ? JSON.stringify(req.user) : 'null',
+          fbAppId: global.fbAppId,
+          loc: loc
+        });
+      });
+    }
+  });
+
+
+
+
   app.get('/:slug/:eid', function(req, res) {
     getLocation(req, function(loc) {
       res.render('index', {
