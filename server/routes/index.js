@@ -64,7 +64,7 @@ module.exports = function(app, passport) {
 
 
   app.post('/facebook-canvas', function(req, res) {
-    if (req.query.fb_source === 'notification') {
+    if (req.query.fb_source === 'notification' || req.query.fb_source === 'reminder') {
       var signedRequest = req.body.signed_request;
 
       var data = signedRequest.split('.')[1];
