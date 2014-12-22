@@ -12,7 +12,6 @@ exports.sendInvitations = function(req, res) {
  //    }
  //    else {
  //    if (req.user) {
-      Inv.giveInvitePoints(req.body.eid, req.user.facebook.id, req.body.uids);
 
       var invitation = {
         to: req.body.uids,
@@ -23,6 +22,8 @@ exports.sendInvitations = function(req, res) {
 
       if (req.user) {
         invitation.from = req.user.facebook.id;
+
+        Inv.giveInvitePoints(req.body.eid, req.user.facebook.id, req.body.uids);
       }
 
       Invitations.insert(invitation);
