@@ -1,4 +1,4 @@
-app.controller('infoCtrl', function($scope, $sce) {
+app.controller('infoCtrl', function($scope, $sce, $rootScope) {
   $scope.headerimg = $sce.trustAsResourceUrl('/img/getrewarded/header.jpg');
   $scope.cadeaumail = $sce.trustAsResourceUrl('/img/getrewarded/cadeaumail.png');
   $scope.midbannerreward = $sce.trustAsResourceUrl('/img/getrewarded/midbanner.png');

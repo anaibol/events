@@ -6,12 +6,12 @@ var db = require('monk')(config.db);
 var Invitations = db.get('invitations');
 
 exports.sendInvitations = function(req, res) {
- // graph.post('/' + req.params.eid + '/invited/' + req.params.uids + '?access_token=' + req.user.accessToken, function(err, result) {
- //    if (err) {
- //      res.json(err);
- //    }
- //    else {
- //    if (req.user) {
+ graph.post('/' + req.params.eid + '/invited/' + req.params.uids + '?access_token=' + req.user.accessToken, function(err, result) {
+    if (err) {
+      res.json(err);
+    }
+    else {
+    if (req.user) {
 
       var invitation = {
         to: req.body.uids,
@@ -28,8 +28,8 @@ exports.sendInvitations = function(req, res) {
 
       Invitations.insert(invitation);
 
-  //     res.json();
-  //   }
-  //   }
-  // });
+      res.json();
+    }
+    }
+  });
 };

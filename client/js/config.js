@@ -42,20 +42,25 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
         }
       }
     })
-    .state('discoverevents', {
-      url:'/info/discover-events',
+    .state('info', {
+      url:'/:city/info',
       controller:'infoCtrl',
-      templateUrl:'discoverevents'
+      templateUrl:'info'
+    })
+    .state('discoverevents', {
+      url:'/:city/info/discover-events',
+      controller:'infoCtrl',
+      templateUrl:'discoverevents',
     })
     .state('getrewarded', {
-      url:'/info/get-rewarded',
+      url:'/:city/info/get-rewarded',
       controller:'infoCtrl',
-      templateUrl:'getrewarded'
+      templateUrl:'getrewarded',
     })
     .state('boostyourevent', {
-      url:'/info/boost-your-event',
+      url:'/:city/info/boost-your-event',
       controller:'infoCtrl',
-      templateUrl:'boostyourevent'
+      templateUrl:'boostyourevent',
     })
     .state('game', {
       url: '/:city/:slug/:eid/game',
