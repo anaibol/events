@@ -12610,9 +12610,12 @@ li.checked .fs-anchor {
 #getrewarded .summary .h3 {
   color: red;
   font-size: 2em;
+  margin: 0%;
+}
+#getrewarded .summary .h3.inline {
+  display: inline;
 }
 #getrewarded .summary .getreward {
-  margin-top: 3%;
   width: 5%;
 }
 #getrewarded .summary .black {
@@ -12670,6 +12673,14 @@ li.checked .fs-anchor {
 #information {
   background-color: white;
   color: black;
+}
+#information .contactus {
+  background-image: url('/img/boostyourevent/contactus.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#information .contactus .decal {
+  margin-top: 14%;
 }
 #information .summary {
   margin-bottom: 5%;
@@ -12747,11 +12758,10 @@ li.checked .fs-anchor {
 }
 #boost .bottom {
   font-size: 1.5em;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 #boost .bottom .h3 {
   color: purple;
-  margin-bottom: 5%;
 }
 #boost .bottom .aligncenter {
   text-align: center;
@@ -12775,14 +12785,6 @@ li.checked .fs-anchor {
 #boost .bottom .red {
   text-align: center;
   color: red;
-}
-#boost .contactus {
-  background-image: url('/img/boostyourevent/contactus.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-#boost .contactus .decal {
-  margin-top: 14%;
 }
 #boost .end {
   font-size: 1.5em;

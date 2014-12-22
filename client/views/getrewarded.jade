@@ -2,16 +2,13 @@
   div(align='center')
     img(ng-src='{{headerimg}}', width='100%;')
   div.summary.aligncenter
-    h3.h3 Invite your friends to GET REWARDED !
+    h3.h3 Invite your friends to GET REWARDED!
     br
     br
-    p.black Free admissions, VIP tables, Bottles of Champagne & much more!
-    br
-    br
+    img.getreward(ng-src="{{cadeaumail}}", width='5%', align='center', alt='reward')
+    h3.h3.inline REWARDS
     p
       b.black IT'S FUN! IT'S EASY! IT'S FREE!
-    img.getreward(ng-src="{{cadeaumail}}", width='5%', align='center', alt='reward')
-    h3.h3 REWARDS
     div.aligncenter
       img.aligncenter(ng-src='{{midbannerreward}}', width='50%', align='center', alt='discover events')
   div.bottom.aligncenter
@@ -32,8 +29,10 @@
     div.aligncenter
       br
       img(ng-src='{{redarrow}}', alt='bluearrow',width='10%')
-      b.h3 BOOST A FRIEND'S SCORE TO MAKE THEM WIN!
+      b.h3 BOOST YOUR FRIEND'S SCORE!
       br
+      br
+      b.h3 Start to invite Friends!
       br
       a(href='http://wooepa.com')
         img(align='center', ng-src='{{playbutton}}', width='10%')

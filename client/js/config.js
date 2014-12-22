@@ -45,7 +45,7 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
     .state('info', {
       url:'/:city/info',
       controller:'infoCtrl',
-      templateUrl:'info'
+      templateUrl:'info',
     })
     .state('discoverevents', {
       url:'/:city/info/discover-events',
