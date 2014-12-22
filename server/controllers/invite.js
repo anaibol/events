@@ -27,5 +27,5 @@ exports.sendInvitations = function(req, res) {
 
       res.send(true);
     // }
-  });
+  // });
 };
