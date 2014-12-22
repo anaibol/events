@@ -1,4 +1,4 @@
-var fbtok = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGlDcQcEAzZAtmyDrOlrwDpOG7N64BTdloH0tDia3OPRb0fRLBXiLKATFMPzRoE0estUT8z6gz7Mb73yBLh3oXXFCt8UmI5fe3pLg0cUi1ZAamY02PZC25OxBYwMKYKMJKlzedF1CmIoh7Iekah5tJQ7';
+var fbtok = 'CAAGPsrwaxr4BAFvh23xnDJrLXUgAZCGw43XvsnckrsnYehlIv5eK4bCf2iHin2UxHgynW2JTPEMgTWln74ZA4rxV8urn3bENFI5E6WyN2ZBMY4GtOsNCKHixS37R7YAAZBVk8vEdcIGmd1CqTgh9Sz9JFbz5958mbIOzoRnnpHSNlLOyOoIR6X7w54KUg59vHwA5EHZBdWCg0c5PJGZAcu';
 
 app.factory('fbvideos', function($http) {
   var base = 'https://graph.facebook.com';
@@ -43,14 +43,14 @@ app.factory('fbvideos', function($http) {
               ++j;
               ++k;
             }
-            var new_url = "http://www.youtube.com/embed/" + videoId;
+            var new_url = "https://www.youtube.com/embed/" + videoId;
             j = 0;
             k = 0;
             videos.push(new_url)
           }
           else if (facebook != -1)
           {
-            videos.push('http://www.facebook.com/video/embed?video_id=' + feed.data[i].object_id);
+            videos.push('https://www.facebook.com/video/embed?video_id=' + feed.data[i].object_id);
           }
         }
         ++i;
