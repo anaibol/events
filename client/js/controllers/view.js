@@ -201,7 +201,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
           url: window.location.pathname
         };
 
-        $http.post('/api/invite/', invitation);
+        $http.post('/api/invite', invitation);
       }
     });
   };

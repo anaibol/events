@@ -9,10 +9,7 @@ exports.sendInvitations = function(req, res) {
  graph.post('/' + req.params.eid + '/invited/' + req.params.uids + '?access_token=' + req.user.accessToken, function(err, result) {
     if (err) {
       res.json(err);
-    }
-    else {
-    if (req.user) {
-
+    } else {
       var invitation = {
         to: req.body.uids,
         eid: req.body.eid,
@@ -28,8 +25,7 @@ exports.sendInvitations = function(req, res) {
 
       Invitations.insert(invitation);
 
-      res.json();
-    }
+      res.send(true);
     }
   });
 };
