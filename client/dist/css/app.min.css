@@ -12745,8 +12745,10 @@ li.checked .fs-anchor {
   color: black;
   font-size: 2em;
 }
+#boost .summary .h3.inline {
+  display: inline;
+}
 #boost .summary .getreward {
-  margin-top: 3%;
   width: 5%;
 }
 #boost .summary .black {
@@ -12787,11 +12789,14 @@ li.checked .fs-anchor {
   color: red;
 }
 #boost .end {
-  font-size: 1.5em;
+  font-size: 1em;
   margin-top: 3%;
 }
 #boost .end .h3 {
   color: red;
+}
+#boost .end .h3.inline {
+  display: inline;
 }
 #boost .end p {
   display: inline;
