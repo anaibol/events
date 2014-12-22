@@ -185,23 +185,23 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
   $scope.inviteFriends = function(player) {
     ezfb.ui({
       method: 'apprequests',
-      message: 'Invite your friends to play now.',
-      data: window.location.pathname
-    }, function(response) {
-      if (response.to)
-      {
+      message: 'Invite your friends to play now.'
+    }, function(res) {
+      console.log(res);
+      if (res.to) {
         var uids = [];
-        response.to.forEach(function(uid){
+        res.to.forEach(function(uid){
           uids += uid + ',';
         });
-        $http({
-          method: 'POST',
-          data: {
-            eid: $scope.ev.eid,
-            uids: uids
-          },
-          url: '/api/invite/' + $scope.ev.eid + '/' + uids
-        });
+
+        var invitation = {
+          eid: $scope.ev.eid,
+          uids: uids,
+          requestId: res.request,
+          url: window.location.pathname
+        };
+
+        $http.post('/api/invite/', invitation);
       }
     });
   };

@@ -1,16 +1,28 @@
 var graph = require('fbgraph');
 var Inv = require('../services/game.js');
 
+var db = require('monk')(config.db);
+
+var Invitations = db.get('invitations');
+
 exports.sendInvitations = function(req, res) {
- graph.post('/' + req.params.eid + '/invited/' + req.params.uids + '?access_token=' + req.user.accessToken, function(err, result) {
-    if (err) {
-      res.json(err);
-    }
-    else {
-    if (req.user) {
-      Inv.giveInvitePoints(req.params.eid, req.user.facebook.id, req.params.uids);
-      res.json();
-    }
-    }
-  });
+ // graph.post('/' + req.params.eid + '/invited/' + req.params.uids + '?access_token=' + req.user.accessToken, function(err, result) {
+ //    if (err) {
+ //      res.json(err);
+ //    }
+ //    else {
+ //    if (req.user) {
+      Inv.giveInvitePoints(req.body.eid, req.user.facebook.id, req.body.uids);
+      Invitations.insert({
+        from: req.user.facebook.id,
+        to: req.body.uids,
+        eid: req.body.eid,
+        requestId: req.body.requestId,
+        url: req.body.url
+      });
+
+  //     res.json();
+  //   }
+  //   }
+  // });
 };

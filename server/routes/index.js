@@ -1,7 +1,7 @@
 var url = require('url');
 var request = require('request');
 var Events = global.db.get('events');
-
+var Invitations = db.get('invitations');
 var users = require(controllersDir + 'users');
 
 var graph = require('fbgraph');
@@ -75,22 +75,22 @@ module.exports = function(app, passport) {
 
       var userId = data.user_id;
 
-      req.query.request_ids = req.query.request_ids.split(',')[0];
+      req.query.request_ids = req.query.request_ids.split(',');
+      var requestId = req.query.request_ids[req.query.request_ids.length - 1];
 
-      var query = req.query.request_ids + '_' + userId + '?access_token=' + req.user.accessToken;
-      graph.get(query, function(err, data) {
-        // res.redirect(data.data);
-
-        getLocation(req, function(loc) {
-          res.render('index', {
-            title: 'Wooepa',
-            is_mobile: req.is_mobile,
-            user: req.user ? JSON.stringify(req.user) : 'null',
-            fbAppId: global.fbAppId,
-            loc: loc,
-            redirectPath: data.data
-          });
-        });
+      Invitations.findOne({requestId: requestId}, function(err, data) {
+        res.redirect(data.url);
+        // // console.log( data)
+        // // getLocation(req, function(loc) {
+        // //   res.render('index', {
+        // //     title: 'Wooepa',
+        // //     is_mobile: req.is_mobile,
+        // //     user: req.user ? JSON.stringify(req.user) : 'null',
+        // //     fbAppId: global.fbAppId,
+        // //     loc: loc,
+        // //     redirectPath: data.data
+        // //   });
+        // });
       });
     } else {
       getLocation(req, function(loc) {
@@ -104,9 +104,6 @@ module.exports = function(app, passport) {
       });
     }
   });
-
-
-
 
   app.get('/:slug/:eid', function(req, res) {
     getLocation(req, function(loc) {
