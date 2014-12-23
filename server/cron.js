@@ -20,6 +20,8 @@ var accessToken = 'CAAGPsrwaxr4BAFvh23xnDJrLXUgAZCGw43XvsnckrsnYehlIv5eK4bCf2iHi
 graph.setAccessToken(accessToken);
 
 global.keywords = require('./keywords.json').keywords;
+global.keywords2 = require('./keywords.json').keywords2;
+global.coord = require('./keywords.json').coord;
 var users = ['EsenciaSalsaClub',
   'clubastoriabcn',
   'SevenDanceEscuelaBaile',
@@ -40,7 +42,6 @@ var users = ['EsenciaSalsaClub',
   'MangosTropCafe',
   'victorsuco'
 ];
-
 function starttime2(){
   var date = new Date();
   date.setSeconds(0);
@@ -293,6 +294,9 @@ function paginate(page, term) {
 
 function fetchEventsFromKeywords() {
   global.keywords.forEach(function(keyword) {
+    fetchEventsFromKeyword(keyword);
+  });
+  global.keywords2.forEach(function(keyword) {
     fetchEventsFromKeyword(keyword);
   });
 }

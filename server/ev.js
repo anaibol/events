@@ -131,11 +131,7 @@ function fetchMultiple(eids, term, cb) {
             }
           else if(exists)
           {
-            if (parseInt(ev.eid) == 518928278147534)
-              // console.log(ev);
             ev = normalize(ev);
-            if (parseInt(ev.eid) == 518928278147534)
-              // console.log(ev);
             //ev.updated = new Date();
             //getAttendings(ev.eid, function(attendings) {
               //ev.attending = attendings;
@@ -379,18 +375,38 @@ function normalize(ev) {
 
   delete ev.venue.latitude;
   delete ev.venue.longitude;
-
     if (!ev.venue || !ev.venue.coord || !ev.venue.coord.lng || !ev.venue.coord.lat) {
-      var venue = {
-        city: "City",
-        country: "Antarctique",
-        street: "Street",
-        zip: "99999",
-        coord: {
-          lng: -135,
-          lat: -82.862751
+      var i = 0;
+      while (global.keywords2[i])
+      {
+        if (ev.query === global.keywords2[i])
+        {
+          var venue = {
+              city: ev.query,
+              country: global.coord[i].country,
+              street: "",
+              zip: "",
+              coord: {
+                lng: global.coord[i].lng,
+                lat: global.coord[i].lat
+              }
+          }
         }
-      };
+        ++i;
+      }
+        if (!venue)
+        {
+          var venue = {
+            city: "City",
+            country: "Antarctique",
+            street: "Street",
+            zip: "99999",
+            coord: {
+              lng: -135,
+              lat: -82.862751
+            }
+          };
+        }
       ev.venue = venue;
     }
   // delete ev.pic_cover;
