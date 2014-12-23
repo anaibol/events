@@ -41,7 +41,7 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(port);
-httpsServer.listen(3001);
+httpsServer.listen(43);
 
 console.log('Express app started on port ' + port);
 
