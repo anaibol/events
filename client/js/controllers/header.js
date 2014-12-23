@@ -1,5 +1,4 @@
-app.controller('HeaderCtrl', function($scope, $rootScope) {
-	$rootScope.loc.city = $rootScope.loc.citySlug;
+app.controller('HeaderCtrl', function($scope) {
 	function getStringDate(aDate) {
 		var dd = aDate;
 		var yy = dd.getYear();

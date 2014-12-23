@@ -196,14 +196,13 @@ app.run(function($rootScope, $state, $stateParams, $location, $rootScope, $windo
     if (toParams.slug === 'auth') {
       window.location.href = window.location.href;
     }
-    console.log($window.redirectPath);
+
     if ($window.redirectPath && $window.redirectPath !== 'undefined') {
       $location.path($window.redirectPath);
     }
 
     console.log(toState);
 
-     
     // if (!toState.parent) {
     //   $rootScope.listRendered = true;
     // } else if (!$rootScope.listRendered) {

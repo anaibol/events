@@ -88,6 +88,8 @@ exports.activateGame = function(req, res) {
     if (err) {
       res.json(err);
     } else {
+      console.log(charge);
+
       res.json(charge);
     }
   });

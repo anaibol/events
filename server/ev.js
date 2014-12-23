@@ -352,7 +352,6 @@ function slug(str) {
 }
 
 function normalize(ev) {
-
   ev.eid = parseInt(ev.eid);
 
   ev.start_time2 = ev.start_time;

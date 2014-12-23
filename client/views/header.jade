@@ -11,17 +11,17 @@ header
         form.navbar-form.city
           .form-control-wrapper
             i.fa.fa-search
-            input.form-control.col-lg-8(type="text", typeahead="location.description for location in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.loc.city", ng-controller="LocationpickerCtrl", id="test123")
+            input.form-control.col-lg-8(type="text", typeahead="location.description for location in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.loc.city", ng-controller="LocationpickerCtrl")
             //- placeholder="Type a city or location", 
             span.material-input
         a.hidden-xs.navbar-brand(href='', ui-sref="promoted({city: $root.loc.citySlug})") Play!
-        ul.nav.navbar-nav.navbar-right
+        ul.nav.navbar-nav.navbar-right(ng-cloak)
           li.dropdown(dropdown, is-open="dropDownIsOpen", ng-if='!$root.isMobile && $root.user')
             a.dropdown-toggle(href='#', dropdown-toggle)
               span.avatar.pull-right
                 img.img-circle(ng-src='{{ $root.user.facebook.picture }}', alt='{{ $root.user.facebook.name }}')
               span.hidden-xs.hidden-sm.hidden-m
-              d {{$root.user.facebook.name}}
+                {{$root.user.facebook.name}}
               i.fa.fa-chevron-down
             ul.dropdown-menu
               li
@@ -33,7 +33,7 @@ header
               li
                 a(href="/auth/signout", target="_self" translate) Logout
                   i.fa.fa-sign-out
-          li(ng-if='!$root.user')
+          li(ng-if='!$root.user', ng-cloak)
             a.login(ng-href="/auth/facebook?redirectUrl={{$root.location.url()}}", ng-click="$rootScope.login()", translate)
               i.fa.fa-facebook
               | Login

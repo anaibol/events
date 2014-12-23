@@ -144,8 +144,6 @@ module.exports = function(app, passport) {
     getLocFromSlug(req.params.city, function(loc) {
       req.session.loc = loc;
 
-      // res.json(loc);
-
       res.render('index', {
         title: 'Wooepa',
         is_mobile: req.is_mobile,
