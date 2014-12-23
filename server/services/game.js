@@ -24,7 +24,7 @@ function AddPointsBoost(uid, eid, point) {
 function AddPoints(uid, eid, point, type) {
   Results.findOne({
     user_id: uid,
-    event_id: eid
+    event_id: eid.toString()
   }, function(err, results) {
     if (results && results.result + point >= 0) {
       if (type === 'share')
@@ -34,7 +34,7 @@ function AddPoints(uid, eid, point, type) {
 
           Results.update({
             user_id: uid,
-            event_id: eid
+            event_id: eid.toString()
             }, {
             $inc: {
             result: point,
@@ -49,7 +49,7 @@ function AddPoints(uid, eid, point, type) {
         if ((results.join == 0 && point == 6) || (results.join == 6 && point == -6))
           Results.update({
         user_id: uid,
-        event_id: eid
+        event_id: eid.toString()
       }, {
         $inc: {
           result: point,
@@ -61,7 +61,7 @@ function AddPoints(uid, eid, point, type) {
       else if (type != "join" && type != "unjoin" && type != 'share')
       Results.update({
         user_id: uid,
-        event_id: eid
+        event_id: eid.toString()
       }, {
         $inc: {
           result: point,
@@ -77,7 +77,7 @@ function AddPoints(uid, eid, point, type) {
                     Results.insert({
           user_id: uid,
           name: user.facebook.name,
-          event_id: eid,
+          event_id: eid.toString(),
           result: point,
           result_boosted: point,
           score: 0,
@@ -90,7 +90,7 @@ function AddPoints(uid, eid, point, type) {
           Results.insert({
             user_id: uid,
             name: user.facebook.name,
-            event_id: eid,
+            event_id: eid.toString(),
             result: point,
             result_boosted: point,
             score: 0,
@@ -103,7 +103,7 @@ function AddPoints(uid, eid, point, type) {
             Results.insert({
             user_id: uid,
             name: user.facebook.name,
-            event_id: eid,
+            event_id: eid.toString(),
             result: point,
             result_boosted: point,
             score: 0,
@@ -138,12 +138,12 @@ function giveInvitePoints(eid, uid, uids) {
     tabuids.pop();
   Results.findOne({
     user_id: uid,
-    event_id: eid
+    event_id: eid.toString()
   }, function(err, results) {
     if (!results) {
       Results.insert({
         user_id: uid,
-        event_id: eid,
+        event_id: eid.toString(),
         result: 0,
         result_boosted: 0,
         score: 0,
@@ -151,9 +151,9 @@ function giveInvitePoints(eid, uid, uids) {
         share:0
       });
     }
-    Invitations.findOne({
-      user_id: uid,
-      event_id: eid
+    Invitations.findOne({$and:[{
+      user_id: uid},{
+      event_id: eid}]
     }, function(err, inv) {
       if (!inv) {
         Invitations.insert({
