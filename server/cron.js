@@ -16,7 +16,7 @@ var Locations = db.get('locations');
 
 var graph = require('fbgraph');
 
-var accessToken = 'CAAGPsrwaxr4BAB7D3ZBNlZAf7R5vPWZAu6xVZAD7gq1hdzMOVDsPq3Bsxl2AAojoGlDcQcEAzZAtmyDrOlrwDpOG7N64BTdloH0tDia3OPRb0fRLBXiLKATFMPzRoE0estUT8z6gz7Mb73yBLh3oXXFCt8UmI5fe3pLg0cUi1ZAamY02PZC25OxBYwMKYKMJKlzedF1CmIoh7Iekah5tJQ7';
+var accessToken = 'CAAGPsrwaxr4BAFvh23xnDJrLXUgAZCGw43XvsnckrsnYehlIv5eK4bCf2iHin2UxHgynW2JTPEMgTWln74ZA4rxV8urn3bENFI5E6WyN2ZBMY4GtOsNCKHixS37R7YAAZBVk8vEdcIGmd1CqTgh9Sz9JFbz5958mbIOzoRnnpHSNlLOyOoIR6X7w54KUg59vHwA5EHZBdWCg0c5PJGZAcu';
 graph.setAccessToken(accessToken);
 
 global.keywords = require('./keywords.json').keywords;
