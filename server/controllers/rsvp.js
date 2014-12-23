@@ -62,7 +62,7 @@ exports.setAttending = function(req, res) {
         Results.findOne({user_id:req.user.facebook.id,event_id:req.params.eid},function(err,results){
       if (!results)
       {
-        Results.insert({user_id:req.user.facebook.id,event_id:req.params.eid,name:req.user.facebook.name, result:0, result_boosted:0, score:0, join:0});
+        Results.insert({user_id:req.user.facebook.id,event_id:req.params.eid,name:req.user.facebook.name, result:0, result_boosted:0, score:0, join:0, share:0});
       }
       Game.AddPoints(req.user.facebook.id, req.params.eid, 6, 'join');
 });
