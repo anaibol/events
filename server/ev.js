@@ -695,13 +695,28 @@ function getPrice(ev) {
   if (match) {
     var numbers = match.join().removeAll("$").removeAll("£").removeAll("€").split(',');
     var min = numbers.min();
-
+    if (min <= 2 && numbers.length > 1)
+    {
+      var i = 0;
+      var j = 0;
+      var new_numbers = [];
+      while (numbers[i])
+      {
+        if (numbers[i] != min){
+          new_numbers[j] = parseInt(numbers[i]);
+          ++j;
+        }
+        ++i;
+      }
+      min = new_numbers.min();
+      numbers = new_numbers;
+    }
     if (min > 1000) {
       return {};
     }
 
     price = {
-      full: match[numbers.indexOf(min.toString())],
+      full: match[numbers.indexOf(min)],
       num: min
     };
 

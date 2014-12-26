@@ -24,6 +24,8 @@ var app = express();
 global.db = require('monk')(config.db);
 global.Ev = require('./ev');
 global.keywords = require('./keywords.json').keywords;
+global.keywords2 = require('./keywords.json').keywords2;
+global.coord = require('./keywords.json').coord;
 
 // Bootstrap passport config
 require('./config/passport')(passport);

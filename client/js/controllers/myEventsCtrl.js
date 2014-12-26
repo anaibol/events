@@ -1,4 +1,4 @@
-app.controller('myEventsCtrl', function($scope, moment, $http) {
+app.controller('myEventsCtrl', function($scope, moment, $http, ezfb) {
   var url = document.location.pathname;
   if (url.substring(0, 1) == '/') {
   url = url.substring(1);
@@ -33,8 +33,11 @@ app.controller('myEventsCtrl', function($scope, moment, $http) {
     };
     $scope.updateEvents = function()
     {
+      ezfb.login(function(response) {
+      console.log(response);
       $http({url:'/import/user/'+ url, method: 'GET', params:{uid:url}}).success(function(err){
         location.reload();
       });
+    }, {scope: ['create_event', 'rsvp_event', 'user_events']});
     };
 });
