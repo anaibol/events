@@ -9,10 +9,9 @@ module.exports = function(app, passport) {
     req.session.redirectUrl = req.query.redirectUrl;
     next();
   }, passport.authenticate('facebook', {
-    scope: ['email','publish_actions' ,'create_event', 'rsvp_event', 'user_events', 'user_interests'],
+    scope: ['email','create_event', 'rsvp_event', 'user_events', 'user_interests'],
     failureRedirect: '/signin'
   }));
-
   app.post('/auth/facebook/canvas', passport.authenticate('facebook-canvas', {
     scope: ['email','publish_actions' ,'user_about_me', 'create_event', 'rsvp_event', 'user_events', 'user_interests', 'user_likes']
   }), users.authCallback);
