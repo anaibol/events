@@ -183,38 +183,38 @@ app.directive('isotope', function($timeout, $rootScope) {
 //   };
 // });
 
-app.directive('shareEvent', function($http) {
-  return {
-    restrict: 'A',
-    link: function(scope, elm, req) {
-      elm.on("click", function() {
-        $http({
-          method: 'POST',
-          data: {
-            eid: scope.ev.eid
-          },
-          url: '/api/share/' + scope.ev.eid,
-        }).success(function(){
-            $http({
-        method: 'GET',
-        data: {
-          eid: scope.ev.eid
-        },
-        url: '/api/list_player/' + scope.ev.eid
-      }).success(function(data) {
-        if (data)
-        {
-          var i = 0;
-          scope.ev.list_event_players = data;
-        }
-          elm.html("Share again?");
-          $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
-      });
-      });
-    });
-  }
-};
-});
+// app.directive('shareEvent', function($http) {
+//   return {
+//     restrict: 'A',
+//     link: function(scope, elm, req) {
+//       elm.on("click", function() {
+//         $http({
+//           method: 'POST',
+//           data: {
+//             eid: scope.ev.eid
+//           },
+//           url: '/api/share/' + scope.ev.eid,
+//         }).success(function(){
+//             $http({
+//         method: 'GET',
+//         data: {
+//           eid: scope.ev.eid
+//         },
+//         url: '/api/list_player/' + scope.ev.eid
+//       }).success(function(data) {
+//         if (data)
+//         {
+//           var i = 0;
+//           scope.ev.list_event_players = data;
+//         }
+//           elm.html("Share again?");
+//           $("li.list-group-item.players").html("<li class='list-group-item players' ng-repeat='player in ev.list_event_players'></li>");
+//       });
+//       });
+//     });
+//   }
+// };
+// });
 
 app.directive('setAttendings', function($http) {
   return {

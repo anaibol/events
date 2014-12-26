@@ -4,7 +4,18 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
   if ($scope.ev.price.edited) {
     $scope.ev.price.full = $scope.ev.price.edited;
   }
-
+  $scope.share = function() {
+    ezfb.login(function(response) {
+      console.log(response);
+      $http({
+          method: 'POST',
+          data: {
+            eid: $scope.ev.eid
+          },
+          url: '/api/share/' + $scope.ev.eid,
+        });
+    }, {scope: ['publish_actions']});
+  };
   $scope.editing = false;
   $scope.today = new Date();
 

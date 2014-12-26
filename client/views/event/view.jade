@@ -128,8 +128,9 @@
               i.fa.fa-users
               | Invite friends
           .event-rsvp-btns
-            button.btn.btn-primary.share(share-event)
-              i.fa.fa-share-alt
-              | Share
+            a(ng-click="share()")
+              button.btn.btn-primary.share
+                i.fa.fa-share-alt
+                | Share
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
