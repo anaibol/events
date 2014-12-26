@@ -1,4 +1,4 @@
-var fbtok = 'CAAGPsrwaxr4BAFvh23xnDJrLXUgAZCGw43XvsnckrsnYehlIv5eK4bCf2iHin2UxHgynW2JTPEMgTWln74ZA4rxV8urn3bENFI5E6WyN2ZBMY4GtOsNCKHixS37R7YAAZBVk8vEdcIGmd1CqTgh9Sz9JFbz5958mbIOzoRnnpHSNlLOyOoIR6X7w54KUg59vHwA5EHZBdWCg0c5PJGZAcu';
+var fbtok = 'CAAGPsrwaxr4BANogLqZBhA82kFXn8ZBLHTYxgdrzDYd2ByT5ns5AbLqI01naTIDVBdWth94BIVrAZBtllc8ZB3yVBc5O4bZBuQkjpXwvdRUjKRaPf4fdrH7gIHyh1K4m2jZAQPZAdDbnEE3p0WpX8K7FQFKZAu1myErwIlTzAWlpkj4HNDcKBZAgQPQ4oBYsOB529oY0qRZBDusyweP6AavcMK';
 
 app.factory('fbvideos', function($http) {
   var base = 'https://graph.facebook.com';
