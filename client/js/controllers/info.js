@@ -1,4 +1,8 @@
 app.controller('infoCtrl', function($scope, $sce, $rootScope) {
+  if (!$rootScope.loc || !$rootScope.loc.citySlug)
+    $rootScope.loc = {
+      citySlug: $rootScope.loc.city
+      };
   $scope.headerimg = $sce.trustAsResourceUrl('/img/getrewarded/header.jpg');
   $scope.cadeaumail = $sce.trustAsResourceUrl('/img/getrewarded/cadeaumail.png');
   $scope.midbannerreward = $sce.trustAsResourceUrl('/img/getrewarded/midbanner.png');

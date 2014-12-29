@@ -43,22 +43,22 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       }
     })
     .state('info', {
-      url:'/:city/info',
+      url:'/info/main',
       controller:'infoCtrl',
       templateUrl:'info',
     })
     .state('discoverevents', {
-      url:'/:city/info/discover-events',
+      url:'/info/discover-events',
       controller:'infoCtrl',
       templateUrl:'discoverevents',
     })
     .state('getrewarded', {
-      url:'/:city/info/get-rewarded',
+      url:'/info/get-rewarded',
       controller:'infoCtrl',
       templateUrl:'getrewarded',
     })
     .state('boostyourevent', {
-      url:'/:city/info/boost-your-event',
+      url:'/info/boost-your-event',
       controller:'infoCtrl',
       templateUrl:'boostyourevent',
     })

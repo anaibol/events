@@ -112,7 +112,7 @@ app.directive('listEventPlayer', function($http, $rootScope) {
                 {
                   winner = scope.ev.list_event_players[i];
                 }
-                if (scope.ev.list_event_players[i].uid == parseInt(scope.user.facebook.id))
+                if (scope.user && scope.ev.list_event_players[i].uid == parseInt(scope.user.facebook.id))
                   scope.user.result = scope.ev.list_event_players[i].result;
                 ++i;
               }
@@ -216,7 +216,7 @@ app.directive('isotope', function($timeout, $rootScope) {
 // };
 // });
 
-app.directive('setAttendings', function($http) {
+app.directive('setAttendings', function($http, $window) {
   return {
     restrict: 'A',
     scope: true,
@@ -224,7 +224,21 @@ app.directive('setAttendings', function($http) {
       elm.on('click', function() {
         if (!scope.user || !scope.user.facebook || !scope.user.facebook.id)
         {
-          document.location.href='/auth/facebook';
+          document.getElementById('confirmbox').style.display="block"; //this is the replace of this line
+          document.getElementById('acceptbutton').onclick = function(){
+            if ($window.location.href.search("/game") != -1)
+            {
+              $window.location = '/auth/facebook?redirectUrl=/' + scope.loc + '/' + scope.ev.slug + '/' + scope.ev.eid + '/game';
+            }
+            else
+            {
+              $window.location = '/auth/facebook?redirectUrl=/' + scope.loc + '/' + scope.ev.slug + '/' + scope.ev.eid;
+            }
+          };
+          document.getElementById('cancelbutton').onclick = function(){
+            document.getElementById('confirmbox').style.display="none";
+            return false;
+          };
         }
         else if (scope.attending == 'Join') {
           scope.attending = 'Leave';

@@ -51,6 +51,10 @@
             button.btn.btn-primary.share(ng-click="share()")
               i.fa.fa-share-alt
               &nbsp Share?  &nbsp &nbsp +2
+          div(id="confirmbox", style="display:none")
+            h1 Please Login!
+            button.btn.btn-primary(id="acceptbutton") Log Me!
+            button.btn.btn-primary(id="cancelbutton") Not now 
       section.aligncenter
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')

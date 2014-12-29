@@ -1,6 +1,6 @@
 var graph = require('fbgraph');
 var Inv = require('../services/game.js');
-
+var Mail = require('../services/mail.js');
 var db = require('monk')(config.db);
 
 var Invitations = db.get('invitations');
@@ -15,7 +15,7 @@ exports.sendInvitations = function(req, res) {
       };
       if (req.user) {
         invitation.from = req.user.facebook.id;
-
+        Mail.inviteMail(req.user.facebook.id, invitation.to, invitation.url, invitation.eid);
         Inv.giveInvitePoints(req.body.eid, req.user.facebook.id, req.body.uids);
       }
 

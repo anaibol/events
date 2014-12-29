@@ -5,17 +5,32 @@ app.controller('GameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   if ($scope.ev.price.edited) {
     $scope.ev.price.full = $scope.ev.price.edited;
   }
+  $scope.loc = $rootScope.loc.citySlug;
   $scope.share = function() {
-    ezfb.login(function(response) {
-      console.log(response);
-      $http({
-          method: 'POST',
-          data: {
-            eid: $scope.ev.eid
-          },
-          url: '/api/share/' + $scope.ev.eid,
-        });
-    }, {scope: ['publish_actions']});
+    if (!$scope.user)
+    {
+      document.getElementById('confirmbox').style.display="block"; //this is the replace of this line
+      document.getElementById('acceptbutton').onclick = function(){
+      $window.location = '/auth/facebook?redirectUrl=/' + $rootScope.loc.citySlug + '/' + $scope.ev.slug + '/' + $scope.ev.eid + '/game';
+      };
+      document.getElementById('cancelbutton').onclick = function(){
+        document.getElementById('confirmbox').style.display="none";
+        return false;
+      };
+    }
+    else
+    {
+      ezfb.login(function(response) {
+        console.log(response);
+        $http({
+            method: 'POST',
+            data: {
+              eid: $scope.ev.eid
+            },
+            url: '/api/share/' + $scope.ev.eid,
+          });
+      }, {scope: ['publish_actions']});
+    }
   };
   $scope.editing = false;
   $scope.today = new Date();
@@ -93,26 +108,40 @@ app.controller('GameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
   };
 
   $scope.inviteFriends = function(player) {
-    ezfb.ui({
-      method: 'apprequests',
-      message: 'Invite your friends to play now.'
-    }, function(res) {
-      console.log(res);
-      if (res.to) {
-        var uids = [];
-        res.to.forEach(function(uid){
-          uids += uid + ',';
-        });
+    if (!$scope.user)
+    {
+      document.getElementById('confirmbox').style.display="block"; //this is the replace of this line
+      document.getElementById('acceptbutton').onclick = function(){
+      $window.location = '/auth/facebook?redirectUrl=/' + $rootScope.loc.citySlug + '/' + $scope.ev.slug + '/' + $scope.ev.eid + '/game';
+      };
+      document.getElementById('cancelbutton').onclick = function(){
+        document.getElementById('confirmbox').style.display="none";
+        return false;
+      };
+    }
+    else
+    {
+      ezfb.ui({
+        method: 'apprequests',
+        message: 'Invite your friends to play now.'
+      }, function(res) {
+        console.log(res);
+        if (res.to) {
+          var uids = [];
+          res.to.forEach(function(uid){
+            uids += uid + ',';
+          });
 
-        var invitation = {
-          eid: $scope.ev.eid,
-          uids: uids,
-          requestId: res.request,
-          url: window.location.pathname
-        };
+          var invitation = {
+            eid: $scope.ev.eid,
+            uids: uids,
+            requestId: res.request,
+            url: window.location.pathname
+          };
 
-        $http.post('/api/invite', invitation);
-      }
-    });
+          $http.post('/api/invite', invitation);
+        }
+      });
+    }
   };
 });

@@ -45,7 +45,7 @@
           | &nbsp Activate game
         button.btn.btn-warning(ui-sref="game({city:$root.loc.citySlug, slug:ev.slug, eid:ev.eid})") 
           i.fa.fa-gamepad.fa-lg
-          | &nbsp Play!
+          | &nbsp Play!       
       section.info
         .info
           h3.title.truncate {{::ev.name}}
@@ -132,5 +132,9 @@
               button.btn.btn-primary.share
                 i.fa.fa-share-alt
                 | Share
+        div(id="confirmbox", style="display:none")
+          h1 Please Login!
+          button.btn.btn-primary(id="acceptbutton") Log Me!
+          button.btn.btn-primary(id="cancelbutton") Not now 
         .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')
