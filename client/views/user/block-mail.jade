@@ -1,0 +1,11 @@
+#getrewarded
+ div.bottom(align='center')
+  br
+  br
+  p.red {{::blocked.name}} is spamming you ?
+  button.btn.btn-primary(ng-click='addToSpam()') Block him!
+  br
+  br
+  br
+  p.black You may disable all invitation mail if you want to
+  button.btn.btn-danger(ng-click='blockAll()') Disable

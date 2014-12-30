@@ -83,6 +83,11 @@ app.config(function($locationProvider, $urlRouterProvider, $stateProvider, ezfbP
       controller: 'myEventsCtrl',
       templateUrl: 'user/events'
     })
+    .state('unsubscribe', {
+      url: '/mail/unsubscribe?mid=:_id',
+      controller: 'blockMail',
+      templateUrl: 'user/block-mail'
+    })
     .state('auth', {
       url: '/auth/facebook?redirectUrl',
       controller: function($window, $stateParams) {

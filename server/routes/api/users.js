@@ -1,5 +1,5 @@
 var users = require(controllersDir + 'users');
-
+var mail = require(rootDir + 'services/mail');
 module.exports = function(app, passport) {
   app.get('/auth/signin', users.signin);
   app.get('/auth/signup', users.signup);
@@ -31,6 +31,9 @@ module.exports = function(app, passport) {
   }), users.authCallback);
 
   app.get('/:user/events', users.getEvents);
+  app.get('/api/unsubscribe/:mid', mail.unsubscribe);
+  app.post('/api/addtospam/:fromid/:toid', mail.addToSpam);
+  app.post('/api/blockall/:toid', mail.blockAll);
   app.get('/api/me/events', users.getMyEvents);
   app.get('/api/user/:uid', users.getOne);
   app.get('/api/users/:uids/info', users.getInfo);
