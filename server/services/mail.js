@@ -176,7 +176,7 @@ function inviteMail(fromuid, uids, url, eid)
                             new_mail = new_mail.replace('promotionReward', ev.promotion.reward);
                             new_mail = new_mail.replace('*|CURRENT_YEAR|*', currentyear);
                             var email = new sendgrid.Email({
-                                to:       "tristan.roby@epitech.eu",//res.facebook.email,
+                                to:       res.facebook.email,
                                 from:     'hello@wooepa.com',
                                 fromname: from.name,
                                 subject:  from.name + ' just invited you!',
