@@ -24,6 +24,7 @@ exports.addBoost = function(req, res) {
         father_id: req.user.facebook.id,
         son_id: req.params.uid,
         score: result.result,
+        name: req.user.facebook.name
       }
     Boosts.findOne({event_id : req.params.eid, father_id: req.user.facebook.id, son_id: req.params.uid}, function(err, first_boost){
       if (first_boost)
@@ -93,7 +94,8 @@ exports.updateBoosts = function (req, res) {
                       event_id: req.params.eid,
                       father_id: father_id,
                       son_id: req.params.uid,
-                      score: score
+                      score: score,
+                      name: req.user.facebook.name
                     }
                     Boosts.insert(new_boost, function (err) {
                       if (err)

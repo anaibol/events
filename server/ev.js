@@ -349,11 +349,13 @@ function slug(str) {
 
 function normalize(ev) {
   ev.eid = parseInt(ev.eid);
-
+  ev.categorie = [];
   ev.start_time2 = ev.start_time;
   ev.end_time2 = ev.end_time;
   ev.update_time2 = ev.update_time;
-
+  var NightLife = new Date(ev.start_time).getHours();
+  if (NightLife >= 21 || NightLife < 5)
+    ev.categorie.push("NightLife");
   ev.start_time = new Date(ev.start_time);
   ev.end_time = new Date(ev.end_time);
   ev.update_time = new Date(ev.update_time);
@@ -362,7 +364,7 @@ function normalize(ev) {
 
   ev.tags = getTags(ev);
 
-  ev.festival = getFestival(ev);
+  ev = getFestival(ev);
 
   ev.price = getPrice(ev);
 
@@ -665,17 +667,20 @@ function getFestival(ev) {
 
   var text = name + ' ' + desc;
   text = text.toLowerCase();
-  var words = ["congress", "festival"];
+  var words = ["congress", "festival", "concert", "cours ", "class "];
   for (var i = 0; i < words.length; i++) {
     var str = words[i];
     var n = text.search(str);
 
     if (n > 0) {
       festival = true;
+      if (words[i] == "cours " || words[i] == "class ")
+        words[i] = "class";
+      ev.categorie.push(words[i]);
     }
   }
 
-  return festival;
+  return ev;
 }
 
 function getPrice(ev) {

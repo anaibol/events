@@ -1,5 +1,14 @@
 app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ezfb, $modal, $http, Instagram, ev, fbphoto, fbvideos, $templateCache, $window) {
   $scope.ev = ev;
+  if (ev.promoted == true)
+  {
+    $http({method: 'GET', data:{eid:$scope.ev.eid}, url:'/api/promote/checkend/' + $scope.ev.eid}).success(function(data){
+      if (data)
+      {
+        $scope.ev = data;
+      }
+    });
+  }
   $scope.descriptionOpened = false;
   if ($scope.ev.price.edited) {
     $scope.ev.price.full = $scope.ev.price.edited;
@@ -28,7 +37,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
             },
             url: '/api/share/' + $scope.ev.eid,
           });
-      }, {scope: ['publish_actions']});
+      }, {scope: ['publish_actions', 'read_stream']});
     }
   };
   $scope.editing = false;

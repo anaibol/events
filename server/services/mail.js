@@ -20,7 +20,7 @@ exports.blockAll = function(req, res)
             if (to)
             {
                 to.blockall = true;
-                Users.update({'facebook.id': req.params.toid}, to);   
+                Users.update({'facebook.id': req.params.toid}, to);
             }
         });
     }
@@ -78,6 +78,49 @@ exports.unsubscribe = function(req, res)
     }
 }
 
+function gameActive(ev)
+{
+    Users.findOne({'facebook.id':ev.promoter.id}, function (err, promoter){
+        fs.readFile(path + 'GameActive.html', 'utf-8', function (err, mail){
+        if (err)
+        {
+            console.log(err);
+        }
+        var link = "";
+        if (ev.venue && ev.venue.city)
+        {
+            link = "http://wooepa.com/" + ev.venue.city + '/' + ev.slug + "/" + ev.eid + '/game';
+        }
+        else
+        {
+            link = "http://wooepa.com/" + "events/" + ev.slug + "/" + ev.eid + '/game';
+        } 
+        var unsubscribe = "http://wooepa.com/mail/unsubscribe?mid="
+        var new_mail = mail.replace("**promoter**", ev.promoter.name);
+        new_mail = new_mail.replace('**reward**', ev.promotion.reward);
+        new_mail = new_mail.replace('**promoterpic**', ev.promoter.picture);
+        new_mail = new_mail.replace('**deadline**', moment(ev.promotion.end_date).calendar());
+        new_mail = new_mail.replace('**eventpic**', ev.pic_cover.source);
+        new_mail = new_mail.replace('*|CURRENT_YEAR|*', currentyear);
+        new_mail = new_mail.replace('**unsub**', unsubscribe);
+        new_mail = new_mail.replace('**invitebtn**', link + '?a=invite');
+        new_mail = new_mail.replace('**sharebtn**', link + '?a=share');
+        new_mail = new_mail.replace('**watchbtn**', link);
+        var email = new sendgrid.Email({
+        to:       promoter.email,
+        from:     'no-reply@wooepa.com',
+        fromname: 'Wooepa',
+        subject:  'Game Active!',
+        html: new_mail
+        });
+        sendgrid.send(email, function(err, json) {
+            if (err) { return console.error(err); }
+                console.log(json);
+        });
+        });
+    });
+}
+
 function loginMail(user)
 {
     fs.readFile(path + 'loginMail.html', 'utf-8', function (err, mail){
@@ -85,11 +128,13 @@ function loginMail(user)
         {
             console.log(err);
         }
+        var unsubscribe = "http://wooepa.com/mail/unsubscribe?mid="
         var new_mail = mail.replace("src='p'", "src='http://graph.facebook.com/" + user.facebook.id + "/picture'");
+        new_mail = new_mail.replace('**unsub**', unsubscribe);
         new_mail = new_mail.replace('*|CURRENT_YEAR|*', currentyear);
         var email = new sendgrid.Email({
         to:       user.email,
-        from:     'hello@wooepa.com',
+        from:     'no-reply@wooepa.com',
         fromname: 'Wooepa',
         subject:  'Welcome to Wooepa',
         html: new_mail
@@ -133,7 +178,9 @@ function inviteMail(fromuid, uids, url, eid)
                 link = "http://wooepa.com/" + ev.venue.city + '/' + ev.slug + "/" + ev.eid;
             }
             else
-            link = "http://wooepa.com/" + "events/" + ev.slug + "/" + ev.eid;
+            {
+                link = "http://wooepa.com/" + "events/" + ev.slug + "/" + ev.eid;
+            }
         }
         if (ev.promotion && ev.promotion.reward)
         {
@@ -177,7 +224,7 @@ function inviteMail(fromuid, uids, url, eid)
                             new_mail = new_mail.replace('*|CURRENT_YEAR|*', currentyear);
                             var email = new sendgrid.Email({
                                 to:       res.facebook.email,
-                                from:     'hello@wooepa.com',
+                                from:     'no-reply@wooepa.com',
                                 fromname: from.name,
                                 subject:  from.name + ' just invited you!',
                                 html: new_mail
@@ -197,47 +244,6 @@ function inviteMail(fromuid, uids, url, eid)
     });
 }
 
-function promoteMail(ev)
-{
-	// Users.findOne({'facebook.id': ev.promoter.id.toString()}, function(err, promoter){
-	//     var mailOptions = {
- //    		from: 'Tristan Roby ✔ <hello@wooepa.com>', // sender address
- //        	to: promoter.facebook.email, // list of receivers
- //        	subject: 'Your promotion !', // Subject line
- //        	text: 'Hello ' + ev.promoter.name + ' your event : "'  + ev.name + '" is now in promotion' // plaintext body
- //    	};
- //    	transporter.sendMail(mailOptions, function(error, info){
- //        	if(error){
- //          		console.log(error);
- //        	}
- //        	else{
- //            	console.log('Message sent: ' + info.response);
- //        	}
- //    	});
-	// });
-	// if (ev.attending)
-	// {
-	// 	ev.attending.forEach(function(attender){
-	// 		Users.findOne({'facebook.id':attender.toString()}, function(err, attendinfo){
-	// 		    var mailOptions = {
- //    				from: 'Tristan Roby ✔ <hello@wooepa.com>', // sender address
- //        			to: attendinfo.facebook.email, // list of receivers
- //        			subject: 'Try to win ' + ev.promotion.quantity + ' ' + ev.promotion.reward, // Subject line
- //        			text: 'Hello the event where you are attending: "' + ev.name +'" is now in promotion, play on Wooepa and try to win ' + ev.promotion.quantity + ' ' + ev.promotion.reward// plaintext body
- //    			};
- //    			transporter.sendMail(mailOptions, function(error, info){
- //        			if(error){
- //          				console.log(error);
- //        			}
- //        			else{
- //            			console.log('Message sent: ' + info.response);
- //        			}
- //    			});
-	// 		});
-	// 	});
-	// }
-}
-
-module.exports.promoteMail = promoteMail;
 module.exports.loginMail = loginMail;
 module.exports.inviteMail = inviteMail;
+module.exports.gameActive = gameActive;

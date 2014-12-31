@@ -144,4 +144,15 @@ app.controller('GameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
       });
     }
   };
+  var url = $window.location.href;
+  var urlinv = url.indexOf("?a=invite");
+  var urlshare = url.indexOf("?a=share");
+  if (urlinv >= 0)
+  {
+    $scope.inviteFriends();
+  }
+  else if (urlshare >= 0)
+  {
+    $scope.share();
+  }
 });

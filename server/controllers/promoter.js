@@ -2,6 +2,106 @@ var Users = global.db.get('users');
 
 var Events = global.db.get('events');
 var Mail = require('../services/mail.js');
+var Results = global.db.get('results');
+var Boosts = global.db.get('boosts');
+
+exports.checkEnd = function(req, res)
+{
+  if (req.params && req.params.eid)
+  {
+    Events.findOne({eid:parseInt(req.params.eid)}, function(err, ev){
+      var currentdate = new Date();
+      if (currentdate.getTime() >= ev.promotion.end_date.getTime())
+      {
+        ev.promoted = false;
+        Results.find({event_id:ev.eid.toString()}, function(err, results){
+          var i = 0;
+          var winner = {
+            score: 0,
+            invited:0,
+            share: 0,
+            join: 0,
+            picture:"",
+            name:"",
+            uid : ""
+          };
+          var promotionStats = {
+            wooepajoin: 0,
+            invited: 0,
+            share: 0,
+            nbplayer: results.length,
+            facebookjoin: ev.attending_count - ev.promotion.facebookAttendings
+          };
+          var invpoints = 0;
+          while (results[i])
+          {
+            invpoints = results[i].result - results[i].join - results[i].share;
+            if (results[i].result_boosted > winner.score)
+            {
+              winner.score = results[i].result_boosted;
+              winner.uid = results[i].user_id;
+              if (invpoints > 0)
+              {
+                winner.invited = invpoints / 3
+              }
+              if (results[i].share == 2)
+              {
+                winner.share = 1;
+              
+              }
+              if (results[i].join == 6)
+              {
+                winner.share = 1;
+              }
+            }
+            if (results[i].join == 6)
+            {
+              promotionStats.wooepajoin++;
+            }
+            if (invpoints > 0)
+            {
+              promotionStats.invited += invpoints / 3;
+            }
+            if (results[i].share == 2)
+            {
+              promotionStats.share++;
+            }
+            ++i;
+          }
+          Users.findOne({'facebook.id':winner.uid}, function(err, win){
+            if (win)
+            {
+
+            winner.picture = win.facebook.picture;
+            winner.name = win.facebook.name;
+            }
+            Boosts.find({son_id: win.facebook.id}, function(err, boosts){
+              var j = 0;
+              if (boosts && !err)
+              {
+                var boostname = [];
+                while (boosts[j])
+                {
+                    boostname.push(boosts[j].name);
+                  ++j;
+                }
+                ev.winner = winner;
+                ev.promotionStats = promotionStats;
+                winner.boostname = boostname;
+              }
+              Events.update({eid:ev.eid}, ev);
+              res.json(ev);
+            });
+          });
+        });
+      }
+      else
+      {
+        res.json(null);
+      }
+    });
+  }
+}
 
 exports.promoteEvent = function(req, res)
 {
@@ -22,11 +122,16 @@ exports.promoteEvent = function(req, res)
             commentary: req.body.commentary,
             value: req.body.value,
             quantity: req.body.quantity,
+            facebookAttendings: ev.attending_count
             };
+            if (req.body.end_date)
+            {
+              promotion.end_date = new Date(parseInt(req.body.end_date));
+            }
             ev.promoter = promoter;
             ev.promotion = promotion;
             ev.promoted = true;
-            Mail.promoteMail(ev);
+            Mail.gameActive(ev);
           if (!req.body.end_date || req.body.end_date <= new Date().getTime())
          {
           Events.findOne({'eid':parseInt(req.params.eid)}, function(err, new_ev){

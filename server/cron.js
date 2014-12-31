@@ -113,8 +113,7 @@ function updateAntarctique(){
   Events.find({
     start_time:{
       $gt: date
-    },
-    'venue.country': "Antarctique"
+    }
   }).success(function(evs){
     var eids = [];
     evs.forEach(function(ev) {

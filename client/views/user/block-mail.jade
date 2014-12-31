@@ -2,8 +2,8 @@
  div.bottom(align='center')
   br
   br
-  p.red {{::blocked.name}} is spamming you ?
-  button.btn.btn-primary(ng-click='addToSpam()') Block him!
+  p.red(ng-if="blocked != false") {{::blocked.name}} is spamming you ?
+  button.btn.btn-primary(ng-if="blocked != false", ng-click='addToSpam()') Block him!
   br
   br
   br

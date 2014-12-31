@@ -35,10 +35,46 @@
                     td.aligncenter {{::ev.promotion.end_date | amCalendar}}
                   tr
                     td.smallp_andfont Deadline
-      section.in_promotion(ng-if="ev.list_event_players[0].uid", id="winner", style="text-align:center;")
+      section.promoted(ng-if="ev.promoted == false && ev.promotion") 
+        .panel-danger
+          .panel-heading.aligncenter Game Finished
+          table.marginstd
+            tr
+              td
+                table.promoterinfo
+                  tr
+                    td.aligncenter 
+                      img.img-circle(ng-src="{{::ev.promoter.picture}}", ng-alt="{{::ev.promoter.name}}")
+                  tr
+                    td.aligncenter {{::ev.promoter.name}}
+                  tr
+                    td.smallp_andfont Promoter
+              td
+                table.reward
+                  tr
+                    td.aligncenter
+                      i.fa.fa-gift.fa-4x
+                  tr
+                    td.aligncenter {{::ev.promotion.reward}}
+                  tr
+                    td.smallp_andfont Reward
+              td
+                table.end_date
+                  tr
+                    td.aligncenter
+                      i.fa.fa-bomb.fa-4x
+                  tr
+                    td.aligncenter {{::ev.promotion.end_date | amCalendar}}
+                  tr
+                    td.smallp_andfont Deadline
+      section.in_promotion(ng-if="ev.list_event_players[0].uid && ev.promoted", id="winner", style="text-align:center;")
         span.aligncenter
           img.img-circle(ng-src='{{::"http://graph.facebook.com/" + ev.winner.uid + "/picture?type=square"}}', ng- alt='{{::ev.winner.name}}')
           &nbsp {{::ev.winner.name}} is currently winning with {{::ev.winner.result}} points !
+      section.in_promotion(ng-if="ev.list_event_players[0].uid && !ev.promoted", id="winner", style="text-align:center;")
+        span.aligncenter
+          img.img-circle(ng-src='{{::"http://graph.facebook.com/" + ev.winner.uid + "/picture?type=square"}}', ng- alt='{{::ev.winner.name}}')
+          &nbsp {{::ev.winner.name}} is the winner with {{::ev.winner.result}} points !
       section.aligncenter 
         .event-buttons
           .event-rsvp-btns

@@ -4,7 +4,7 @@ app.controller('ListCtrl', function($scope, $window, Event, evs) {
   }
 
   $scope.events = evs;
-
+  $scope.noMoreEvents = false;
   //$scope.mobileSortList = false;
   $scope.getTags = function() {
     $scope.tags = _.uniq([].concat.apply([], _.pluck($scope.events, 'tags'))).sort();
@@ -19,6 +19,8 @@ app.controller('ListCtrl', function($scope, $window, Event, evs) {
       if (evs.length) {
         $scope.events.push.apply($scope.events, evs);
         $scope.getTags();
+        var y = document.getElementById('list');
+        //y.innerHTML = y.innerHTML;
       } else {
         $scope.noMoreEvents = true;
       }
