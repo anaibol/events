@@ -363,7 +363,7 @@ function inviteMail(fromuid, uids, url, eid)
                           Invitations.insert(invitation, function(err, saved){
                             var mailid = saved._id.toString();
                             var unsubscribe = "http://wooepa.com/mail/unsubscribe?mid=" + mailid;
-                            Results.findOne({user_id:from.facebook.id}, function(err, fromres){
+                            Results.findOne({$and: [{user_id:from.facebook.id},{event_id:ev.eid.toString()}]}, function(err, fromres){
                                 var fromPoints = {
                                 join:fromres.join,
                                 invite:0,
