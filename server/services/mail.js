@@ -373,9 +373,9 @@ function inviteMail(fromuid, uids, url, eid)
                                 };
                                 var categorie = "";
                                 var tags = "";
-                                if (ev.categorie.length >= 1)
+                                if (ev.categorie && ev.categorie.length >= 1)
                                     categorie = ev.categorie.toString();
-                                if (ev.tags.length >= 1)
+                                if (ev.tags && ev.tags.length >= 1)
                                     tags = ev.tags.toString();
                                 if (fromres.result > 0)
                                     fromPoints.invite = fromres.result - fromres.join - fromres.share;
