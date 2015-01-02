@@ -74,7 +74,7 @@
       section.in_promotion(ng-if="ev.list_event_players[0].uid && !ev.promoted", id="winner", style="text-align:center;")
         span.aligncenter
           img.img-circle(ng-src='{{::"http://graph.facebook.com/" + ev.winner.uid + "/picture?type=square"}}', ng- alt='{{::ev.winner.name}}')
-          &nbsp {{::ev.winner.name}} is the winner with {{::ev.winner.result}} points !
+          &nbsp {{::ev.winner.name}} is won with {{::ev.winner.result}} points !
       section.aligncenter 
         .event-buttons
           .event-rsvp-btns

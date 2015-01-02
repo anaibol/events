@@ -668,6 +668,7 @@ function getFestival(ev) {
   var text = name + ' ' + desc;
   text = text.toLowerCase();
   var words = ["congress", "festival", "concert", "cours ", "class "];
+  var alreadyin = false;
   for (var i = 0; i < words.length; i++) {
     var str = words[i];
     var n = text.search(str);
@@ -675,8 +676,14 @@ function getFestival(ev) {
     if (n > 0) {
       festival = true;
       if (words[i] == "cours " || words[i] == "class ")
+      {
         words[i] = "class";
-      ev.categorie.push(words[i]);
+        alreadyin = true;
+      }
+      if (alreadyin == false)
+      {
+        ev.categorie.push(words[i]);
+      }
     }
   }
 

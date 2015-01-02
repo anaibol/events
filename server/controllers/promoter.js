@@ -30,7 +30,7 @@ exports.checkEnd = function(req, res)
             invited: 0,
             share: 0,
             nbplayer: results.length,
-            facebookjoin: ev.attending_count - ev.promotion.facebookAttendings
+            facebookjoin: ev.attending_count
           };
           var invpoints = 0;
           while (results[i])
@@ -51,7 +51,7 @@ exports.checkEnd = function(req, res)
               }
               if (results[i].join == 6)
               {
-                winner.share = 1;
+                winner.join = 6;
               }
             }
             if (results[i].join == 6)
@@ -89,8 +89,13 @@ exports.checkEnd = function(req, res)
                 ev.promotionStats = promotionStats;
                 winner.boostname = boostname;
               }
+              Boosts.find({event_id:ev.eid.toString()}, function(err, nbBoost){
+              ev.promotionStats.nbBoost = nbBoost.length;
               Events.update({eid:ev.eid}, ev);
+              Mail.endGameMail(ev);
+              Mail.toWinnerMail(ev);
               res.json(ev);
+              });
             });
           });
         });
@@ -101,6 +106,11 @@ exports.checkEnd = function(req, res)
       }
     });
   }
+}
+
+function diffdate(d1,d2){
+var WNbJours = d2.getTime() - d1.getTime();
+return Math.ceil(WNbJours/(1000*60*60*24));
 }
 
 exports.promoteEvent = function(req, res)
@@ -122,12 +132,14 @@ exports.promoteEvent = function(req, res)
             commentary: req.body.commentary,
             value: req.body.value,
             quantity: req.body.quantity,
-            facebookAttendings: ev.attending_count
+            facebookAttendings: ev.attending_count,
+            duration: ""
             };
             if (req.body.end_date)
             {
               promotion.end_date = new Date(parseInt(req.body.end_date));
             }
+            promotion.duration = diffdate(new Date(),promotion.end_date);
             ev.promoter = promoter;
             ev.promotion = promotion;
             ev.promoted = true;

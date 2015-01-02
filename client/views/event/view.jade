@@ -36,7 +36,7 @@
                     td.aligncenter {{::ev.promotion.end_date | amCalendar}}
                   tr
                     td.smallp_andfont Deadline
-      section.promoted(ng-if="ev.promoted == false && ev.promotion") 
+      section.promoted(ng-if="ev.promoted == false && ev.promotion", list-event-player) 
         .panel-danger
           .panel-heading.aligncenter Game Finished
           table.marginstd
@@ -67,7 +67,11 @@
                   tr
                     td.aligncenter {{::ev.promotion.end_date | amCalendar}}
                   tr
-                    td.smallp_andfont Deadline  
+                    td.smallp_andfont Deadline
+      section.in_promotion(ng-if="ev.list_event_players[0].uid && !ev.promoted", id="winner", style="text-align:center;")
+        span.aligncenter
+          img.img-circle(ng-src='{{::"http://graph.facebook.com/" + ev.winner.uid + "/picture?type=square"}}', ng- alt='{{::ev.winner.name}}')
+          &nbsp {{::ev.winner.name}} won with {{::ev.winner.result}} points !
       section.aligncenter
         button.btn.btn-warning(ng-click="promote()")
           i.fa.fa-bullhorn.fa-lg

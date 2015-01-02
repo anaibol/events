@@ -66,6 +66,7 @@ function starttime2(){
     console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + eids.length + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     Ev.updateMultiple(eids);
 });}
+  updateNoCover();
 var cronJob = require('cron').CronJob;
 var env = process.env.NODE_ENV || 'development';
 
@@ -107,6 +108,34 @@ updateWeek();
 fetchEventsFromKeywords();
 updatePrioritaires();
 updatePopular();
+
+function updateNoCover(){
+  console.log('updatepic');
+  Events.find({pic_cover:null}, function(err, evs){
+    var eids = [];
+    evs.forEach(function(ev) {
+      eids.push(parseInt(ev.eid));
+    });
+    if (eids)
+    {
+      Ev.updateMultiple(eids);
+    }
+  });
+  Events.find({pic_cover:null}, function(err, evs){
+    evs.forEach(function (ev){
+      var request = '/' + ev.eid + '/photos?access_token=' + accessToken;
+      graph.get(request, function(err, pic){
+      if (pic.data && pic.data[0])
+      {
+        console.log('PICFOUND');
+        ev.pic_cover = 'https://graph.facebook.com/' + pic.data[0].id + '/picture?width=9999&height=9999'
+        ev.original_cover = null;
+        Events.update({eid:ev.eid}, ev);
+      }
+    });
+    });
+  });
+}
 function updateAntarctique(){
   var date = new Date();
 
