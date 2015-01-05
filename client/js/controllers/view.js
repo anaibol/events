@@ -26,18 +26,22 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
         return false;
       };
     }
-    else
-    {
-      ezfb.login(function(response) {
-        console.log(response);
-        $http({
-            method: 'POST',
-            data: {
-              eid: $scope.ev.eid
-            },
-            url: '/api/share/' + $scope.ev.eid,
-          });
-      }, {scope: ['publish_actions', 'read_stream']});
+    else {
+      $window.open('https://www.facebook.com/sharer/sharer.php?u=' + $window.location.href);
+
+
+      // var modalInstance = $modal.open({
+      //   templateUrl: 'event/share',
+      //   controller: 'EventShareCtrl',
+      //   resolve: {
+      //     ev: function() {
+      //       return $scope.ev;
+      //     }
+      //   }
+      // });
+
+      // modalInstance.result.then(function(selected) {
+      // }, function() {});
     }
   };
   $scope.editing = false;
