@@ -14,7 +14,7 @@ head
 
   link(href='/favicon.ico', rel='shortcut icon', type='image/x-icon')
   
-  meta(property='fb:app_id', content='APP_ID')
+  meta(property='fb:app_id', content='#{global.fbAppId}')
 
   if ev
     title=ev.name
@@ -28,14 +28,14 @@ head
     meta(name="description", content='Events near #{loc.city}')
     meta(property='og:title', content=title)
     meta(property='og:description', content='Events near #{loc.city}')
-    meta(property='og:image', content='APP_LOGO')
+    meta(property='og:image', content='http://wooepa.com/img/logo_wooepa.png')
     meta(property='og:url', content='https://wooepa.com/#{loc.citySlug}')
   else
     title=title
     meta(name="description", content='Discover Events Near You - Invite your Friends - Get Rewarded!')
     meta(property='og:title', content=title)
     meta(property='og:description', content='Discover Events Near You - Invite your Friends - Get Rewarded!')
-    meta(property='og:image', content='APP_LOGO')
+    meta(property='og:image', content='http://wooepa.com/img/logo_wooepa.png')
     meta(property='og:url', content='https://wooepa.com/')
 
   meta(property='og:type', content='website')
