@@ -27,7 +27,7 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
       };
     }
     else {
-      $window.open('https://www.facebook.com/sharer/sharer.php?u=' + $window.location.href);
+      $window.open('https://www.facebook.com/dialog/share?display=popup&app_id=' + window.fbAppId + '&href=' + $window.location.href + '&redirect_uri=' + window.location.href);
 
 
       // var modalInstance = $modal.open({
