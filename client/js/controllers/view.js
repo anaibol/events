@@ -27,27 +27,15 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
       };
     }
     else {
-      var url = 'https://www.facebook.com/dialog/share?display=popup&app_id=' + window.fbAppId + '&href=' + $window.location.href + '&redirect_uri=' + window.location.href;
-      var w = 450;
-      var h = 300;
-      var title = $scope.ev;
-      var left = (screen.width/2)-(w/2);
-      var top = (screen.height/2)-(h/2);
-      window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-
-      // var modalInstance = $modal.open({
-      //   templateUrl: 'event/share',
-      //   controller: 'EventShareCtrl',
-      //   resolve: {
-      //     ev: function() {
-      //       return $scope.ev;
-      //     }
-      //   }
-      // });
-
-      // modalInstance.result.then(function(selected) {
-      // }, function() {});
+      ezfb.ui(
+        {
+          method: 'share',
+          href: $window.location.href,
+        },
+        function(response) {
+          console.log(response);
+        }
+      );
     }
   };
   $scope.editing = false;
