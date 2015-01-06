@@ -118,12 +118,15 @@ module.exports = function(app, passport) {
 
   app.get('/:city/:slug/:eid', function(req, res) {
     getLocFromSlug(req.params.city, function(loc) {
-      res.render('index', {
-        title: 'Wooepa',
-        is_mobile: req.is_mobile,
-        user: req.user ? JSON.stringify(req.user) : 'null',
-        fbAppId: global.fbAppId,
-        loc: loc
+      Events.findOne({eid: parseInt(req.params.eid)}, function(err, ev) {
+        res.render('index', {
+          title: 'Wooepa',
+          is_mobile: req.is_mobile,
+          user: req.user ? JSON.stringify(req.user) : 'null',
+          fbAppId: global.fbAppId,
+          loc: loc,
+          ev: ev
+        });
       });
     });
   });
@@ -149,7 +152,8 @@ module.exports = function(app, passport) {
         is_mobile: req.is_mobile,
         user: req.user ? JSON.stringify(req.user) : 'null',
         fbAppId: global.fbAppId,
-        loc: loc
+        loc: loc,
+        evs: true
       });
     });
   });

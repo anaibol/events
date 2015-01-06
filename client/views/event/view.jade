@@ -84,7 +84,10 @@
           | &nbsp Play!       
       section.info
         .info
-          h3.title.truncate {{::ev.name}}
+          if ev
+            h3.title.truncate #{ev.name}
+          else
+            h3.title.truncate {{::ev.name}}
         table
           tr
             td
@@ -113,7 +116,11 @@
           span.fontlarge Price
       section.description(ng-class="{opened: descriptionOpened}", ng-init="descriptionOpened = (ev.description.length < 600)", ng-if="ev.description", ng-click="descriptionOpened = true")
         .bg-image.down(style='background-image: url({{::ev.pic_coveg.source}})')
-        p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
+        if ev
+          p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
+            !{ev.description}
+        else
+          p(ng-bind-html='ev.description | linky', ng-click="descriptionOpened = true")
         button.btn(ng-show="!descriptionOpened", ng-if="ev.description.length >= 600")
           i.fa(ng-class="{'fa-chevron-down': !descriptionOpened, 'fa-chevron-up': descriptionOpened}")
 
