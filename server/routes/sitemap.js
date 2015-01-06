@@ -102,7 +102,6 @@ module.exports = function(app) {
     };
 
     return Events.find({}, options, function(err, evs) {
-      console.log(err)
       if (err) return;
 
       var url;
