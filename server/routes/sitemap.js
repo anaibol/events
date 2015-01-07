@@ -109,7 +109,7 @@ module.exports = function(app) {
       limit: MaxSitemapUrls,
       skip: from,
       sort: {
-        id: 1
+        _id: 1
       },
       fields: {
         eid: 1,
