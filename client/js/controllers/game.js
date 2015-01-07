@@ -11,25 +11,23 @@ app.controller('GameCtrl', function($scope, $rootScope, $state, ezfb, $modal, $h
     {
       document.getElementById('confirmbox').style.display="block"; //this is the replace of this line
       document.getElementById('acceptbutton').onclick = function(){
-      $window.location = '/auth/facebook?redirectUrl=/' + $rootScope.loc.citySlug + '/' + $scope.ev.slug + '/' + $scope.ev.eid + '/game';
+      $window.location = '/auth/facebook?redirectUrl=/' + $rootScope.loc.citySlug + '/' + $scope.ev.slug + '/' + $scope.ev.eid;
       };
       document.getElementById('cancelbutton').onclick = function(){
         document.getElementById('confirmbox').style.display="none";
         return false;
       };
     }
-    else
-    {
-      ezfb.login(function(response) {
-        console.log(response);
-        $http({
-            method: 'POST',
-            data: {
-              eid: $scope.ev.eid
-            },
-            url: '/api/share/' + $scope.ev.eid,
-          });
-      }, {scope: ['publish_actions']});
+    else {
+      ezfb.ui(
+        {
+          method: 'share',
+          href: $window.location.href,
+        },
+        function(response) {
+          console.log(response);
+        }
+      );
     }
   };
   $scope.editing = false;
