@@ -105,16 +105,16 @@ module.exports = function(app, passport) {
     }
   });
 
-  app.get('/:slug/:eid', function(req, res) {
-    getLocation(req, function(loc) {
-      res.render('index', {
-        title: 'Wooepa',
-        is_mobile: req.is_mobile,
-        user: req.user ? JSON.stringify(req.user) : 'null',
-        loc: loc
-      });
-    });
-  });
+  // app.get('/:slug/:eid', function(req, res) {
+  //   getLocation(req, function(loc) {
+  //     res.render('index', {
+  //       title: 'Wooepa',
+  //       is_mobile: req.is_mobile,
+  //       user: req.user ? JSON.stringify(req.user) : 'null',
+  //       loc: loc
+  //     });
+  //   });
+  // });
 
   app.get('/:city/:slug/:eid', function(req, res) {
     getLocFromSlug(req.params.city, function(loc) {

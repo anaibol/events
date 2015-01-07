@@ -10,6 +10,7 @@ var fs = require('fs');
 var Creators = db.get('creators');
 var Locations = db.get('locations');
 var Events = global.db.get('events');
+var Payments = global.db.get('payments');
 
 var Ev = require('../ev');
 var Resolve = require('../services/resolve.js');
@@ -88,9 +89,10 @@ exports.activateGame = function(req, res) {
     if (err) {
       res.json(err);
     } else {
-      console.log(charge);
-
-      res.json(charge);
+      Payments.insert({charge: charge, eid: parseInt(req.params.eid), uid: parseInt(req.user.facebook.id)});
+      Events.update({eid: parseInt(req.params.eid)}, {$set: {gameactive: true}}, function(err, result) {
+        res.json({state: 'success'});
+      });
     }
   });
 };

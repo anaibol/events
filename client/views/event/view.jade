@@ -4,7 +4,7 @@
     .left-container.col-xs-12.col-sm-12.col-md-8.col-lg-8
       section.header(ng-if="ev.pic_cover && ev.pic_cover.source")
         img(src="{{::ev.pic_cover.source}}", style="top: {{coverTopPosition}}")
-      section.promoted(ng-if="ev.promoted", ui-sref="list.view.game()")
+      section.promoted(ng-if="ev.promoted && ev.gameactive", ui-sref="list.view.game()")
         .panel-success
           .panel-heading.aligncenter Game Active
           table.marginstd
@@ -73,10 +73,10 @@
           img.img-circle(ng-src='{{::"http://graph.facebook.com/" + ev.winner.uid + "/picture?type=square"}}', ng- alt='{{::ev.winner.name}}')
           &nbsp {{::ev.winner.name}} won with {{::ev.winner.result}} points !
       section.aligncenter
-        button.btn.btn-warning(ng-click="promote()")
+        button.btn.btn-warning(ng-click="promote()", ng-if="!ev.promoted && !ev.gameactive")
           i.fa.fa-bullhorn.fa-lg
           | &nbsp Promote event!
-        button.btn.btn-warning(ng-click="activateGame()")
+        button.btn.btn-warning(ng-click="activateGame()", ng-if="ev.promoted && !ev.gameactive")
           i.fa.fa-gamepad.fa-lg
           | &nbsp Activate game
         button.btn.btn-warning(ui-sref="game({city:$root.loc.citySlug, slug:ev.slug, eid:ev.eid})") 
@@ -179,5 +179,5 @@
           h1 Please Login!
           button.btn.btn-primary(id="acceptbutton") Log Me!
           button.btn.btn-primary(id="cancelbutton") Not now 
-        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted")
+        .event-buttons.wdiv.padding-10(ng-hide='isInPromotion()', ng-if="ev.promoted && ev.gameactive")
           .alert.alert-success(ng-repeat='player in ev.list_event_players | orderBy:\'-result\' | filter:search', ng-if='ng-if')

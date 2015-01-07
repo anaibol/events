@@ -202,8 +202,6 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
       key: $window.stripePublicKey,
       image: $scope.ev.pic_cover.source,
       token: function(token) {
-        console.log(token);
-
         var currency = 'eur';
 
         var data = {
@@ -215,9 +213,15 @@ app.controller('ViewCtrl', function($scope, $rootScope, $state, $stateParams, ez
         // Use the token to create the charge with a server-side script.
         // You can access the token ID with `token.id`
         $http.post('/api/events/' + $scope.ev.eid + '/activate-game', data).then(function(res) {
-          console.log(res);
+          $scope.ev.gameactive = true;
         });
       }
+    });
+
+    handler.open({
+      name: 'Activate contest',
+      description: 'Contest for event ' + $scope.ev.description,
+      amount: 10 * 100
     });
   };
 
