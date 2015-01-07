@@ -5,6 +5,8 @@ app.controller('LocationpickerCtrl', function($scope, $state, $http, $rootScope)
     $rootScope.loc.city = $item.description.split(',')[0];
     $rootScope.loc.citySlug = slug($rootScope.loc.city);
 
+    document.querySelector('header .city input').blur();
+
     $http.get('/api/autocomplete/placeid', {
       params: {
         placeid: $item.place_id,

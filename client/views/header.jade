@@ -11,7 +11,7 @@ header
         form.navbar-form.city
           .form-control-wrapper
             i.fa.fa-search
-            input.form-control.col-lg-8(type="text", typeahead="location.description for location in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.loc.city", ng-controller="LocationpickerCtrl")
+            input.form-control.col-lg-8(type="text", typeahead="location.description for location in getLocation($viewValue)" typeahead-on-select="onSelect($item, $model, $label)", ng-model="$root.loc.city", ng-controller="LocationpickerCtrl", ng-blur)
             //- placeholder="Type a city or location", 
             span.material-input
         a.hidden-xs.navbar-brand(href='', ui-sref="promoted({city: $root.loc.citySlug})") Play!
