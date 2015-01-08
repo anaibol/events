@@ -20,7 +20,10 @@ head
     title=ev.name
     meta(name="description", content=ev.description)
     meta(property='og:title', content=ev.name)
-    meta(property='og:description', content=ev.description)
+    if ev.promotion
+      meta(property='og:description', content=ev.promotion.reward)
+    else
+      meta(property='og:description', content=ev.description)
     meta(property='og:image', content=ev.pic_cover.source)
     meta(property='og:url', content='https://wooepa.com/' + loc.citySlug + '/' + ev.slug + '/' + ev.eid)
   else if evs

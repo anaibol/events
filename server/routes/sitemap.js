@@ -119,7 +119,6 @@ module.exports = function(app) {
     };
 
     return Events.find({ 'venue.city': { $exists: true}}, options, function(err, evs) {
-      console.log(err);
       if (err) return;
 
       var url;

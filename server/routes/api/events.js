@@ -19,7 +19,9 @@ module.exports = function(app) {
   app.get('/import/user/timeline/:name', authorization.requiresLogin, hasAuthorization, events.importFromUserTimeline);
   app.get('/import/page/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPage);
   app.get('/import/page/timeline/:pid', authorization.requiresLogin, hasAuthorization, events.importFromPageTimeline);
-  app.get('/import/event/:eid', authorization.requiresLogin, hasAuthorization, events.import);
+  // app.get('/import/event/:eid', authorization.requiresLogin, hasAuthorization, events.import);
+  app.get('/import/event/:eid', events.import);
+  app.post('/import/event/:eid', events.import);
   app.get('/api/events', events.get);
   app.get('/api/events/:eid', events.getOne);
   app.post('/api/events/:eid/purchase', events.purchase);
