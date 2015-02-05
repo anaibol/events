@@ -1,0 +1,60 @@
+#mobile-list {
+  padding: 0 10px;
+
+  h1 {
+    font-family: 'Open Sans';
+    color: black;
+  }
+
+  .events {
+    padding: 0;
+    margin: 0;
+
+    .event {
+      padding: 0;
+      margin-bottom: 5px;
+
+      &.clicked {
+        background: #38c;
+      }
+
+      a {
+        display: inline-block;
+        padding-left: 110px;
+
+        * {
+          color: black;
+        }
+
+        img {
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+
+        h2 {
+          font-family: 'Open Sans';
+          font-size: 12px;
+          margin: 0 0 5px 0;
+        }
+
+        .tag-list {
+          text-align: left;
+          padding: 0;
+        }
+
+        span {
+          font-size: 11px;
+        }
+
+        .location {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+doctype html
+html(ng-class="{noscroll: $root.menuOpen}")
+  include head
+  body(id="event-{{$state.current.name.replace('.', '-')}}", ng-class="{mobile: $root.isMobile, desktop: !$root.isMobile, noscroll: $root.menuOpen}")
+    .container-fluid
+      include header
+      include menu
+      .banner
+
+      //- #wrapper(ng-class="{'move':$root.menuOpen}", ng-swipe-left="$root.menuOpen = !$root.menuOpen")
+      #wrapper(ng-class="{'move':$root.menuOpen}",ma)
+        ui-view.container-fluid(autoscroll="autoscroll='true'")
+
+      //- .global-navigation.back
+      //-   a(href='/', ui-sref="^", ng-if="$state.$current !== ''")
+      //-     i.fa-chevron-left
+      
+      //- if (is_mobile)
+      //-   script(type='text/javascript', src='/js/app.mobile.min.js')
+      //- else
+      script(type='text/javascript', src='/js/app.min.js')
+      
+      //- script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false')
+
+      block inline-scripts
+      script(src='//localhost:35729/livereload.js')
+      script(src='https://checkout.stripe.com/checkout.js')

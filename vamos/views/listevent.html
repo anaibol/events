@@ -1,0 +1,45 @@
+<section class="event hand" ng-class="{ 'responsive': responsive }" itemscope itemtype="//schema.org/Event" ui-sref="events({parameterized_name: eventInstance.name.parameterize(), id: eventInstance.id })">
+    <div class="eventTop">
+        <h3 class="name"><a itemprop="url" ui-sref="events({parameterized_name: eventInstance.name.parameterize(), id: eventInstance.id })"><span itemprop="name" class="mobile">{{ eventInstance.name }}</span> <span class="desktop">{{ eventInstance.name ? (eventInstance.name | truncate:30) : '' }}</span></a></h3>
+        <div><span class="venue" itemprop="location" itemtype="//schema.org/Place"><i class="icon icon-pin-filled"></i><span itemprop="name">{{ eventInstance.location }}</span></span>
+            <time class="startDate" itemprop="startDate" content="{{ eventInstance.start_time }}" ng-class="{ red:sort.by==='startDate' }">{{ eventInstance.startDate.today() ? ('Today ' + (eventInstance.startDate | date: ', h:mma')) : (eventInstance.startDate.thisWeek() ? (eventInstance.startDate | date: 'EEEE, h:mma') : (eventInstance.startDate | date: 'd. M. yy, h:mma')) }} <span ng-if="eventInstance.end_time">- {{ eventInstance.endDate | date: 'h:mma' }}</span>
+            </time>
+            <meta itemprop="endDate" content="{{ eventInstance.end_time }}">
+        </div>
+    </div>
+    <div class="imageHolder">
+        <a class="inner" ui-sref="events({parameterized_name: eventInstance.name.parameterize(), id: eventInstance.id })">
+            <img itemprop="image" ng-src="{{ eventInstance.picture_url }}" alt="{{ eventInstance.name }}">
+        </a>
+        <div ng-show="eventInstance.is_favorite" class="action interested first">
+            <div class="icon icon-heart-filled"></div>
+        </div>
+        <div ng-show="eventInstance.joined" class="action joined" ng-class="{ 'first':!eventInstance.is_favorite, 'second':eventInstance.is_favorite }">
+            <div class="icon icon-checkmark"></div>
+        </div>
+    </div>
+    <div class="descriptionHolder hidden-xs hidden-sm" ng-hide="noDescription">
+        <div class="valign">
+            <p itemprop="description" class="description" ng-if="eventInstance.description">{{ eventInstance.description | truncate:70 }}</p>
+        </div>
+    </div>
+    <div class="attendees" ng-class="{ red:sort.by==='num_attending'}">
+        <div ng-if="eventInstance.facebookFriends && eventInstance.facebookFriends.length > 0">
+            <a href="https://facebook.com/{{ friend.uid }}" title="{{ friend.name }}" ng-repeat="friend in eventInstance.facebookFriends | limitTo:5" target="_blank" class="friend" ng-class="{ last:$last }">
+                <img ng-src="{{ friend.pic_square }}" alt="{{ friend.name }}" title="{{ friend.name }}">
+            </a>
+            <ng-pluralize count="eventInstance.facebookFriends.length" offset="0" when="{
+				'0': 'No friends attending.',
+				'1': '{{ eventInstance.facebookFriends[0].first_name }} joined',
+				'other': '{} friends joined'
+			}"></ng-pluralize>
+        </div>
+        <div ng-if="!eventInstance.facebookFriends || eventInstance.facebookFriends.length < 1">
+            <ng-pluralize count="eventInstance.num_attending" when="{
+				'0': 'Undisclosed guestlist',
+				'1': '1 attendee',
+				'other': '{} attendees'
+			}"></ng-pluralize>
+        </div>
+    </div>
+</section>

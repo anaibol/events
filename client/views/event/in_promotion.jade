@@ -1,0 +1,36 @@
+#list(ng-show="$state.current.name === 'promoted' || !$root.isMobile")
+ div(style='text-align:center;')
+  h2(style='color:red;') Events in promotion !
+ .events.loading.col-xs-12.col-sm-9.col-md-9.col-lg-10(isotope)
+    .event.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="ev in events | orderBy:\'start_time\'", ui-sref="list.view({city: $root.$stateParams.city, slug:ev.slug, eid: ev.eid})")
+      .content(adaptive-background)
+        .top
+          a(ui-sref="list.view({slug: ev.slug, eid: ev.eid})").title.truncate {{::ev.name}}
+          .tag-list
+            span.tag(quick-ng-repeat="tag in ev.tags", ng-if="$index < 3", class="{{::tag}}", ng-click="openTag($event, ev)") {{::tag}}
+        .image-container
+          .image
+            .ribbon-wrapper-green(ng-if="ev.price.num === 0")
+              .ribbon-green {{::ev.price.full}}
+            //- img(ng-src="{{::ev.pic_big}}", ng-if="$root.isMobile")
+            //- img(ng-src="{{::ev.pic_cover.source}}", ng-if="!$root.isMobile")
+            img(ng-src="{{::ev.pic_cover.source}}")
+            //- hm-swipe="$root.menuOpen = !$root.menuOpen"
+        .bottom
+          span.date
+            //- i.fa.fa-clock-o
+            //- span {{::ev.start_time2 | amCalendar}}
+            //- i.fa.fa-calendar
+            i.fa.fa-clock-o
+            span {{::ev.start_time2 | amCalendar}} 
+           // i.fa.fa-clock-o
+           // span {{::ev.start_time2 | amDateFormat:"LT"}}
+
+          .attending.pull-right(ng-if="ev.attending_count > 0", ev.attending_count="ev.attending_count")
+            i.fa.fa-group
+            span {{::ev.attending_count}}
+
+          .span.place(ng-click="openMap($event, ev)", ng-if="ev.location")
+            i.fa.fa-map-marker
+            span.location {{::' ' + ev.location | characters:45}}{{::ev.location && ev.venue.city ? ', ' + ev.venue.city : ''}}
+        .box-shadow

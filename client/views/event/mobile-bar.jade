@@ -1,0 +1,32 @@
+//- #mobile-bar.visible-xs
+//-   //- a(href="#", ng-click='mobileSortList = !mobileSortList')
+//-   //-   | Sorting: Suggested
+//-   //-   i.fa.fa-chevron-down
+//-   //- ul(ng-show='mobileSortList', ng-click='mobileSortList = !mobileSortList')
+//-   //-   li
+//-   //-     a(href='#', ui-sref="list({sortBy: 'popularity'})")
+//-   //-       | Popularity
+//-   //-   li
+//-   //-     a(href='#', ui-sref="list({sortBy: ''})")
+//-   //-       | Date
+
+
+//-   .navbar-collapse.collapse(ng-class="{'in':!navCollapsed}")
+//-     ul.nav.navbar-nav.visible-xs
+//-       li
+//-         a(ui-sref='app.page.profile', href='/me/events')
+//-           | Sort by
+//-           i.fa.fa-chevron-down
+
+//-         ul
+//-           li
+//-             a(href='#', ui-sref="list({sortBy: 'popularity'})")
+//-               | Popularity
+//-           li
+//-             a(href='#', ui-sref="list({sortBy: ''})")
+//-               | Date
+
+//-       li.divider
+//-       li
+//-         a(href="/auth/signout", target='_self' translate) Logout
+//-           i.fa.fa-sign-out

@@ -1,0 +1,33 @@
+Vamos web flow
+
+get translations
+
+http://www.getvamos.com/locales/en/translation.json?lang=en
+
+- get user
+
+https://api.getvamos.com/users/166544.json?user_id=166544&auth_token=2Ehzsq37JsVaZ7KrqpHb&oauth_consumer_key=7GKdQCkhAJgIfJRav73guOucWkaAZas3EmIxYdZ7&timestamp=1411102478
+
+- get views
+
+- geolocalize user
+freegeoip (same as us)
+
+- geocode user location searched
+
+http://dev.virtualearth.net/REST/v1/Locations?key=ApaZmvi-aGDj5Xs9QqBFTqkoqquvExbnaO1Nr_n0Wk3ntee9eu_y140GYHm4VH2j&query=Barcelona&userIp=190.190.77.139&jsonp=angular.callbacks._2
+
+
+- import flickr images from coordinates
+
+https://api.flickr.com/services/rest/?api_key=02fc2dff1d73a08a575b9532210a28eb&method=flickr.photos.search&format=json&nojsoncallback=1&accuracy=11&sort=interestingness-desc&media=photos&content_type=1&has_geo=1&per_page=10&extras=url_z%2Ctags%2Cmachine_tags%2Co_dims%2Cview&tags=landmark&tag_mode=all&in_gallery=true&lat=41.375&lon=2.157589912414551
+
+
+- call to vamos api for campaigns
+(no one)
+https://api.getvamos.com/campaigns.json?oauth_consumer_key=7GKdQCkhAJgIfJRav73guOucWkaAZas3EmIxYdZ7&timestamp=1411101503&center=41.375,2.157589912414551&since=1411101502&until=1411181999
+
+
+- call to vamos api for events
+
+https://api.getvamos.com/events.json?oauth_consumer_key=7GKdQCkhAJgIfJRav73guOucWkaAZas3EmIxYdZ7&timestamp=1411101503&center=41.375,2.157589912414551&since=1411101502&until=1411181999

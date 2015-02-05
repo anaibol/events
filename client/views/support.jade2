@@ -1,0 +1,6 @@
+.modal-header
+    h1 Support
+    .modal-body
+      p.description
+        | Please contact support at
+        a(href='mailto:contact@wooepa.com', target='_top') contact@wooepa.com

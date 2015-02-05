@@ -1,0 +1,39 @@
+form#promote.form-horizontal
+    .modal-header Event Promotion
+      .modal-body
+        .control-group
+          label.control-label.promote-form Reward
+          span
+            input.medium-input.promote-form(type='text', ng-model='ev.promotion.reward')
+            label.promote-label.promote-form Quantity
+            input.small-input.promote-form(type='text', ng-model='ev.promotion.quantity')
+            label.promote-label.promote-form Value
+            input.small-input.promote-form(type='text', ng-model='ev.promotion.value')
+        .control-group.date
+          br
+          div.form-group(ng-controller='DatepickerCtrl')
+            br
+            br
+            label.col-md-2.promote-form(for='title') Deadline
+            br
+            p.input-group.datepicker
+              input.promote-form(ng-click='open($event)', datepicker-popup='{{format}}', ng-model='ev.promotion.end_date', is-open='opened', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
+              button.btn.btn-default.promote-form(ng-click='open($event)')
+                i.fa.fa-calendar
+          div.form-group(ng-controller='TimepickerCtrl')
+            label.col-md-3.promote-form(for='title') End Time
+            br
+            br
+            br
+            timepicker.promote-form(ng-model="ev.promotion.end_time", ng-change="changed()", hour-step="hstep", minute-step="mstep", show-meridian="ismeridian", required="false")
+        .control-group
+          label.control-label.promote-form Commentary
+          textarea#description.form-control(ng-model="ev.promotion.commentary", cols="30", rows="5", placeholder="Content")
+          input(type='hidden', name='promoted', ng-model="ev.promoted", value="value")
+      .modal-footer
+        button.btn.btn-primary(ng-click="submit()")
+          i.fui-check
+          | OK
+        button.btn.btn-warning(ng-click="cancel()")
+          i.fui-cross
+          | Cancel

@@ -1,0 +1,186 @@
+<!doctype html>
+<html data-ng-app="vamosApp" id="ng-app">
+
+<head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="/styles/92791f2c.main.css">
+
+    <title data-ng-bind="title + 'VAMOS - The Event Guide'">URF - Ultimate Reggaeton Fest - Buenos Aires | VAMOS</title>
+    <meta name="description" content="" />
+
+    <meta property="fb:app_id" content="333846903320181" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.getvamos.com/venues/urf-ultimate-reggaeton-fest/3108460" />
+    <meta property="og:title" content="URF - Ultimate Reggaeton Fest - Buenos Aires | VAMOS" />
+    <meta property="og:site_name" content="VAMOS" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="" />
+
+    <meta name="twitter:card" content="app" />
+    <meta name="twitter:url" content="http://getvamos.com/" />
+    <meta name="twitter:site" content="@getVamos" />
+    <meta name="twitter:app:name:iphone" content="Vamos - The Event Guide" />
+    <meta name="twitter:app:id:iphone" content="id546732445" />
+    <meta name="twitter:app:name:ipad" content="Vamos - The Event Guide" />
+    <meta name="twitter:app:id:ipad" content="id546732445" />
+    <meta name="twitter:app:country" content="de" />
+    <meta name="twitter:title" content="VAMOS - The Event Guide" />
+    <meta name="twitter:description" content="Vamos is like an event compass for the city - turning your attending Facebook friends into local event curators and putting all information you need into one place." />
+
+    <meta name="apple-itunes-app" content="app-id=546732445" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="alexaVerifyID" content="9VqMTKjRTdMkZJfKN31HudD124c" />
+
+    <!-- iOS STUFF -->
+    <!-- Status bar styles -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Telephone format detection -->
+    <meta name="format-detection" content="telephone=no" />
+    <!-- Fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Title -->
+    <meta name="apple-mobile-web-app-title" content="Vamos" />
+    <!-- ICONS -->
+    <!-- iPhone 3GS & 2011 iPod Touch (57x57) -->
+    <link rel="apple-touch-icon" href="/images/app_icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" href="/images/app_icon-57x57.png" />
+    <!-- iPhone iPad, iPad 2 & iPad mini (72x72) -->
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/app_icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/app_icon-72x72.png" />
+    <!-- iPhone 4, 4S, 5 & 2012 iPod Touch (114x114) -->
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/app_icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/app_icon-114x114.png" />
+    <!-- iPad 3 & 4 (144x144) -->
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/app_icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/app_icon-144x144.png" />
+    <!-- SPLASH SCREEN -->
+    <!-- iPhone (320x460) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 320px)" href="/images/splash_screen-320x460.png" />
+    <!-- iPhone 4 & 4S Retina (640x920) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 320px)" href="/images/splash_screen-640x920.png" />
+    <!-- iPhone 5 Retina (640x1096) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 320px)" href="/images/splash_screen-640x1096.png" />
+    <!-- iPad Landscape (1024x748) -->
+    <link rel="apple-touch-startup-image" sizes="1024x748" href="/images/splash_screen-1024x748.png" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : landscape)" />
+    <!-- iPad Portrait (768x1004) -->
+    <link rel="apple-touch-startup-image" sizes="768x1004" href="/images/splash_screen-768x1004.png" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : portrait)" />
+    <!-- iPad Retina Landscape (2048x1496) -->
+    <link rel="apple-touch-startup-image" sizes="2048x1496" href="/images/splash_screen-2048x1496.png" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : landscape)" />
+    <!-- iPad Retina Portrait (1536x2008) -->
+    <link rel="apple-touch-startup-image" sizes="1536x2008" href="/images/splash_screen-1536x2008.png" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : portrait)" />
+
+</head>
+
+
+<body data-ng-class="{ 'overflowHidden' : hideBodyOverflow }" class="{{ activeView }}" data-scroll="" data-loading="" data-promises="busyPromises">
+    <header id="header" class="wrapper" data-ng-controller="HeaderCtrl" data-ng-class="{ standalone:device.standalone, red:!gray, gray:gray }" data-header="">
+        <div class="container">
+            <h1 title="VAMOS - The Event Guide"><a class="logo" href="/">VAMOS - The Event Guide</a>
+			</h1>
+        </div>
+    </header>
+    <div data-ui-view="yield" class="yield"></div>
+    <div data-google-popup-map=""></div>
+    <div data-facebook-login-modal=""></div>
+    <div id="fb-root"></div>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    </script>
+    <script async src="/scripts/0b598555.scripts.js"></script>
+
+    <noscript>
+
+        <div itemscope itemtype="http://schema.org/Place">
+            <h1>
+		<a itemprop="url" href="http://www.getvamos.com/venues/urf-ultimate-reggaeton-fest/3108460">
+			<span itemprop="name">URF - Ultimate Reggaeton Fest</span>
+		</a>
+	</h1>
+            <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                Latitude: -34.6096
+                <br/>Longitude: -58.3801
+                <meta itemprop="latitude" content="-34.6096" />
+                <meta itemprop="longitude" content="-58.3801" />
+            </div>
+        </div>
+        <hr/>
+        <nav>
+            <a href="/">Home</a> &bull;
+            <a href="/berlin">Berlin</a> &bull;
+            <a href="/stockholm">Stockholm</a> &bull;
+            <a href="/amsterdam">Amsterdam</a> &bull;
+            <a href="/rio-de-janeiro">Rio de Janeiro</a> &bull;
+            <a href="/sao-paulo">Sao Paulo</a> &bull;
+            <a href="/madrid">Madrid</a> &bull;
+            <a href="/barcelona">Barcelona</a> &bull;
+            <a href="/paris">Paris</a> &bull;
+            <a href="/munich">Munich</a> &bull;
+            <a href="/hamburg">Hamburg</a> &bull;
+            <a href="/london">London</a> &bull;
+            <a href="/milan">Milan</a> &bull;
+            <a href="/rome">Rome</a> &bull;
+            <a href="/adelaide">Adelaide</a> &bull;
+            <a href="/bath">Bath</a> &bull;
+            <a href="/brisbane">Brisbane</a> &bull;
+            <a href="/bruges">Bruges</a> &bull;
+            <a href="/brussels">Brussels</a> &bull;
+            <a href="/buenos-aires">Buenos Aires</a> &bull;
+            <a href="/chicago">Chicago</a> &bull;
+            <a href="/copenhagen">Copenhagen</a> &bull;
+            <a href="/dublin">Dublin</a> &bull;
+            <a href="/dusseldorf">Dusseldorf</a> &bull;
+            <a href="/edinburgh">Edinburgh</a> &bull;
+            <a href="/essen">Essen</a> &bull;
+            <a href="/frankfurt">Frankfurt</a> &bull;
+            <a href="/goeteborg">Göteborg</a> &bull;
+            <a href="/hanover">Hanover</a> &bull;
+            <a href="/helsinki">Helsinki</a> &bull;
+            <a href="/cologne">Cologne</a> &bull;
+            <a href="/leeds">Leeds</a> &bull;
+            <a href="/lima">Lima</a> &bull;
+            <a href="/lisbon">Lisbon</a> &bull;
+            <a href="/los-angeles">Los Angeles</a> &bull;
+            <a href="/lyon">Lyon</a> &bull;
+            <a href="/malmoe">Malmö</a> &bull;
+            <a href="/manchester">Manchester</a> &bull;
+            <a href="/marseille">Marseille</a> &bull;
+            <a href="/medellin">Medellin</a> &bull;
+            <a href="/melbourne">Melbourne</a> &bull;
+            <a href="/mexico-city">Mexico City</a> &bull;
+            <a href="/miami">Miami</a> &bull;
+            <a href="/naples">Naples</a> &bull;
+            <a href="/new-york">New York</a> &bull;
+            <a href="/newquay">Newquay</a> &bull;
+            <a href="/orange-county">orange county</a> &bull;
+            <a href="/oslo">Oslo</a> &bull;
+            <a href="/perth">Perth</a> &bull;
+            <a href="/philadelphia">Philadelphia</a> &bull;
+            <a href="/prague">Prague</a> &bull;
+            <a href="/rotterdam">Rotterdam</a> &bull;
+            <a href="/san-diego">San Diego</a> &bull;
+            <a href="/san-francisco-bay-area">San Francisco/Bay Area</a> &bull;
+            <a href="/santiago">Santiago</a> &bull;
+            <a href="/seattle">Seattle</a> &bull;
+            <a href="/stuttgart">Stuttgart</a> &bull;
+            <a href="/sydney">Sydney</a> &bull;
+            <a href="/valencia">Valencia</a> &bull;
+            <a href="/vienna">Vienna</a> &bull;
+            <a href="/washington-dc">Washington DC</a> &bull;
+        </nav>
+        <hr/>
+
+
+    </noscript>
+</body>
+
+</html>

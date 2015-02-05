@@ -1,0 +1,93 @@
+<div class="modalHeader">
+    <div class="button animateOpacity" ng-show="step === 0" ng-animate="" ng-click="$modalCancel()"><i class="icon icon-close"></i>
+    </div>
+    <div class="button back animateOpacity" ng-hide="step === 0 || mode === 'firstRun'" ng-animate="" ng-click="goBack();"><i class="icon icon-step-back"></i>
+    </div>
+</div>
+<div class="modalContent">
+    <div class="step step_0 active" ng-class="{ active:step === 0, pullLeft:step > 0, pullRight:step < 0}">
+        <div class="gradient"></div>
+        <div class="stepContent">
+            <div class="vamosLogo">
+                <img src="/images/d3ab31fb.vamos_logo_white.png" alt="vamos logo" title="VAMOS" width="190" height="60" ng-if="!device.retina">
+                <img src="/images/eee448d3.vamos_logo_white@2x.png" alt="vamos logo" title="VAMOS" width="190" height="60" ng-if="device.retina">
+            </div>
+            <div class="titleFirst">Discover Events</div>
+            <div class="descriptionFirst">Turning your attending friends into event curators</div>
+        </div>
+        <div class="stepFooter first transparent">
+            <div class="footerDivider"></div>
+            <div ng-click="goToSignIn()" class="loginButton">Log in</div>
+            <div ng-click="goToSignUp()" class="signupButton">Sign up</div>
+        </div>
+    </div>
+    <div ng-show="mode === 'sign-in'">
+        <div class="step step_1" ng-class="{ active:step === 1, pullLeft:step > 1, pullRight:step < 1}">
+            <div class="content"><a class="facebookButton" href="javascript:FB.login(window.facebookLoginResponse, {scope:'user_events, email, friends_events, rsvp_event'});"><i class="icon icon-fb-filled fbIcon animateOpacity"></i> <span class="text">Log in with Facebook</span></a>
+                <p>or email</p>
+                <form name="forms.signInForm" class="signInForm" ng-submit="submitSignIn(forms.signInForm)" novalidate>
+                    <div class="inputHolder noIcon first" ng-class="{ error:forms.signInForm.user_email.$invalid && forms.signInForm.submited, valid:forms.signInForm.user_email.$valid && forms.signInForm.submited }">
+                        <input class="input" type="email" name="user_email" ng-model="user.user_email" placeholder="Your email" required>
+                    </div>
+                    <div class="inputHolder noIcon last" ng-class="{ error:forms.signInForm.user_pwd.$invalid && forms.signInForm.submited, valid:forms.signInForm.user_pwd.$valid && forms.signInForm.submited}">
+                        <input class="input" type="password" name="user_pwd" ng-model="user.user_pwd" ng-minlength="8" placeholder="Your password" required>
+                    </div>
+                    <button class="roundButton transparent" type="submit">Log in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div ng-show="mode === 'sign-up'">
+        <div class="step step_1" ng-class="{ active:step === 1, pullLeft:step > 1, pullRight:step < 1}">
+            <div class="content"><a class="facebookButton" href="javascript:FB.login(window.facebookSignupResponse, {scope:'user_events, email, friends_events, rsvp_event'});"><i class="icon icon-fb-filled fbIcon animateOpacity"></i> <span class="text">Sign up with Facebook</span></a>
+                <p>or email</p>
+                <form name="forms.signUpForm" class="signUpForm" ng-submit="submitSignUp(forms.signUpForm)" novalidate>
+                    <div class="inputHolder first" ng-class="{ error:forms.signUpForm.user_email.$invalid && forms.signUpForm.submited, valid:forms.signUpForm.user_email.$valid && forms.signUpForm.submited }"><i class="icon icon-mail"></i>
+                        <input class="input" type="email" name="user_email" ng-model="user.user_email" placeholder="Your email" required>
+                    </div>
+                    <div class="inputHolder" ng-class="{ error:forms.signUpForm.user_pwd.$invalid && forms.signUpForm.submited, valid:forms.signUpForm.user_pwd.$valid && forms.signUpForm.submited}"><i class="icon icon-lock"></i>
+                        <input class="input" type="password" name="user_pwd" ng-model="user.user_pwd" ng-minlength="8" placeholder="Choose password" required>
+                    </div>
+                    <div class="inputHolder" ng-class="{ error:forms.signUpForm.full_name.$invalid && forms.signUpForm.submited, valid:forms.signUpForm.full_name.$valid && forms.signUpForm.submited}"><i class="icon icon-user"></i>
+                        <input class="input" type="text" name="full_name" ng-model="user.full_name" ng-minlength="2" placeholder="First and last name" required>
+                    </div>
+                    <div class="inputHolder"><i class="icon icon-calendar-add"></i>
+                        <input class="input" type="number" name="birthyear" ng-model="user.birthyear" placeholder="Year of birth" min="1789">
+                    </div>
+                    <div class="inputHolder last"><i class="icon icon-gender"></i>
+                        <input class="input" type="text" name="gender" placeholder="Gender" ng-value="user.gender" disabled>
+                        <select ng-options="gender for gender in genders" ng-model="user.gender"></select>
+                    </div>
+                    <button class="roundButton transparent" type="submit">Sign up</button>
+                </form>
+                <p>By entering you agree to the
+                    <br><a ui-sref="terms" class="terms">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+        <div class="step step_2" ng-class="{ active:step === 2, pullLeft:step > 2, pullRight:step < 2}">
+            <div class="content" ng-if="step === 2">
+                <form name="forms.completeSignupForm" class="signupForm" ng-submit="$parent.completeSignupFormSubmit(forms.completeSignupForm)" novalidate>
+                    <div class="profileImageUpload">
+                        <div class="imageHolder">
+                            <input type="file" id="filePicker" name="profile_image" ng-model="profile_image" onchange="angular.element(this).scope().profilePictureSelected()" onblur="angular.element(this).scope().profilePictureSelected()">
+                            <div class="icon icon-camera"></div>
+                            <canvas id="profileImage120" class="canvas imageCanvas"></canvas>
+                            <div id="canvasHolder"></div>
+                        </div>
+                    </div>
+                    <div class="inputHolder noIcon first" ng-class="{ error:forms.completeSignupForm.user_email.$invalid && forms.completeSignupForm.submited, valid:forms.completeSignupForm.user_email.$valid && forms.completeSignupForm.submited }">
+                        <input class="input" type="email" name="user_email" ng-model="user.user_email" placeholder="Your email" required>
+                    </div>
+                    <div class="inputHolder noIcon" ng-class="{ error:forms.completeSignupForm.first_name.$invalid && forms.completeSignupForm.submited, valid:forms.completeSignupForm.first_name.$valid && forms.completeSignupForm.submited}">
+                        <input class="input" type="text" name="first_name" ng-model="user.first_name" placeholder="First name" ng-minlength="2" required>
+                    </div>
+                    <div class="inputHolder noIcon last" ng-class="{ error:forms.completeSignupForm.last_name.$invalid && forms.completeSignupForm.submited, valid:forms.completeSignupForm.last_name.$valid && forms.completeSignupForm.submited}">
+                        <input class="input" type="text" name="last_name" ng-model="user.last_name" placeholder="Last name" ng-minlength="0" required>
+                    </div>
+                    <button class="roundButton transparent">Yeah that's it</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

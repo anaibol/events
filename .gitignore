@@ -1,0 +1,4 @@
+client/lib/*
+client/tmp/*
+client/node_modules/*
+server/node_modules/*

@@ -1,0 +1,42 @@
+{
+  "name": "wooeva",
+  "version": "1.0.0",
+  "description": "Wooepa",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rester-Libre/Wooeva.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rester-Libre/Wooeva/issues"
+  },
+  "homepage": "https://github.com/Rester-Libre/Wooeva",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^1.0.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-imagemin": "^0.8.1",
+    "grunt-contrib-jade": "^0.13.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-less": "^0.11.4",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-html2js": "^0.2.9",
+    "grunt-ng-annotate": "^0.4.0",
+    "grunt-node-inspector": "^0.1.5",
+    "grunt-nodemon": "^0.3.0",
+    "grunt-notify": "^0.4.1",
+    "grunt-uncss": "^0.3.7",
+    "load-grunt-tasks": "^0.6.0"
+  },
+  "dependencies": {
+    "prerender-node": "^1.1.1"
+  }
+}

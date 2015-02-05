@@ -1,0 +1,13 @@
+
+# vide actions et force clef unique
+db.actions.remove( { } );
+db.actions.ensureIndex( { post_id : 1, type : 1 } , { unique : true } );
+
+
+db.events.ensureIndex( { loc: "2dsphere" })
+
+
+#db.events.remove( { } );
+db.events.ensureIndex( { "eid": 1}, { unique : true })
+
+db.events.ensureIndex( { "eid": 1 }, { unique: true,  dropDups : true } )

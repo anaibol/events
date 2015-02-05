@@ -1,0 +1,71 @@
+.datepicker {
+  // & {
+  //   .lg({
+  //     padding: 15px;
+  //   });
+  // }
+
+  // & {
+  //   .md({
+  //     padding: 10px 0;
+  //   });
+  // }
+
+  table {
+    background-color: darken(@red, 3%);
+
+    thead, tbody {
+      width: 100%;
+      display: inline-table;
+      text-align: center;
+    }
+  }
+
+  thead .btn {
+    padding: 6px;
+    margin: 0;
+
+    &.pull-left {
+      padding-left: 15px;
+    }
+
+    &.pull-right {
+      padding-right: 15px;
+    }
+  }
+
+  tbody .btn {
+    width: 30px !important;
+    height: 30px;
+    padding: 6px;
+    margin: 0;
+    border-radius: 500px;
+    
+    &.active {
+      background-color: transparent;
+      border-radius: 500px;
+
+      span {
+        color: darken(@red, 20%);
+      }
+    }
+
+    &:hover {
+      transition: .3s ;
+      background-color: darken(@red, 20%);
+      box-shadow: none;
+
+      span {
+        color: @red;
+      }
+    }
+  }
+}
+
+.tags {
+  padding: 15px;
+
+  .tag-list {
+    margin-top: 10px;
+  }
+}

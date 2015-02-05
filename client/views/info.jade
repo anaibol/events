@@ -1,0 +1,52 @@
+#information
+  div(align='center')
+    img(ng-src='{{headermail}}', alt='logo', align='center', width='100%')
+  div.summary
+    span.span
+      div(align='center')
+        a(ui-sref="discoverevents({city:loc.city})")
+          img(ng-src='{{loupemail}}', align='center', alt='discover events', width='25%')
+      h3.h3(align='center')
+        u.h3 DISCOVER EVENTS
+      div.leftdiv
+        p(style="color:black;text-align:center;")
+          | - What's happenning in your City?
+        p(style="color:black;text-align:center;")
+          | - What's your Music Style?
+        p(style="color:black;text-align:center;")
+          | - Checkout Popular Events!
+    span.span
+      div(align='center')
+        a(ui-sref="getrewarded({city:loc.city})")
+          img(ng-src='{{cadeaumail}}', align='center', alt='discover events', width='25%')
+      h3.h3(align='center')
+        u.h3 GET REWARDED
+      div.centerdiv
+        p(style="color:black;text-align:center;")
+          | - Free admissions
+        p(style="color:black;text-align:center;")
+          | - VIP tables
+        p(style="color:black;text-align:center;")
+          | - Bottles of Champagne!
+    span.span
+      div(align='center')
+        a(ui-sref="boostyourevent({city:loc.city})")
+          img(ng-src='{{megaphonemail}}', align='center', alt='discover events', width='25%')
+      h3.h3(align='center')
+        u.h3 BOOST YOUR EVENT
+      div.rigthdiv
+        p(style="color:black;text-align:center;")
+          | - Start an invitation Contest
+        p(style="color:black;text-align:center;")
+          | - Offer a reward
+        p(style="color:black;text-align:center;")
+          | - Let people invite their friends
+  div.contactus.aligncenter
+    a(href='https://www.facebook.com/wooepa')
+      img.decal(ng-src='{{facebookbutton}}', alt='facebook', width='10%')
+    a(href='https://twitter.com/wooepa')
+      img.decal(ng-src='{{twitterbutton}}', alt='twitter', width='10%')
+    a(href='http://instagram.com/wooepa/')
+      img.decal(ng-src='{{instagrambutton}}', alt='instagram', width='10%')
+    a(href='mailto:hello@wooepa.com')
+      img.decal(ng-src='{{emailbutton}}', alt='email', width='10%')

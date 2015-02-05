@@ -1,0 +1,84 @@
+form.event-form.form-horizontal
+    .modal-body
+        .control-group
+          label.control-label Name
+          input#name.form-control(required='required', type='text', ng-model='ev.name', placeholder='Name')
+        .control-group.date
+          label.control-label Date and time
+          .input-group(ng-controller='DatepickerCtrl', ng-click='open($event)')
+            input.form-control(required='required', type='text', ng-model='ev.start_time', min='minDate', datepicker-options='dateOptions', datepicker-popup='dd - MMMM', is-open='opened')
+            span.input-group-btn
+              button.btn.btn-default
+                i.fui-calendar-solid(ng-click='open($event)')
+          label.control-label Repeat
+          input(type='checkbox', ng-model='ev.repeat')
+          .repeat(ng-show='ev.repeat')
+            select(ng-model='ev.day')
+              option(ng-repeat='day in days', value='{{$index + 1}}') {{day}}
+          div(ng-controller='TimepickerCtrl', ng-model='ev.start_time')
+            timepicker(hour-step='hstep', minute-step='mstep', show-meridian='ismeridian')
+            i.fui-time
+        .control-group
+          label.control-label Description
+          textarea#description.form-control(required='required', ng-model='ev.description', cols='30', rows='10', placeholder='Content')
+        .control-group.inline
+          label.control-label Location name
+          .input-append.input-group
+            input.form-control(type='text', ng-model='ev.location')
+            span.input-group-addon
+              i.fui-location
+        .control-group.inline
+          label.control-label Country
+          .input-append.input-group
+            input.form-control(type='text', ng-autocomplete='ng-autocomplete', ng-model='ev.country')
+            span.input-group-addon
+              i.fui-location
+        .control-group.inline
+          label.control-label City
+          .input-append.input-group
+            input.form-control(type='text', ng-autocomplete='ng-autocomplete', options='{types: \'(cities)\'}', ng-model='ev.city')
+            span.input-group-addon
+              i.fui-location
+        .control-group
+          label.control-label Address
+          .input-append.input-group
+            input.form-control(type='text', ng-autocomplete='ng-autocomplete', ng-model='ev.place')
+            span.input-group-addon
+              i.fui-location
+        .control-group
+          label.control-label Picture
+          .input-append.input-group
+            input#pig.form-control(type='text', ng-model='imageFile', placeholder='Picture')
+            span.btn.btn-default.btn-file.input-group-addon
+              | Browse
+              input(type='file', accept='image/*', name='image', onchange='angular.element(this).scope().previewImage(this)')
+              i.glyphicon.glyphicon-picture
+          img(ng-src='{{imageSrc}}')
+        .control-group
+          label.control-label Tags
+          tags-input(ng-model='ev.tags', allowed-tags-pattern='(salsa+|bachata+|kizomba+|porto+|cubaine+|cubana+|semba+|samba+|merengue+|tango+|lambazouk+|regueton+|reggaeton+|suelta+|kuduru)')
+            auto-complete(source='words($query)', min-length='0')
+        .control-group
+          label.control-label Price
+          .input-append.input-group
+            input#pig.form-control(type='text', ng-model='ev.price.full', placeholder='Price')
+            span.input-group-btn
+              .dropdown
+                button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+                  i.glyphicon.glyphicon-euro
+                  span.caret
+                ul.dropdown-menu.pull-right
+                  li
+                    i.glyphicon.glyphicon-euro
+                    | $
+                  li
+                    i.glyphicon.glyphicon-euro
+                  li
+                    i.glyphicon.glyphicon-euro
+        .modal-footer
+          button.btn.btn-primary(ng-click='submit(image)')
+            i.fui-check
+            | OK
+          button.btn.btn-warning(ng-click='cancel()')
+            i.fui-cross
+            | Cancel

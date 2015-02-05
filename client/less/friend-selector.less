@@ -1,0 +1,593 @@
+#fs-dialog {
+  color: #333333;
+  font-family: 'Lucida Grande', Tahoma, Verdana, Arial, sans-serif !important;
+  font-size: 11px;
+  line-height: normal !important;
+  width: 555px;
+
+  input:focus {
+    outline: none;
+  }
+}
+
+#fs-dialog-title {
+  background: #6d84b4;
+  border: 1px solid #3b5998;
+  border-bottom: none;
+  color: #ffffff;
+  font-family: 'Lucida Grande', Tahoma, Verdana, Arial, sans-serif !important;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+
+  span {
+    display: block;
+    padding: 5px 10px;
+  }
+}
+
+#fs-filter-box {
+  background: #f2f2f2;
+  border: 1px solid #cccccc;
+  border-top: none;
+  padding: 10px;
+}
+
+#fs-input-wrap {
+  background: #ffffff;
+  border: 1px solid #bdc7d8;
+  position: relative;
+}
+
+#fs-input-text {
+  background: #ffffff;
+  border: 0;
+  color: #333333;
+  font-family: 'Lucida Grande', Tahoma, Verdana, Arial, sans-serif !important;
+  font-size: 11px;
+  padding: 3px;
+  margin: 0;
+  width: 95%;
+}
+
+#fs-reset {
+  background: url(friend-selector-erase.png) no-repeat 0 0 #adbdd6;
+  text-indent: -9999px;
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  right: 2px;
+  top: 3px;
+}
+
+#fs-reset:hover {
+  background-position: 0 -16px;
+  background-color: #6584b2;
+}
+
+#fs-reset:active {
+  background-position: 0 -16px;
+  background-color: #325c99;
+}
+
+#fs-summary-box {
+  border-bottom: 1px solid #cccccc;
+  padding: 10px 5px;
+  overflow: hidden;
+}
+
+#fs-result-text {
+  float: left;
+}
+
+.fs-limit.fs-count {
+  color: #008800;
+  float: right;
+}
+
+.fs-limit.fs-full {
+  color: #aa0000;
+  float: right;
+}
+
+#fs-user-list {
+  border-bottom: 1px solid #cccccc;
+  height: 353px;
+  overflow: auto;
+  position: relative;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  li {
+    float: left;
+    padding: 5px 0 0 5px;
+    width: 173px;
+    overflow: hidden;
+  }
+
+  input[type="checkbox"] {
+    float: left;
+    margin: 6px 6px 0;
+  }
+}
+
+.fs-anchor {
+  border-color: #ffffff;
+  border-style: solid;
+  border-width: 1px 0;
+  color: #333333;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  padding: 2px;
+  overflow: hidden;
+}
+
+.fs-anchor:hover {
+  background-color: #eceff5;
+  border-color: #eceff5;
+  text-decoration: none !important;
+}
+
+li.checked .fs-anchor {
+  background-color: #d8dfea;
+  border-color: #c3cce1;
+}
+
+.fs-thumb {
+  border: none;
+  float: left;
+  height: 30px;
+  margin-right: 5px;
+  width: 30px;
+}
+
+.fs-name {
+  display: table-cell;
+  vertical-align: middle;
+  height: 29px;
+}
+
+#fs-filters-buttons {
+  background: #f2f2f2;
+  padding: 8px 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+#fs-filters {
+  float: left;
+  padding: 6px 0 0;
+
+  a {
+    color: #333333;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+#fs-dialog-buttons {
+  text-align: right;
+  float: right;
+}
+
+.fs-button:-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+
+.fs-button {
+  border-width: 1px;
+  border-style: solid;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  overflow: visible;
+  position: relative;
+  padding: 0;
+  margin: 0;
+
+  span {
+    border-top: 1px solid #8a9cc2;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-block;
+    padding: 3px 6px 4px;
+    position: relative;
+  }
+}
+
+.fs-button:focus {
+  outline: none;
+}
+
+#fs-submit-button {
+  background-color: #5b74a8;
+  border-color: #29447e #29447e #1a356e;
+  color: #ffffff;
+}
+
+#fs-submit-button:active {
+  background-color: #4f6aa3;
+  border-color: #29447e;
+
+  span {
+    border-top: 1px solid #4f6aa3;
+  }
+}
+
+#fs-cancel-button {
+  background: #eae9e9;
+  border-color: #999999;
+  color: #333333;
+  margin-left: 4px;
+
+  span {
+    border-top: 1px solid #ffffff;
+  }
+}
+
+#fs-cancel-button:active {
+  background: #dddddd;
+  span {
+    border-top: 1px solid #dddddd;
+  }
+}
+
+.fs-color-dark #fs-dialog-title {
+  background-color: #41505b;
+  border-color: #212a30;
+}
+
+.fs-color-dark #fs-input-wrap {
+  border-color: #212a30;
+}
+
+.fs-color-dark .fs-anchor:hover {
+  background-color: #ededed;
+  border-color: #ededed;
+}
+
+.fs-color-dark li.checked .fs-anchor {
+  background-color: #dddddd;
+  border-color: #cccccc;
+}
+
+.fs-color-dark #fs-submit-button {
+  background-color: #41505b;
+  border-color: #212a30 #212a30 #112a30;
+
+  span {
+    border-top: 1px solid #777777;
+  }
+}
+
+.fs-color-dark #fs-reset {
+  background-color: #cccccc;
+}
+
+.fs-color-dark #fs-reset:hover {
+  background-color: #41505b;
+}
+
+.fs-color-dark #fs-reset:active {
+  background-color: #212a30;
+}
+
+.fs-color-light-blue #fs-dialog-title {
+  background-color: #add7e9;
+  border-color: #95c1d3;
+}
+
+.fs-color-light-blue #fs-input-wrap {
+  border-color: #add7e9;
+}
+
+.fs-color-light-blue .fs-anchor:hover {
+  background-color: #e9f4f8;
+  border-color: #e9f4f8;
+}
+
+.fs-color-light-blue li.checked .fs-anchor {
+  background-color: #d4e9f2;
+  border-color: #add7e9;
+}
+
+.fs-color-light-blue #fs-submit-button {
+  background-color: #add7e9;
+  border-color: #95c1d3 #95c1d3 #85c1d3;
+
+  span {
+    border-top: 1px solid #dddddd;
+  }
+}
+
+.fs-color-light-blue #fs-reset {
+  background-color: #add7e9;
+}
+
+.fs-color-light-blue #fs-reset:hover {
+  background-color: #add7e9;
+}
+
+.fs-color-light-blue #fs-reset:active {
+  background-color: #95c1d3;
+}
+
+.fs-color-blue #fs-dialog-title {
+  background-color: #139bd3;
+  border-color: #1d8099;
+}
+
+.fs-color-blue #fs-input-wrap {
+  border-color: #1d8099;
+}
+
+.fs-color-blue .fs-anchor:hover {
+  background-color: #caebf9;
+  border-color: #caebf9;
+}
+
+.fs-color-blue li.checked .fs-anchor {
+  background-color: #9ddbf5;
+  border-color: #139bd3;
+}
+
+.fs-color-blue #fs-submit-button {
+  background-color: #139bd3;
+  border-color: #1d8099 #1d8099 #0d8099;
+
+  span {
+    border-top: 1px solid #2db0d1;
+  }
+}
+
+.fs-color-blue #fs-reset {
+  background-color: #139bd3;
+}
+
+.fs-color-blue #fs-reset:hover {
+  background-color: #139bd3;
+}
+
+.fs-color-blue #fs-reset:active {
+  background-color: #1d8099;
+}
+
+.fs-color-green #fs-dialog-title {
+  background-color: #2fc20f;
+  border-color: #2b9a10;
+}
+
+.fs-color-green #fs-input-wrap {
+  border-color: #2b9a10;
+}
+
+.fs-color-green .fs-anchor:hover {
+  background-color: #a7f596;
+  border-color: #a7f596;
+}
+
+.fs-color-green li.checked .fs-anchor {
+  background-color: #74f159;
+  border-color: #2fc20f;
+}
+
+.fs-color-green #fs-submit-button {
+  background-color: #2fc20f;
+  border-color: #2b9a10 #2b9a10 #1b9a10;
+
+  span {
+    border-top: 1px solid #3dd918;
+  }
+}
+
+.fs-color-green #fs-reset {
+  background-color: #2fc20f;
+}
+
+.fs-color-green #fs-reset:hover {
+  background-color: #2fc20f;
+}
+
+.fs-color-green #fs-reset:active {
+  background-color: #2b9a10;
+}
+
+.fs-color-red #fs-dialog-title {
+  background-color: #d71919;
+  border-color: #bb0909;
+}
+
+.fs-color-red #fs-input-wrap {
+  border-color: #bb0909;
+}
+
+.fs-color-red .fs-anchor:hover {
+  background-color: #fcb2b2;
+  border-color: #fcb2b2;
+}
+
+.fs-color-red li.checked .fs-anchor {
+  background-color: #fa7676;
+  border-color: #f44141;
+}
+
+.fs-color-red #fs-submit-button {
+  background-color: #f31c1c;
+  border-color: #bb0909 #bb0909 #ab0909;
+
+  span {
+    border-top: 1px solid #f54747;
+  }
+}
+
+.fs-color-red #fs-reset {
+  background-color: #e90b0b;
+}
+
+.fs-color-red #fs-reset:hover {
+  background-color: #e90b0b;
+}
+
+.fs-color-red #fs-reset:active {
+  background-color: #bb0909;
+}
+
+.fs-color-pink #fs-dialog-title {
+  background-color: #fb8ced;
+  border-color: #e073ab;
+}
+
+.fs-color-pink #fs-input-wrap {
+  border-color: #fb8ced;
+}
+
+.fs-color-pink .fs-anchor:hover {
+  background-color: #fdd7f8;
+  border-color: #fdd7f8;
+}
+
+.fs-color-pink li.checked .fs-anchor {
+  background-color: #faacf0;
+  border-color: #f882e9;
+}
+
+.fs-color-pink #fs-submit-button {
+  background-color: #fb8ced;
+  border-color: #e073ab #e073ab #d073ab;
+
+  span {
+    border-top: 1px solid #fcb2f2;
+  }
+}
+
+.fs-color-pink #fs-reset {
+  background-color: #fb8ced;
+}
+
+.fs-color-pink #fs-reset:hover {
+  background-color: #fb8ced;
+}
+
+.fs-color-pink #fs-reset:active {
+  background-color: #e073ab;
+}
+
+#fs-overlay {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1100;
+}
+
+#fs-dialog-box-wrap {
+  outline: none;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1101;
+}
+
+.fs-dialog-box-bg {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: 10px;
+  height: 10px;
+  z-index: 1001;
+}
+
+#fs-dialog-box-bg-n {
+  background-image: url(img/friend-selector-x.png);
+  width: 100%;
+  top: -10px;
+  left: 0;
+}
+
+#fs-dialog-box-bg-ne {
+  background-image: url(img/friend-selector-corners.png);
+  background-position: -10px 0;
+  top: -10px;
+  right: -10px;
+}
+
+#fs-dialog-box-bg-e {
+  background-image: url(img/friend-selector-y.png);
+  height: 100%;
+  top: 0;
+  right: -10px;
+}
+
+#fs-dialog-box-bg-se {
+  background-image: url(img/friend-selector-corners.png);
+  background-position: -10px -10px;
+  bottom: -10px;
+  right: -10px;
+}
+
+#fs-dialog-box-bg-s {
+  background-image: url(img/friend-selector-x.png);
+  width: 100%;
+  bottom: -10px;
+  left: 0;
+}
+
+#fs-dialog-box-bg-sw {
+  background-image: url(img/friend-selector-corners.png);
+  background-position: 0 -10px;
+  bottom: -10px;
+  left: -10px;
+}
+
+#fs-dialog-box-bg-w {
+  top: 0;
+  left: -10px;
+  height: 100%;
+  background-image: url(img/friend-selector-y.png);
+}
+
+#fs-dialog-box-bg-nw {
+  top: -10px;
+  left: -10px;
+  background-image: url(img/friend-selector-corners.png);
+  background-position: 0 0;
+}
+
+#fs-dialog-box-content {
+  padding: 0;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1102;
+  border: 0px solid #ffffff;
+  background: #ffffff;
+}
+
+#fs-loading {
+  background-image: url(img/friend-selector-loader.gif);
+  margin: -12px 0 0 -12px;
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

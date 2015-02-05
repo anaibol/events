@@ -1,0 +1,64 @@
+nav#sidebar.hidden-xs.col-sm-3.col-md-3.col-lg-2(ng-controller="SidebarCtrl")
+  ul.nav.navbar-nav
+    li.tags
+      a(href='#', ng-click='isCollapsed2 = !isCollapsed2')
+        i.fa.fa-tag
+        | Explore by tags
+        i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed2, 'fa-chevron-down': !isCollapsed2}")
+      ul.tag-list.nav-collapse(collapse='isCollapsed2')
+        li(ng-hide="isCollapsed2")
+          a.tag(ng-repeat="tag in tags" class="{{tag}}", ui-sref="list({tags: [tag]})", ui-sref-active="active", style="padding-left:4px;") {{tag}}
+
+    li.sort
+      a(href='#', ng-click='isCollapsed = !isCollapsed')
+        i.fa.fa-bar-chart-o
+        | Sort by
+        i.pull-right.fa(ng-class="{'fa-chevron-right': isCollapsed, 'fa-chevron-down': !isCollapsed}")
+      ul.nav.nav-collapse(collapse='isCollapsed')
+        li
+          a(href='#', ui-sref="list({sortBy: 'popularity'})", ui-sref-active="active")
+            i.fa.fa-group 
+            | Popularity
+        li
+          a(href='#', ui-sref="list({sortBy: 'date'})", ui-sref-active="active")
+            i.fa.fa-calendar
+            | Date
+
+    li.today
+      a(ui-sref="list({since:getStringDate(today)})")
+        i.fa.fa-calendar
+        | Today
+
+    li(ng-if="today.getDay() >= 5 || today.getDay() === 0")
+      a(ui-sref="list({since:getStringDate(today)})")
+        i.fa.fa-calendar
+        | This weekend
+
+    li(ng-if="today.getDay() < 5 && today.getDay() > 0")
+      a(ui-sref="list({since:getNextDay('Friday')})")
+        i.fa.fa-calendar
+        | Next weekend
+
+    li.datepicker
+      datepicker(ng-change="$state.go('list', {since: getStringDate(date)})", ng-model="date", show-weeks="false")
+
+    //- li(ng-if='$root.user')
+    //-   a(ng-click='newEvent()') Submit an event
+    //-     i.fa.fa-plus
+
+  //- ul.nav
+  //-   li
+  //-     a(href='/about', ui-sref="about") About Us
+
+  //-   li
+  //-     a(href='/privacy', ui-sref="privacy") Privacy policy
+
+  //-   li
+  //-     a(href='/terms', ui-sref="terms") Terms
+
+  //-   li
+  //-     a(href='/support', ui-sref="support") Support
+
+  //-   li
+  //-     //-a(href='/contact')
+  //-     a(href='mailto:info@wooepa.com', target='_top') Contact Us

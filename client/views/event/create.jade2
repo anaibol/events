@@ -1,0 +1,34 @@
+section(ng-controller='EventsCtrl')
+    form.form-horizontal.col-md-6(role='form', ng-controller='FormCtrl', ng-submit='create()')
+        h1 New event
+        .form-group
+          label.col-md-2.control-label(for='title') Title
+          .col-md-10
+            input#name.form-control(type='text', ng-model='ev.title', placeholder='Name', required='required')
+        .form-group(ng-controller='DatepickerCtrl')
+          label.col-md-2.control-label(for='title') Date
+          .col-md-10
+            p.input-group
+              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='ev.start_time', is-open='opened', min='minDate', max='\'2015-06-22\'', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close')
+              span.input-group-btn
+                button.btn.btn-default(ng-click='open($event)')
+                  i.glyphicon.glyphicon-calendar
+        .form-group
+          label.col-md-2.control-label(for='content') Description
+          .col-md-10
+            textarea#description.form-control(ng-model='ev.description', cols='30', rows='10', placeholder='Content', required='required')
+        .form-group
+          label.col-md-2.control-label(for='title') Creator Facebook ID
+          .col-md-10
+            input#creator_id.form-control(type='text', ng-model='ev.creator.id', placeholder='Creator ID', required='required')
+        .form-group
+          label.col-md-2.control-label(for='title') Creator name
+          .col-md-10
+            input#creator_name.form-control(type='text', ng-model='ev.creator.name', placeholder='Creator name', required='required')
+        .form-group
+          label.col-md-2.control-label(for='title') Picture
+          .col-md-10
+            input#pig.form-control(type='text', ng-model='ev.pic', placeholder='Picture', required='required')
+        .form-group
+          .col-md-offset-2.col-md-10
+            button.btn.btn-default(type='submit') Submit

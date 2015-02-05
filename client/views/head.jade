@@ -1,0 +1,50 @@
+head
+  base(href="/")
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+  meta(name='viewport', content='width=device-width,initial-scale=1')
+
+
+  meta(http-equiv='Content-type', content='text/html;charset=UTF-8')
+  meta(name="keywords", content="Wooepa")
+  
+
+  //- link(property='og:image', rel='image_wooepa', href="/img/logo_wooepa.png")
+  meta(name="fragment", content="!")
+
+  link(href='/favicon.ico', rel='shortcut icon', type='image/x-icon')
+  
+  meta(property='fb:app_id', content='#{global.fbAppId}')
+
+  if ev
+    title=ev.name
+    meta(name="description", content=ev.description)
+    meta(property='og:title', content=ev.name)
+    if ev.promotion
+      meta(property='og:description', content=ev.promotion.reward)
+    else
+      meta(property='og:description', content=ev.description)
+    meta(property='og:image', content=ev.pic_cover.source)
+    meta(property='og:url', content='https://wooepa.com/' + loc.citySlug + '/' + ev.slug + '/' + ev.eid)
+  else if evs
+    title=title
+    meta(name="description", content='Events near #{loc.city}')
+    meta(property='og:title', content=title)
+    meta(property='og:description', content='Events near #{loc.city}')
+    meta(property='og:image', content='http://wooepa.com/img/logo_wooepa.png')
+    meta(property='og:url', content='https://wooepa.com/#{loc.citySlug}')
+  else
+    title=title
+    meta(name="description", content='Discover Events Near You - Invite your Friends - Get Rewarded!')
+    meta(property='og:title', content=title)
+    meta(property='og:description', content='Discover Events Near You - Invite your Friends - Get Rewarded!')
+    meta(property='og:image', content='http://wooepa.com/img/logo_wooepa.png')
+    meta(property='og:url', content='https://wooepa.com/')
+
+  meta(property='og:type', content='website')
+  meta(property='og:site_name', content='Wooepa')
+  meta(property='fb:admins', content='100005812353144')
+  meta(name='msvalidate.01', content='741DD559CC819DECAF2AA49D92578598')
+  meta(name='google-site-verification', content='w79q3QuneD2E21myOjjIUeCobYxg7Rpv_TBQsZ_Yh2M')
+  link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600', rel='stylesheet', type='text/css')
+  link(rel='stylesheet', href='/css/app.min.css')
